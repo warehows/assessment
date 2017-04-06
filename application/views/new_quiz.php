@@ -88,18 +88,18 @@
 				<?php 
 			}
 			?>
-				<div class="form-group">	 
-					<label   ><?php echo $this->lang->line('select_group');?></label> <br>
-					 <?php 
-					foreach($group_list as $key => $val){
-						?>
-						
-						 <input type="checkbox" name="gids[]" value="<?php echo $val['gid'];?>" <?php if($key==0){ echo 'checked'; } ?> > <?php echo $val['group_name'];?> &nbsp;&nbsp;&nbsp;
-						<?php 
-					}
-					?>
-					 
-			</div>
+<!--				<div class="form-group">	 -->
+<!--					<label   >--><?php //echo $this->lang->line('select_group');?><!--</label> <br>-->
+<!--					 --><?php //
+//					fo	reach($group_list as $key => $val){
+//						?>
+<!--						-->
+<!--						 <input type="checkbox" name="gids[]" value="--><?php //echo $val['gid'];?><!--" --><?php //if($key==0){ echo 'checked'; } ?><!-- > --><?php //echo $val['group_name'];?><!-- &nbsp;&nbsp;&nbsp;-->
+<!--						--><?php //
+//					}
+//					?>
+<!--					 -->
+<!--			</div>-->
 
 				<div class="form-group">	 
 					<label for="inputEmail" ><?php echo $this->lang->line('question_selection');?></label> <br>

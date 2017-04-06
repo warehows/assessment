@@ -47,7 +47,6 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="http://savsoftquiz.com"><?php echo $this->lang->line('savsoft_quiz');?></a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -63,7 +62,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="<?php echo site_url('user/new_user');?>"><?php echo $this->lang->line('add_new');?></a></li>
                   <li><a href="<?php echo site_url('user');?>"><?php echo $this->lang->line('users');?> <?php echo $this->lang->line('list');?></a></li>
-                  
+
                 </ul>
               </li>
 			 
