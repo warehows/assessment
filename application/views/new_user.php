@@ -42,29 +42,13 @@
 					<label for="inputEmail" class="sr-only"><?php echo $this->lang->line('contact_no');?></label> 
 					<input type="text" name="contact_no"  class="form-control" placeholder="<?php echo $this->lang->line('contact_no');?>"   autofocus>
 			</div>
-			<div class="form-group">
-				<label><?php echo $this->lang->line('select_group'); ?></label>
-				<select class="form-control" name="gid" id="gid" onChange="getexpiry();">
-					<?php
-					foreach($group_list as $key => $val){
-						?>
 
-						<option value="<?php echo $val['gid'];?>"><?php echo $val['group_name'];?> (<?php echo $this->lang->line('price_');?>: <?php echo $val['price'];?>)</option>
-						<?php
-					}
-					?>
-					</select>
-			</div>
-			<div class="form-group">	 
-					<label for="inputEmail"  ><?php echo $this->lang->line('subscription_expired');?></label> 
-					<input type="text" name="subscription_expired"  id="subscription_expired" class="form-control" placeholder="<?php echo $this->lang->line('subscription_expired');?>"    autofocus>
-			</div>
 
 				<div class="form-group">	 
 					<label   ><?php echo $this->lang->line('account_type');?></label> 
 					<select class="form-control" name="su">
-						<option value="0"><?php echo $this->lang->line('user');?></option>
-						<option value="1"><?php echo $this->lang->line('administrator');?></option>
+						<option value="0"><?php echo $this->lang->line('student');?></option>
+						<option value="1"><?php echo $this->lang->line('teacher');?></option>
 					</select>
 			</div>
 

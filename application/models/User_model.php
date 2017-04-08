@@ -106,16 +106,16 @@ Class User_model extends CI_Model
 		'first_name'=>$this->input->post('first_name'),
 		'last_name'=>$this->input->post('last_name'),
 		'contact_no'=>$this->input->post('contact_no'),
-		'gid'=>$this->input->post('gid'),
-		'subscription_expired'=>strtotime($this->input->post('subscription_expired')),
+//		'gid'=>$this->input->post('gid'),
+//		'subscription_expired'=>strtotime($this->input->post('subscription_expired')),
 		'su'=>$this->input->post('su')		
 		);
 		
 		if($this->db->insert('savsoft_users',$userdata)){
-			
+
 			return true;
 		}else{
-			
+
 			return false;
 		}
 	 
