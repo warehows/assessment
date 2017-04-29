@@ -78,7 +78,7 @@ if($this->config->item('tinymce')){
 ?>
 <div class="row">
 <div class="container" style="text-align:right;">
-Powered by <a href="http://savsoftquiz.com">Savsoft Quiz</a>
+
 </div>
 </div>
 </body>

@@ -40,8 +40,11 @@
                             <i class="fa fa-users fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo $num_quiz; ?></div>
-                            <div><?php echo $this->lang->line('no_registered_quiz'); ?> </div>
+                            <div class="huge"></div>
+                            <div>Tests: <?php echo $num_quiz; ?></div>
+                            <div>New Test: 2</div>
+                            <div>Unfinished Test: 3</div>
+                            <div>Finished Test: 4</div>
                         </div>
                     </div>
                 </div>
