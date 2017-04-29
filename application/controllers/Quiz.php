@@ -26,13 +26,10 @@ class Quiz extends CI_Controller {
 		$this->session->unset_userdata('logged_in');		
 		redirect('login');
 		}
-		
+
 		
 		
 		$logged_in=$this->session->userdata('logged_in');
-//		echo '<pre>';
-//		var_dump($logged_in); die();
-			
 			
 		$data['list_view']=$list_view;
 		$data['limit']=$limit;
