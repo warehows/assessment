@@ -1,4 +1,5 @@
  <div class="container">
+     <h1>Students Quiz List</h1>
 <?php 
 $logged_in=$this->session->userdata('logged_in');
 			 
