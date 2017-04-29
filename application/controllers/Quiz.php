@@ -30,16 +30,22 @@ class Quiz extends CI_Controller {
 		
 		
 		$logged_in=$this->session->userdata('logged_in');
-			 
+//		echo '<pre>';
+//		var_dump($logged_in); die();
 			
 			
 		$data['list_view']=$list_view;
 		$data['limit']=$limit;
 		$data['title']=$this->lang->line('quiz');
+		$data['su'] = $logged_in['su'];
 		// fetching quiz list
 		$data['result']=$this->quiz_model->quiz_list($limit);
 		$this->load->view('header',$data);
-		$this->load->view('quiz_list',$data);
+		if ($logged_in['su'] > 0) {
+            $this->load->view('quiz_list', $data);
+        }else{
+            $this->load->view('quiz_list_student', $data);
+        }
 		$this->load->view('footer',$data);
 	}
 	
