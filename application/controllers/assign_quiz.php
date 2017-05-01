@@ -38,11 +38,7 @@ class assign_quiz extends CI_Controller {
         // fetching quiz list
         $data['result']=$this->quiz_model->quiz_list($limit);
         $this->load->view('header',$data);
-        if ($logged_in['su'] > 0) {
-            $this->load->view('assign_quiz/index.php', $data);
-        }else{
-            $this->load->view('assign_quiz/index.php', $data);
-        }
+        $this->load->view('assign_quiz/index.php', $data);
         $this->load->view('footer',$data);
     }
 
