@@ -101,7 +101,7 @@
 	
 
 	           <li><a href="<?php echo site_url('result');?>"><?php echo $this->lang->line('result');?></a></li>
-	           <li><a href="<?php echo site_url('assignquiz');?>">Assign Quiz</a></li>
+	           <li><a href="<?php echo site_url('assign');?>">Assign Quiz</a></li>
 
 <!--			 <li><a href="--><?php //echo site_url('liveclass');?><!--">--><?php //echo $this->lang->line('live_classroom');?><!--</a></li>-->
 			 
