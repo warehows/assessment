@@ -11,10 +11,10 @@
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge"></div>
-                            <div>Tests: <?php echo $num_quiz; ?></div>
-                            <div>New Test: 2</div>
-                            <div>Unfinished Test: 3</div>
-                            <div>Finished Test: 4</div>
+                            <div>Tests: <?php echo count($result); ?></div>
+<!--                            <div>New Test: --><?php //echo count($new_quiz); ?><!--</div>-->
+                            <div>Unfinished Test: <?php echo $unfinished_test; ?></div>
+                            <div>Finished Test: <?php echo count($result_model)?></div>
                         </div>
                     </div>
                 </div>

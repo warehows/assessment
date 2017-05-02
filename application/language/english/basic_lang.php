@@ -208,6 +208,7 @@ $lang['review_later'] = "Review Later";
 $lang['long_answer'] = "Long Answer";
 $lang['answer_in_one_or_two_word'] = "Answer in one or two words (comma separated for multiple possibilities.) Not case sensitive ";
 $lang['quiz_name'] = "Quiz Name";
+$lang['quiz_status'] = "Status";
 $lang['noq'] = "No. of Questions";
 $lang['questions_added_into_quiz'] = "Questions added in to this quiz";
 $lang['no_question_added'] = "No question added yet";

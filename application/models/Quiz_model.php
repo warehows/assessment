@@ -36,6 +36,14 @@ Class Quiz_model extends CI_Model
 		$query=$this->db->get('savsoft_quiz');
 		return $query->result_array();
 }
+
+//    function new_quiz(){
+//        $logged_in=$this->session->userdata('logged_in');
+//        $uid=$logged_in['uid'];
+//        $query=$this->db->query("select * from savsoft_result join savsoft_quiz on savsoft_result.quid=savsoft_quiz.quid where savsoft_result.uid='$uid' AND savsoft_result.end_time >= CURRENT_DATE ");
+//        return $query->result_array();
+//
+//    }
  
    function open_quiz($limit){
 	  

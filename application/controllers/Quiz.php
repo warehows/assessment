@@ -30,7 +30,7 @@ class Quiz extends CI_Controller {
 		
 		
 		$logged_in=$this->session->userdata('logged_in');
-			
+        $data['quiz_model'] = $this->quiz_model;
 		$data['list_view']=$list_view;
 		$data['limit']=$limit;
 		$data['title']=$this->lang->line('quiz');

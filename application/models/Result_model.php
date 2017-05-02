@@ -40,7 +40,13 @@ Class Result_model extends CI_Model
 		
 	 
  }
- 
+    function no_unfinished(){
+        $logged_in=$this->session->userdata('logged_in');
+        $uid=$logged_in['uid'];
+        $query=$this->db->query(" select * from savsoft_result where uid='$uid' and result_status='Open' ");
+        return $query->num_rows();
+    }
+
  function quiz_list(){
 	 $this->db->order_by('quid','desc');
 $query=$this->db->get('savsoft_quiz');	

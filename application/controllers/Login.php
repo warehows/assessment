@@ -28,9 +28,10 @@ class Login extends CI_Controller {
 			$logged_in=$this->session->userdata('logged_in');
 			if($logged_in['su']=='1'){
 				redirect('dashboard');
-			}else{
-				redirect('quiz');
-			}
+            }else{
+//				redirect('quiz');
+                redirect('dashboard/student');
+            }
 
 		}
 
@@ -91,9 +92,10 @@ class Login extends CI_Controller {
 			// redirect to dashboard
 			if($user['su']=='1'){
 				redirect('dashboard');
-			}else{
-				redirect('quiz');
-			}
+            }else{
+//				redirect('quiz');
+                redirect('dashboard/student');
+            }
 		}else{
 
 			// invalid login

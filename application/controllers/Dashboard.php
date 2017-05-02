@@ -26,46 +26,33 @@ class Dashboard extends CI_Controller {
 
     public function index()
     {
-        $data['title']=$this->lang->line('dashboard');
-
         $logged_in=$this->session->userdata('logged_in');
         if($logged_in['su']=='1'){
-
+            $data['title']=$this->lang->line('dashboard');
             $data['result']=$this->user_model->user_list(0);
-
-
             $data['num_users']=$this->user_model->num_users();
             $data['num_qbank']=$this->qbank_model->num_qbank();
             $data['num_quiz']=$this->quiz_model->num_quiz();
-
-
+            $this->load->view('header',$data);
+            $this->load->view('dashboard',$data);
+            $this->load->view('footer',$data);
+        }else{
+            redirect('');
         }
-
-
-
-
-
-        $this->load->view('header',$data);
-        $this->load->view('dashboard',$data);
-        $this->load->view('footer',$data);
     }
 
-    public function student()
+    public function student($limit='0')
     {
         $data['title']=$this->lang->line('dashboard');
-
+        $data['result']=$this->quiz_model->quiz_list($limit);
+        $data['result_model']=$this->result_model->result_list($limit);
+        $data['new_quiz']=$this->quiz_model->new_quiz();
+        $data['unfinished_test']=$this->result_model->no_unfinished();
         $logged_in=$this->session->userdata('logged_in');
-//        if($logged_in['su']=='1'){
 
-            $data['result']=$this->user_model->user_list(0);
             $data['num_users']=$this->user_model->num_users();
             $data['num_qbank']=$this->qbank_model->num_qbank();
             $data['num_quiz']=$this->quiz_model->num_quiz();
-
-//        }
-
-
-
 
 
         $this->load->view('header',$data);

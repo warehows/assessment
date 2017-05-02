@@ -62,6 +62,7 @@ $logged_in=$this->session->userdata('logged_in');
  <th>#</th>
  <th><?php echo $this->lang->line('quiz_name');?></th>
 <th><?php echo $this->lang->line('noq');?></th>
+<th><?php echo $this->lang->line('quiz_status');?></th>
 <th><?php echo $this->lang->line('action');?> </th>
 </tr>
 <?php
@@ -80,6 +81,7 @@ foreach($result as $key => $val){
  <td><?php echo $val['quid'];?></td>
  <td><?php echo substr(strip_tags($val['quiz_name']),0,50);?></td>
 <td><?php echo $val['noq'];?></td>
+<td><?php echo $quiz_model->quiz_result($val['quid'])['result_status'];?></td>
  <td>
 <a href="<?php echo site_url('quiz/quiz_detail/'.$val['quid']);?>" class="btn btn-success"  ><?php echo $this->lang->line('attempt');?> </a>
 
