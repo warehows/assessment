@@ -46,7 +46,7 @@ class Dashboard extends CI_Controller {
         $data['title']=$this->lang->line('dashboard');
         $data['result']=$this->quiz_model->quiz_list($limit);
         $data['result_model']=$this->result_model->result_list($limit);
-        $data['new_quiz']=$this->quiz_model->new_quiz();
+//        $data['new_quiz']=$this->quiz_model->new_quiz();
         $data['unfinished_test']=$this->result_model->no_unfinished();
         $logged_in=$this->session->userdata('logged_in');
 
