@@ -157,7 +157,7 @@ if($logged_in['su']=='1'){
 	  
 	  
 	  <?php 
-	  if($cc >= 4){
+	  if($cc >= 3){
 	  $cc=0;
 	  }else{
 	  $cc+=1;

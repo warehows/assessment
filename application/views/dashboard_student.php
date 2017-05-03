@@ -12,7 +12,7 @@
                         <div class="col-xs-9 text-right">
                             <div class="huge"></div>
                             <div>Tests: <?php echo count($result); ?></div>
-<!--                            <div>New Test: --><?php //echo count($new_quiz); ?><!--</div>-->
+                            <div>New Test: <?php echo count($has_new_quiz); ?></div>
                             <div>Unfinished Test: <?php echo $unfinished_test; ?></div>
                             <div>Finished Test: <?php echo count($result_model)?></div>
                         </div>
