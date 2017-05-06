@@ -11,7 +11,7 @@
 	
 	<!-- custom css -->
 	<link href="<?php echo base_url('css/style.css');?>" rel="stylesheet">
-	
+
 	<script>
 	
 	var base_url="<?php echo base_url();?>";
