@@ -89,7 +89,6 @@ foreach($result as $key => $val){
     $end_date = date('Y-m-d H:i:s',$val['end_date']);
     $expires = strtotime('+0 days', strtotime(date($end_date)));
     $date_diff = ($expires-strtotime($timestamp)) / 86400;
-    echo $date_diff;
     $days_left = round($date_diff, 0);
     ?>
 
