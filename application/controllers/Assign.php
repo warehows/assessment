@@ -27,8 +27,6 @@ class Assign extends CI_Controller {
             redirect('login');
         }
 
-
-
         $logged_in=$this->session->userdata('logged_in');
 
         $data['list_view']=$list_view;
@@ -40,6 +38,21 @@ class Assign extends CI_Controller {
         $this->load->view('header',$data);
         $this->load->view('assign_quiz/index.php', $data);
         $this->load->view('footer',$data);
+    }
+
+    public function assessment_quiz_list(){
+        if(!$this->session->userdata('logged_in')){
+            redirect('login');
+
+        }
+        $logged_in=$this->session->userdata('logged_in');
+        if($logged_in['base_url'] != base_url()){
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $data=$this->quiz_model->quiz_list(0);
+        echo json_encode($data);
     }
 
 
