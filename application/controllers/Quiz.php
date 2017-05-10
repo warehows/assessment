@@ -752,18 +752,23 @@ class Quiz extends CI_Controller
 //        if ($logged_in['su'] != '1') {
 //            exit($this->lang->line('permission_denied'));
 //        }
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('quiz_name', 'quiz_name', 'required');
-        if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . validation_errors() . " </div>");
+//        $this->load->library('form_validation');
+//        $this->form_validation->set_rules('quiz_name', 'quiz_name', 'required');
+//        if ($this->form_validation->run() == FALSE) {
+//            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . validation_errors() . " </div>");
 //            redirect('quiz/add_new/');
-            echo "This shit worked";
-        } else {
-            $quid = $this->quiz_model->assessment_insert_quiz();
+//            echo "This shit worked";
+//        } else {
+//            $quid = $this->quiz_model->assessment_insert_quiz();
 //            redirect('quiz/edit_quiz/' . $quid);
-            echo "kaka";
+//        }
+        $post = $this->input->post();
+
+        $quid = $this->quiz_model->assessment_insert_quiz($post["quiz_name"]);
+        if($quid){
+            echo "Table has been successfully added";
         }
-        echo "nothing worked mother fucker";
+
 
     }
 

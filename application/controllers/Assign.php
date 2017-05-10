@@ -35,9 +35,9 @@ class Assign extends CI_Controller {
         $data['su'] = $logged_in['su'];
         // fetching quiz list
         $data['result']=$this->quiz_model->quiz_list($limit);
-        $this->load->view('header',$data);
+        $this->load->view('material_part/header_material',$data);
         $this->load->view('assign_quiz/index.php', $data);
-        $this->load->view('footer',$data);
+        $this->load->view('material_part/footer_material.php',$data);
     }
 
     public function assessment_quiz_list(){
