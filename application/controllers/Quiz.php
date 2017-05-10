@@ -85,6 +85,7 @@ class Quiz extends CI_Controller
         $data['title'] = $this->lang->line('add_new') . ' ' . $this->lang->line('quiz');
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
+        $data['quiz_model'] = $this->quiz_model;
         $this->load->view('header', $data);
         $this->load->view('new_quiz', $data);
         $this->load->view('footer', $data);

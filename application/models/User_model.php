@@ -349,7 +349,19 @@ $query=$this->db->get('savsoft_users');
 	 return $query->row_array();
 	 
  }
- 
+
+    function get_user_name($uid){
+        $query = $this->db->query(" select * from savsoft_users");
+
+
+            $this->db->where('uid', $uid);
+
+
+        return $query->row_array();
+
+    }
+
+
  
  
  function insert_group(){

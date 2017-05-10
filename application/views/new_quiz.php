@@ -28,6 +28,15 @@
                                    placeholder="<?php echo $this->lang->line('quiz_name'); ?>" required autofocus>
                         </div>
                         <div class="form-group">
+                            <label for="inputEmail" class="sr-only">Select Subject</label>
+                            <select name="category" class="form-control">
+                                <option value="0">Select Subject</option>
+                                <?php foreach ( $quiz_model->get_all_category() as $category): ?>
+                                    <option value="<?php echo $category['cid']; ?>"><?php echo $category['category_name']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="inputEmail"><?php echo $this->lang->line('description'); ?></label>
                             <textarea name="description" class="form-control tinymce_textarea"></textarea>
                         </div>

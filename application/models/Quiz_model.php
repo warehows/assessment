@@ -36,11 +36,36 @@ Class Quiz_model extends CI_Model
         return $CI->user_model;
     }
 
+    function get_all_category()
+    {
+        $query = $this->db->query(" select * from savsoft_category");
+
+
+        return $query->result_array();
+
+    }
+
+    function get_category($cid)
+    {
+        $query = $this->db->query(" select * from savsoft_category where cid ='$cid'");
+
+
+
+        return $query->row_array();
+
+    }
+
+    function get_result_model(){
+        $CI =& get_instance();
+        $CI->load->model('result_model');
+        return $CI->result_model;
+    }
+
     function assigned_by($uid){
 
         $user_model = $this->get_user_model();
 
-        return $user_model->get_user($uid);
+        return $user_model->get_user_name($uid);
 
     }
 
@@ -98,6 +123,7 @@ Class Quiz_model extends CI_Model
 
         $userdata = array(
             'quiz_name' => $this->input->post('quiz_name'),
+            'cid' => $this->input->post('category'),
             'description' => $this->input->post('description'),
             'start_date' => strtotime($this->input->post('start_date')),
             'end_date' => strtotime($this->input->post('end_date')),

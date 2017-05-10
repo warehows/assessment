@@ -124,6 +124,18 @@ return $query->result_array();
 	 
 	 
  }
+
+    function get_student_result($uid,$quid){
+
+        $this->db->where('savsoft_result.uid',$uid);
+
+        $this->db->where('savsoft_result.quid',$quid);
+
+        $query=$this->db->get('savsoft_result');
+        return $query->result_array();
+
+
+    }
  
  
  function last_ten_result($quid){
