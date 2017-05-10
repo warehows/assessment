@@ -109,11 +109,11 @@ Class Quiz_model extends CI_Model
 
     }
 
-    function assessment_insert_quiz()
+    function assessment_insert_quiz($variable)
     {
 
         $userdata = array(
-            'quiz_name' => $this->input->get('quiz_name'),
+            'quiz_name' => $variable,
         );
 
         $this->db->insert('savsoft_quiz', $userdata);
