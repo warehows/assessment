@@ -29,6 +29,21 @@ Class Quiz_model extends CI_Model
 
     }
 
+    function get_user_model()
+    {
+        $CI =& get_instance();
+        $CI->load->model('user_model');
+        return $CI->user_model;
+    }
+
+    function assigned_by($uid){
+
+        $user_model = $this->get_user_model();
+
+        return $user_model->get_user($uid);
+
+    }
+
 
     function recent_quiz($limit)
     {

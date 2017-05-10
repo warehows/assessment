@@ -60,9 +60,12 @@ $logged_in=$this->session->userdata('logged_in');
 <table class="table table-bordered">
 <tr>
  <th>#</th>
- <th><?php echo $this->lang->line('quiz_name');?></th>
+ <th><?php echo 'Title';?></th>
+ <th><?php echo 'Assigned By'; ?></th>
 <th><?php echo $this->lang->line('noq');?></th>
 <th><?php echo $this->lang->line('quiz_status');?></th>
+<th><?php echo 'Start Date';?></th>
+<th><?php echo 'Expiration';?></th>
 <th><?php echo $this->lang->line('action');?> </th>
 </tr>
 <?php
@@ -77,11 +80,28 @@ if(count($result)==0){
 }
 foreach($result as $key => $val){
 ?>
+    <?php $name = array(); ?>
+    <?php $name['first'] = $quiz_model->assigned_by($val['with_login'])['first_name']; ?>
+    <?php $name['last'] = $quiz_model->assigned_by($val['with_login'])['last_name']; ?>
+    <?php
+    $timestamp = date('Y-m-d H:i:s');
+    $start_date = date('Y-m-d H:i:s',$val['start_date']);
+    $end_date = date('Y-m-d H:i:s',$val['end_date']);
+    $expires = strtotime('+0 days', strtotime(date($end_date)));
+    $date_diff = ($expires-strtotime($timestamp)) / 86400;
+    $days_left = round($date_diff, 0);
+    ?>
+
+
 <tr>
  <td><?php echo $val['quid'];?></td>
  <td><?php echo substr(strip_tags($val['quiz_name']),0,50);?></td>
+ <td><?php echo $name['first'].' '.$name['last']; ?></td>
 <td><?php echo $val['noq'];?></td>
 <td><?php echo $quiz_model->quiz_result($val['quid'])['result_status'];?></td>
+<td><?php echo $start_date;?></td>
+<td><?php echo $end_date;?>
+<?php echo $days_left > 0 ? ' ('.$days_left.' days left)' : 'Expired'; ?></td>
  <td>
 <a href="<?php echo site_url('quiz/quiz_detail/'.$val['quid']);?>" class="btn btn-success"  ><?php echo $this->lang->line('attempt');?> </a>
 
