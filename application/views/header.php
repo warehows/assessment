@@ -56,7 +56,7 @@
 			  
 			  <li <?php if($this->uri->segment(1)=='dashboard'){ echo "class='active'"; } ?> ><a href="<?php echo site_url('dashboard');?>"><?php echo $this->lang->line('dashboard');?></a></li>
             
-			 
+
 			  <li class="dropdown" <?php if($this->uri->segment(1)=='user'){ echo "class='active'"; } ?> >
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('users');?> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -101,6 +101,7 @@
 	
 
 	           <li><a href="<?php echo site_url('result');?>"><?php echo $this->lang->line('result');?></a></li>
+	           <li><a href="<?php echo site_url('class_controller/new_class');?>"><?php echo "Class";?></a></li>
 	           <li><a href="<?php echo site_url('assign');?>">Assign Quiz</a></li>
 
 <!--			 <li><a href="--><?php //echo site_url('liveclass');?><!--">--><?php //echo $this->lang->line('live_classroom');?><!--</a></li>-->
