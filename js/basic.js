@@ -1,4 +1,14 @@
- 
+
+function fillInClassCode(){
+    $('form select').on('change', function(){
+        var section = $('#section option:selected');
+        var level = $('#level option:selected');
+        var subject = $('#subject option:selected');
+        var classCode = subject.text()+'-'+level.text()+'-'+section.text();
+        $('#class_code').val(classCode);
+
+    });
+}
 function remove_entry(redir_cont){
 	
 	if(confirm("Do you really want to remove entry?")){

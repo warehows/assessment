@@ -1,8 +1,3 @@
-<?php //echo '<pre>'; ?>
-<?php //var_dump($level); ?>
-<?php //var_dump($section); ?>
-<?php //var_dump($subject); ?>
-<?php //var_dump($teacher); ?>
 <div class="container">
     <h3><?php echo $title;?></h3>
     <div class="row">
@@ -17,7 +12,7 @@
                             echo $this->session->flashdata('message');
                         }
                         ?>
-                        <div class="form-group">
+                        <div id="level" class="form-group">
                             <label><?php echo "Level/Year";?></label>
                             <select class="form-control" name="level">
                                 <option value="0">Select Year/Level</option>
@@ -26,7 +21,7 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div id="section" class="form-group">
                             <label><?php echo "Section";?></label>
                             <select class="form-control" name="section">
                                 <option value="0">Select Section</option>
@@ -35,7 +30,7 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div id="subject" class="form-group">
                             <label><?php echo "Subject";?></label>
                             <select class="form-control" name="subject">
                                 <option value="0">Select Subject</option>
@@ -44,7 +39,7 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div id="teacher" class="form-group">
                             <label><?php echo "Teacher";?></label>
                             <select class="form-control" name="teacher">
                                 <option value="0">Select Teacher</option>
@@ -53,6 +48,7 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <input id="class_code" type="hidden" name="class_code" value="0">
                         <button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit');?></button>
                     </div>
                 </div>
@@ -62,5 +58,6 @@
     </div>
 </div>
 <script>
+    fillInClassCode();
     getexpiry();
 </script>

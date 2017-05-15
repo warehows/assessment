@@ -10,7 +10,6 @@ class Class_controller extends CI_Controller
         $this->load->database();
         $this->load->model("class_model");
         $this->lang->load('basic', $this->config->item('language'));
-        // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
 
@@ -26,20 +25,20 @@ class Class_controller extends CI_Controller
     public function index($limit = '0')
     {
 
-//        $logged_in = $this->session->userdata('logged_in');
-//
-//        if ($logged_in['su'] != '1') {
-//            exit($this->lang->line('permission_denied'));
-//        }
-//
-//
-//        $data['limit'] = $limit;
-//        $data['title'] = $this->lang->line('userlist');
-//        // fetching user list
-//        $data['result'] = $this->user_model->user_list($limit);
-//        $this->load->view('header', $data);
-//        $this->load->view('user_list', $data);
-//        $this->load->view('footer', $data);
+        $logged_in = $this->session->userdata('logged_in');
+
+        if ($logged_in['su'] != '1') {
+            exit($this->lang->line('permission_denied'));
+        }
+
+
+        $data['limit'] = $limit;
+        $data['title'] = "Class List";
+        // fetching user list
+        $data['result'] = $this->class_model->class_list($limit);
+        $this->load->view('header', $data);
+        $this->load->view('class_list', $data);
+        $this->load->view('footer', $data);
 
     }
 
@@ -70,12 +69,7 @@ class Class_controller extends CI_Controller
             exit($this->lang->line('permission_denied'));
         }
         $this->load->library('form_validation');
-//        $this->form_validation->set_rules('email', 'Email', 'required|is_unique[savsoft_users.email]');
-//        $this->form_validation->set_rules('password', 'Password', 'required');
-//        if ($this->form_validation->run() == FALSE) {
-//            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . validation_errors() . " </div>");
-//            redirect('class_controller/new_class/');
-//        } else {
+
             if ($this->class_model->insert_class()) {
                 $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_added_successfully') . " </div>");
             } else {
@@ -83,7 +77,6 @@ class Class_controller extends CI_Controller
 
             }
             redirect('class_controller/new_class/');
-//        }
 
     }
 
