@@ -52,6 +52,7 @@ class Class_controller extends CI_Controller
         }
 
         $data['title'] = 'Add New Class';
+        $data['class_model'] = $this->class_model;
         $data['level'] = $this->class_model->getCollection('savsoft_level');
         $data['section'] = $this->class_model->getCollection('savsoft_group');
         $data['subject'] = $this->class_model->getCollection('savsoft_category');

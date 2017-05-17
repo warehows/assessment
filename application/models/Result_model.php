@@ -1,7 +1,21 @@
 <?php
 Class Result_model extends CI_Model
 {
-	
+
+    public function load($table,$key,$value){
+
+        $this->db->query("select * from ".$table." where ".$key."='".$value."'");
+        $query = $this->db->get($table);
+        return $query->row_array();
+    }
+
+    public function getCollection($table,$field = '*')
+    {
+        $this->db->query("select ".$field." from ".$table);
+        $query = $this->db->get($table);
+
+        return $query->result_array();
+    }
  
  function result_list($limit,$status='0'){
 	$result_open=$this->lang->line('open');

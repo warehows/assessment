@@ -163,6 +163,7 @@ class User extends CI_Controller
 
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
+        $data['user_model'] = $this->user_model;
         $data['title'] = $this->lang->line('group_list');
         $this->load->view('header', $data);
         $this->load->view('group_list', $data);

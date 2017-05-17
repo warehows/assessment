@@ -1,6 +1,22 @@
 <?php
 Class User_model extends CI_Model
 {
+
+    public function load($table,$key,$value){
+
+        $this->db->query("select * from ".$table." where ".$key."='".$value."'");
+        $query = $this->db->get($table);
+        return $query->row_array();
+    }
+
+    public function getCollection($table,$field = '*')
+    {
+        $this->db->query("select ".$field." from ".$table);
+        $query = $this->db->get($table);
+
+        return $query->result_array();
+    }
+
  function login($username, $password)
  {
    
@@ -73,7 +89,7 @@ Class User_model extends CI_Model
 	 $this->db->order_by('gid','desc');
 	$query=$this->db->get('savsoft_group');
 		return $query->result_array();
-		 
+
 	 
  }
  
@@ -365,11 +381,12 @@ $query=$this->db->get('savsoft_users');
  
  
  function insert_group(){
-	 
+	    $level_name = $this->load('savsoft_level','lid',$this->input->post('level'));
 	 	$userdata=array(
-		'group_name'=>$this->input->post('group_name'),
-		'price'=>$this->input->post('price'),
-		'valid_for_days'=>$this->input->post('valid_for_days'),
+		'group_name'=>$level_name['level_name'].' '.$this->input->post('group_name'),
+		'lid'=>$this->input->post('level'),
+		'price'=>0,
+		'valid_for_days'=>0,
 			);
 		
 		if($this->db->insert('savsoft_group',$userdata)){

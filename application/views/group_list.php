@@ -1,4 +1,5 @@
- <div class="container">
+<?php $level_list = $user_model->getCollection('savsoft_level'); ?>
+<div class="container">
 
    
  <h3><?php echo $title;?></h3>
@@ -16,12 +17,29 @@
 		<div id="message"></div>
 		
 		 <form method="post" action="<?php echo site_url('user/insert_group/');?>">
+             <table class="table table-bordered">
+                 <tr>
+                     <td>
+                         <input type="text"   class="form-control"   name="group_name" value="" placeholder="Section Name"  required >
+                     </td>
+                     <td>
+                         <select class="form-control" name="level">
+                             <option value="0">Select Year/Level</option>
+                             <?php foreach ($level_list as $lvl): ?>
+                                 <option value="<?php echo $lvl['lid']; ?>"><?php echo $lvl['level_name']; ?></option>
+                             <?php endforeach; ?>
+                         </select>
+                     </td>
+                     <td>
+                         <button class="btn btn-default" type="submit"><?php echo $this->lang->line('add_new');?></button>
+                     </td>
+                 </tr>
+             </table>
+         </form>
 	
 <table class="table table-bordered">
 <tr>
  <th><?php echo $this->lang->line('group_name');?></th>
- <th><?php echo $this->lang->line('price'); ?></th>
- <th><?php echo $this->lang->line('valid_for_days');?></th>
 <th><?php echo $this->lang->line('action');?> </th>
 </tr>
 <?php 
@@ -38,11 +56,11 @@ if(count($group_list)==0){
 foreach($group_list as $key => $val){
 ?>
 <tr>
- <td><input type="text"   class="form-control"  value="<?php echo $val['group_name'];?>" onBlur="updategroup(this.value,'<?php echo $val['gid'];?>');" ></td>
- <td>
- <?php echo $this->config->item('base_currency_prefix');?> <input type="text"      value="<?php echo $val['price'];?>" onBlur="updategroupprice(this.value,'<?php echo $val['gid'];?>');" >
-  <?php echo $this->config->item('base_currency_sufix');?>  </td>
- <td><input type="text"   class="form-control"  value="<?php echo $val['valid_for_days'];?>" onBlur="updategroupvalid(this.value,'<?php echo $val['gid'];?>');" ></td>
+ <td><input disabled type="text"   class="form-control"  value="<?php echo $val['group_name'];?>" onBlur="updategroup(this.value,'<?php echo $val['gid'];?>');" ></td>
+
+ <input type="hidden"      value="0" onBlur="updategroupprice(this.value,'<?php echo $val['gid'];?>');" >
+
+ <input type="hidden"   class="form-control"  value="0" onBlur="updategroupvalid(this.value,'<?php echo $val['gid'];?>');" >
 <td>
 <a href="javascript:remove_entry('user/remove_group/<?php echo $val['gid'];?>');"><img src="<?php echo base_url('images/cross.png');?>"></a>
 
@@ -52,26 +70,7 @@ foreach($group_list as $key => $val){
 <?php 
 }
 ?>
-<tr>
- <td>
- 
- <input type="text"   class="form-control"   name="group_name" value="" placeholder="<?php echo $this->lang->line('group_name');?>"  required ></td>
-<td>
- 
-  <?php echo $this->config->item('base_currency_prefix');?> 
- <input type="text"     name="price" value="" placeholder="<?php echo $this->lang->line('price');?>"  required >
-  <?php echo $this->config->item('base_currency_sufix');?>  </td>
-<td>
- 
- 
- <input type="text"   class="form-control"   name="valid_for_days" value="" placeholder="<?php echo $this->lang->line('valid_for_days');?>"  required ></td>
-<td>
-<button class="btn btn-default" type="submit"><?php echo $this->lang->line('add_new');?></button>
- 
-</td>
-</tr>
 </table>
-</form>
 </div>
 
 </div>
