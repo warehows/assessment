@@ -60,7 +60,7 @@
                                 <input type="button" id="selected_quiz_confirm" value="Done"/>
 
                                 <table id="second_table">
-                                    <tr id="">
+                                    <tr>
                                         <th>
                                             Select
                                         </th>
@@ -76,7 +76,9 @@
                                     </tr>
 
                                     <tr id="last_question_tr">
-
+                                        <td>
+                                            <input type="button" value="Done" id="questions_selected_confirmed"/>
+                                        </td>
                                     </tr>
 
                                 </table>
@@ -154,7 +156,9 @@ $logged_in = $this->session->userdata('logged_in');
 </script>
 <script>
     $(document).ready(function () {
+        $("#second_table").hide();
         var quiz_selected = "";
+
         $.ajax({
             url: "<?php echo site_url('assign/assessment_quiz_list/'); ?>",
         }).done(function (value) {
@@ -168,7 +172,6 @@ $logged_in = $this->session->userdata('logged_in');
             $(".selected_quiz").click(function () {
                 quiz_selected = $(this).attr("id");
                 quiz_selected = quiz_selected.replace("selected_", "");
-                console.log(quiz_selected);
 
             });
         });
@@ -208,12 +211,10 @@ $logged_in = $this->session->userdata('logged_in');
                         $(".selected_quiz").click(function () {
                             quiz_selected = $(this).attr("id");
                             quiz_selected = quiz_selected.replace("selected_", "");
-                            console.log(quiz_selected);
 
                         });
 
                     });
-
 
                 });
 
@@ -234,12 +235,21 @@ $logged_in = $this->session->userdata('logged_in');
                 type: "POST",
             }).done(function (values) {
                 var all_quizzes = JSON.parse(values);
-                console.log(all_quizzes);
                 $("#second_table").show();
                 $.each(all_quizzes, function (key, value) {
-                    $("#last_question_tr").before('<tr class="question_name_tr"><td><input type="checkbox" class="question_checkbox" /></td><td>' + value["cid"] + '</td><td>' + value["question_type"] + '</td><td>' + value["question"] + '</td></tr>');
+                    $("#last_question_tr").before('<tr class="question_name_tr"><td><input type="checkbox" name="'+ value["qid"] +'" class="question_checkbox" /></td><td>' + value["cid"] + '</td><td>' + value["question_type"] + '</td><td>' + value["question"] + '</td></tr>');
                 });
             });
+        });
+
+        $("#questions_selected_confirmed").click(function(){
+
+            var selected_questions = $(".question_checkbox:checkbox:checked");
+            var selected_questions_array = new Array();
+            $.each(selected_questions,function(key,value){
+                selected_questions_array.push($(value).attr("name"));
+            });
+
         });
 
 
