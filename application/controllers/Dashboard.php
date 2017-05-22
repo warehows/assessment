@@ -33,9 +33,9 @@ class Dashboard extends CI_Controller {
             $data['num_users']=$this->user_model->num_users();
             $data['num_qbank']=$this->qbank_model->num_qbank();
             $data['num_quiz']=$this->quiz_model->num_quiz();
-            $this->load->view('header',$data);
+            $this->load->view('material_part/header_material',$data);
             $this->load->view('dashboard',$data);
-            $this->load->view('footer',$data);
+            $this->load->view('material_part/footer_material',$data);
         }else{
             redirect('');
         }
@@ -56,9 +56,9 @@ class Dashboard extends CI_Controller {
             $data['num_quiz']=$this->quiz_model->num_quiz();
 
 
-        $this->load->view('header',$data);
+        $this->load->view('material_part/header_material',$data);
         $this->load->view('dashboard_student',$data);
-        $this->load->view('footer',$data);
+        $this->load->view('material_part/footer_material',$data);
 
     }
 
@@ -91,9 +91,9 @@ class Dashboard extends CI_Controller {
 
         $data['result']=file_get_contents('./application/config/config.php');
         $data['title']=$this->lang->line('config');
-        $this->load->view('header',$data);
+        $this->load->view('material_part/header_material',$data);
         $this->load->view('config',$data);
-        $this->load->view('footer',$data);
+        $this->load->view('material_part/footer_material',$data);
 
     }
 
@@ -125,9 +125,9 @@ class Dashboard extends CI_Controller {
 
         $data['result']=file_get_contents('./css/style.css');
         $data['title']=$this->lang->line('config');
-        $this->load->view('header',$data);
+        $this->load->view('material_part/header_material',$data);
         $this->load->view('css',$data);
-        $this->load->view('footer',$data);
+        $this->load->view('material_part/footer_material',$data);
 
     }
 

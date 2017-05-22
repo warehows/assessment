@@ -1,4 +1,5 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
     <title><?php echo $title; ?></title>
     <meta charset="utf-8">
@@ -7,11 +8,12 @@
 
     <title></title>
     <!-- bootstrap css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link href="<?php echo base_url('css/material/fonts/material-icons.css'); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link href="<?php echo base_url('css/material/css/material.css'); ?>" rel="stylesheet">
     <link href="<?php echo base_url('css/material/css/material2.min.css'); ?>" rel="stylesheet">
     <link href="<?php echo base_url('css/material/css/stepper.css'); ?>" rel="stylesheet">
+
     <link href="<?php echo base_url('css/material/css/styles.css'); ?>" rel="stylesheet">
     <link href="<?php echo base_url('css/material/css/cust_stepper.css'); ?>" rel="stylesheet">
     <link href="<?php echo base_url('css/material/css/material-datetime-picker.css'); ?>" rel="stylesheet">
@@ -25,33 +27,27 @@
     <script src="<?php echo base_url('css/material/js/material.min.js'); ?>"></script>
     <script src="<?php echo base_url('css/material/js/navigation.js'); ?>"></script>
     <script src="<?php echo base_url('css/material/js/stepper.js'); ?>"></script>
-    <script src="<?php echo base_url('css/material/js/stepper.min.js'); ?>"></script>
-    <script src="<?php echo base_url('css/material/js/jquery.dataTables.min.js'); ?>"></script>
-    <script src="<?php echo base_url('css/material/js/dataTables.material.min.js'); ?>"></script>
-    <script src="<?php echo base_url('css/material/js/jquery-1.12.4.js'); ?>"></script>
-    <script type="text/javascript">
-        var jQuery_1_12_4 = $.noConflict(true);
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#example').DataTable({
-                columnDefs: [
-                    {
-                        targets: [0, 1, 2],
-                        className: 'mdl-data-table__cell--non-numeric'
-                    }
-                ]
-            });
-        });
-    </script>
+    <!--    <script src="--><?php //echo base_url('css/material/js/stepper.min.js'); ?><!--"></script>-->
+    <style>
+        .drawer-header{
+            box-sizing:border-box;
+            display:flex;
+            flex-direction:column;
+            justify-content:flex-end;
+            padding:16px;
+            height:151px;
+            background:url(<?php echo base_url('css/material/img/nav_header.jpg'); ?>);
+            background-size:cover;
+        }
 
+    </style>
 </head>
 <body>
+
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
-            <div class="brand_logo"><img src="<?php echo base_url('css/material/img/main_logo.png'); ?>"
-                                         alt="Brand Logo" width="100%" height="100%"
+            <div class="brand_logo"><img src="<?php echo base_url('css/material/img/main_logo.png'); ?>" alt="Brand Logo" width="100%" height="100%"
                                          class="brand_logo_img"></div>
         </div>
     </header>
@@ -67,47 +63,57 @@
                     <li class="mdl-menu__item">Item 1</li>
                 </ul>
             </div>
-            <span>Teacher </span>
-        </header>
+            <span>Teacher </span></header>
+
         <nav class="mdl-navigation">
-            <a id="users" class="mdl-navigation__link ">Users
-                <i class="material-icons">keyboard_arrow_down</i>
+            <a class="mdl-navigation__link" href="<?php echo site_url('dashboard');?>">Dashboard</a>
+            <a id="users" class="mdl-navigation__link">Users
+                <i class="material-icons" >keyboard_arrow_down</i>
             </a>
             <nav id="users_submenu" class="sub-navigation " style="display: none;">
-                <a class="mdl-navigation__link">Add new</a>
+                <a class="mdl-navigation__link" href="<?php echo site_url('user/new_user');?>">Add new</a>
 
-                <a class="mdl-navigation__link">Users List</a>
+                <a class="mdl-navigation__link" href="<?php echo site_url('user');?>">Users List</a>
             </nav>
 
-            <a id="qbank" class="mdl-navigation__link">Question Bank
-                <i class="material-icons">keyboard_arrow_down</i>
+            <a id="qbank" class="mdl-navigation__link" >Question Bank
+                <i class="material-icons" >keyboard_arrow_down</i>
             </a>
 
             <nav id="qbank_submenu" class="sub-navigation " style="display: none;">
-                <a class="mdl-navigation__link">Add new</a>
-                <a class="mdl-navigation__link">Question List</a>
+                <a class="mdl-navigation__link" href="<?php echo site_url('qbank/pre_new_question');?>">Add new</a>
+                <a class="mdl-navigation__link" href="<?php echo site_url('qbank');?>">Question List</a>
             </nav>
 
-            <a id="quiz" class="mdl-navigation__link">Quiz
-                <i class="material-icons">keyboard_arrow_down</i>
+            <a id="quiz" class="mdl-navigation__link" >Quiz
+                <i class="material-icons" >keyboard_arrow_down</i>
             </a>
             <nav id="quiz_submenu" class="sub-navigation " style="display: none;">
-                <a class="mdl-navigation__link">Add new</a>
-                <a class="mdl-navigation__link">Quiz List</a>
+                <a class="mdl-navigation__link" href="<?php echo site_url('quiz/add_new');?>">Add new</a>
+                <a class="mdl-navigation__link" href="<?php echo site_url('quiz');?>">Quiz List</a>
             </nav>
-            <a class="mdl-navigation__link" href="">Result</a>
-            <a class="mdl-navigation__link" href="">Assign Quiz</a>
-            <a id="settings" class="mdl-navigation__link">Settings
-                <i class="material-icons">keyboard_arrow_down</i>
+            <a class="mdl-navigation__link" href="<?php echo site_url('result');?>">Result</a>
+            <a class="mdl-navigation__link" href="<?php echo site_url('class_controller/new_class');?>">Class</a>
+            <a class="mdl-navigation__link" href="<?php echo site_url('assign');?>">Assign Quiz</a>
+            <a  id="settings" class="mdl-navigation__link" >Settings
+                <i class="material-icons" >keyboard_arrow_down</i>
             </a>
             <nav id="settings_submenu" class="sub-navigation " style="display: none;">
-                <a class="mdl-navigation__link">User Group</a>
-                <a class="mdl-navigation__link">Category List</a>
-                <a class="mdl-navigation__link">Level List</a>
+                <a class="mdl-navigation__link" href="<?php echo site_url('user/group_list');?>">Section</a>
+                <a class="mdl-navigation__link" href="<?php echo site_url('qbank/category_list');?>">Subjects</a>
+                <a class="mdl-navigation__link" href="<?php echo site_url('qbank/level_list');?>">Year/Level</a>
             </nav>
             <a class="mdl-navigation__link" href="">Logout</a>
         </nav>
+
     </div>
+
+    <main class="mdl-layout__content">
+
+
+
+
+
 
 
 

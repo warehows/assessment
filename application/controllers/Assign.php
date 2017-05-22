@@ -38,7 +38,7 @@ class Assign extends CI_Controller {
         $data['result']=$this->quiz_model->quiz_list($limit);
         $this->load->view('material_part/header_material',$data);
         $this->load->view('assign_quiz/index.php', $data);
-        $this->load->view('material_part/footer_material.php',$data);
+        $this->load->view('material_part/footer_material',$data);
     }
 
     public function update($quid){

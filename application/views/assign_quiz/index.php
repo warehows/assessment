@@ -1,8 +1,3 @@
-<style>
-    /*#last_tr {*/
-    /*display: none;*/
-    /*}*/
-</style>
 <?php $this->load->helper('url'); ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>js/jstree/dist/themes/default/style.min.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -18,25 +13,27 @@
     }
 </style>
 
-<main class="mdl-layout__content">
     <div class="mdl-stepper-demo">
+
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--12-col">
+                <!-- markup -->
                 <ul class="mdl-stepper mdl-stepper--horizontal " id="demo-stepper-non-linear">
+
                     <li class="mdl-step">
-                        <span class="mdl-step__label">
-                            <span class="mdl-step__title">
-                                <span class="mdl-step__title-text">Select Quiz</span>
+                            <span class="mdl-step__label">
+                                <span class="mdl-step__title">
+                                    <span class="mdl-step__title-text">Title</span>
+                                </span>
                             </span>
-                        </span>
 
                         <div class="mdl-step__content">
+
                             <div
                                 class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
 
-
                                 <table>
-                                    <tr id="">
+                                    <tr>
                                         <th>
 
                                         </th>
@@ -82,18 +79,44 @@
                                     </tr>
 
                                 </table>
+
                             </div>
+
+                        </div>
+                        <div class="mdl-step__actions">
+                            <button
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
+                                data-stepper-next>
+                                Next
+                            </button>
                         </div>
                     </li>
+
+                    <li class="mdl-step">
+                            <span class="mdl-step__label">
+                              <span class="mdl-step__title">
+                                <span class="mdl-step__title-text">Section and Test Creation</span>
+                            </span>
+                            </span>
+
+                        <div class="mdl-step__content">
+                            <button class="mdl-button mdl-js-ripple-effect mdl-js-button ">Create Section</button>
+
+
+                        </div>
+                        <div class="mdl-step__actions">
+                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
+                                    data-stepper-next>
+                                Save & Next
+                            </button>
+                        </div>
+                    </li>
+
                 </ul>
             </div>
         </div>
-    </div>
-</main>
-<!--This is important--do not remove!!-->
-</div>
-<!--This is important--do not remove!!-->
 
+    </div>
 
 <?php
 $logged_in = $this->session->userdata('logged_in');
@@ -237,16 +260,16 @@ $logged_in = $this->session->userdata('logged_in');
                 var all_quizzes = JSON.parse(values);
                 $("#second_table").show();
                 $.each(all_quizzes, function (key, value) {
-                    $("#last_question_tr").before('<tr class="question_name_tr"><td><input type="checkbox" name="'+ value["qid"] +'" class="question_checkbox" /></td><td>' + value["cid"] + '</td><td>' + value["question_type"] + '</td><td>' + value["question"] + '</td></tr>');
+                    $("#last_question_tr").before('<tr class="question_name_tr"><td><input type="checkbox" name="' + value["qid"] + '" class="question_checkbox" /></td><td>' + value["cid"] + '</td><td>' + value["question_type"] + '</td><td>' + value["question"] + '</td></tr>');
                 });
             });
         });
 
-        $("#questions_selected_confirmed").click(function(){
+        $("#questions_selected_confirmed").click(function () {
 
             var selected_questions = $(".question_checkbox:checkbox:checked");
             var selected_questions_array = new Array();
-            $.each(selected_questions,function(key,value){
+            $.each(selected_questions, function (key, value) {
                 selected_questions_array.push($(value).attr("name"));
             });
 

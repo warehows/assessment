@@ -38,9 +38,9 @@ class Result extends CI_Controller {
 		 $this->load->model("user_model");
 		$data['group_list']=$this->user_model->group_list();
 		
-		$this->load->view('header',$data);
+		$this->load->view('material_part/header_material',$data);
 		$this->load->view('result_list',$data);
-		$this->load->view('footer',$data);
+		$this->load->view('material_part/footer_material',$data);
 	}
 	
 
@@ -176,14 +176,14 @@ class Result extends CI_Controller {
 	  $query=$this->db->query(" select * from savsoft_result where quid ='$quid'  group by score_obtained  order by score_obtained asc limit 1 ");
 	  $data['looser']=$query->row_array();
 	
-		$this->load->view('header',$data);
+		$this->load->view('material_part/header_material',$data);
 		if($this->session->userdata('logged_in')){
 		$this->load->view('view_result',$data);
 		}else{
 		$this->load->view('view_result_without_login',$data);
 			
 		}
-		$this->load->view('footer',$data);	
+		$this->load->view('material_part/footer_material',$data);
 		
 		
 	}
