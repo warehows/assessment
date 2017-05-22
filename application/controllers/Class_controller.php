@@ -37,7 +37,7 @@ class Class_controller extends CI_Controller
         $data['title'] = "Class List";
         // fetching user list
         $data['result'] = $this->class_model->class_list($limit);
-        $this->load->view('material_part/header_material_2', $data);
+        $this->load->view('material_part/header_material', $data);
         $data['user_model'] = $this->user_model;
         $this->load->view('header', $data);
         $this->load->view('class_list', $data);
@@ -60,7 +60,7 @@ class Class_controller extends CI_Controller
         $data['groups'] = $this->class_model->getCollection('savsoft_group');
         $data['subject'] = $this->class_model->getCollection('savsoft_category');
         $data['teacher'] = $this->class_model->getCollection('savsoft_users');
-        $this->load->view('material_part/header_material_2', $data);
+        $this->load->view('material_part/header_material', $data);
         $this->load->view('new_class', $data);
         $this->load->view('footer', $data);
     }
