@@ -1,6 +1,6 @@
 <style>
     /*#last_tr {*/
-        /*display: none;*/
+    /*display: none;*/
     /*}*/
 </style>
 <?php $this->load->helper('url'); ?>
@@ -36,12 +36,12 @@
 
 
                                 <table>
-                                    <tr id="header_quiz_list">
+                                    <tr id="">
                                         <th>
 
                                         </th>
                                         <th>
-                                            Select
+
                                         </th>
                                     </tr>
 
@@ -52,7 +52,31 @@
                                         <td>
                                             <input id="new_quiz_name" name="quiz_name" placeholder="Quiz Name"/>
                                             <input type="button" id="new_quiz_confirm" value="Confirm"/>
+                                            <input type="button" id="cancel_new_quiz" value="Cancel"/>
                                         </td>
+                                    </tr>
+
+                                </table>
+                                <input type="button" id="selected_quiz_confirm" value="Done"/>
+
+                                <table id="second_table">
+                                    <tr id="">
+                                        <th>
+                                            Select
+                                        </th>
+                                        <th>
+                                            Subject
+                                        </th>
+                                        <th>
+                                            Question Type
+                                        </th>
+                                        <th>
+                                            Question
+                                        </th>
+                                    </tr>
+
+                                    <tr id="last_question_tr">
+
                                     </tr>
 
                                 </table>
@@ -130,41 +154,62 @@ $logged_in = $this->session->userdata('logged_in');
 </script>
 <script>
     $(document).ready(function () {
-
+        var quiz_selected = "";
         $.ajax({
             url: "<?php echo site_url('assign/assessment_quiz_list/'); ?>",
         }).done(function (value) {
             var quiz_value = JSON.parse(value);
-
             $.each(quiz_value, function (key, key_value) {
-                $("#last_tr").before('<tr class="quiz_name"><td>' + key_value["quiz_name"] + '</td><td><input type="button" value="Select"></td></tr>');
+//                console.log(key_value["quid"]);
+                $("#last_tr").before('<tr class="quiz_name_tr"><td>' + key_value["quiz_name"] + '</td><td><input type="button" id="selected_' + key_value["quid"] + '" value="Select" class="selected_quiz"></td></tr>');
             });
 
+
+            $(".selected_quiz").click(function () {
+                quiz_selected = $(this).attr("id");
+                quiz_selected = quiz_selected.replace("selected_", "");
+                console.log(quiz_selected);
+
+            });
         });
         $("#new_quiz_name").hide();
         $("#new_quiz_confirm").hide();
+        $("#cancel_new_quiz").hide();
         $("#add_new_quiz").click(function () {
             $("#new_quiz_confirm").show();
             $("#new_quiz_name").show();
+            $("#cancel_new_quiz").show();
         });
         $("#new_quiz_confirm").click(function (event) {
-            var val_array = {quiz_name: "ninja"};
+
             var quiz_name = $("#new_quiz_name").val();
             var r = confirm("Are you sure to create " + quiz_name + "?");
             if (r == true) {
+                alert(quiz_selected);
                 $.ajax({
                     url: "<?php echo site_url('quiz/assessment_insert_quiz/');?>",
                     type: "POST",
-                    data:{quiz_name:quiz_name}
+                    data: {quiz_name: quiz_name}
                 }).done(function (values) {
-                    alert(values);
                     $.ajax({
                         url: "<?php echo site_url('assign/assessment_quiz_list/'); ?>",
                     }).done(function (value) {
+                        quiz_selected = quiz_selected;
+
                         var quiz_value = JSON.parse(value);
                         $(".quiz_name_tr").remove();
                         $.each(quiz_value, function (key, key_value) {
-                            $("#last_tr").before('<tr class="quiz_name_tr"><td>' + key_value["quiz_name"] + '</td><td><input type="button" value="Select"></td></tr>');
+                            $("#last_tr").before('<tr class="quiz_name_tr"><td>' + key_value["quiz_name"] + '</td><td><input type="button" id="selected_' + key_value["quid"] + '" class="selected_quiz" value="Select"></td></tr>');
+                        });
+                        $("#new_quiz_confirm").hide();
+                        $("#new_quiz_name").hide();
+                        $("#cancel_new_quiz").hide();
+
+                        $(".selected_quiz").click(function () {
+                            quiz_selected = $(this).attr("id");
+                            quiz_selected = quiz_selected.replace("selected_", "");
+                            console.log(quiz_selected);
+
                         });
 
                     });
@@ -176,6 +221,28 @@ $logged_in = $this->session->userdata('logged_in');
                 event.preventDefault();
             }
         });
+
+        $("#cancel_new_quiz").click(function () {
+            $("#new_quiz_confirm").hide();
+            $("#new_quiz_name").hide();
+            $("#cancel_new_quiz").hide();
+        });
+
+        $("#selected_quiz_confirm").click(function () {
+            $.ajax({
+                url: "<?php echo site_url('assign/get_all_questions');?>",
+                type: "POST",
+            }).done(function (values) {
+                var all_quizzes = JSON.parse(values);
+                console.log(all_quizzes);
+                $("#second_table").show();
+                $.each(all_quizzes, function (key, value) {
+                    $("#last_question_tr").before('<tr class="question_name_tr"><td><input type="checkbox" class="question_checkbox" /></td><td>' + value["cid"] + '</td><td>' + value["question_type"] + '</td><td>' + value["question"] + '</td></tr>');
+                });
+            });
+        });
+
+
     });
 </script>
 
