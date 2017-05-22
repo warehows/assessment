@@ -4,8 +4,8 @@ Class Quiz_model extends CI_Model
 {
     public function load($table,$key,$value){
 
-        $this->db->query("select * from ".$table." where ".$key."='".$value."'");
-        $query = $this->db->get($table);
+        $query = $this->db->query("select * from ".$table." where ".$key."='".$value."'");
+
         return $query->row_array();
     }
 

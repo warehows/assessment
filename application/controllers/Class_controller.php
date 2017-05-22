@@ -9,6 +9,7 @@ class Class_controller extends CI_Controller
         parent::__construct();
         $this->load->database();
         $this->load->model("class_model");
+        $this->load->model("user_model");
         $this->lang->load('basic', $this->config->item('language'));
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
@@ -37,6 +38,8 @@ class Class_controller extends CI_Controller
         // fetching user list
         $data['result'] = $this->class_model->class_list($limit);
         $this->load->view('material_part/header_material_2', $data);
+        $data['user_model'] = $this->user_model;
+        $this->load->view('header', $data);
         $this->load->view('class_list', $data);
         $this->load->view('footer', $data);
 
@@ -54,7 +57,7 @@ class Class_controller extends CI_Controller
         $data['title'] = 'Add New Class';
         $data['class_model'] = $this->class_model;
         $data['level'] = $this->class_model->getCollection('savsoft_level');
-        $data['section'] = $this->class_model->getCollection('savsoft_group');
+        $data['groups'] = $this->class_model->getCollection('savsoft_group');
         $data['subject'] = $this->class_model->getCollection('savsoft_category');
         $data['teacher'] = $this->class_model->getCollection('savsoft_users');
         $this->load->view('material_part/header_material_2', $data);

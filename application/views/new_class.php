@@ -12,21 +12,12 @@
                             echo $this->session->flashdata('message');
                         }
                         ?>
-                        <div id="level" class="form-group">
-                            <label><?php echo "Level/Year";?></label>
-                            <select class="form-control" name="level">
-                                <option value="0">Select Year/Level</option>
-                                <?php foreach ($level as $lvl): ?>
-                                    <option value="<?php echo $lvl['lid']; ?>"><?php echo $lvl['level_name']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
                         <div id="section" class="form-group">
                             <label><?php echo "Section";?></label>
-                            <select class="form-control" name="section">
+                            <select class="form-control" name="group">
                                 <option value="0">Select Section</option>
-                                <?php foreach ($section as $sect): ?>
-                                    <option value="<?php echo $sect['gid']; ?>"><?php echo $sect['group_name']; ?></option>
+                                <?php foreach ($groups as $group): ?>
+                                    <option value="<?php echo $group['gid']; ?>"><?php echo $group['group_name']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -48,7 +39,7 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <input id="class_code" type="hidden" name="class_code" value="0">
+
                         <button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit');?></button>
                     </div>
                 </div>
@@ -57,7 +48,3 @@
         </form>
     </div>
 </div>
-<script>
-    fillInClassCode();
-    getexpiry();
-</script>
