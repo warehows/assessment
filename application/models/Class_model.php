@@ -3,8 +3,8 @@ Class Class_model extends CI_Model
 {
     public function load($table,$key,$value){
 
-        $this->db->query("select * from ".$table." where ".$key."='".$value."'");
-        $query = $this->db->get($table);
+        $query = $this->db->query("select * from ".$table." where ".$key."='".$value."'");
+
         return $query->row_array();
     }
 
@@ -18,17 +18,19 @@ Class Class_model extends CI_Model
 
     function insert_class(){
 
-        $lid = $this->input->post('level');
-        $gid = $this->input->post('section');
+
+        $gid = $this->input->post('group');
+        $group_obj = $this->load('savsoft_group','gid',$gid);
+        $lid = $group_obj['lid'];
         $cid = $this->input->post('subject');
-        $class_code = $this->input->post('class_code');
+        $category_obj = $this->load('savsoft_category','cid',$cid);
         $teacher_id = $this->input->post('teacher');
         $userdata = array(
             'lid' => $lid,
             'gid' => $gid,
             'cid' => $cid,
             'teacher_id' => $teacher_id,
-            'class_code' => $class_code,
+            'class_code' => $category_obj['category_name'].' '.$group_obj['group_name'],
         );
 
         if($this->db->insert('class',$userdata)){

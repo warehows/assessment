@@ -115,7 +115,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('setting');?> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                  
-                  <li><a href="<?php echo site_url('user/group_list');?>">Section</a></li>
+                  <li><a href="<?php echo site_url('user/group_list');?>">Group</a></li>
                   <li><a href="<?php echo site_url('qbank/category_list');?>">Subjects</a></li>
                   <li><a href="<?php echo site_url('qbank/level_list');?>">Year/Level</a></li>
                   

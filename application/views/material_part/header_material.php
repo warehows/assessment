@@ -99,7 +99,13 @@
                 <a class="mdl-navigation__link" href="<?php echo site_url('quiz');?>">Quiz List</a>
             </nav>
             <a class="mdl-navigation__link" href="<?php echo site_url('result');?>">Result</a>
-            <a class="mdl-navigation__link" href="<?php echo site_url('class_controller/new_class');?>">Class</a>
+            <a id="class" class="mdl-navigation__link" >Class
+                <i class="material-icons" >keyboard_arrow_down</i>
+            </a>
+            <nav id="class_submenu" class="sub-navigation " style="display: none;">
+                <a class="mdl-navigation__link" href="<?php echo site_url('class_controller/new_class');?>">Add Class</a>
+                <a class="mdl-navigation__link" href="<?php echo site_url('class_controller/');?>">Class List</a>
+            </nav>
             <a class="mdl-navigation__link" href="<?php echo site_url('assign');?>">Assign Quiz</a>
             <a  id="settings" class="mdl-navigation__link" >Settings
                 <i class="material-icons" >keyboard_arrow_down</i>

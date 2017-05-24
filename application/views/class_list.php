@@ -50,9 +50,16 @@
                 }
                 foreach ($result as $key => $val) {
                     ?>
+
                     <tr>
                         <td><?php echo $val['class_code']; ?></td>
-                        <td><?php echo $val['teacher_id']; ?></td>
+                        <td>
+                            <?php if($teacher = $user_model->load('savsoft_users','uid',$val['teacher_id'])): ?>
+                                <?php echo $teacher['first_name'].' '.$teacher['last_name']; ?>
+                            <?php else: ?>
+                                <?php echo "N/A"; ?>
+                            <?php endif; ?>
+                        </td>
                         <td>
                             <a href="<?php echo site_url('user/edit_user/'.$val['teacher_id']);?>"><img src="<?php echo base_url('images/edit.png');?>"></a>
                         </td>
