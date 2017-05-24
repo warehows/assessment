@@ -738,35 +738,11 @@ class Quiz extends CI_Controller
 //customized functions
     public function assessment_insert_quiz()
     {
-        // redirect if not logged in
-//        if (!$this->session->userdata('logged_in')) {
-//            redirect('login');
-//        }
-//        $logged_in = $this->session->userdata('logged_in');
-//        if ($logged_in['base_url'] != base_url()) {
-//            $this->session->unset_userdata('logged_in');
-//            redirect('login');
-//        }
-//
-//        $logged_in = $this->session->userdata('logged_in');
-//        if ($logged_in['su'] != '1') {
-//            exit($this->lang->line('permission_denied'));
-//        }
-//        $this->load->library('form_validation');
-//        $this->form_validation->set_rules('quiz_name', 'quiz_name', 'required');
-//        if ($this->form_validation->run() == FALSE) {
-//            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . validation_errors() . " </div>");
-//            redirect('quiz/add_new/');
-//            echo "This shit worked";
-//        } else {
-//            $quid = $this->quiz_model->assessment_insert_quiz();
-//            redirect('quiz/edit_quiz/' . $quid);
-//        }
         $post = $this->input->post();
 
         $quid = $this->quiz_model->assessment_insert_quiz($post["quiz_name"]);
         if($quid){
-            echo "Table has been successfully added";
+            echo $this->db->insert_id();
         }
 
 

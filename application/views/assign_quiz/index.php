@@ -21,6 +21,15 @@
                     <div class="mdl-step__content">
 
                         <div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+                            <form>
+                                <h7>Test Title</h7>
+                                <div class="mdl-textfield mdl-js-textfield  extrawide is-upgraded is-dirty">
+                                    <label for="input_text" class="mdl-textfield__label"></label>
+                                    <input type="text" class="mdl-textfield__input " id="new_quiz_name" placeholder="Test Title"/>
+                                </div>
+                            </form>
+                            <button class="mdl-button mdl-js-ripple-effect mdl-js-button" id="select_quiz">Select Quiz</button>
+                            <button class="mdl-button mdl-js-ripple-effect mdl-js-button" id="new_quiz_confirm">Next</button>
 
                             <!-- datatable -->
                             <table id="quiz_lists" class="mdl-data-table" cellspacing="0" width="100%"
@@ -51,35 +60,20 @@
                     <div class="mdl-step__actions">
                         <button
                             class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
-                            id="add_new_quiz"
-                            data-stepper-next>
-                            Add New Quiz
-                        </button>
-                        <button
-                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
                             id="selected_quiz_confirm"
                             data-stepper-next>
                             Done
                         </button>
-                        <input id="new_quiz_name" class="mdl-js-ripple-effect" name="quiz_name"
-                               placeholder="Quiz Name"/>
-                        <input type="button"
-                               class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
-                               id="new_quiz_confirm" value="Confirm"/>
-                        <input type="button"
-                               class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
-                               id="cancel_new_quiz" value="Cancel"/>
                     </div>
                 </li>
                 <li class="mdl-step">
                     <span class="mdl-step__label">
                         <span class="mdl-step__title">
-                            <span class="mdl-step__title-text">Section and Test Creation</span>
+                            <span class="mdl-step__title-text">Question Creation</span>
                         </span>
                     </span>
 
                     <div class="mdl-step__content">
-
                         <!-- datatable -->
                         <table id="question_lists" class="mdl-data-table" cellspacing="0" width="100%"
                                align="center">
@@ -122,11 +116,11 @@
                     </div>
                 </li>
                 <li class="mdl-step">
-                            <span class="mdl-step__label">
-                                <span class="mdl-step__title">
-                                    <span class="mdl-step__title-text">Test Settings</span>
-                                </span>
-                            </span>
+                    <span class="mdl-step__label">
+                        <span class="mdl-step__title">
+                            <span class="mdl-step__title-text">Test Settings</span>
+                        </span>
+                    </span>
 
                     <div class="mdl-step__content">
                         <div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
@@ -216,6 +210,8 @@
 <script>
     $(document).ready(function () {
         $('#last_question_tr').hide();
+        $('#quiz_lists').wrap('<div id="hide_quiz_lists" style="display:none"/>');
+        $("#selected_quiz_confirm").hide();
         $('#quiz_lists').DataTable({
             columnDefs: [
                 {
@@ -235,6 +231,7 @@
         var current_step = 0;
         var quiz_lists = $('#quiz_lists').DataTable();
         var question_lists = $('#question_lists').DataTable();
+        var latest_id = "";
         $("#last_tr").hide();
         $("#second_table").hide();
         var quiz_selected = "";
@@ -244,8 +241,6 @@
         }).done(function (value) {
             var quiz_value = JSON.parse(value);
             $.each(quiz_value, function (key, key_value) {
-//                console.log(key_value["quid"]);
-//                $("#last_tr").before('<tr class="quiz_name_tr row"><td>' + key_value["quiz_name"] + '</td><td><input type="button" id="selected_' + key_value["quid"] + '" value="Select" class="selected_quiz"></td></tr>');
                 quiz_lists.row.add([key_value["quiz_name"], '<input type="button" id="selected_' + key_value["quid"] + '" value="Select" class="selected_quiz">']).draw();
             });
 
@@ -265,13 +260,9 @@
             });
 
         });
-        $("#new_quiz_name").hide();
-        $("#new_quiz_confirm").hide();
-        $("#cancel_new_quiz").hide();
-        $("#add_new_quiz").click(function () {
-            $("#new_quiz_confirm").show();
-            $("#new_quiz_name").show();
-            $("#cancel_new_quiz").show();
+        $("#select_quiz").click(function(){
+            $("#hide_quiz_lists").toggle();
+            $("#selected_quiz_confirm").toggle();
         });
         $("#new_quiz_confirm").click(function (event) {
 
@@ -283,27 +274,36 @@
                     type: "POST",
                     data: {quiz_name: quiz_name}
                 }).done(function (values) {
+                    latest_id = values;
                     $.ajax({
                         url: "<?php echo site_url('assign/assessment_quiz_list/'); ?>",
                     }).done(function (value) {
-                        quiz_selected = quiz_selected;
-
                         var quiz_value = JSON.parse(value);
                         quiz_lists.clear().draw();
                         $.each(quiz_value, function (key, key_value) {
-//                            $("#last_tr").before('<tr class="quiz_name_tr"><td>' + key_value["quiz_name"] + '</td><td><input type="button" id="selected_' + key_value["quid"] + '" class="selected_quiz" value="Select"></td></tr>');
                             quiz_lists.row.add([key_value["quiz_name"], '<input type="button" id="selected_' + key_value["quid"] + '" class="selected_quiz" value="Select">']).draw();
                         });
-                        $("#new_quiz_confirm").hide();
-                        $("#new_quiz_name").hide();
                         $("#cancel_new_quiz").hide();
 
                         $(".selected_quiz").click(function () {
                             quiz_selected = $(this).attr("id");
                             quiz_selected = quiz_selected.replace("selected_", "");
-
                         });
 
+                    });
+
+                    $.ajax({
+                        url: "<?php echo site_url('assign/get_all_questions');?>",
+                        type: "POST",
+                    }).done(function (values) {
+                        var all_quizzes = JSON.parse(values);
+                        $("#second_table").show();
+                        quiz_selected = latest_id;
+                        $(".mdl-step").removeClass("is-active");
+                        $(".mdl-step").eq(1).addClass("is-active");
+                        $.each(all_quizzes, function (key, value) {
+                            question_lists.row.add(['<input type="checkbox" name="' + value["qid"] + '" class="question_checkbox" />', value["cid"],value["question_type"],value["question"]]).draw();
+                        });
                     });
 
                 });
