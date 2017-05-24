@@ -27,7 +27,13 @@
     <script src="<?php echo base_url('css/material/js/material.min.js'); ?>"></script>
     <script src="<?php echo base_url('css/material/js/navigation.js'); ?>"></script>
     <script src="<?php echo base_url('css/material/js/stepper.js'); ?>"></script>
+    <script src="<?php echo base_url('css/material/js/jquery.dataTables.min.js'); ?>"></script>
+    <script src="<?php echo base_url('css/material/js/dataTables.material.min.js'); ?>"></script>
+    <script src="<?php echo base_url('css/material/js/jquery-1.12.4.js'); ?>"></script>
     <!--    <script src="--><?php //echo base_url('css/material/js/stepper.min.js'); ?><!--"></script>-->
+
+
+
     <style>
         .drawer-header{
             box-sizing:border-box;
