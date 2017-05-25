@@ -140,54 +140,50 @@
                     <div class="mdl-step__content">
                         <div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
 
-
                             <form>
+
                                 <h7>Start Date (Quiz can be attempted after this date)</h7>
                                 <div class="mdl-textfield mdl-js-textfield  extrawide is-upgraded is-dirty">
                                     <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="text" class="mdl-textfield__input " id="startDate"/>
+                                    <input type="text" class="mdl-textfield__input" value="" id="start_date"/>
                                     <!--     <input class="c-datepicker-input" /> -->
                                 </div>
                                 <h7>End Date (Quiz can be attempted before this date)</h7>
                                 <div class="mdl-textfield mdl-js-textfield  extrawide">
                                     <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="text" class="mdl-textfield__input" id="endDate"/>
+                                    <input type="text" class="mdl-textfield__input" id="end_date"/>
                                 </div>
                                 <h7>Duration (in min.)</h7>
                                 <div class="mdl-textfield mdl-js-textfield   extrawide">
                                     <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="number" class="mdl-textfield__input" id="input_text"/>
-                                </div>
-                                <h7>Duration (in sec.)</h7>
-                                <div class="mdl-textfield mdl-js-textfield   extrawide">
-                                    <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="number" class="mdl-textfield__input" id="input_text"/>
+                                    <input type="number" class="mdl-textfield__input" id="duration"/>
                                 </div>
                                 <h7>Allow Maximum Attempts</h7>
                                 <div class="mdl-textfield mdl-js-textfield   extrawide">
                                     <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="number" class="mdl-textfield__input" id="input_text"/>
+                                    <input type="number" class="mdl-textfield__input" id="maximum_attempts"/>
                                 </div>
                                 <h7>Minimum Percentage Required to Pass</h7>
                                 <div class="mdl-textfield mdl-js-textfield   extrawide">
                                     <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="number" class="mdl-textfield__input" id="input_text"/>
+                                    <input type="number" class="mdl-textfield__input" id="pass_percentage"/>
                                 </div>
                                 <h7>Allow to view contact answers after submiting quiz</h7>
                                 <div class="mdl-layout-spacer"></div>
 
-                                <label for="option-1" class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
-                                    <label for="option-1" class="mdl-textfield__label"></label>
-                                    <input type="radio" class="mdl-radio__button" id="option-1" name="options"
-                                           value="1" checked/>
-                                    <span class="mdl-radio__label">Yes</span>
-                                </label>
-
                                 <label for="option-2" class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
-                                    <input type="radio" class="mdl-radio__button" id="option-2" name="options"
+                                    <input type="radio" class="mdl-radio__button" id="option-2" name="view_answer"
                                            value="2"/>
                                     <span class="mdl-radio__label">No</span>
                                 </label>
+                                <label for="option-1" class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
+                                    <label for="option-1" class="mdl-textfield__label"></label>
+                                    <input type="radio" class="mdl-radio__button" id="option-1" name="view_answer"
+                                           value="1"/>
+                                    <span class="mdl-radio__label">Yes</span>
+                                </label>
+
+
 
 
                             </form>
@@ -196,7 +192,8 @@
                     <div class="mdl-step__actions">
                         <button
                             class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
-                            data-stepper-next>
+                            data-stepper-next
+                            id="settings_confirmed">
                             Save & Next
                         </button>
                     </div>
@@ -378,6 +375,34 @@
             $(".mdl-step").removeClass("is-active");
             $(".mdl-step").eq(2).addClass("is-active");
 
+            $.ajax({
+                url: "<?php echo site_url('assign/get_quiz');?>",
+                type: "POST",
+                data: {quid:quiz_selected}
+            }).done(function (values) {
+                values = JSON.parse(values);
+                $("#start_date").val(values['start_date']);
+                $("#end_date").val(values['start_date']);
+                $("#duration").val(values['duration']);
+                $("#maximum_attempts").val(values['maximum_attempts']);
+                $("#pass_percentage").val(values['pass_percentage']);
+                $("input[name='view_answer']").eq(values['view_answer']).attr("checked","");
+                $("input[name='view_answer']").eq(values['view_answer']).parents("label").addClass("is-checked");
+            });
+
+        });
+        $("#settings_confirmed").click(function(){
+            var settings_array = new Array();
+
+            $("#start_date").val();
+            $("#end_date").val();
+            $("#duration").val();
+            $("#maximum_attempts").val();
+            $("#pass_percentage").val();
+
+            $.each($("input[name='view_answer']"),function(key,value){
+
+            });
         });
 
 

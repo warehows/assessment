@@ -44,8 +44,7 @@ class Assign extends CI_Controller {
         $this->load->view('material_part/footer_material',$data);
     }
 
-    public function update($quid){
-            echo $quid;
+    public function update(){
 
     }
 
@@ -68,6 +67,24 @@ class Assign extends CI_Controller {
         $data = $this->qbank_model->get_all_question();
         echo json_encode($data);
     }
+
+    public function get_quiz(){
+
+        $post = $this->input->post();
+
+        $quid = $post["quid"];
+        $data = $this->quiz_model->get_quiz($quid);
+        $array = array(
+            "start_date"=>date('Y-m-d H:i:s', $data['start_date']),
+            "end_date"=>date('Y-m-d H:i:s', $data['end_date']),
+            "duration"=>$data['duration'],
+            "maximum_attempts"=>$data['maximum_attempts'],
+            "pass_percentage"=>$data['pass_percentage'],
+            "view_answer"=>$data['view_answer'],
+        );
+        echo json_encode($array);
+    }
+
 
 
 

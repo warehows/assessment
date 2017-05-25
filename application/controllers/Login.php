@@ -22,8 +22,6 @@ class Login extends CI_Controller {
 
 	public function index()
 	{
-
-
 		if($this->session->userdata('logged_in')){
 			$logged_in=$this->session->userdata('logged_in');
 			if($logged_in['su']=='1'){
@@ -34,8 +32,6 @@ class Login extends CI_Controller {
             }
 
 		}
-
-
 
 		$data['title']=$this->lang->line('login');
 		$data['recent_quiz']=$this->quiz_model->recent_quiz('5');

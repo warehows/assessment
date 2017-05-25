@@ -117,14 +117,12 @@ class Quiz extends CI_Controller
         $data['quiz'] = $this->quiz_model->get_quiz($quid);
         if ($data['quiz']['question_selection'] == '0') {
             $data['questions'] = $this->quiz_model->get_questions($data['quiz']['qids']);
-
         } else {
             $this->load->model("qbank_model");
             $data['qcl'] = $this->quiz_model->get_qcl($data['quiz']['quid']);
 
             $data['category_list'] = $this->qbank_model->category_list();
             $data['level_list'] = $this->qbank_model->level_list();
-
         }
         $this->load->view('material_part/header_material', $data);
         $this->load->view('edit_quiz', $data);
