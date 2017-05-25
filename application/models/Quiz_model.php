@@ -164,20 +164,6 @@ Class Quiz_model extends CI_Model
 
     }
 
-    function assessment_insert_quiz($variable)
-    {
-
-        $userdata = array(
-            'quiz_name' => $variable,
-        );
-
-        $this->db->insert('savsoft_quiz', $userdata);
-        $quid = $this->db->insert_id();
-        return $quid;
-
-    }
-
-
     function update_quiz($quid)
     {
 
@@ -981,6 +967,20 @@ Class Quiz_model extends CI_Model
         return true;
     }
 
+    //custom
+    function assessment_insert_quiz($variable)
+    {
+
+        $userdata = array(
+            'quiz_name' => $variable['quiz_name'],
+            'cid' => $variable['cid'],
+        );
+
+        $this->db->insert('savsoft_quiz', $userdata);
+        $quid = $this->db->insert_id();
+        return $quid;
+
+    }
 
 }
 

@@ -126,7 +126,7 @@ class Quiz extends CI_Controller
             $data['level_list'] = $this->qbank_model->level_list();
 
         }
-        $this->load->view('material_part/header_material_2', $data);
+        $this->load->view('material_part/header_material', $data);
         $this->load->view('edit_quiz', $data);
         $this->load->view('material_part/footer_material', $data);
     }
@@ -739,8 +739,8 @@ class Quiz extends CI_Controller
     public function assessment_insert_quiz()
     {
         $post = $this->input->post();
-
-        $quid = $this->quiz_model->assessment_insert_quiz($post["quiz_name"]);
+        $data = array("quiz_name"=>$post["quiz_name"],"cid"=>$post['cid']);
+        $quid = $this->quiz_model->assessment_insert_quiz($data);
         if($quid){
             echo $this->db->insert_id();
         }

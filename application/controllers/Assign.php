@@ -10,6 +10,7 @@ class Assign extends CI_Controller {
         $this->load->model("quiz_model");
         $this->load->model("user_model");
         $this->load->model("qbank_model");
+        $this->load->model("category_model");
         $this->lang->load('basic', $this->config->item('language'));
 
     }
@@ -36,6 +37,8 @@ class Assign extends CI_Controller {
         $data['su'] = $logged_in['su'];
         // fetching quiz list
         $data['result']=$this->quiz_model->quiz_list($limit);
+        $data['category']=$this->category_model->get_all();
+
         $this->load->view('material_part/header_material',$data);
         $this->load->view('assign_quiz/index.php', $data);
         $this->load->view('material_part/footer_material',$data);
@@ -43,60 +46,6 @@ class Assign extends CI_Controller {
 
     public function update($quid){
             echo $quid;
-//        $userdata = array(
-//            'quiz_name' => $this->input->post('quiz_name'),
-//            'description' => $this->input->post('description'),
-//            'start_date' => strtotime($this->input->post('start_date')),
-//            'end_date' => strtotime($this->input->post('end_date')),
-//            'duration' => $this->input->post('duration'),
-//            'maximum_attempts' => $this->input->post('maximum_attempts'),
-//            'pass_percentage' => $this->input->post('pass_percentage'),
-//            'correct_score' => $this->input->post('correct_score'),
-//            'incorrect_score' => $this->input->post('incorrect_score'),
-//            'ip_address' => $this->input->post('ip_address'),
-//            'view_answer' => $this->input->post('view_answer'),
-//            'camera_req' => $this->input->post('camera_req'),
-//            'with_login' => $this->input->post('with_login'),
-//            'gids' => implode(',', $this->input->post('gids'))
-//        );
-//
-//        $userdata['gen_certificate'] = $this->input->post('gen_certificate');
-//
-//        if ($this->input->post('certificate_text')) {
-//            $userdata['certificate_text'] = $this->input->post('certificate_text');
-//        }
-//
-//        $this->db->where('quid', $quid);
-//        $this->db->update('savsoft_quiz', $userdata);
-//
-//        $this->db->where('quid', $quid);
-//        $query = $this->db->get('savsoft_quiz', $userdata);
-//        $quiz = $query->row_array();
-//        if ($quiz['question_selection'] == '1') {
-//
-//            $this->db->where('quid', $quid);
-//            $this->db->delete('savsoft_qcl');
-//
-//            foreach ($_POST['cid'] as $ck => $val) {
-//                if (isset($_POST['noq'][$ck])) {
-//                    if ($_POST['noq'][$ck] >= '1') {
-//                        $userdata = array(
-//                            'quid' => $quid,
-//                            'cid' => $val,
-//                            'lid' => $_POST['lid'][$ck],
-//                            'noq' => $_POST['noq'][$ck]
-//                        );
-//                        $this->db->insert('savsoft_qcl', $userdata);
-//                    }
-//                }
-//            }
-//            $userdata = array(
-//                'noq' => array_sum($_POST['noq'])
-//            );
-//            $this->db->where('quid', $quid);
-//            $this->db->update('savsoft_quiz', $userdata);
-//        }
-//        return $quid;
 
     }
 

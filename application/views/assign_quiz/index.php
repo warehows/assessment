@@ -22,14 +22,29 @@
 
                         <div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
                             <form>
-                                <h7>Test Title</h7>
+                                <h7 id="test_title_label">Test Title</h7>
                                 <div class="mdl-textfield mdl-js-textfield  extrawide is-upgraded is-dirty">
                                     <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="text" class="mdl-textfield__input " id="new_quiz_name" placeholder="Test Title"/>
+                                    <input type="text" class="mdl-textfield__input " id="new_quiz_name"
+                                           placeholder="Test Title"/>
+                                </div>
+                                <h7>Subject</h7>
+                                <div class="mdl-textfield mdl-js-textfield  extrawide is-upgraded is-dirty">
+                                    <label for="input_text" class="mdl-textfield__label"></label>
+                                    <select class="mdl-textfield__input " id="subject">
+                                        <?php foreach ($category as $key => $value) { ?>
+
+                                            <option
+                                                value="<?php echo $value['cid'] ?>"><?php echo $value['category_name'] ?></option>
+                                        <?php } ?>
+                                    </select>
+
                                 </div>
                             </form>
-                            <button class="mdl-button mdl-js-ripple-effect mdl-js-button" id="select_quiz">Select Quiz</button>
-                            <button class="mdl-button mdl-js-ripple-effect mdl-js-button" id="new_quiz_confirm">Next</button>
+                            <button class="mdl-button mdl-js-ripple-effect mdl-js-button" id="select_quiz">Select Quiz
+                            </button>
+                            <button class="mdl-button mdl-js-ripple-effect mdl-js-button" id="new_quiz_confirm">Next
+                            </button>
 
                             <!-- datatable -->
                             <table id="quiz_lists" class="mdl-data-table" cellspacing="0" width="100%"
@@ -209,6 +224,7 @@
 </div>
 <script>
     $(document).ready(function () {
+        var subject = $("#subject").val();
         $('#last_question_tr').hide();
         $('#quiz_lists').wrap('<div id="hide_quiz_lists" style="display:none"/>');
         $("#selected_quiz_confirm").hide();
@@ -223,19 +239,20 @@
         $('#question_lists').DataTable({
             columnDefs: [
                 {
-                    targets: [0, 1,2,3],
+                    targets: [0, 1, 2, 3],
                     className: 'mdl-data-table__cell--non-numeric'
                 }
             ]
         });
-        var current_step = 0;
         var quiz_lists = $('#quiz_lists').DataTable();
         var question_lists = $('#question_lists').DataTable();
         var latest_id = "";
         $("#last_tr").hide();
         $("#second_table").hide();
         var quiz_selected = "";
-
+        $("#subject").change(function () {
+            subject = $(this).val();
+        });
         $.ajax({
             url: "<?php echo site_url('assign/assessment_quiz_list/'); ?>",
         }).done(function (value) {
@@ -260,57 +277,67 @@
             });
 
         });
-        $("#select_quiz").click(function(){
+        $("#select_quiz").click(function () {
             $("#hide_quiz_lists").toggle();
             $("#selected_quiz_confirm").toggle();
+            $("#new_quiz_confirm").toggle();
+            $("#new_quiz_name").toggle();
+            $("#test_title_label").toggle();
         });
         $("#new_quiz_confirm").click(function (event) {
 
             var quiz_name = $("#new_quiz_name").val();
-            var r = confirm("Are you sure to create " + quiz_name + "?");
-            if (r == true) {
-                $.ajax({
-                    url: "<?php echo site_url('quiz/assessment_insert_quiz/');?>",
-                    type: "POST",
-                    data: {quiz_name: quiz_name}
-                }).done(function (values) {
-                    latest_id = values;
+            if(quiz_name!=""){
+                var r = confirm("Are you sure to create " + quiz_name + "?");
+                if (r == true) {
                     $.ajax({
-                        url: "<?php echo site_url('assign/assessment_quiz_list/'); ?>",
-                    }).done(function (value) {
-                        var quiz_value = JSON.parse(value);
-                        quiz_lists.clear().draw();
-                        $.each(quiz_value, function (key, key_value) {
-                            quiz_lists.row.add([key_value["quiz_name"], '<input type="button" id="selected_' + key_value["quid"] + '" class="selected_quiz" value="Select">']).draw();
-                        });
-                        $("#cancel_new_quiz").hide();
-
-                        $(".selected_quiz").click(function () {
-                            quiz_selected = $(this).attr("id");
-                            quiz_selected = quiz_selected.replace("selected_", "");
-                        });
-
-                    });
-
-                    $.ajax({
-                        url: "<?php echo site_url('assign/get_all_questions');?>",
+                        url: "<?php echo site_url('quiz/assessment_insert_quiz/');?>",
                         type: "POST",
+                        data: {quiz_name: quiz_name, cid: subject}
                     }).done(function (values) {
-                        var all_quizzes = JSON.parse(values);
-                        $("#second_table").show();
-                        quiz_selected = latest_id;
-                        $(".mdl-step").removeClass("is-active");
-                        $(".mdl-step").eq(1).addClass("is-active");
-                        $.each(all_quizzes, function (key, value) {
-                            question_lists.row.add(['<input type="checkbox" name="' + value["qid"] + '" class="question_checkbox" />', value["cid"],value["question_type"],value["question"]]).draw();
+                        latest_id = values;
+                        $.ajax({
+                            url: "<?php echo site_url('assign/assessment_quiz_list/'); ?>",
+                        }).done(function (value) {
+                            var quiz_value = JSON.parse(value);
+                            quiz_lists.clear().draw();
+                            $.each(quiz_value, function (key, key_value) {
+                                quiz_lists.row.add([key_value["quiz_name"], '<input type="button" id="selected_' + key_value["quid"] + '" class="selected_quiz" value="Select">']).draw();
+                            });
+                            $("#cancel_new_quiz").hide();
+
+                            $(".selected_quiz").click(function () {
+                                quiz_selected = $(this).attr("id");
+                                quiz_selected = quiz_selected.replace("selected_", "");
+                            });
+
                         });
+
+                        $.ajax({
+                            url: "<?php echo site_url('assign/get_all_questions');?>",
+                            type: "POST",
+                        }).done(function (values) {
+                            var all_quizzes = JSON.parse(values);
+                            $("#second_table").show();
+                            quiz_selected = latest_id;
+                            $(".mdl-step").removeClass("is-active");
+                            $(".mdl-step").eq(1).addClass("is-active");
+                            $.each(all_quizzes, function (key, value) {
+                                question_lists.row.add(['<input type="checkbox" name="' + value["qid"] + '" class="question_checkbox" />', value["cid"], value["question_type"], value["question"]]).draw();
+                            });
+                        });
+
                     });
 
-                });
-
-            } else {
-                event.preventDefault();
+                } else {
+                    event.preventDefault();
+                }
             }
+            else{
+                alert("Test tile is required");
+                $("#new_quiz_name").focus();
+            }
+
         });
 
         $("#cancel_new_quiz").click(function () {
@@ -332,7 +359,7 @@
                         $(".mdl-step").eq(1).addClass("is-active");
 
 //                        $("#last_question_tr").before('<tr class="question_name_tr"><td><input type="checkbox" name="' + value["qid"] + '" class="question_checkbox" /></td><td>' + value["cid"] + '</td><td>' + value["question_type"] + '</td><td>' + value["question"] + '</td></tr>');
-                        question_lists.row.add(['<input type="checkbox" name="' + value["qid"] + '" class="question_checkbox" />', value["cid"],value["question_type"],value["question"]]).draw();
+                        question_lists.row.add(['<input type="checkbox" name="' + value["qid"] + '" class="question_checkbox" />', value["cid"], value["question_type"], value["question"]]).draw();
                     });
                 });
             } else {
@@ -350,6 +377,7 @@
             });
             $(".mdl-step").removeClass("is-active");
             $(".mdl-step").eq(2).addClass("is-active");
+
         });
 
 
