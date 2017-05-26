@@ -11,6 +11,9 @@ class Assign extends CI_Controller {
         $this->load->model("user_model");
         $this->load->model("qbank_model");
         $this->load->model("category_model");
+        $this->load->model("level_model");
+        $this->load->model("group_model");
+        $this->load->model("classstudents_model");
         $this->lang->load('basic', $this->config->item('language'));
 
     }
@@ -38,6 +41,7 @@ class Assign extends CI_Controller {
         // fetching quiz list
         $data['result']=$this->quiz_model->quiz_list($limit);
         $data['category']=$this->category_model->get_all();
+        $data['all_users']=$this->user_model->get_all();
 
         $this->load->view('material_part/header_material',$data);
         $this->load->view('assign_quiz/index.php', $data);
@@ -90,7 +94,7 @@ class Assign extends CI_Controller {
         $post = $this->input->post();
 
         $settings = json_decode($post['settings']);
-        $quid = $this->quiz_model->assessment_update_quiz($settings);
+        $quid = $this->quiz_model->assessment_update_quiz($settings['quid'],$settings);
         print_r($quid);
 
 //       lo $gged_in = $this->session->userdata('logged_in');
@@ -110,10 +114,14 @@ class Assign extends CI_Controller {
 
     }
 
-
-
-
-
+    public function get_all_level()
+    {
+        $data_level = $this->level_model->get_all();
+        $data_group = $this->group_model->get_all();
+        $data_class_students = $this->classstudents_model->get_all();
+        $data = array('level'=>$data_level,'group'=>$data_group,'class_students'=>$data_class_students);
+        echo json_encode($data);
+    }
 
 
 

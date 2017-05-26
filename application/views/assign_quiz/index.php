@@ -184,8 +184,6 @@
                                 </label>
 
 
-
-
                             </form>
                         </div>
                     </div>
@@ -199,13 +197,13 @@
                     </div>
                 </li>
                 <li class="mdl-step">
-            <span class="mdl-step__label">
-              <span class="mdl-step__title">
-                <span class="mdl-step__title-text">Assigning</span>
-            </span>
-            </span>
+                    <span class="mdl-step__label">
+                        <span class="mdl-step__title"><span class="mdl-step__title-text">Assigning</span></span>
+                    </span>
 
-                    <div class="mdl-step__content"></div>
+                    <div class="mdl-step__content">
+                        <div id="data" class="demo"></div>
+                    </div>
                     <div class="mdl-step__actions">
                         <button
                             class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
@@ -219,6 +217,12 @@
     </div>
 
 </div>
+<script>
+    $(document).ready(function () {
+//            Variable initiation
+
+    });
+</script>
 <script>
     (function () {
         // Stepper non-linear demonstration
@@ -262,7 +266,17 @@
 
 <script>
     $(document).ready(function () {
-        var subject = $("#subject").val();
+        var all_users = <?php echo json_encode($all_users);?>;
+        var all_users_array = new Array();
+        var all_users_value = new Array();
+        $.each(all_users,function(all_user_key,all_user_value){
+            all_users_value = {};
+            all_users_value[all_user_value.uid] = new Array();
+//            all_users_value[all_user_value.uid] = {first_name:all_user_value.first_name,last_name:all_user_value.last_name};
+//            all_users_array.push(all_users_value[all_user_value.uid] = {first_name:all_user_value.first_name,last_name:all_user_value.last_name});
+        });
+        console.log(all_users_array);
+    var subject = $("#subject").val();
         $('#last_question_tr').hide();
         $('#quiz_lists').wrap('<div id="hide_quiz_lists" style="display:none"/>');
         $("#selected_quiz_confirm").hide();
@@ -324,7 +338,7 @@
         $("#new_quiz_confirm").click(function (event) {
 
             var quiz_name = $("#new_quiz_name").val();
-            if(quiz_name!=""){
+            if (quiz_name != "") {
                 var r = confirm("Are you sure to create " + quiz_name + "?");
                 if (r == true) {
                     $.ajax({
@@ -370,7 +384,7 @@
                     event.preventDefault();
                 }
             }
-            else{
+            else {
                 alert("Test tile is required");
                 $("#new_quiz_name").focus();
             }
@@ -416,7 +430,7 @@
             $.ajax({
                 url: "<?php echo site_url('assign/get_quiz');?>",
                 type: "POST",
-                data: {quid:quiz_selected}
+                data: {quid: quiz_selected}
             }).done(function (values) {
                 values = JSON.parse(values);
                 $("#start_date").val(values['start_date']);
@@ -424,12 +438,12 @@
                 $("#duration").val(values['duration']);
                 $("#maximum_attempts").val(values['maximum_attempts']);
                 $("#pass_percentage").val(values['pass_percentage']);
-                $("input[name='view_answer']").eq(values['view_answer']).attr("checked","");
+                $("input[name='view_answer']").eq(values['view_answer']).attr("checked", "");
                 $("input[name='view_answer']").eq(values['view_answer']).parents("label").addClass("is-checked");
             });
 
         });
-        $("#settings_confirmed").click(function(){
+        $("#settings_confirmed").click(function () {
             var settings_array = new Array();
             var start_date;
             var end_date;
@@ -442,8 +456,8 @@
             maximum_attempts = $("#maximum_attempts").val();
             pass_percentage = $("#pass_percentage").val();
             var view_answer = "";
-            $.each($("input[name='view_answer']"),function(key,value){
-                if($(value).is(":checked")){
+            $.each($("input[name='view_answer']"), function (key, value) {
+                if ($(value).is(":checked")) {
                     view_answer = $(value).attr("value");
                 }
             });
@@ -454,16 +468,56 @@
                 duration: duration,
                 maximum_attempts: maximum_attempts,
                 pass_percentage: pass_percentage,
-                view_answer:view_answer
+                view_answer: view_answer
             };
-
-            var settings = JSON.stringify(settings_array);
             $.ajax({
-                url: "<?php echo site_url('assign/update_quiz');?>",
+                url: "<?php echo site_url('assign/get_all_level');?>",
                 type: "POST",
-                data: {settings:settings}
             }).done(function (values) {
-                console.log(values);
+                var all_data = JSON.parse(values);
+                var all_level = all_data['level'];
+                var all_group = all_data['group'];
+                var all_class_students = all_data['class_students'];
+                var grade_array = new Array();
+                var grade_array_value = new Array();
+                console.log(all_class_students);
+                var text = "text";
+
+                $.each(all_level,function(x_key,x){
+                    x = x['level_name'];
+                    var grade_group_value = new Array();
+                    grade_array_value = {
+                        text: "Grade " + x, id: x, children: Array()
+                    };
+                    $.each(all_group,function(group_key,group_value){
+                        var grade_class_students_value = new Array();
+                        grade_group_value = {
+                            text: group_value['group_name'], children: Array()
+                        };
+
+                        $.each(all_class_students,function(student_key,student_value){
+
+                            grade_class_students_value = {
+                                text:student_value['uid'],icon:"jstree-file"
+                            };
+                            grade_group_value['children'].push(grade_class_students_value);
+                        });
+                        grade_array_value['children'].push(grade_group_value);
+
+
+                    });
+
+                    grade_array.push(grade_array_value);
+                });
+
+//            Tree
+                $('#html').jstree();
+                $('#data').jstree({
+                    "plugins": ["checkbox"],
+                    'core': {
+                        'data': grade_array
+                    }
+                });
             });
         });
 

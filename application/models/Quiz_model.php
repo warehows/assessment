@@ -982,33 +982,32 @@ Class Quiz_model extends CI_Model
 
     }
 
-    function assessment_update_quiz($settings)
+    function assessment_update_quiz($quid,$settings)
     {
-
         $userdata = array(
             'quiz_name' => "",
             'description' => "",
-            'start_date' => $settings.start_date,
-            'end_date' => $settings.end_date,
-            'duration' => $settings.duration,
-            'maximum_attempts' => $settings.maximum_attempts,
-            'pass_percentage' => $settings.pass_percentage,
+            'start_date' => $settings->start_date,
+            'end_date' => $settings->end_date,
+            'duration' => $settings->duration,
+            'maximum_attempts' => $settings->maximum_attempts,
+            'pass_percentage' => $settings->pass_percentage,
             'correct_score' => "",
             'incorrect_score' => "",
             'ip_address' => "",
-            'view_answer' => $settings.view_answer,
+            'view_answer' => $settings->view_answer,
             'camera_req' => "",
             'with_login' => "",
             'gids' => ""
         );
-        return $userdata;
-//        $this->db->where('quid', $quid);
-//        $this->db->update('savsoft_quiz', $userdata);
-//
-//        $this->db->where('quid', $quid);
-//        $query = $this->db->get('savsoft_quiz', $userdata);
-//        $quiz = $query->row_array();
-//        return $quiz;
+
+
+        $this->db->where('quid', $quid);
+        $this->db->update('savsoft_quiz', $userdata);
+
+        $this->db->where('quid', $quid);
+        $query = $this->db->get('savsoft_quiz', $userdata);
+        $quiz = $query->row_array();
 //        if ($quiz['question_selection'] == '1') {
 //
 //            $this->db->where('quid', $quid);
@@ -1033,7 +1032,7 @@ Class Quiz_model extends CI_Model
 //            $this->db->where('quid', $quid);
 //            $this->db->update('savsoft_quiz', $userdata);
 //        }
-//        return $quid;
+        return $quid;
 
     }
 
