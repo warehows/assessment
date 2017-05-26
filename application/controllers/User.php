@@ -37,7 +37,7 @@ class User extends CI_Controller
         $data['title'] = $this->lang->line('userlist');
         // fetching user list
         $data['result'] = $this->user_model->user_list($limit);
-        $this->load->view('material_part/header_material', $data);
+        $this->load->view('header', $data);
         $this->load->view('user_list', $data);
         $this->load->view('material_part/footer_material', $data);
     }
@@ -53,7 +53,7 @@ class User extends CI_Controller
         $data['title'] = $this->lang->line('add_new') . ' ' . $this->lang->line('user');
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
-        $this->load->view('material_part/header_material', $data);
+        $this->load->view('header', $data);
         $this->load->view('new_user', $data);
         $this->load->view('material_part/footer_material', $data);
     }
@@ -121,7 +121,7 @@ class User extends CI_Controller
         $data['payment_history'] = $this->payment_model->get_payment_history($uid);
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
-        $this->load->view('material_part/header_material', $data);
+        $this->load->view('header', $data);
         if ($logged_in['su'] == '1') {
             $this->load->view('edit_user', $data);
         } else {
@@ -165,7 +165,7 @@ class User extends CI_Controller
         $data['group_list'] = $this->user_model->group_list();
         $data['user_model'] = $this->user_model;
         $data['title'] = $this->lang->line('group_list');
-        $this->load->view('material_part/header_material', $data);
+        $this->load->view('header', $data);
         $this->load->view('group_list', $data);
         $this->load->view('material_part/footer_material', $data);
 
