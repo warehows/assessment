@@ -13,7 +13,6 @@ class Assign extends CI_Controller {
         $this->load->model("category_model");
         $this->load->model("level_model");
         $this->load->model("group_model");
-        $this->load->model("classstudents_model");
         $this->lang->load('basic', $this->config->item('language'));
 
     }
