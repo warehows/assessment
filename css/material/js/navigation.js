@@ -7,11 +7,8 @@
      });
      $('#quiz').click(function() {
        $('#quiz_submenu').toggle();
-     });
-      $('#class').click(function() {
-          $('#class_submenu').toggle();
-      });
-      $('#settings').click(function() {
+     }); 
+     $('#settings').click(function() {
        $('#settings_submenu').toggle();
      });
 });

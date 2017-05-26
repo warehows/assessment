@@ -171,14 +171,14 @@
                                 <h7>Allow to view contact answers after submiting quiz</h7>
                                 <div class="mdl-layout-spacer"></div>
 
-                                <label for="option-2" class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
-                                    <input type="radio" class="mdl-radio__button" id="option-2" name="view_answer"
-                                           value="2"/>
+                                <label for="option-1" class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
+                                    <input type="radio" class="mdl-radio__button" id="option-1" name="view_answer"
+                                           value="0"/>
                                     <span class="mdl-radio__label">No</span>
                                 </label>
-                                <label for="option-1" class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
+                                <label for="option-2" class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
                                     <label for="option-1" class="mdl-textfield__label"></label>
-                                    <input type="radio" class="mdl-radio__button" id="option-1" name="view_answer"
+                                    <input type="radio" class="mdl-radio__button" id="option-2" name="view_answer"
                                            value="1"/>
                                     <span class="mdl-radio__label">Yes</span>
                                 </label>
@@ -219,6 +219,47 @@
     </div>
 
 </div>
+<script>
+    (function () {
+        // Stepper non-linear demonstration
+        var demoNonLinear = function (e) {
+            var element = document.querySelector('.mdl-stepper#demo-stepper-non-linear');
+
+            if (!element) return;
+
+            var stepper = element.MaterialStepper;
+            var steps = element.querySelectorAll('.mdl-step');
+            var step;
+
+            for (var i = 0; i < steps.length; i++) {
+                step = steps[i];
+                step.addEventListener('onstepnext', function (e) {
+                    stepper.next();
+                });
+            }
+            element.addEventListener('onsteppercomplete', function (e) {
+                var toast = document.querySelector('#snackbar-stepper-complete');
+
+                if (!toast) return false;
+
+                toast.MaterialSnackbar.showSnackbar({
+                    message: 'Stepper non-linear are completed',
+                    timeout: 4000,
+                    actionText: 'Ok'
+                });
+            });
+        };
+        window.addEventListener('load', demoNonLinear);
+    })();
+
+
+</script>
+<!--<script src="--><?php //echo base_url('css/material/js/material-datetime-picker.js'); ?><!--"></script>-->
+<script src="https://unpkg.com/babel-polyfill@6.2.0/dist/polyfill.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rome/2.1.22/rome.standalone.js"></script>
+
+
 <script>
     $(document).ready(function () {
         var subject = $("#subject").val();
@@ -270,7 +311,6 @@
                 quiz_selected = quiz_selected.replace("selected_", "");
                 $("tr[role='row']").css("background-color", "");
                 $(this).parent().parent().css("background-color", "rgb(240,240,240)");
-                console.log(quiz_selected);
             });
 
         });
@@ -354,8 +394,6 @@
                     $.each(all_quizzes, function (key, value) {
                         $(".mdl-step").removeClass("is-active");
                         $(".mdl-step").eq(1).addClass("is-active");
-
-//                        $("#last_question_tr").before('<tr class="question_name_tr"><td><input type="checkbox" name="' + value["qid"] + '" class="question_checkbox" /></td><td>' + value["cid"] + '</td><td>' + value["question_type"] + '</td><td>' + value["question"] + '</td></tr>');
                         question_lists.row.add(['<input type="checkbox" name="' + value["qid"] + '" class="question_checkbox" />', value["cid"], value["question_type"], value["question"]]).draw();
                     });
                 });
@@ -393,15 +431,39 @@
         });
         $("#settings_confirmed").click(function(){
             var settings_array = new Array();
-
-            $("#start_date").val();
-            $("#end_date").val();
-            $("#duration").val();
-            $("#maximum_attempts").val();
-            $("#pass_percentage").val();
-
+            var start_date;
+            var end_date;
+            var duration;
+            var maximum_attempts;
+            var pass_percentage;
+            start_date = $("#start_date").val();
+            end_date = $("#end_date").val();
+            duration = $("#duration").val();
+            maximum_attempts = $("#maximum_attempts").val();
+            pass_percentage = $("#pass_percentage").val();
+            var view_answer = "";
             $.each($("input[name='view_answer']"),function(key,value){
+                if($(value).is(":checked")){
+                    view_answer = $(value).attr("value");
+                }
+            });
+            settings_array = {
+                quid: quiz_selected,
+                start_date: start_date,
+                end_date: end_date,
+                duration: duration,
+                maximum_attempts: maximum_attempts,
+                pass_percentage: pass_percentage,
+                view_answer:view_answer
+            };
 
+            var settings = JSON.stringify(settings_array);
+            $.ajax({
+                url: "<?php echo site_url('assign/update_quiz');?>",
+                type: "POST",
+                data: {settings:settings}
+            }).done(function (values) {
+                console.log(values);
             });
         });
 

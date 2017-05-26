@@ -153,3 +153,72 @@ img {
   width:auto;
 }
 
+.mdl-button.mdl-js-ripple-effect.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-color--primary {
+    color: white !important;
+}
+
+.content_wrapper{
+  display: table-row;
+  width: 100%
+}
+
+
+.add_new_user.mdl-card {
+  /*  width: 350px;
+    height: auto;*/
+    margin: auto;
+    /*width: 40%;*/
+
+ width: calc(100% - 16px);
+}
+
+
+@media (min-width: 840px){
+  .add_new_user.mdl-card {
+    width: 350px;
+    height: auto;
+    margin: auto;
+ width: 400px;
+
+
+}
+}
+
+.extrawide {
+    width: 100%;
+}
+
+
+.mdl_forms.mdl-card__supporting-text {
+    color: rgba(0,0,0,.54);
+    font-size: 1rem;
+    line-height: 18px;
+    overflow: initial;
+    padding: 16px;
+    width: auto;
+}
+
+
+#main_cont {
+  background-color: #fafafa;
+
+}
+
+.dashboard_card {
+  background-color: #ffffff;
+
+}
+
+.wrapper {
+    padding-top: 80px;
+}
+
+.card_supporting_text {
+  min-height: 72px;
+}
+
+
+.mdl-button--raised.mdl-button--colored {
+    background: rgb(76,175,80);
+    color: rgb(255, 255, 255);
+}

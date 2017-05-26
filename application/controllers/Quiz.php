@@ -137,12 +137,9 @@ class Quiz extends CI_Controller
         $nor = $query->num_rows();
         for ($i = 0; $i <= $nor; $i++) {
             $val .= "<option value='" . $i . "' >" . $i . "</option>";
-
-
         }
         $val .= "</select>";
         echo $val;
-
     }
 
 

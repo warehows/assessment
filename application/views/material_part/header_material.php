@@ -119,7 +119,6 @@
         </nav>
 
     </div>
-    <?php echo $var?>
     <main class="mdl-layout__content">
 
 

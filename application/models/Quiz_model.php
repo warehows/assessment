@@ -982,6 +982,61 @@ Class Quiz_model extends CI_Model
 
     }
 
+    function assessment_update_quiz($settings)
+    {
+
+        $userdata = array(
+            'quiz_name' => "",
+            'description' => "",
+            'start_date' => $settings.start_date,
+            'end_date' => $settings.end_date,
+            'duration' => $settings.duration,
+            'maximum_attempts' => $settings.maximum_attempts,
+            'pass_percentage' => $settings.pass_percentage,
+            'correct_score' => "",
+            'incorrect_score' => "",
+            'ip_address' => "",
+            'view_answer' => $settings.view_answer,
+            'camera_req' => "",
+            'with_login' => "",
+            'gids' => ""
+        );
+        return $userdata;
+//        $this->db->where('quid', $quid);
+//        $this->db->update('savsoft_quiz', $userdata);
+//
+//        $this->db->where('quid', $quid);
+//        $query = $this->db->get('savsoft_quiz', $userdata);
+//        $quiz = $query->row_array();
+//        return $quiz;
+//        if ($quiz['question_selection'] == '1') {
+//
+//            $this->db->where('quid', $quid);
+//            $this->db->delete('savsoft_qcl');
+//
+//            foreach ($_POST['cid'] as $ck => $val) {
+//                if (isset($_POST['noq'][$ck])) {
+//                    if ($_POST['noq'][$ck] >= '1') {
+//                        $userdata = array(
+//                            'quid' => $quid,
+//                            'cid' => $val,
+//                            'lid' => $_POST['lid'][$ck],
+//                            'noq' => $_POST['noq'][$ck]
+//                        );
+//                        $this->db->insert('savsoft_qcl', $userdata);
+//                    }
+//                }
+//            }
+//            $userdata = array(
+//                'noq' => array_sum($_POST['noq'])
+//            );
+//            $this->db->where('quid', $quid);
+//            $this->db->update('savsoft_quiz', $userdata);
+//        }
+//        return $quid;
+
+    }
+
 }
 
 ?>

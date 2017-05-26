@@ -44,8 +44,8 @@ class Assign extends CI_Controller {
         $this->load->view('material_part/footer_material',$data);
     }
 
-    public function update(){
-
+    public function update($quid){
+            echo $quid;
     }
 
     public function assessment_quiz_list(){
@@ -83,6 +83,31 @@ class Assign extends CI_Controller {
             "view_answer"=>$data['view_answer'],
         );
         echo json_encode($array);
+    }
+
+    public function update_quiz()
+    {
+        $post = $this->input->post();
+
+        $settings = json_decode($post['settings']);
+        $quid = $this->quiz_model->assessment_update_quiz($settings);
+        print_r($quid);
+
+//       lo $gged_in = $this->session->userdata('logged_in');
+//        if ($logged_in['su'] != '1') {
+//            exit($this->lang->line('permission_denied'));
+//        }
+//        $this->load->library('form_validation');
+//        $this->form_validation->set_rules('quiz_name', 'quiz_name', 'required');
+//
+//
+//        if ($this->form_validation->run() == FALSE) {
+//            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . validation_errors() . " </div>");
+//            redirect('quiz/edit_quiz/' . $quid);
+//        } else {
+
+//        }
+
     }
 
 
