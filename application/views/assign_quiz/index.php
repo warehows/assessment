@@ -272,8 +272,6 @@
         $.each(all_users,function(all_user_key,all_user_value){
             all_users_value = {};
             all_users_value[all_user_value.uid] = new Array();
-//            all_users_value[all_user_value.uid] = {first_name:all_user_value.first_name,last_name:all_user_value.last_name};
-//            all_users_array.push(all_users_value[all_user_value.uid] = {first_name:all_user_value.first_name,last_name:all_user_value.last_name});
         });
         console.log(all_users_array);
     var subject = $("#subject").val();

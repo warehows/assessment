@@ -169,7 +169,6 @@ class User extends CI_Controller
         $this->load->view('group_list', $data);
         $this->load->view('material_part/footer_material', $data);
 
-
     }
 
 

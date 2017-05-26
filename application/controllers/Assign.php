@@ -118,8 +118,8 @@ class Assign extends CI_Controller {
     {
         $data_level = $this->level_model->get_all();
         $data_group = $this->group_model->get_all();
-        $data_class_students = $this->classstudents_model->get_all();
-        $data = array('level'=>$data_level,'group'=>$data_group,'class_students'=>$data_class_students);
+//        $data_class_students = $this->classstudents_model->get_all();
+        $data = array('level'=>$data_level,'group'=>$data_group);
         echo json_encode($data);
     }
 
