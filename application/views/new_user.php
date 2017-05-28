@@ -56,13 +56,14 @@
                 </select>
             </div>
 
-				<div class="form-group">	 
-					<label   ><?php echo $this->lang->line('account_type');?></label> 
-					<select class="form-control" name="su">
-						<option value="0"><?php echo $this->lang->line('student');?></option>
-						<option value="1"><?php echo $this->lang->line('teacher');?></option>
-					</select>
-			</div>
+            <div class="form-group">
+                <label   ><?php echo $this->lang->line('account_type');?></label>
+                <select class="form-control" name="su">
+                    <option value="0">Student</option>
+                    <option value="2">Teacher</option>
+                    <option value="1">Admin</option>
+                </select>
+            </div>
 
  
 	<button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit');?></button>

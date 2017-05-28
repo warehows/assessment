@@ -69,8 +69,9 @@
 				<div class="form-group">	 
 					<label   ><?php echo $this->lang->line('account_type');?></label> 
 					<select class="form-control" name="su">
-						<option value="0" <?php if($result['su']<1){ echo 'selected';}?>  ><?php echo $this->lang->line('user');?></option>
-						<option value="1" <?php if($result['su']>0){ echo 'selected';}?>  ><?php echo $this->lang->line('administrator');?></option>
+						<option value="0" <?php if($result['su']<1){ echo 'selected';}?>  ><?php echo "Student"; ?></option>
+						<option value="2" <?php if($result['su']==2){ echo 'selected';}?>  ><?php echo "Teacher";?></option>
+						<option value="1" <?php if($result['su']==1){ echo 'selected';}?>  ><?php echo "Admin";?></option>
 					</select>
 			</div>
 
