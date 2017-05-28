@@ -35,7 +35,7 @@ Class Result_model extends CI_Model
 	 }else{
 		 $this->db->where('savsoft_result.result_status !=',$result_open);
 	 }
-	 	if($logged_in['su']=='0'){
+	 	if($logged_in['su']<'1'){
 			$this->db->where('savsoft_result.uid',$uid);
 		}
 		
@@ -126,7 +126,7 @@ return $query->result_array();
  function get_result($rid){
 	$logged_in=$this->session->userdata('logged_in');
 	$uid=$logged_in['uid'];
-		if($logged_in['su']=='0'){
+		if($logged_in['su']<'1'){
 			$this->db->where('savsoft_result.uid',$uid);
 		}
 		$this->db->where('savsoft_result.rid',$rid);

@@ -6,7 +6,7 @@ $logged_in=$this->session->userdata('logged_in');
   
 
 <?php 
-if($logged_in['su']=='1'){
+if($logged_in['su']>'0'){
 	?>
    <div class="row">
  
@@ -80,7 +80,7 @@ foreach($group_list as $gk => $group){
 		}
 		?>	
 		<?php 
-		if($logged_in['su']=='1'){
+		if($logged_in['su']>'0'){
 			?>
 				<div class='alert alert-danger'><?php echo $this->lang->line('pending_message_admin');?></div>		
 		<?php 
@@ -124,7 +124,7 @@ foreach($result as $key => $val){
 <td>
 <a href="<?php echo site_url('result/view_result/'.$val['rid']);?>" class="btn btn-success" ><?php echo $this->lang->line('view');?> </a>
 <?php 
-if($logged_in['su']=='1'){
+if($logged_in['su']>'0'){
 	?>
 	<a href="javascript:remove_entry('result/remove_result/<?php echo $val['rid'];?>');"><img src="<?php echo base_url('images/cross.png');?>"></a>
 <?php 

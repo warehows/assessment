@@ -97,7 +97,7 @@ class Assign extends CI_Controller {
         print_r($quid);
 
 //       lo $gged_in = $this->session->userdata('logged_in');
-//        if ($logged_in['su'] != '1') {
+//        if ($logged_in['su'] < '1') {
 //            exit($this->lang->line('permission_denied'));
 //        }
 //        $this->load->library('form_validation');

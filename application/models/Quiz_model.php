@@ -21,14 +21,14 @@ Class Quiz_model extends CI_Model
     {
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] == '0') {
+        if ($logged_in['su']<'1') {
             $gid = $logged_in['gid'];
             $where = "FIND_IN_SET('" . $gid . "', gids)";
             $this->db->where($where);
         }
 
 
-        if ($this->input->post('search') && $logged_in['su'] == '1') {
+        if ($this->input->post('search') && $logged_in['su']>'0') {
             $search = $this->input->post('search');
             $this->db->or_where('quid', $search);
             $this->db->or_like('quiz_name', $search);

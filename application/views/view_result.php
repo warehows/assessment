@@ -284,7 +284,7 @@ $cia_tim_cate=cia_tim_cate($correct_incorrect_unattempted,explode(",",$result['i
 <div class="col-lg-12" style="margin-top:20px;">
 <center>
 <?php 
-if($result['view_answer']=='1' || $logged_in['su']=='1'){
+if($result['view_answer']=='1' || $logged_in['su']>'0'){
 	
 ?>
 <a href="#answers_i" class="btn btn-info" style="margin-top:10px;"><?php echo $this->lang->line('answer_sheet');?></a>
@@ -590,7 +590,7 @@ if($this->config->item('google_chart') == true ){
 <?php
 $ind_score=explode(',',$result['score_individual']); 
 // view answer
-if($result['view_answer']=='1' || $logged_in['su']=='1'){
+if($result['view_answer']=='1' || $logged_in['su']>'0'){
 	
 ?>
 
@@ -755,7 +755,7 @@ foreach($questions as $qk => $question){
 		<textarea name="answer[<?php echo $qk;?>][]" id="answer_value<?php echo $qk;?>" style="width:100%;height:100%;" onKeyup="count_char(this.value,'char_count<?php echo $qk;?>');"><?php echo $save_ans;?></textarea>
 		</div>
 		<?php 
-		if($logged_in['su']=='1'){
+		if($logged_in['su']>'0'){
 			if($ind_score[$qk]=='3'){
 			
 		?>

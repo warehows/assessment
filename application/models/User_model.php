@@ -122,7 +122,7 @@ Class User_model extends CI_Model
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
             'contact_no' => $this->input->post('contact_no'),
-//		'gid'=>$this->input->post('gid'),
+		'gid'=>$this->input->post('gid'),
 //		'subscription_expired'=>strtotime($this->input->post('subscription_expired')),
             'su' => $this->input->post('su')
         );
@@ -265,105 +265,102 @@ Class User_model extends CI_Model
     }
 
 
-    function update_user($uid)
-    {
-        $logged_in = $this->session->userdata('logged_in');
+
+ function update_user($uid)
+	{ $logged_in=$this->session->userdata('logged_in');
 
 
-        $userdata = array(
-            'first_name' => $this->input->post('first_name'),
-            'last_name' => $this->input->post('last_name'),
-            'contact_no' => $this->input->post('contact_no')
-        );
-        if ($logged_in['su'] == '1') {
-            $userdata['email'] = $this->input->post('email');
-            $userdata['gid'] = $this->input->post('gid');
-            if ($this->input->post('subscription_expired') != '0') {
-                $userdata['subscription_expired'] = strtotime($this->input->post('subscription_expired'));
-            } else {
-                $userdata['subscription_expired'] = '0';
-            }
-            $userdata['su'] = $this->input->post('su');
-        }
+		$userdata=array(
+		  'first_name'=>$this->input->post('first_name'),
+		'last_name'=>$this->input->post('last_name'),
+		'contact_no'=>$this->input->post('contact_no')
+		);
+		if($logged_in['su']>'0'){
+			$userdata['email']=$this->input->post('email');
+			$userdata['gid']=$this->input->post('gid');
+			if($this->input->post('subscription_expired') !='0'){
+			$userdata['subscription_expired']=strtotime($this->input->post('subscription_expired'));
+			}else{
+			$userdata['subscription_expired']='0';
+			}
+			$userdata['su']=$this->input->post('su');
+			}
 
-        if ($this->input->post('password') != "") {
-            $userdata['password'] = md5($this->input->post('password'));
-        }
-        $this->db->where('uid', $uid);
-        if ($this->db->update('savsoft_users', $userdata)) {
+		if($this->input->post('password')!=""){
+			$userdata['password']=md5($this->input->post('password'));
+		}
+		 $this->db->where('uid',$uid);
+		if($this->db->update('savsoft_users',$userdata)){
 
-            return true;
-        } else {
+			return true;
+		}else{
 
-            return false;
-        }
+			return false;
+		}
 
-    }
+ }
 
-    function update_group($gid)
-    {
+ function update_group($gid)
+	 {
+		$userdata=array();
+		if($this->input->post('group_name')){
+		$userdata['group_name']=$this->input->post('group_name');
+		}
+		if($this->input->post('price')){
+		$userdata['price']=$this->input->post('price');
+		}
+		if($this->input->post('valid_day')){
+		$userdata['valid_for_days']=$this->input->post('valid_day');
+		}
+		 $this->db->where('gid',$gid);
+		if($this->db->update('savsoft_group',$userdata)){
 
-        $userdata = array();
-        if ($this->input->post('group_name')) {
-            $userdata['group_name'] = $this->input->post('group_name');
-        }
-        if ($this->input->post('price')) {
-            $userdata['price'] = $this->input->post('price');
-        }
-        if ($this->input->post('valid_day')) {
-            $userdata['valid_for_days'] = $this->input->post('valid_day');
-        }
-        $this->db->where('gid', $gid);
-        if ($this->db->update('savsoft_group', $userdata)) {
+			return true;
+		}else{
 
-            return true;
-        } else {
+			return false;
+		}
 
-            return false;
-        }
-
-    }
-
-
-    function remove_user($uid)
-    {
-
-        $this->db->where('uid', $uid);
-        if ($this->db->delete('savsoft_users')) {
-            return true;
-        } else {
-
-            return false;
-        }
+ }
 
 
-    }
+ function remove_user($uid)
+	 {
+	 $this->db->where('uid',$uid);
+	 if($this->db->delete('savsoft_users')){
+		 return true;
+	 }else{
+
+		 return false;
+	 }
 
 
-    function remove_group($gid)
-    {
-
-        $this->db->where('gid', $gid);
-        if ($this->db->delete('savsoft_group')) {
-            return true;
-        } else {
-
-            return false;
-        }
+ }
 
 
-    }
-
-
-    function get_user($uid)
-    {
-
-        $this->db->where('savsoft_users.uid', $uid);
-        $this->db->join('savsoft_group', 'savsoft_users.gid=savsoft_group.gid');
-        $query = $this->db->get('savsoft_users');
-        return $query->row_array();
-
-    }
+ function remove_group($gid)
+	 {
+	 $this->db->where('gid',$gid);
+	 if($this->db->delete('savsoft_group')){
+		 return true;
+	 }else{
+		 
+		 return false;
+	 }
+	 
+	 
+ }
+ 
+ 
+ 
+ function get_user($uid){
+	 
+	$this->db->where('savsoft_users.uid',$uid);
+	   $this -> db -> join('savsoft_group', 'savsoft_users.gid=savsoft_group.gid');
+$query=$this->db->get('savsoft_users');
+	 return $query->row_array();
+	 
+ }
 
     function get_user_name($uid)
     {

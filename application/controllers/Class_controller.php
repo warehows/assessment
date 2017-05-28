@@ -28,7 +28,7 @@ class Class_controller extends CI_Controller
 
         $logged_in = $this->session->userdata('logged_in');
 
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
 
@@ -50,7 +50,7 @@ class Class_controller extends CI_Controller
     {
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
 
@@ -69,7 +69,7 @@ class Class_controller extends CI_Controller
     {
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
         $this->load->library('form_validation');
@@ -88,7 +88,7 @@ class Class_controller extends CI_Controller
     {
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
         if ($uid == '1') {
@@ -110,7 +110,7 @@ class Class_controller extends CI_Controller
     {
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             $uid = $logged_in['uid'];
         }
 
@@ -123,7 +123,7 @@ class Class_controller extends CI_Controller
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
         $this->load->view('header', $data);
-        if ($logged_in['su'] == '1') {
+        if ($logged_in['su']>'0') {
             $this->load->view('edit_user', $data);
         } else {
             $this->load->view('myaccount', $data);
@@ -138,7 +138,7 @@ class Class_controller extends CI_Controller
 
         $logged_in = $this->session->userdata('logged_in');
 
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             $uid = $logged_in['uid'];
         }
         $this->load->library('form_validation');
@@ -178,7 +178,7 @@ class Class_controller extends CI_Controller
 
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
 
@@ -197,7 +197,7 @@ class Class_controller extends CI_Controller
 
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
 
@@ -224,7 +224,7 @@ class Class_controller extends CI_Controller
     {
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
 

@@ -25,7 +25,7 @@ class Qbank extends CI_Controller {
 	{
 		$this->load->helper('form');
 		$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			
@@ -48,7 +48,7 @@ class Qbank extends CI_Controller {
 	public function remove_question($qid){
 
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 				exit($this->lang->line('permission_denied'));
 			} 
 			
@@ -78,7 +78,7 @@ class Qbank extends CI_Controller {
 	
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			
@@ -131,7 +131,7 @@ class Qbank extends CI_Controller {
 	{
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			if($this->input->post('question')){
@@ -159,7 +159,7 @@ class Qbank extends CI_Controller {
 	{
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			if($this->input->post('question')){
@@ -187,7 +187,7 @@ class Qbank extends CI_Controller {
 	{
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			if($this->input->post('question')){
@@ -215,7 +215,7 @@ class Qbank extends CI_Controller {
 	{
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			if($this->input->post('question')){
@@ -243,7 +243,7 @@ class Qbank extends CI_Controller {
 	{
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			if($this->input->post('question')){
@@ -276,7 +276,7 @@ class Qbank extends CI_Controller {
 	{
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			if($this->input->post('question')){
@@ -307,7 +307,7 @@ class Qbank extends CI_Controller {
 	{
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			if($this->input->post('question')){
@@ -338,7 +338,7 @@ class Qbank extends CI_Controller {
 	{
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			if($this->input->post('question')){
@@ -369,7 +369,7 @@ class Qbank extends CI_Controller {
 	{
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			if($this->input->post('question')){
@@ -400,7 +400,7 @@ class Qbank extends CI_Controller {
 	{
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			if($this->input->post('question')){
@@ -448,7 +448,7 @@ class Qbank extends CI_Controller {
 		
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 				exit($this->lang->line('permission_denied'));
 			}
 	
@@ -467,7 +467,7 @@ class Qbank extends CI_Controller {
 		
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 				exit($this->lang->line('permission_denied'));
 			}
 	
@@ -487,7 +487,7 @@ class Qbank extends CI_Controller {
 			public function remove_category($cid){
 
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 				exit($this->lang->line('permission_denied'));
 			} 
 			
@@ -542,7 +542,7 @@ class Qbank extends CI_Controller {
 		
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 				exit($this->lang->line('permission_denied'));
 			}
 	
@@ -561,7 +561,7 @@ class Qbank extends CI_Controller {
 		
 		
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 				exit($this->lang->line('permission_denied'));
 			}
 	
@@ -581,7 +581,7 @@ class Qbank extends CI_Controller {
 			public function remove_level($lid){
 
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 				exit($this->lang->line('permission_denied'));
 			} 
 			

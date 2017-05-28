@@ -42,7 +42,19 @@
 					<label for="inputEmail" class="sr-only"><?php echo $this->lang->line('contact_no');?></label> 
 					<input type="text" name="contact_no"  class="form-control" placeholder="<?php echo $this->lang->line('contact_no');?>"   autofocus>
 			</div>
+            <div class="form-group">
+                <label><?php echo $this->lang->line('select_group'); ?></label>
+                <select class="form-control" name="gid" id="gid" onChange="getexpiry();">
+                    <?php
+                    foreach($group_list as $key => $val){
+                        ?>
 
+                        <option value="<?php echo $val['gid'];?>"><?php echo $val['group_name'];?> (<?php echo $this->lang->line('price_');?>: <?php echo $val['price'];?>)</option>
+                        <?php
+                    }
+                    ?>
+                </select>
+            </div>
 
 				<div class="form-group">	 
 					<label   ><?php echo $this->lang->line('account_type');?></label> 

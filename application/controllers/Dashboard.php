@@ -27,7 +27,7 @@ class Dashboard extends CI_Controller {
     public function index()
     {
         $logged_in=$this->session->userdata('logged_in');
-        if($logged_in['su']=='1'){
+        if($logged_in['su']>'0'){
             $data['title']=$this->lang->line('dashboard');
             $data['result']=$this->user_model->user_list(0);
             $data['num_users']=$this->user_model->num_users();
@@ -67,7 +67,7 @@ class Dashboard extends CI_Controller {
 
         $logged_in=$this->session->userdata('logged_in');
 
-        if($logged_in['su']!='1'){
+        if($logged_in['su']<'1'){
             exit($this->lang->line('permission_denied'));
         }
         if($this->config->item('frontend_write_admin') > $logged_in['su']){
@@ -103,7 +103,7 @@ class Dashboard extends CI_Controller {
 
         $logged_in=$this->session->userdata('logged_in');
 
-        if($logged_in['su']!='1'){
+        if($logged_in['su']<'1'){
             exit($this->lang->line('permission_denied'));
         }
 

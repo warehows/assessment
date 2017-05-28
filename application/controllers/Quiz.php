@@ -77,7 +77,7 @@ class Quiz extends CI_Controller
         }
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
 
@@ -106,7 +106,7 @@ class Quiz extends CI_Controller
         }
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
 
@@ -215,7 +215,7 @@ class Quiz extends CI_Controller
 
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
 
@@ -308,7 +308,7 @@ class Quiz extends CI_Controller
         }
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
         $this->load->library('form_validation');
@@ -339,7 +339,7 @@ class Quiz extends CI_Controller
 
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
         $this->load->library('form_validation');
@@ -370,7 +370,7 @@ class Quiz extends CI_Controller
         }
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
 
@@ -721,7 +721,7 @@ class Quiz extends CI_Controller
 
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
         $this->quiz_model->assign_score($rid, $qno, $score);

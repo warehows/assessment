@@ -275,7 +275,7 @@ Class Class_model extends CI_Model
             'last_name'=>$this->input->post('last_name'),
             'contact_no'=>$this->input->post('contact_no')
         );
-        if($logged_in['su']=='1'){
+        if($logged_in['su']>'0'){
             $userdata['email']=$this->input->post('email');
             $userdata['gid']=$this->input->post('gid');
             if($this->input->post('subscription_expired') !='0'){

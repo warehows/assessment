@@ -51,7 +51,7 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <?php  
-				if($logged_in['su']==1){
+				if($logged_in['su']>0){
 			?>
 			  
 			  <li <?php if($this->uri->segment(1)=='dashboard'){ echo "class='active'"; } ?> ><a href="<?php echo site_url('dashboard');?>"><?php echo $this->lang->line('dashboard');?></a></li>
@@ -90,7 +90,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('quiz');?> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                  <?php  
-				if($logged_in['su']==1){
+				if($logged_in['su']>0){
 			?>     <li><a href="<?php echo site_url('quiz/add_new');?>"><?php echo $this->lang->line('add_new');?></a></li>
               <?php 
 				}
@@ -107,7 +107,7 @@
 <!--			 <li><a href="--><?php //echo site_url('liveclass');?><!--">--><?php //echo $this->lang->line('live_classroom');?><!--</a></li>-->
 			 
 			  <?php  
-				if($logged_in['su']==1){
+				if($logged_in['su']>0){
 			?>
 <!--			 <li><a href="--><?php //echo site_url('payment_gateway');?><!--">--><?php //echo $this->lang->line('payment_history');?><!--</a></li>-->
 			 

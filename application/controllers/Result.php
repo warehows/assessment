@@ -57,7 +57,7 @@ class Result extends CI_Controller {
 		redirect('login');
 		}
 			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 				exit($this->lang->line('permission_denied'));
 			} 
 			
@@ -86,7 +86,7 @@ class Result extends CI_Controller {
 		}
 		
 		$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 				exit($this->lang->line('permission_denied'));
 			} 
 			
@@ -127,7 +127,7 @@ class Result extends CI_Controller {
 		$data['result']=$this->result_model->get_result($rid);
 		$data['attempt']=$this->result_model->no_attempt($data['result']['quid'],$data['result']['uid']);
 		$data['title']=$this->lang->line('result_id').' '.$data['result']['rid'];
-		if($data['result']['view_answer']=='1' || $logged_in['su']=='1'){
+		if($data['result']['view_answer']=='1' || $logged_in['su']>'0'){
 		 $this->load->model("quiz_model");
 		$data['saved_answers']=$this->quiz_model->saved_answers($rid);
 		$data['questions']=$this->quiz_model->get_questions($data['result']['r_qids']);

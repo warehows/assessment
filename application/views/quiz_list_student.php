@@ -7,7 +7,7 @@ $result_model = $quiz_model->get_result_model();
 
  <h3><?php echo $title;?></h3>
     <?php
-	if($logged_in['su']=='1'){
+	if($logged_in['su']>'0'){
 		?>
 		<div class="row">
 
@@ -110,7 +110,7 @@ foreach($result as $key => $val){
 <a href="<?php echo site_url('quiz/quiz_detail/'.$val['quid']);?>" class="<?php echo $no_of_attempts >= $val['maximum_attempts'] ? 'disabled' : ''; ?> btn btn-success"  ><?php echo $this->lang->line('attempt');?> </a>
 
 <?php
-if($logged_in['su']=='1'){
+if($logged_in['su']>'0'){
 	?>
 
 <a href="<?php echo site_url('quiz/edit_quiz/'.$val['quid']);?>"><img src="<?php echo base_url('images/edit.png');?>"></a>
