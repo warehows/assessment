@@ -1,6 +1,6 @@
 <?php
 
-Class Level_model extends CI_Model
+Class Grades_model extends CI_Model
 {
     //custom
     function all()
@@ -8,7 +8,6 @@ Class Level_model extends CI_Model
         $query = $this->db->get('savsoft_level');
         return $query->result_array();
     }
-
 }
 
 ?>

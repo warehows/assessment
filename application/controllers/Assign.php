@@ -13,6 +13,7 @@ class Assign extends CI_Controller {
         $this->load->model("category_model");
         $this->load->model("level_model");
         $this->load->model("group_model");
+        $this->load->model("subjects_model");
         $this->lang->load('basic', $this->config->item('language'));
 
     }
@@ -41,6 +42,7 @@ class Assign extends CI_Controller {
         $data['result']=$this->quiz_model->quiz_list($limit);
         $data['category']=$this->category_model->get_all();
         $data['all_users']=$this->user_model->get_all();
+        $data['all_subjects']=$this->subjects_model->all();
 
         $this->load->view('material_part/header_material',$data);
         $this->load->view('assign_quiz/index.php', $data);
@@ -54,7 +56,6 @@ class Assign extends CI_Controller {
     public function assessment_quiz_list(){
         if(!$this->session->userdata('logged_in')){
             redirect('login');
-
         }
         $logged_in=$this->session->userdata('logged_in');
         if($logged_in['base_url'] != base_url()){

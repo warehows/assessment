@@ -49,7 +49,7 @@
     </style>
 </head>
 <body>
-<?php $logged_in=$this->session->userdata('logged_in');?>
+
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
@@ -60,7 +60,7 @@
     <div class="mdl-layout__drawer">
         <header class="drawer-header"><img src="<?php echo base_url('css/material/img/user-placeholder.png'); ?>" class="avatar">
 
-            <div class="avatar-dropdown"><span><?php echo $logged_in['email'];?></span>
+            <div class="avatar-dropdown"><span>admin@example.com </span>
 
                 <div class="mdl-layout-spacer"></div>
                 <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
@@ -69,19 +69,9 @@
                     <li class="mdl-menu__item">Item 1</li>
                 </ul>
             </div>
-            <span>
-            <?php if ($logged_in['su'] == 0):
-                echo "Student";
-            elseif ($logged_in['su'] == 1):
-                echo "Admin";
-            elseif ($logged_in['su']== 2):
-                echo "Teacher";
-            endif;?>
-            </span>
-        </header>
+            <span>Teacher </span></header>
 
         <nav class="mdl-navigation">
-            <?php if ($logged_in['su'] == 1): ?>
             <a class="mdl-navigation__link" href="<?php echo site_url('dashboard');?>">Dashboard</a>
             <a id="users" class="mdl-navigation__link">Users
                 <i class="material-icons" >keyboard_arrow_down</i>
@@ -91,7 +81,6 @@
 
                 <a class="mdl-navigation__link" href="<?php echo site_url('user');?>">Users List</a>
             </nav>
-            <?php endif; ?>
 
             <a id="qbank" class="mdl-navigation__link" >Question Bank
                 <i class="material-icons" >keyboard_arrow_down</i>
@@ -101,7 +90,6 @@
                 <a class="mdl-navigation__link" href="<?php echo site_url('qbank/pre_new_question');?>">Add new</a>
                 <a class="mdl-navigation__link" href="<?php echo site_url('qbank');?>">Question List</a>
             </nav>
-
 
             <a id="quiz" class="mdl-navigation__link" >Quiz
                 <i class="material-icons" >keyboard_arrow_down</i>
@@ -115,13 +103,11 @@
                 <i class="material-icons" >keyboard_arrow_down</i>
             </a>
             <nav id="class_submenu" class="sub-navigation " style="display: none;">
-                <?php if ($logged_in['su'] == 1): ?>
                 <a class="mdl-navigation__link" href="<?php echo site_url('class_controller/new_class');?>">Add Class</a>
-                <?php endif; ?>
                 <a class="mdl-navigation__link" href="<?php echo site_url('class_controller/');?>">Class List</a>
             </nav>
             <a class="mdl-navigation__link" href="<?php echo site_url('assign');?>">Assign Quiz</a>
-            <?php if ($logged_in['su'] == 1): ?>
+            <a class="mdl-navigation__link" href="<?php echo site_url('lessons');?>">Create Lessons</a>
             <a  id="settings" class="mdl-navigation__link" >Settings
                 <i class="material-icons" >keyboard_arrow_down</i>
             </a>
@@ -130,8 +116,7 @@
                 <a class="mdl-navigation__link" href="<?php echo site_url('qbank/category_list');?>">Subjects</a>
                 <a class="mdl-navigation__link" href="<?php echo site_url('qbank/level_list');?>">Year/Level</a>
             </nav>
-            <?php endif; ?>
-            <a class="mdl-navigation__link" href="<?php echo site_url('user/logout');?>">Logout</a>
+            <a class="mdl-navigation__link" href="">Logout</a>
         </nav>
 
     </div>

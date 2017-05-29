@@ -274,7 +274,7 @@
             all_users_value[all_user_value.uid] = new Array();
         });
         console.log(all_users_array);
-    var subject = $("#subject").val();
+        var subject = $("#subject").val();
         $('#last_question_tr').hide();
         $('#quiz_lists').wrap('<div id="hide_quiz_lists" style="display:none"/>');
         $("#selected_quiz_confirm").hide();
