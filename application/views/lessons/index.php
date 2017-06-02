@@ -48,38 +48,13 @@
                                     <?php foreach ($all_levels as $key => $value) { ?>
 
                                         <option
-                                            value="<?php echo $value['lid'] ?>">Grade <?php echo $value['level_name'] ?></option>
+                                            value="<?php echo $value['lid'] ?>">
+                                            Grade <?php echo $value['level_name'] ?></option>
                                     <?php } ?>
                                 </select>
 
                             </div>
 
-                        </div>
-
-                    </div>
-                    <div class="mdl-step__actions">
-                            <button
-                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
-                            id="step_1_submit"
-                            data-stepper-next>
-                            Done
-                        </button>
-                    </div>
-                </li>
-                <li class="mdl-step">
-                            <span class="mdl-step__label">
-                                <span class="mdl-step__title">
-                                    <span class="mdl-step__title-text">Lesson Label</span>
-                                </span>
-                            </span>
-
-                    <div class="mdl-step__content">
-
-                        <div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-
-                            <button id="add_folder">Add Folder</button>
-
-                            <div id="data"></div>
                         </div>
 
                     </div>
@@ -103,10 +78,35 @@
 
                         <div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
 
-                            <button id="add_folder">Add Folder</button>
+                            <button id="add_folder_toggle">Add Folder</button>
+                            <div id="folder_name_container">
+                                <input type="text" placeholder="Folder Name" id="folder_name"/>
+                                <input type="button" value="Add" id="add_folder"/>
+                            </div>
 
-                            <div id="data" class="demo"></div>
+                            <div id="data"></div>
                         </div>
+
+                    </div>
+                    <div class="mdl-step__actions">
+                        <button
+                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
+                            id="step_1_submit"
+                            data-stepper-next>
+                            Done
+                        </button>
+                    </div>
+                </li>
+                <li class="mdl-step">
+                            <span class="mdl-step__label">
+                                <span class="mdl-step__title">
+                                    <span class="mdl-step__title-text">Lesson Label</span>
+                                </span>
+                            </span>
+
+                    <div class="mdl-step__content">
+
+
 
                     </div>
                     <div class="mdl-step__actions">
@@ -162,32 +162,88 @@
 </script>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         var lesson_id;
-        var folder_id_counter=0;
+        var folder_id_counter = 0;
+        var current_selected;
+
+        $("#folder_name_container").hide();
 
         //JS tree initialization
         $('#data').jstree({
-            'core' : {
+            'core': {
                 "check_callback": true,
-                'data' : []
-            }
-        }).on('create_node.jstree', function(e, data) {
-            console.log('Saved');
+                'data': []
+            },
+
+        })
+            .on('create_node.jstree', function (e, data) {})
+            .on("select_node.jstree", function (e, data) {
+
+                $(this).find("li").find("a");
+                $(document).delegate($(this).find("#"+data.selected[0]), 'hakhak', function(event){
+                    $(event.currentTarget).find("#"+data.selected[0]).find(".folder_action_button").remove();
+                });
+                $(document).trigger("hakhak");
+                $(this).find("#"+data.selected[0]).find("a").after('<input type="button" class="open_folder folder_action_button" id="open_folder_'+data.selected[0]+'" value="Open Folder" /><input type="button" value="Edit" class="edit_folder folder_action_button" id="edit_folder_'+data.selected[0]+'" /><input type="button" value="Delete" class="delete_folder folder_action_button" id="delete_folder_'+data.selected[0]+'" />');
+
+            });
+
+        $(document).delegate('.edit_folder', 'click', function(event){
+
+            var current_folder_edit_id = $(event.currentTarget).attr("id");
+            current_folder_edit_id = current_folder_edit_id.replace("edit_folder_","");
+            var current_folder_text = $(event.currentTarget).siblings().eq(1).text();
+            $(event.currentTarget).parent().children().eq(1).hide();
+            $(event.currentTarget).parent().children().eq(2).hide();
+            $(event.currentTarget).parent().children().eq(3).hide();
+            $(event.currentTarget).parent().children().eq(4).hide();
+            $(event.currentTarget).parent().children().eq(0).after('<i class="jstree-icon jstree-themeicon" role="presentation"></i><input type="text" id="rename_current_folder_'+current_folder_edit_id+'" value="'+current_folder_text+'">');
+            $("#rename_current_folder_"+current_folder_edit_id).focus().select().focusout(function(){
+                $("#data").jstree('rename_node', current_folder_edit_id , $("#rename_current_folder_"+current_folder_edit_id).val() );
+                var edited_text = $("#rename_current_folder_"+current_folder_edit_id).val();
+                $.ajax({
+                    url: "<?php echo site_url('lessons/delete_folder');?>",
+                    type: "POST",
+                    data: {lesson_id: lesson_id, folder_name: edited_text}
+                }).done(function(values){
+                    console.log(values);
+                });
+            });
+
         });
 
+        $(document).delegate('.delete_folder', 'click', function(event){
+
+            var current_folder_delete_id = $(event.currentTarget).attr("id");
+            current_folder_delete_id = current_folder_delete_id.replace("delete_folder_","");
+            var folder_name = $(event.currentTarget).siblings().eq(1).text();
+            var instance = $("#data").jstree(true);
+            instance.delete_node(current_folder_delete_id);
+            $.ajax({
+                url: "<?php echo site_url('lessons/delete_folder');?>",
+                type: "POST",
+                data: {lesson_id: lesson_id, folder_name: folder_name}
+            }).done(function(values){
+                console.log(values);
+            });
+
+        });
 
         //save lesson to database
-        $("#step_1_submit").click(function(e){
+        $("#step_1_submit").click(function (e) {
+
             var lesson_name = $("#lesson_name").val();
             var subject_id = $("#subject_id").val();
             var level_id = $("#level_id").val();
-            if(lesson_name){
+
+            //if there is lesson name or not
+            if (lesson_name) {
                 $.ajax({
                     url: "<?php echo site_url('lessons/save_lesson');?>",
                     type: "POST",
-                    data:{lesson_name:lesson_name,subject_id:subject_id,level_id:level_id}
+                    data: {lesson_name: lesson_name, subject_id: subject_id, level_id: level_id}
                 }).done(function (values) {
                     lesson_id = values;
 
@@ -203,27 +259,43 @@
                         stepper.next();
                     });
                 }
-                $("#lesson_name").prop("disabled",true)
-                $("#subject_id").prop("disabled",true)
-                $("#level_id").prop("disabled",true)
+                $("#lesson_name").prop("disabled", true)
+                $("#subject_id").prop("disabled", true)
+                $("#level_id").prop("disabled", true)
 
-            }else{
+            } else {
                 $("#lesson_name").focus();
             }
-
+            //if there is lesson name or not
         });
 
-        $("#add_folder").click(function(){
+        $("#add_folder_toggle").click(function () {
+            $("#folder_name_container").toggle();
+        });
+        $("#add_folder").click(function () {
+            var folder_name = $("#folder_name").val();
+            if (folder_name) {
+                folder_id_counter++;
+                $('#data').jstree().create_node('#', {
+                    "id": folder_id_counter,
+                    "text": folder_name
+                }, "last", function () {
+                    var current_folder = $(".jstree-node").length;
+                    current_folder = current_folder-1;
+                    var folder = $("#data").find(".jstree-node").eq(current_folder);
+                    alert(folder_name);
+                    $.ajax({
+                        url: "<?php echo site_url('lessons/add_folder');?>",
+                        type: "POST",
+                        data: {lesson_id: lesson_id, folder_name: folder_name}
+                    }).done(function (values) {
 
-            folder_id_counter++;
-            $('#data').jstree().create_node('#', {
-                "id": folder_id_counter,
-                "text": "Parent-3"
-            }, "last", function() {
-
-            });
-
-//            $("#data").jstree("create", $("#somenode"), "inside", { "data":"new_node" }, false, true);
+                    });
+                });
+            } else {
+                $("folder_name").focus();
+            }
+            $("#folder_name_container").toggle();
         });
     });
 </script>

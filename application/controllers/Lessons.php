@@ -57,6 +57,62 @@ class Lessons extends CI_Controller {
         echo $data;
 
     }
+
+    public function add_folder(){
+        // redirect if not loggedin
+        if(!$this->session->userdata('logged_in')){
+            redirect('login');
+        }
+        $logged_in=$this->session->userdata('logged_in');
+        if($logged_in['base_url'] != base_url()){
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $logged_in=$this->session->userdata('logged_in');
+
+        $data = $this->input->post();
+        $data = $this->lessons_model->add_folder($data);
+
+        echo $data;
+
+    }
+
+    public function delete_folder(){
+        // redirect if not loggedin
+        if(!$this->session->userdata('logged_in')){
+            redirect('login');
+        }
+        $logged_in=$this->session->userdata('logged_in');
+        if($logged_in['base_url'] != base_url()){
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $logged_in=$this->session->userdata('logged_in');
+
+        $data = $this->input->post();
+        $data = $this->lessons_model->delete_folder($data);
+
+        echo $data;
+    }
+
+    public function edit_folder(){
+        // redirect if not loggedin
+        if(!$this->session->userdata('logged_in')){
+            redirect('login');
+        }
+        $logged_in=$this->session->userdata('logged_in');
+        if($logged_in['base_url'] != base_url()){
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $data = $this->input->post();
+        $data = $this->lessons_model->edit_folder($data);
+
+        echo $data;
+
+    }
+
     public function step2()
     {
         // redirect if not loggedin

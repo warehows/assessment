@@ -30,6 +30,9 @@
     <script src="<?php echo base_url('css/material/js/jquery.dataTables.min.js'); ?>"></script>
     <script src="<?php echo base_url('css/material/js/dataTables.material.min.js'); ?>"></script>
     <script src="<?php echo base_url('css/material/js/jquery-1.12.4.js'); ?>"></script>
+    <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
     <!--    <script src="--><?php //echo base_url('css/material/js/stepper.min.js'); ?><!--"></script>-->
 
 
