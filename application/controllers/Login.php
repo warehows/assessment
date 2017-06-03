@@ -36,8 +36,9 @@ class Login extends CI_Controller {
 		$data['title']=$this->lang->line('login');
 		$data['recent_quiz']=$this->quiz_model->recent_quiz('5');
 
-		$this->load->view('material_part/header_material_login',$data);
-		$this->load->view('login',$data);
+		$this->load->view('new_material/header_login',$data);
+		$this->load->view('login_new',$data);
+		$this->load->view('new_material/footer',$data);
 
 	}
 
