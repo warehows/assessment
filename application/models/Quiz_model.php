@@ -25,6 +25,11 @@ Class Quiz_model extends CI_Model
             $gid = $logged_in['gid'];
             $where = "FIND_IN_SET('" . $gid . "', gids)";
             $this->db->where($where);
+        }else{
+            // if not admin, list only quiz list created by teacher
+            if($logged_in['uid'] != 1) {
+                $this->db->where('uid', $logged_in['uid']);
+            }
         }
 
 
@@ -134,10 +139,13 @@ Class Quiz_model extends CI_Model
 
     function insert_quiz()
     {
+        $logged_in = $this->session->userdata('logged_in');
+        $uid = $logged_in['uid'];
 
         $userdata = array(
             'quiz_name' => $this->input->post('quiz_name'),
             'cid' => $this->input->post('category'),
+            'uid' => $uid,
             'description' => $this->input->post('description'),
             'start_date' => strtotime($this->input->post('start_date')),
             'end_date' => strtotime($this->input->post('end_date')),

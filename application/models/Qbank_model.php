@@ -5,6 +5,7 @@ Class Qbank_model extends CI_Model
 
     function question_list($limit, $cid = '0', $lid = '0')
     {
+        $logged_in = $this->session->userdata('logged_in');
         if ($this->input->post('search')) {
             $search = $this->input->post('search');
             $this->db->or_where('savsoft_qbank.qid', $search);
@@ -17,6 +18,9 @@ Class Qbank_model extends CI_Model
         }
         if ($lid != '0') {
             $this->db->where('savsoft_qbank.lid', $lid);
+        }
+        if($logged_in['uid'] > 1) {
+            $this->db->where('uid', $logged_in['uid']);
         }
         $this->db->join('savsoft_category', 'savsoft_category.cid=savsoft_qbank.cid');
         $this->db->join('savsoft_level', 'savsoft_level.lid=savsoft_qbank.lid');
@@ -79,6 +83,8 @@ Class Qbank_model extends CI_Model
 
     function insert_question_1()
     {
+        $logged_in = $this->session->userdata('logged_in');
+        $uid = $logged_in['uid'];
 
 
         $userdata = array(
@@ -86,6 +92,7 @@ Class Qbank_model extends CI_Model
             'description' => $this->input->post('description'),
             'question_type' => $this->lang->line('multiple_choice_single_answer'),
             'cid' => $this->input->post('cid'),
+            'uid' => $uid,
             'lid' => $this->input->post('lid')
         );
         $this->db->insert('savsoft_qbank', $userdata);
@@ -112,12 +119,15 @@ Class Qbank_model extends CI_Model
     function insert_question_2()
     {
 
+        $logged_in = $this->session->userdata('logged_in');
+        $uid = $logged_in['uid'];
 
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
             'question_type' => $this->lang->line('multiple_choice_multiple_answer'),
             'cid' => $this->input->post('cid'),
+            'uid' => $uid,
             'lid' => $this->input->post('lid')
         );
         $this->db->insert('savsoft_qbank', $userdata);
@@ -145,12 +155,15 @@ Class Qbank_model extends CI_Model
     function insert_question_3()
     {
 
+        $logged_in = $this->session->userdata('logged_in');
+        $uid = $logged_in['uid'];
 
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
             'question_type' => $this->lang->line('match_the_column'),
             'cid' => $this->input->post('cid'),
+            'uid' => $uid,
             'lid' => $this->input->post('lid')
         );
         $this->db->insert('savsoft_qbank', $userdata);
@@ -175,12 +188,15 @@ Class Qbank_model extends CI_Model
     function insert_question_4()
     {
 
+        $logged_in = $this->session->userdata('logged_in');
+        $uid = $logged_in['uid'];
 
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
             'question_type' => $this->lang->line('short_answer'),
             'cid' => $this->input->post('cid'),
+            'uid' => $uid,
             'lid' => $this->input->post('lid')
         );
         $this->db->insert('savsoft_qbank', $userdata);
@@ -203,13 +219,14 @@ Class Qbank_model extends CI_Model
 
     function insert_question_5()
     {
-
+        $logged_in = $this->session->userdata('logged_in');
+        $uid = $logged_in['uid'];
 
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
             'question_type' => $this->lang->line('long_answer'),
-            'cid' => $this->input->post('cid'),
+            'uid' => $uid,
             'lid' => $this->input->post('lid')
         );
         $this->db->insert('savsoft_qbank', $userdata);
