@@ -34,7 +34,7 @@ class Dashboard extends CI_Controller {
             $data['num_qbank']=$this->qbank_model->num_qbank();
             $data['num_quiz']=$this->quiz_model->num_quiz();
             $this->load->view('header',$data);
-            $this->load->view('dashboard',$data);
+            $this->load->view('new_dashboard',$data);
             $this->load->view('material_part/footer_material',$data);
         }else{
             redirect('');

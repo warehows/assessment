@@ -68,11 +68,11 @@
                     </div>
                 </li>
                 <li class="mdl-step">
-                            <span class="mdl-step__label">
-                                <span class="mdl-step__title">
-                                    <span class="mdl-step__title-text">Lesson Label</span>
-                                </span>
-                            </span>
+                    <span class="mdl-step__label">
+                        <span class="mdl-step__title">
+                            <span class="mdl-step__title-text">Lesson Label</span>
+                        </span>
+                    </span>
 
                     <div class="mdl-step__content">
 
@@ -95,6 +95,9 @@
                             data-stepper-next>
                             Done
                         </button>
+                    </div>
+                    <div id="folder_content">
+
                     </div>
                 </li>
                 <li class="mdl-step">
@@ -283,7 +286,7 @@
                     var current_folder = $(".jstree-node").length;
                     current_folder = current_folder-1;
                     var folder = $("#data").find(".jstree-node").eq(current_folder);
-                    alert(folder_name);
+
                     $.ajax({
                         url: "<?php echo site_url('lessons/add_folder');?>",
                         type: "POST",
