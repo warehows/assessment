@@ -13,6 +13,18 @@ $logged_in=$this->session->userdata('logged_in');
  
   <div class="col-lg-6">
     <form method="post" action="<?php echo site_url('quiz/index/0/'.$list_view);?>">
+        <select   name="cid">
+            <option value="0"><?php echo $this->lang->line('all_category');?></option>
+            <?php
+            foreach($category_list as $key => $val){
+                ?>
+
+                <option value="<?php echo $val['cid'];?>" ><?php echo $val['category_name'];?></option>
+                <?php
+            }
+            ?>
+        </select>
+
 	<div class="input-group">
     <input type="text" class="form-control" name="search" placeholder="<?php echo $this->lang->line('search');?>...">
       <span class="input-group-btn">
@@ -77,6 +89,7 @@ if(count($result)==0){
 }
 foreach($result as $key => $val){
 ?>
+    <?php if ($logged_in['su'] > 1 && $logged_in['uid'] != $val['uid']): continue; endif; ?>
 <tr>
  <td><?php echo $val['quid'];?></td>
  <td><?php echo substr(strip_tags($val['quiz_name']),0,50);?></td>
@@ -119,7 +132,8 @@ $colorcode=array(
 );
 foreach($result as $key => $val){
 ?>
-	  
+    <?php if ($logged_in['su'] > 1 && $logged_in['uid'] != $val['uid']): continue; endif; ?>
+
 	                <!-- item -->
                 <div class="col-md-4 text-center">
                     <div class="panel panel-<?php echo $colorcode[$cc];?> panel-pricing">
@@ -135,7 +149,7 @@ foreach($result as $key => $val){
                             <li class="list-group-item"><i class="fa fa-check"></i> <?php echo $this->lang->line('maximum_attempts');?>: <?php echo $val['maximum_attempts'];?></li>
                             </ul>
                         <div class="panel-footer">
-                         
+
 						 
 <a href="<?php echo site_url('quiz/quiz_detail/'.$val['quid']);?>" class="btn btn-success"  ><?php echo $this->lang->line('attempt');?> </a>
 

@@ -9,12 +9,13 @@ class Quiz extends CI_Controller
         parent::__construct();
         $this->load->database();
         $this->load->model("quiz_model");
+        $this->load->model("qbank_model");
         $this->load->model("user_model");
         $this->lang->load('basic', $this->config->item('language'));
 
     }
 
-    public function index($limit = '0', $list_view = 'grid')
+    public function index($limit = '0', $list_view = 'table')
     {
 
         // redirect if not loggedin
@@ -30,6 +31,9 @@ class Quiz extends CI_Controller
 
 
         $logged_in = $this->session->userdata('logged_in');
+
+        $data['category_list']=$this->qbank_model->category_list();
+        $data['level_list']=$this->qbank_model->level_list();
         $data['quiz_model'] = $this->quiz_model;
         $data['list_view'] = $list_view;
         $data['limit'] = $limit;
