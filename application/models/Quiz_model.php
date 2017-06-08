@@ -25,11 +25,6 @@ Class Quiz_model extends CI_Model
             $gid = $logged_in['gid'];
             $where = "FIND_IN_SET('" . $gid . "', gids)";
             $this->db->where($where);
-        }else{
-            // if not admin, list only quiz list created by teacher
-            if($logged_in['uid'] != 1) {
-                $this->db->where('uid', $logged_in['uid']);
-            }
         }
 
 
@@ -40,6 +35,14 @@ Class Quiz_model extends CI_Model
             $this->db->or_like('description', $search);
 
         }
+
+        if ($this->input->post('cid')) {
+            $search = $this->input->post('search');
+            $this->db->or_where('cid', $this->input->post('cid'));
+
+
+        }
+
         $this->db->limit($this->config->item('number_of_rows'), $limit);
         $this->db->order_by('quid', 'desc');
         $query = $this->db->get('savsoft_quiz');
