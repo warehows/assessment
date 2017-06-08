@@ -2,26 +2,11 @@
     var jQuery_1_12_4 = $.noConflict(true);
 </script>
 
-<style>
-    .folder_content_holder {
-        border: 1px solid black;
-        height: auto;
-        width: 100%;
-    }
-    .file_content{
-        border:1px solid black;
-    }
-</style>
-
-<link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
-
 <?php $this->load->helper('url'); ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>js/jstree/dist/themes/default/style.min.css"/>
 <script src="<?php echo base_url(); ?>js/jstree/dist/jstree.min.js"></script>
-
 <div class="mdl-stepper-demo">
+
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--12-col">
             <!-- markup -->
@@ -92,18 +77,14 @@
                     <div class="mdl-step__content">
 
                         <div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                            <div id="data"></div>
-                            <div id="folder_content_container" class="folder_content_container">
-                                <div id="fileuploader" class="mdl-cell--12-col-desktop">Upload Files</div>
-                                <input type="button" id="start_upload" value="Start Uploading">
 
-                                <div class="mdl-cell--12-col-desktop">
-                                    <table class="table" id="file_container">
-
-                                    </table>
-                                </div>
-
+                            <button id="add_folder_toggle">Add Folder</button>
+                            <div id="folder_name_container">
+                                <input type="text" placeholder="Folder Name" id="folder_name"/>
+                                <input type="button" value="Add" id="add_folder"/>
                             </div>
+
+                            <div id="data"></div>
                         </div>
 
                     </div>
@@ -120,13 +101,15 @@
                     </div>
                 </li>
                 <li class="mdl-step">
-                    <span class="mdl-step__label">
-                        <span class="mdl-step__title">
-                            <span class="mdl-step__title-text">Lesson Label</span>
-                        </span>
-                    </span>
+                            <span class="mdl-step__label">
+                                <span class="mdl-step__title">
+                                    <span class="mdl-step__title-text">Lesson Label</span>
+                                </span>
+                            </span>
 
                     <div class="mdl-step__content">
+
+
 
                     </div>
                     <div class="mdl-step__actions">
@@ -185,86 +168,8 @@
     $(document).ready(function () {
 
         var lesson_id;
-        var folder_name;
         var folder_id_counter = 0;
         var current_selected;
-        var lesson_folder_id;
-        var lesson_contents_id;
-        var lesson_contents;
-        var uploadObj = $("#fileuploader").uploadFile({
-            url: "<?php echo site_url('/lessons/upload_files')?>",
-            showDownload: false,
-            dragdropWidth: '100%',
-            fileName: "myfile",
-            allowedTypes: "jpg,png,gif",
-            uploadStr: "Upload Files",
-            sequential: true,
-            sequentialCount: 1,
-            autoSubmit: false,
-            showDelete: true,
-            formData: {key1: 'value1', key2: 'value2'},
-            dynamicFormData: function () {
-                var data = {lesson_id: lesson_id, folder_name: folder_name};
-                return data;
-            },
-            downloadCallback: function (files, pd) {
-                location.href = "<?php echo site_url('/lessons/upload_files')?>?myfile=" + files;
-            },
-            onSuccess: function (files, data, xhr, pd) {
-                lesson_folder_id = data;
-                lesson_folder_id = lesson_folder_id.replace('"', "");
-                lesson_folder_id = lesson_folder_id.replace('"', "");
-
-                $.ajax({
-                    url: "<?php echo site_url('lessons/save_files_to_database');?>",
-                    type: "POST",
-                    data: {content: files, lesson_folder_id: lesson_folder_id}
-                }).done(function (values) {
-                    lesson_contents_id = values;
-                });
-
-                $.ajax({
-                    url: "<?php echo site_url('lessons/update_files');?>",
-                    type: "POST",
-                    data: {lesson_folder_id: lesson_folder_id}
-                }).done(function (values) {
-                    lesson_contents = JSON.parse(values);
-                    var append;
-                    $("#file_container").empty();
-                    $.each(lesson_contents,function(key,value){
-
-                        append = "<tr><td>"+value['content']+"</td></tr>";
-                        $("#file_container").append(append);
-                    });
-
-
-                });
-            },
-            deleteCallback: function (data, pd) {
-                var filename = pd.filename[0].childNodes[0].wholeText;
-
-                $.post("<?php echo site_url('/lessons/delete_upload_files')?>", {
-                        op: "delete",
-                        filename: filename,
-                        lesson_id: lesson_id,
-                        folder_name: folder_name,
-                    },
-                    function (resp, textStatus, jqXHR) {
-                        console.log(resp);
-
-
-                    });
-//               pd.statusbar.hide();
-            }
-
-        });
-
-        $("#start_upload").click(function () {
-            uploadObj.startUpload();
-        });
-        $("#download").click(function () {
-            uploadObj.getResponses();
-        });
 
         $("#folder_name_container").hide();
 
@@ -272,28 +177,62 @@
         $('#data').jstree({
             'core': {
                 "check_callback": true,
-                'data': [
-                    {"id": "1", "text": "E_1"},
-                    {"id": "2", "text": "E_2"},
-                    {"id": "3", "text": "E_3"},
-                    {"id": "4", "text": "E_4"},
-                    {"id": "5", "text": "E_5"}
-                ]
+                'data': []
             },
 
         })
-            .on('create_node.jstree', function (e, data) {
-            })
+            .on('create_node.jstree', function (e, data) {})
             .on("select_node.jstree", function (e, data) {
 
                 $(this).find("li").find("a");
-                $(document).delegate($(this).find("#" + data.selected[0]), 'action_buttons', function (event) {
-                    $(event.currentTarget).find("#" + data.selected[0]).find(".folder_action_button").remove();
+                $(document).delegate($(this).find("#"+data.selected[0]), 'hakhak', function(event){
+                    $(event.currentTarget).find("#"+data.selected[0]).find(".folder_action_button").remove();
                 });
-                $(document).trigger("action_buttons");
-                $(this).find("#" + data.selected[0]).find("a").after('<input type="button" class="open_folder folder_action_button" id="open_folder_' + data.selected[0] + '" value="Open Folder" />');
-                $("#folder_content_container").hide();
+                $(document).trigger("hakhak");
+                $(this).find("#"+data.selected[0]).find("a").after('<input type="button" class="open_folder folder_action_button" id="open_folder_'+data.selected[0]+'" value="Open Folder" /><input type="button" value="Edit" class="edit_folder folder_action_button" id="edit_folder_'+data.selected[0]+'" /><input type="button" value="Delete" class="delete_folder folder_action_button" id="delete_folder_'+data.selected[0]+'" />');
+
             });
+
+        $(document).delegate('.edit_folder', 'click', function(event){
+
+            var current_folder_edit_id = $(event.currentTarget).attr("id");
+            current_folder_edit_id = current_folder_edit_id.replace("edit_folder_","");
+            var current_folder_text = $(event.currentTarget).siblings().eq(1).text();
+            $(event.currentTarget).parent().children().eq(1).hide();
+            $(event.currentTarget).parent().children().eq(2).hide();
+            $(event.currentTarget).parent().children().eq(3).hide();
+            $(event.currentTarget).parent().children().eq(4).hide();
+            $(event.currentTarget).parent().children().eq(0).after('<i class="jstree-icon jstree-themeicon" role="presentation"></i><input type="text" id="rename_current_folder_'+current_folder_edit_id+'" value="'+current_folder_text+'">');
+            $("#rename_current_folder_"+current_folder_edit_id).focus().select().focusout(function(){
+                $("#data").jstree('rename_node', current_folder_edit_id , $("#rename_current_folder_"+current_folder_edit_id).val() );
+                var edited_text = $("#rename_current_folder_"+current_folder_edit_id).val();
+                $.ajax({
+                    url: "<?php echo site_url('lessons/delete_folder');?>",
+                    type: "POST",
+                    data: {lesson_id: lesson_id, folder_name: edited_text}
+                }).done(function(values){
+                    console.log(values);
+                });
+            });
+
+        });
+
+        $(document).delegate('.delete_folder', 'click', function(event){
+
+            var current_folder_delete_id = $(event.currentTarget).attr("id");
+            current_folder_delete_id = current_folder_delete_id.replace("delete_folder_","");
+            var folder_name = $(event.currentTarget).siblings().eq(1).text();
+            var instance = $("#data").jstree(true);
+            instance.delete_node(current_folder_delete_id);
+            $.ajax({
+                url: "<?php echo site_url('lessons/delete_folder');?>",
+                type: "POST",
+                data: {lesson_id: lesson_id, folder_name: folder_name}
+            }).done(function(values){
+                console.log(values);
+            });
+
+        });
 
         //save lesson to database
         $("#step_1_submit").click(function (e) {
@@ -305,7 +244,7 @@
             //if there is lesson name or not
             if (lesson_name) {
                 $.ajax({
-                    url: "<?php echo site_url('lessons/save_lesson_with_folder');?>",
+                    url: "<?php echo site_url('lessons/save_lesson');?>",
                     type: "POST",
                     data: {lesson_name: lesson_name, subject_id: subject_id, level_id: level_id}
                 }).done(function (values) {
@@ -329,7 +268,6 @@
 
             } else {
                 $("#lesson_name").focus();
-
             }
             //if there is lesson name or not
         });
@@ -337,17 +275,32 @@
         $("#add_folder_toggle").click(function () {
             $("#folder_name_container").toggle();
         });
-        $("#folder_content_container").hide();
 
-        $(document).delegate('.open_folder', 'click', function (event) {
+        $("#add_folder").click(function () {
+            var folder_name = $("#folder_name").val();
+            if (folder_name) {
+                folder_id_counter++;
+                $('#data').jstree().create_node('#', {
+                    "id": folder_id_counter,
+                    "text": folder_name
+                }, "last", function () {
+                    var current_folder = $(".jstree-node").length;
+                    current_folder = current_folder-1;
+                    var folder = $("#data").find(".jstree-node").eq(current_folder);
 
-            $("#folder_content_container").show();
-            var current_folder_id = $(event.currentTarget).attr("id");
-            current_folder_id = current_folder_id.replace("open_folder_", "");
-            folder_name = $(event.currentTarget).siblings().eq(1).text();
+                    $.ajax({
+                        url: "<?php echo site_url('lessons/add_folder');?>",
+                        type: "POST",
+                        data: {lesson_id: lesson_id, folder_name: folder_name}
+                    }).done(function (values) {
 
+                    });
+                });
+            } else {
+                $("folder_name").focus();
+            }
+            $("#folder_name_container").toggle();
         });
-
 
     });
 </script>
