@@ -116,18 +116,23 @@ class Lessons extends CI_Controller
             }
 
         }
-        $data = array("lesson_id"=>$_POST['lesson_id'],"folder_name"=>$_POST['folder_name']);
+        $data = array("lesson_id" => $_POST['lesson_id'], "folder_name" => $_POST['folder_name']);
         $data = $this->lessons_model->get_current_folder($data);
         print_r(json_encode($data[0]['id']));
 
 
-
-
     }
 
-    public function delete_upload_files()
+    public function get_current_folder()
     {
-        // redirect if not loggedin
+        $data = $this->input->post();
+        $data = $this->lessons_model->get_current_folder($data);
+        print_r(json_encode($data));
+    }
+
+
+    public function delete_upload_files_by_id()
+    {
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
         }
@@ -141,12 +146,31 @@ class Lessons extends CI_Controller
         $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
         $folder = $output_dir . $folder_to_create . "/";
 
-//        $faerunamae = str_replace('["',"",$_POST['filename']);
-//        $faerunamae = str_replace('"]',"",$faerunamae);
-//        $faerunamae = str_replace('"',"",$faerunamae);
+        $filename = $_POST['filename'];
 
+        $data = array("id" => $_POST['lesson_contents_id']);
 
-//        print_r($output_dir.$faerunamae);
+        $data = $this->lessons_model->delete_file_by_id($data);
+        unlink($folder . $filename);
+        print_r($folder . $filename);
+
+    }
+
+    public function delete_upload_files()
+    {
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/assessment/upload/lessons/";
+
+        $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
+        $folder = $output_dir . $folder_to_create . "/";
+
         $filename = $_POST['filename'];
         $filename = explode(" ", $filename);
         $filename_count = count($filename) - 1;
@@ -155,13 +179,13 @@ class Lessons extends CI_Controller
         unset($filename[$filename_count_minus_one]);
         unset($filename[0]);
         $filename = implode(" ", $filename);
-        $data = array("content"=>$filename,"folder_name"=>$_POST['folder_name'],"lesson_id"=>$_POST['lesson_id']);
+        $data = array("content" => $filename, "folder_name" => $_POST['folder_name'], "lesson_id" => $_POST['lesson_id']);
         $data = $this->lessons_model->join_tables($data);
         $data = $data[0];
         $data = $this->lessons_model->delete_file_by_id($data);
         print_r($data);
 
-//        unlink($folder . $filename);
+        unlink($folder . $filename);
 
 
     }
@@ -182,9 +206,9 @@ class Lessons extends CI_Controller
         $data = $this->input->post();
 
         $data = array(
-            "lesson_folder_id"=>$data['lesson_folder_id'],
-            "content_type"=>"file",
-            "content"=>$data['content'][0],
+            "lesson_folder_id" => $data['lesson_folder_id'],
+            "content_type" => "file",
+            "content" => $data['content'][0],
         );
 
         $data = $this->lessons_model->save_files_to_database($data);

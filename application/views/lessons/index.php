@@ -8,8 +8,9 @@
         height: auto;
         width: 100%;
     }
-    .file_content{
-        border:1px solid black;
+
+    .file_content {
+        border: 1px solid black;
     }
 </style>
 
@@ -191,6 +192,27 @@
         var lesson_folder_id;
         var lesson_contents_id;
         var lesson_contents;
+
+
+        function update_file_table(lesson_folder_id) {
+            $.ajax({
+                url: "<?php echo site_url('lessons/update_files');?>",
+                type: "POST",
+                data: {lesson_folder_id: lesson_folder_id}
+            }).done(function (values) {
+                lesson_contents = JSON.parse(values);
+                var append;
+                $("#file_container").empty();
+                $.each(lesson_contents, function (key, value) {
+
+                    append = "<tr><td>" + value['content'] + "</td><td><button id='" + value['id'] + "' name='" + value['content'] + "' class='delete_file_content'>Delete</button></td></tr>";
+                    $("#file_container").append(append);
+
+                });
+
+            });
+        }
+
         var uploadObj = $("#fileuploader").uploadFile({
             url: "<?php echo site_url('/lessons/upload_files')?>",
             showDownload: false,
@@ -221,24 +243,10 @@
                     data: {content: files, lesson_folder_id: lesson_folder_id}
                 }).done(function (values) {
                     lesson_contents_id = values;
+                    update_file_table(lesson_folder_id);
                 });
 
-                $.ajax({
-                    url: "<?php echo site_url('lessons/update_files');?>",
-                    type: "POST",
-                    data: {lesson_folder_id: lesson_folder_id}
-                }).done(function (values) {
-                    lesson_contents = JSON.parse(values);
-                    var append;
-                    $("#file_container").empty();
-                    $.each(lesson_contents,function(key,value){
 
-                        append = "<tr><td>"+value['content']+"</td></tr>";
-                        $("#file_container").append(append);
-                    });
-
-
-                });
             },
             deleteCallback: function (data, pd) {
                 var filename = pd.filename[0].childNodes[0].wholeText;
@@ -250,20 +258,41 @@
                         folder_name: folder_name,
                     },
                     function (resp, textStatus, jqXHR) {
-                        console.log(resp);
 
+                        update_file_table(lesson_folder_id);
 
                     });
-//               pd.statusbar.hide();
             }
 
         });
+
 
         $("#start_upload").click(function () {
             uploadObj.startUpload();
         });
         $("#download").click(function () {
             uploadObj.getResponses();
+        });
+
+        $(document).delegate(".delete_file_content", "click", function (event) {
+            var lesson_content_id_delete = $(event.currentTarget).attr('id');
+            var filename = $(event.currentTarget).attr('name');
+
+            $.ajax({
+                    url: "<?php echo site_url('lessons/delete_upload_files_by_id');?>",
+                    type: "POST",
+                    data: {
+                        lesson_contents_id: lesson_content_id_delete,
+                        filename: filename,
+                        lesson_id: lesson_id,
+                        folder_name: folder_name
+                    }
+                }
+            ).done(function (values) {
+                    update_file_table(lesson_folder_id);
+                    uploadObj.reset();
+                    console.log(values);
+                });
         });
 
         $("#folder_name_container").hide();
@@ -293,6 +322,20 @@
                 $(document).trigger("action_buttons");
                 $(this).find("#" + data.selected[0]).find("a").after('<input type="button" class="open_folder folder_action_button" id="open_folder_' + data.selected[0] + '" value="Open Folder" />');
                 $("#folder_content_container").hide();
+                uploadObj.reset();
+                folder_name = "E_" + data.selected[0];
+                $.ajax({
+                    url: "<?php echo site_url('lessons/get_current_folder');?>",
+                    type: "POST",
+                    data: {lesson_id: lesson_id, folder_name: folder_name}
+                }).done(function (values) {
+                    lesson_folder_id = JSON.parse(values);
+                    lesson_folder_id = lesson_folder_id[0];
+                    lesson_folder_id = lesson_folder_id.id;
+                    update_file_table(lesson_folder_id);
+                });
+
+
             });
 
         //save lesson to database

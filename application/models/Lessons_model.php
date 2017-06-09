@@ -122,6 +122,12 @@ Class Lessons_model extends CI_Model
         $this->db->delete('lesson_folder');
         return $data['folder_name'];
     }
+    function delete_upload_files_by_id($data)
+    {
+        $this->db->where('id', $data['lesson_folder_id']);
+        $query = $this->db->delete('lesson_contents');
+        return $data['lesson_folder_id'];
+    }
     function edit_folder($data)
     {
 
