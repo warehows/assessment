@@ -24,7 +24,7 @@
 		
 				<div class="form-group">	 
 					<label for="inputEmail" class="sr-only"><?php echo $this->lang->line('email_address');?></label> 
-					<input type="email" id="inputEmail" name="email" class="form-control" placeholder="<?php echo $this->lang->line('email_address');?>" required autofocus>
+					<input type="text" id="inputEmail" name="email" class="form-control" placeholder="<?php echo $this->lang->line('email_address');?>" required autofocus>
 			</div>
 			<div class="form-group">	  
 					<label for="inputPassword" class="sr-only"><?php echo $this->lang->line('password');?></label>

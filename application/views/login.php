@@ -35,7 +35,7 @@
                 ?>
                 <div class="mdl-cell mdl-cell--12-col" align="center">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="email" id="inputEmail" name="email" />
+                        <input class="mdl-textfield__input" type="text" id="inputEmail" name="email" />
                         <label class="mdl-textfield__label" for="inputEmail">Email Address</label>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
 <!--                        <div class="form-group">-->
 <!--                            <label for="inputEmail"-->
 <!--                                   class="sr-only">--><?php //echo $this->lang->line('email_address'); ?><!--</label>-->
-<!--                            <input type="email" id="inputEmail" name="email" class="form-control"-->
+<!--                            <input type="text" id="inputEmail" name="email" class="form-control"-->
 <!--                                   placeholder="--><?php //echo $this->lang->line('email_address'); ?><!--" required autofocus>-->
 <!--                        </div>-->
 <!--                        <div class="form-group">-->
