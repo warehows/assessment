@@ -61,7 +61,7 @@ body {
   padding:80px 0;
 }
 
-.contact-clean form .btn-primary {
+form .btn-primary {
   background-color:#68c9f0 !important;
   margin-top:15px;
   color:#fff;
@@ -93,11 +93,11 @@ form .form-control {
   font-size:13px;
 }
 
-.contact-clean form .btn:active {
+form .btn:active {
   transform:translateY(1px);
 }
 
-.contact-clean form .btn:hover {
+form .btn:hover {
   opacity:1;
 }
 
@@ -107,7 +107,7 @@ form .form-control {
   }
 }
 
-.contact-clean form .btn {
+form .btn {
   padding:16px 32px;
   border:none;
   background:none;
@@ -163,7 +163,7 @@ form .form-control {
 }
 
 .navbar.navbar-inverse.navbar-fixed-top.navigation-clean {
-  background-color:#f34e4a!important;
+  background-color:#40b74e!important;
 }
 
 .brand_logo {
@@ -201,7 +201,7 @@ form .form-control {
 
 .wrapper {
   /*padding:80px;*/
-  padding:80px 30px 30px 30px;
+  padding:80px 30px 0px 30px;
 }
 
 .click_paragraph {
@@ -213,5 +213,9 @@ form .form-control {
   box-shadow:none;
   background:none;
   pointer-events:none;
+}
+
+.wizard_title {
+  padding-bottom:20px;
 }
 

@@ -23,7 +23,7 @@
         if ($this->session->flashdata('message')) {
         ?>
             <div class="form-group has-feedback has-error">
-                <input class="form-control" type="text" name="email" placeholder="Password"><i
+                <input class="form-control" type="text" name="email" placeholder="ID Number"><i
                     class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></i>
 
                 <p class="help-block">Please enter the correct credentials</p>
