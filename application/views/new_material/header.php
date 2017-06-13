@@ -27,7 +27,7 @@
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav navbar-right">
                 <li role="presentation"><a href="<?php echo site_url('user');?>">Account </a></li>
-                <li role="presentation"><a href="<?php echo site_url('lessons/');?>">Create Lesson</a></li>
+                <li role="presentation"><a href="<?php echo site_url('lessons');?>">Create Lesson</a></li>
                 <li role="presentation"><a href="<?php echo site_url('user/new_user');?>">New User</a></li>
                 <li role="presentation"><a href="<?php echo site_url('qbank/pre_new_question');?>">New Question</a></li>
                 <li role="presentation"><a href="<?php echo site_url('quiz');?>">Quiz List</a></li>
