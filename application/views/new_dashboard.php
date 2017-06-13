@@ -8,7 +8,7 @@
                 <h3 class="text-center click_subtitle" align="center"><em>Learning Management System (LMS)</em></h3>
 
                 <div class="avatar-login" align="center"><img class="img-responsive avatar-img"
-                                                              src="assets/img/263916_142079905869802_5338795_n.jpg"
+                                                              src="<?php echo base_url('css/new_material/img/263916_142079905869802_5338795_n.jpg')?>"
                                                               alt="School Logo" data-bs-hover-animate="bounce"></div>
                 <h4>VISION: </h4>
 
@@ -30,10 +30,10 @@
         <div style="padding:0px;">
             <div class="carousel slide" data-ride="carousel" id="carousel-1">
                 <div class="carousel-inner" role="listbox">
-                    <div class="item active"><img class="img-responsive" src="<?php echo site_url("css/new_material/img/add1.png"); ?>" alt="Slide Image">
+                    <div class="item active"><img class="img-responsive" src="<?php echo base_url('css/new_material/img/add1.png')?>" alt="Slide Image">
                     </div>
-                    <div class="item"><img class="img-responsive" src="<?php echo site_url("css/new_material/img/-text2.png"); ?>" alt="Slide Image"></div>
-                    <div class="item"><img class="img-responsive" src="<?php echo site_url("css/new_material/img/-text3.png"); ?>" alt="Slide Image"></div>
+                    <div class="item"><img class="img-responsive" src="<?php echo base_url('css/new_material/img/-text2.png')?>" alt="Slide Image"></div>
+                    <div class="item"><img class="img-responsive" src="<?php echo base_url('css/new_material/img/-text3.png')?>" alt="Slide Image"></div>
                 </div>
                 <div><a class="left carousel-control" href="#carousel-1" role="button" data-slide="prev"><i
                             class="glyphicon glyphicon-chevron-left"></i><span class="sr-only">Previous</span></a><a
@@ -61,10 +61,11 @@
         </footer>
     </div>
 
-    <script src="<?php echo site_url("css/new_material/bootstrap/js/jquery.min.js"); ?>"></script>
-    <script src="<?php echo site_url("css/new_material/js/bs-animation.js"); ?>"></script>
-    <script src="<?php echo site_url("css/new_material/js/custom.js"); ?>"></script>
-    <script src="<?php echo site_url("css/new_material/MUSA_form-wizard.js"); ?>"></script>
+    <script src="<?php echo base_url("css/new_material/js/jquery.min.js"); ?>"></script>
+    <script src="<?php echo base_url("css/new_material/bootstrap/js/bootstrap.min.js"); ?>"></script>
+    <script src="<?php echo base_url("css/new_material/js/bs-animation.js"); ?>"></script>
+    <script src="<?php echo base_url("css/new_material/MUSA_form-wizard.js"); ?>"></script>
+    <script src="<?php echo base_url("css/new_material/js/custom.js"); ?>"></script>
 
 </div>
 

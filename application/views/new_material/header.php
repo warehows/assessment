@@ -28,10 +28,10 @@
             <ul class="nav navbar-nav navbar-right">
                 <li role="presentation"><a href="#">Account </a></li>
                 <li role="presentation"><a href="<?php echo site_url('lessons/');?>">Create Lesson</a></li>
-                <li role="presentation"><a href="#">Creation </a></li>
+                <li role="presentation"><a href="#">Add  </a></li>
                 <li role="presentation"><a href="#">My Task </a></li>
                 <li role="presentation"><a href="#">Report </a></li>
-                <li role="presentation"><a href="<?php echo site_url('user/logout');?>">Create Lesson</a></li>
+                <li role="presentation"><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
             </ul>
         </div>
     </div>
