@@ -1,25 +1,25 @@
  <div class="container">
 
-   
+
  <h3><?php echo $title;?></h3>
-   
- 
+
+
 
   <div class="row">
      <form method="post" id="quiz_detail" action="<?php echo site_url('quiz/validate_quiz/'.$quiz['quid']);?>">
-	
+
 <div class="col-md-12">
-<br> 
+<br>
  <div class="login-panel panel panel-default">
-		<div class="panel-body"> 
-	
-	
-	
-			<?php 
+		<div class="panel-body">
+
+
+
+			<?php
 		if($this->session->flashdata('message')){
-			echo $this->session->flashdata('message');	
+			echo $this->session->flashdata('message');
 		}
-		?>	
+		?>
 <table class="table table-bordered">
 <tr><td><?php echo $this->lang->line('quiz_name');?></td><td><?php echo $quiz['quiz_name'];?></td></tr>
 <tr><td colspan='2'><?php echo $this->lang->line('description');?><br><?php echo $quiz['description'];?></td></tr>
@@ -29,12 +29,12 @@
 <tr><td><?php echo $this->lang->line('maximum_attempts');?></td><td><?php echo $quiz['maximum_attempts'];?></td></tr>
 <tr><td><?php echo $this->lang->line('pass_percentage');?></td><td><?php echo $quiz['pass_percentage'];?></td></tr>
 <tr><td><?php echo $this->lang->line('correct_score');?></td><td><?php echo $quiz['correct_score'];?></td></tr>
-<tr><td><?php echo $this->lang->line('incorrect_score');?></td><td><?php echo $quiz['incorrect_score'];?></td></tr>
+<!--<tr><td>--><?php //echo $this->lang->line('incorrect_score');?><!--</td><td>--><?php //echo $quiz['incorrect_score'];?><!--</td></tr>-->
 
 </table>
-  
 
-<?php 
+
+<?php
 if($this->session->userdata('logged_in')){
 if($quiz['camera_req']==1 && $this->config->item('webcam')==true){
 ?>
@@ -51,13 +51,13 @@ if($quiz['camera_req']==1 && $this->config->item('webcam')==true){
 		});
 		Webcam.attach( '#my_photo' );
 
-		
+
 		 function take_snapshot() {
 		     Webcam.snap( function(data_uri) {
                 document.getElementById('my_photo').innerHTML = '<img src="'+data_uri+'"/>';
             } );
         }
-		
+
 		function upload_photo(){
 		Webcam.snap( function(data_uri) {
 
@@ -68,52 +68,52 @@ if($quiz['camera_req']==1 && $this->config->item('webcam')==true){
 	 document.getElementById('quiz_detail').submit();
     });
 	});
-	
+
 	}
-	
+
 	 function capturephoto(){
-		 
-		void(take_snapshot());upload_photo(); 
+
+		void(take_snapshot());upload_photo();
 	 }
 	</script>
-	
+
 	<button class="btn btn-success" type="button" onClick="javascript:capturephoto();"><?php echo $this->lang->line('capture_start_quiz');?></button>
 
-<?php 
+<?php
 }else{
-?>	
+?>
 	<button class="btn btn-success" type="submit"><?php echo $this->lang->line('start_quiz');?></button>
- 
- <?php 
+
+ <?php
 }
 }else{
-	if($quiz['with_login']==0){ 
+	if($quiz['with_login']==0){
 	?>
-	
+
 	<button class="btn btn-success" type="submit"><?php echo $this->lang->line('start_quiz');?></button>
  &nbsp;&nbsp;&nbsp;&nbsp; <a href="<?php echo site_url('quiz/open_quiz/0');?>" ><?php echo $this->lang->line('back');?></a>
 
-	
-	<?php 
+
+	<?php
 	}else{
 ?>
 <div class="alert alert-danger"><?php echo str_replace('{base_url}',base_url(),$this->lang->line('login_required'));?></div>
 &nbsp;&nbsp;&nbsp;&nbsp; <a href="<?php echo site_url('quiz/open_quiz/0');?>" ><?php echo $this->lang->line('back');?></a>
 <?php
-	} 
+	}
 }
 ?>
 		</div>
 </div>
- 
- 
- 
- 
+
+
+
+
 </div>
       </form>
 </div>
 
- 
+
 
 
 

@@ -73,16 +73,17 @@
                             <input type="text" name="correct_score" value="1" class="form-control"
                                    placeholder="<?php echo $this->lang->line('correct_score'); ?>" required>
                         </div>
-                        <div class="form-group">
-                            <label for="inputEmail"><?php echo $this->lang->line('incorrect_score'); ?></label>
-                            <input type="text" name="incorrect_score" value="0" class="form-control"
-                                   placeholder="<?php echo $this->lang->line('incorrect_score'); ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail"><?php echo $this->lang->line('ip_address'); ?></label>
-                            <input type="text" name="ip_address" value="" class="form-control"
+<!--                        <div class="form-group">-->
+<!--                            <label for="inputEmail">--><?php //echo $this->lang->line('incorrect_score'); ?><!--</label>-->
+                        <input type="hidden" name="incorrect_score" value="0"
+                               class="form-control"
+                               placeholder="<?php echo $this->lang->line('incorrect_score'); ?>">
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="inputEmail">--><?php //echo $this->lang->line('ip_address'); ?><!--</label>-->
+                            <input type="hidden" name="ip_address" value="0" class="form-control"
                                    placeholder="<?php echo $this->lang->line('ip_address'); ?>">
-                        </div>
+<!--                        </div>-->
                         <div class="form-group">
                             <label for="inputEmail"><?php echo $this->lang->line('view_answer'); ?></label> <br>
                             <input type="radio" name="view_answer" value="1"
@@ -96,24 +97,51 @@
                             <input type="radio" name="with_login" value="1"
                                    checked> <?php echo $this->lang->line('no'); ?>
                         </div>
-                        <?php
-                        if ($this->config->item('webcam') == true) {
-                            ?>
-                            <div class="form-group">
-                                <label for="inputEmail"><?php echo $this->lang->line('capture_photo'); ?></label> <br>
-                                <input type="radio" name="camera_req" value="1"> <?php echo $this->lang->line('yes'); ?>
-                                &nbsp;&nbsp;&nbsp;
-                                <input type="radio" name="camera_req" value="0"
-                                       checked> <?php echo $this->lang->line('no'); ?>
-                            </div>
-                            <?php
-                        } else {
-                            ?>
-                            <input type="hidden" name="camera_req" value="0">
+<!--                        --><?php
+//                        if ($this->config->item('webcam') == true) {
+//                            ?>
+<!--                            <div class="form-group">-->
+<!--                                <label for="inputEmail">--><?php //echo $this->lang->line('capture_photo'); ?><!--</label> <br>-->
+<!--                                <input type="radio" name="camera_req" value="1"> --><?php //echo $this->lang->line('yes'); ?>
+<!--                                &nbsp;&nbsp;&nbsp;-->
+                                <input type="hidden" name="camera_req" value="0"
+                                       checked>
+                        <?php //echo $this->lang->line('no'); ?>
+<!--                            </div>-->
+<!--                            --><?php
+//                        } else {
+//                            ?>
+<!--                            <input type="hidden" name="camera_req" value="0">-->
+<!---->
+<!--                            --><?php
+//                        }
+//                        ?>
 
-                            <?php
-                        }
-                        ?>
+                        <div class="form-group">
+                            <label for="inputEmail"><?php echo $this->lang->line('question_selection'); ?></label> <br>
+                            <input type="radio" name="question_selection"
+                                   value="1"> <?php echo $this->lang->line('automatically'); ?><br>
+                            <input type="radio" name="question_selection" value="0"
+                                   checked> <?php echo $this->lang->line('manually'); ?>
+                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <label for="inputEmail">--><?php //echo $this->lang->line('generate_certificate'); ?><!--</label>-->
+<!--                            <br>-->
+<!--                            <input type="radio" name="gen_certificate"-->
+<!--                                   value="1"> --><?php //echo $this->lang->line('yes'); ?><!--<br>-->
+                            <input type="hidden" name="gen_certificate" value="0"
+                                   checked>
+<!--                        --><?php //echo $this->lang->line('no'); ?>
+<!--                        </div>-->
+
+<!--                        <div class="form-group">-->
+<!--                            <label for="inputEmail">--><?php //echo $this->lang->line('certificate_text'); ?><!--</label>-->
+<!--                            <textarea name="certificate_text" class="form-control"></textarea><br>-->
+<!--                            --><?php //echo $this->lang->line('tags_use'); ?><!-- --><?php //echo htmlentities("<br>  <center></center>  <b></b>  <h1></h1>  <h2></h2>   <h3></h3>    <font></font>"); ?>
+<!--                            <br>-->
+<!--                            {email}, {first_name}, {last_name}, {quiz_name}, {percentage_obtained}, {score_obtained},-->
+<!--                            {result}, {generated_date}, {result_id}, {qr_code}-->
+<!--                        </div>-->
                         <div class="form-group">
                             <label><?php echo $this->lang->line('select_group'); ?></label> <br>
                             <?php
@@ -128,32 +156,6 @@
                             }
                             ?>
                         </div>
-
-                        <div class="form-group">
-                            <label for="inputEmail"><?php echo $this->lang->line('question_selection'); ?></label> <br>
-                            <input type="radio" name="question_selection"
-                                   value="1"> <?php echo $this->lang->line('automatically'); ?><br>
-                            <input type="radio" name="question_selection" value="0"
-                                   checked> <?php echo $this->lang->line('manually'); ?>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail"><?php echo $this->lang->line('generate_certificate'); ?></label>
-                            <br>
-                            <input type="radio" name="gen_certificate"
-                                   value="1"> <?php echo $this->lang->line('yes'); ?><br>
-                            <input type="radio" name="gen_certificate" value="0"
-                                   checked> <?php echo $this->lang->line('no'); ?>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputEmail"><?php echo $this->lang->line('certificate_text'); ?></label>
-                            <textarea name="certificate_text" class="form-control"></textarea><br>
-                            <?php echo $this->lang->line('tags_use'); ?> <?php echo htmlentities("<br>  <center></center>  <b></b>  <h1></h1>  <h2></h2>   <h3></h3>    <font></font>"); ?>
-                            <br>
-                            {email}, {first_name}, {last_name}, {quiz_name}, {percentage_obtained}, {score_obtained},
-                            {result}, {generated_date}, {result_id}, {qr_code}
-                        </div>
-
 
                         <button class="btn btn-success" type="submit"><?php echo $this->lang->line('next'); ?></button>
 
