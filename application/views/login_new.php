@@ -34,7 +34,7 @@
         }else{
         ?>
             <div class="form-group has-feedback">
-                <input class="form-control" type="text" name="email" placeholder="User Id" inputmode="email">
+                <input class="form-control" type="text" name="email" placeholder="User ID" inputmode="email">
             </div>
 
         <?php } ?>

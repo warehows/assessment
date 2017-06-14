@@ -35,9 +35,9 @@ class Lessons extends CI_Controller
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
-        $this->load->view('material_part/header_material', $data);
+        $this->load->view('new_material/header', $data);
         $this->load->view('lessons/index.php', $data);
-        $this->load->view('material_part/footer_material', $data);
+        $this->load->view('new_material/footer', $data);
     }
 
     public function save_lesson()
@@ -311,6 +311,24 @@ class Lessons extends CI_Controller
         $data = $this->lessons_model->edit_folder($data);
 
         echo $data;
+
+    }
+
+    public function display_all_quizzes()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $data = $this->quiz_model->getCollection("savsoft_quiz","quiz_name,quid");
+
+        print_r(json_encode($data));
 
     }
 
