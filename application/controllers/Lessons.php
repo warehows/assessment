@@ -332,6 +332,53 @@ class Lessons extends CI_Controller
 
     }
 
+    public function add_quizzes_to_lessons()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $data = $this->input->post();
+        $data_selected_quizzes = $data['selected_quizzes'];
+
+        foreach($data_selected_quizzes as $key=>$value){
+            $data = array(
+                "lesson_folder_id"=>$data['lesson_folder_id'],
+                "content_type"=>$data['content_type'],
+                "content"=>$value,
+            );
+            $this->lessons_model->save_files_to_database($data);
+        }
+        print_r(json_encode("kaka"));
+
+    }
+
+    public function get_quiz()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $data = $this->input->post();
+
+        $data = $this->quiz_model->get_quiz($data['quid']);
+
+        print_r(json_encode($data));
+
+    }
+
     public function step2()
     {
         // redirect if not loggedin

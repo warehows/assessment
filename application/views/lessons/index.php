@@ -2,6 +2,12 @@
     var jQuery_1_12_4 = $.noConflict(true);
 </script>
 
+<style>
+    .checked_tr {
+        background-color: rgb(230, 230, 230);
+    }
+</style>
+
 <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
@@ -35,75 +41,76 @@
                     </ul>
                 </div>
 
-                    <div class="tab-content">
-                        <div id="step1" class="tab-pane active" role="tabpanel">
-                            <div style="padding:10%;padding-top:0px;">
-                                <h3 class="wizard_title"><strong>Lesson</strong></h3>
+                <div class="tab-content">
+                    <div id="step1" class="tab-pane active" role="tabpanel">
+                        <div style="padding:10%;padding-top:0px;">
+                            <h3 class="wizard_title"><strong>Lesson</strong></h3>
 
-                                <div class="form-group">
-                                    <label class="control-label" for="start_date">Lesson Title </label>
-                                    <input class="form-control" type="text" name="lesson_name" required=""
-                                           placeholder="Lesson Title" inputmode="email" id="lesson_name">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label" for="end_date">Subject </label>
-                                    <select class="form-control" id="subject_id">
-                                        <?php foreach ($all_subjects as $key => $value) { ?>
-
-                                            <option
-                                                value="<?php echo $value['cid'] ?>"><?php echo $value['category_name'] ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label" for="duration">Grade Level </label>
-                                    <select class="form-control " id="level_id">
-                                        <?php foreach ($all_levels as $key => $value) { ?>
-
-                                            <option
-                                                value="<?php echo $value['lid'] ?>">
-                                                Grade <?php echo $value['level_name'] ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                                <ul class="list-inline pull-right">
-                                    <li>
-                                        <button class="btn btn-primary btn-info-full next-step" id="step_1_submit" type="button">Next
-                                        </button>
-                                    </li>
-                                </ul>
+                            <div class="form-group">
+                                <label class="control-label" for="start_date">Lesson Title </label>
+                                <input class="form-control" type="text" name="lesson_name" required=""
+                                       placeholder="Lesson Title" inputmode="email" id="lesson_name">
                             </div>
-                        </div>
-                        <div id="step2" class="tab-pane" role="tabpanel">
-                            <div style="padding:10%;padding-top:0px;">
-                                <h3 class="wizard_title"><strong>Upload Files</strong></h3>
+                            <div class="form-group">
+                                <label class="control-label" for="end_date">Subject </label>
+                                <select class="form-control" id="subject_id">
+                                    <?php foreach ($all_subjects as $key => $value) { ?>
 
-                                <div class="col-lg-6 col-lg-offset-0 col-md-6">
-                                    <div id="data"></div>
-                                    <div id="folder_content_container" class="folder_content_container">
-                                        <div id="fileuploader" class="mdl-cell--12-col-desktop">Upload Files</div>
-                                        <input type="button" id="start_upload" value="Start Uploading">
-                                        <input type="button" id="add_quiz" value="Add Quiz">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <table class="table" id="file_container">
-
-                                    </table>
-                                </div>
-                                <div class="clearfix"></div>
-                                <ul class="list-inline pull-right">
-                                    <li>
-                                        <button class="btn btn-primary prev-step" type="button">Previous</button>
-                                    </li>
-                                    <li>
-                                        <button class="btn btn-primary next-step" type="button">NEXT</button>
-                                    </li>
-                                </ul>
+                                        <option
+                                            value="<?php echo $value['cid'] ?>"><?php echo $value['category_name'] ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label" for="duration">Grade Level </label>
+                                <select class="form-control " id="level_id">
+                                    <?php foreach ($all_levels as $key => $value) { ?>
+
+                                        <option
+                                            value="<?php echo $value['lid'] ?>">
+                                            Grade <?php echo $value['level_name'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <ul class="list-inline pull-right">
+                                <li>
+                                    <button class="btn btn-primary btn-info-full next-step" id="step_1_submit"
+                                            type="button">Next
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
-                        <div id="step3" class="tab-pane active" role="tabpanel"></div>
                     </div>
+                    <div id="step2" class="tab-pane" role="tabpanel">
+                        <div style="padding:10%;padding-top:0px;">
+                            <h3 class="wizard_title"><strong>Upload Files</strong></h3>
+
+                            <div class="col-lg-6 col-lg-offset-0 col-md-6">
+                                <div id="data"></div>
+                                <div id="folder_content_container" class="folder_content_container">
+                                    <div id="fileuploader" class="mdl-cell--12-col-desktop">Upload Files</div>
+                                    <input type="button" id="start_upload" value="Start Uploading">
+                                    <input type="button" id="add_quiz" value="Add Quiz">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <table class="table" id="file_container">
+
+                                </table>
+                            </div>
+                            <div class="clearfix"></div>
+                            <ul class="list-inline pull-right">
+                                <li>
+                                    <button class="btn btn-primary prev-step" type="button">Previous</button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-primary next-step" type="button">NEXT</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="step3" class="tab-pane active" role="tabpanel"></div>
+                </div>
 
             </div>
         </div>
@@ -131,6 +138,7 @@
         var lesson_folder_id;
         var lesson_contents_id;
         var lesson_contents;
+        var selected_quiz_array = new Array();
 
 
         function update_file_table(lesson_folder_id) {
@@ -143,9 +151,24 @@
                 var append;
                 $("#file_container").empty();
                 $.each(lesson_contents, function (key, value) {
+                    if(value['content_type']=="quiz"){
+                        var quiz_id = value['content'];
+                        $.ajax({
+                            url: "<?php echo site_url('lessons/get_quiz');?>",
+                            type: "POST",
+                            data: {quid: quiz_id}
+                        }).done(function(value){
+                            value = JSON.parse(value);
+                            value['content'] = value.quiz_name;
+                            append = "<tr><td>" + value['content'] + "</td><td>quiz</td><td><button id='" + value['id'] + "' name='" + value['content'] + "' class='delete_file_content_haha'>Delete</button></td></tr>";
+                            $("#file_container").append(append);
+                        });
+                    }else{
+                        append = "<tr><td>" + value['content'] + "</td><td>" + value['content_type'] + "</td><td><button id='" + value['id'] + "' name='" + value['content'] + "' class='delete_file_content_haha'>Delete</button></td></tr>";
+                        $("#file_container").append(append);
+                    }
 
-                    append = "<tr><td>" + value['content'] + "</td><td><button id='" + value['id'] + "' name='" + value['content'] + "' class='delete_file_content_haha'>Delete</button></td></tr>";
-                    $("#file_container").append(append);
+
 
                 });
 
@@ -319,12 +342,30 @@
 
         });
 
-        $("#add_quiz").click(function(){
+        $("#add_quiz").click(function () {
             $.confirm({
                 columnClass: 'col-md-6 col-md-offset-3',
                 containerFluid: true, // this will add 'container-fluid' instead of 'container'
                 draggable: true,
-                draggable: true,
+                buttons: {
+                    confirm: function () {
+                        var checked_values = $('.select_quiz:checkbox:checked');
+                        $.each(checked_values,function(key,value){
+                            var values = $(value).attr("value");
+                            selected_quiz_array.push(values);
+                        });
+                        $.ajax({
+                            url: "<?php echo site_url('lessons/add_quizzes_to_lessons');?>",
+                            type: "POST",
+                            data: {selected_quizzes: selected_quiz_array,lesson_folder_id:lesson_folder_id,lesson_id:lesson_id,content_type:"quiz"},
+                        }).done(function(values){
+                            update_file_table(lesson_folder_id);
+                        });
+                    },
+                    cancel: function () {
+                        $.alert('Canceled!');
+                    }
+                },
                 content: function () {
                     var self = this;
                     return $.ajax({
@@ -335,21 +376,29 @@
                         response = JSON.parse(response);
 
                         self.setContentAppend('<table class="table-striped" width="100%"><tr><th>Quiz Name</th><th>Select</th></tr>');
-                        $.each(response,function(key,value){
-                            self.setContentAppend('<tr><td id="select_quiz_'+key+'">'+value.quiz_name+'</td>' +
-                                '<td><input type="checkbox" joeven="'+key+'" class="select_quiz" name="select_quiz" value="'+value.quid+'"></td>' +
+                        $.each(response, function (key, value) {
+                            self.setContentAppend('<tr class="selected_quiz_tr_' + key + '"><td id="select_quiz_' + key + '">' + value.quiz_name + '</td>' +
+                                '<td><input type="checkbox" name="quiz_selected[]" joeven="' + key + '" class="select_quiz" name="select_quiz" value="' + value.quid + '"></td>' +
                                 '</tr>');
                         });
                         self.setContentAppend('</table>');
 
-                    }).fail(function(){
+                    }).fail(function () {
                         self.setContent('Something went wrong.');
                     });
                 }
+
             });
         });
-        $(document).delegate('.select_quiz','click',function(event){
+
+        $(document).delegate('.select_quiz', 'click', function (event) {
             var selected_quiz = $(event.currentTarget).attr("joeven");
+
+            if($(event.currentTarget).is(":checked")){
+                $(".selected_quiz_tr_"+selected_quiz).css("background-color","rgb(230,230,230)");
+            }else{
+                $(".selected_quiz_tr_"+selected_quiz).css("background-color","");
+            }
 
         });
 
