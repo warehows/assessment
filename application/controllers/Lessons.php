@@ -190,6 +190,28 @@ class Lessons extends CI_Controller
 
     }
 
+    public function modify_folders(){
+        // redirect if not logged in
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $logged_in = $this->session->userdata('logged_in');
+        $data['title'] = $this->lang->line('Lessons');
+        $data['all_users'] = $this->user_model->get_all();
+        $data['all_subjects'] = $this->subjects_model->all();
+        $data['all_levels'] = $this->level_model->all();
+        $this->load->view('new_material/header', $data);
+        $this->load->view('lessons/index.php', $data);
+        $this->load->view('new_material/footer', $data);
+
+    }
+
     public function save_files_to_database()
     {
         // redirect if not loggedin

@@ -26,13 +26,11 @@
         </div>
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav navbar-right">
-                <li role="presentation"><a href="<?php echo site_url('user');?>">Account </a></li>
-                <li role="presentation"><a href="<?php echo site_url('lessons');?>">Create Lesson</a></li>
-                <li role="presentation"><a href="<?php echo site_url('user/new_user');?>">New User</a></li>
-                <li role="presentation"><a href="<?php echo site_url('qbank/pre_new_question');?>">New Question</a></li>
-                <li role="presentation"><a href="<?php echo site_url('quiz');?>">Quiz List</a></li>
-                <li role="presentation"><a href="<?php echo site_url('quiz/add_new');?>">New Quiz</a></li>
-                <li role="presentation"><a href="<?php echo site_url('result');?>">Result</a></li>
+                <li role="presentation"><a href="<?php echo site_url('user');?>">Login </a></li>
+                <li role="presentation"><a href="<?php echo site_url('lessons');?>">Lesson Bank</a></li>
+                <li role="presentation"><a href="<?php echo site_url('');?>">My Lesson</a></li>
+                <li role="presentation"><a href="<?php echo site_url('qbank/pre_new_question');?>">My Task</a></li>
+                <li role="presentation"><a href="<?php echo site_url('result');?>">Report</a></li>
                 <li role="presentation"><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
             </ul>
         </div>

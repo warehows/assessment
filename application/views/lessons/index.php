@@ -180,7 +180,7 @@
             showDownload: false,
             dragdropWidth: '100%',
             fileName: "myfile",
-            allowedTypes: "jpg,png,gif",
+            allowedTypes: "jpg,png,gif,pptx,ppt",
             uploadStr: "Upload Files",
             sequential: true,
             sequentialCount: 1,
