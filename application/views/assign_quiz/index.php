@@ -202,10 +202,24 @@
                     </span>
 
                     <div class="mdl-step__content">
-                        <div id="data" class="demo"></div>
+                        <?php $group = $this->user_model->group_list(); ?>
+                        <div class="form-group">
+                            <label><?php echo $this->lang->line('select_group'); ?></label> <br>
+                            <?php
+                            foreach ($group as $key => $val) {
+                                ?>
+
+                                <input class="gids" type="checkbox" name="gids[]"
+                                       value="<?php echo $val['gid']; ?>" <?php if ($key == 0) {
+                                    echo 'checked';
+                                } ?> > <?php echo $val['group_name']; ?> &nbsp;&nbsp;&nbsp;
+                                <?php
+                            }
+                            ?>
+                        </div>
                     </div>
                     <div class="mdl-step__actions">
-                        <button
+                        <button id="quiz_assign_group"
                             class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
                             data-stepper-next>
                             Save & Next
@@ -215,7 +229,7 @@
             </ul>
         </div>
     </div>
-
+<input type="hidden" id="latest-id">
 </div>
 <script>
     $(document).ready(function () {
@@ -345,6 +359,7 @@
                         data: {quiz_name: quiz_name, cid: subject}
                     }).done(function (values) {
                         latest_id = values;
+                        $('#latest-id').val(latest_id);
                         $.ajax({
                             url: "<?php echo site_url('assign/assessment_quiz_list/'); ?>",
                         }).done(function (value) {
@@ -518,6 +533,21 @@
                 });
             });
         });
+
+        //add group id to quiz
+        $("#quiz_assign_group").click(function () {
+            var gids = $('.gids:checked').serialize();
+            var quid = $('#latest-id').val();
+            $.ajax({
+                url: "<?php echo site_url('quiz/addGroupToQuiz');?>",
+                type: "POST",
+                data: {gids:gids,quid:quid},
+            }).done(function (values) {
+                alert(values);
+            });
+
+        });
+
 
 
     });

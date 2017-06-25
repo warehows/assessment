@@ -745,5 +745,20 @@ class Quiz extends CI_Controller
 
     }
 
+    public function addGroupToQuiz(){
+        $post = $this->input->post();
+        parse_str($post['gids'],$myArray);
+        $gids = implode(',', $myArray['gids']);
+        $quid = $post['quid'];
+
+        $userdata = array(
+            'gids' => $gids,
+        );
+        $this->db->where('quid', $quid);
+        $this->db->update('savsoft_quiz', $userdata);
+    }
+
+
+
 
 }
