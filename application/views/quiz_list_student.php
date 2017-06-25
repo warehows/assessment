@@ -101,7 +101,13 @@ foreach($result as $key => $val){
     <td><?php echo !empty($val['cid']) ? $quiz_model->get_category($val['cid'])['category_name'] : 'N/A' ?></td>
  <td><?php echo $name['first'].' '.$name['last']; ?></td>
  <td><?php echo $val['noq'];?></td>
- <td><?php echo $quiz_model->quiz_result($val['quid'])['result_status'];?></td>
+    <?php $status = $result_model->getStatus($logged_in['uid'],$val['quid']); ?>
+ <td>
+     <?php if (!$status){ ?>
+     <?php echo 'Pending' ;?>
+    <?php }else{; ?>
+    <?php echo $status; }; ?>
+ </td>
  <td><?php echo $start_date;?></td>
  <td><?php echo $end_date;?>
 <?php echo $days_left > 0 ? ' ('.$days_left.' days left)' : 'Expired'; ?></td>

@@ -102,8 +102,10 @@
 
 	           <li><a href="<?php echo site_url('result');?>"><?php echo $this->lang->line('result');?></a></li>
 	           <li><a href="<?php echo site_url('class_controller/new_class');?>"><?php echo "Class";?></a></li>
+                <?php if($logged_in['su']>0){ ?>
 	           <li><a href="<?php echo site_url('assign');?>">Assign Quiz</a></li>
 
+                        <?php } ; ?>
 <!--			 <li><a href="--><?php //echo site_url('liveclass');?><!--">--><?php //echo $this->lang->line('live_classroom');?><!--</a></li>-->
 			 
 			  <?php  

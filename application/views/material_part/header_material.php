@@ -109,6 +109,7 @@
                 <a class="mdl-navigation__link" href="<?php echo site_url('class_controller/new_class');?>">Add Class</a>
                 <a class="mdl-navigation__link" href="<?php echo site_url('class_controller/');?>">Class List</a>
             </nav>
+
             <a class="mdl-navigation__link" href="<?php echo site_url('assign');?>">Assign Quiz</a>
             <a class="mdl-navigation__link" href="<?php echo site_url('lessons');?>">Create Lessons</a>
             <a  id="settings" class="mdl-navigation__link" >Settings

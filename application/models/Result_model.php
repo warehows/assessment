@@ -141,14 +141,27 @@ return $query->result_array();
 
     function get_student_result($uid,$quid){
 
-        $this->db->where('savsoft_result.uid',$uid);
+        $SQL = "SELECT * FROM savsoft_result WHERE uid ='".$uid."' AND quid='".$quid."'";
+        $query = $this->db->query($SQL);
 
-        $this->db->where('savsoft_result.quid',$quid);
-
-        $query=$this->db->get('savsoft_result');
         return $query->result_array();
 
 
+    }
+
+    //This will get the latest taken quiz by the user
+    function getStatus($uid,$quid){
+        $SQL = "SELECT result_status FROM savsoft_result WHERE uid ='".$uid."' AND quid='".$quid."'
+        ORDER BY rid DESC LIMIT 1";
+        $query = $this->db->query($SQL);
+
+        $result = $query->row_array();
+
+        if(empty($result)) {
+            return false;
+        }else{
+            return $result['result_status'];
+        }
     }
  
  
