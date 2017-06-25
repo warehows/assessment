@@ -20,6 +20,7 @@
     <link href="<?php echo base_url('css/material/css/mdl_dp_modal.css'); ?>" rel="stylesheet">
     <link href="<?php echo base_url('css/material/css/dataTables.material.min.css'); ?>" rel="stylesheet">
 
+    <script src="<?php echo base_url('css/material/js/jquery-1.12.4.js'); ?>"></script>
     <script src="<?php echo base_url('css/material/js/jquery.min.js'); ?>"></script>
     <script src="<?php echo base_url('css/material/bootstrap/js/bootstrap.min.js'); ?>"></script>
     <script src="<?php echo base_url('css/material/js/bs-animation.js'); ?>"></script>
@@ -29,7 +30,6 @@
     <script src="<?php echo base_url('css/material/js/stepper.js'); ?>"></script>
     <script src="<?php echo base_url('css/material/js/jquery.dataTables.min.js'); ?>"></script>
     <script src="<?php echo base_url('css/material/js/dataTables.material.min.js'); ?>"></script>
-    <script src="<?php echo base_url('css/material/js/jquery-1.12.4.js'); ?>"></script>
     <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
