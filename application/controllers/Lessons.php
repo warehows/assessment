@@ -39,6 +39,47 @@ class Lessons extends CI_Controller
         $this->load->view('lessons/index.php', $data);
         $this->load->view('new_material/footer', $data);
     }
+    public function create()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        $data['title'] = $this->lang->line('Lessons');
+        $data['all_users'] = $this->user_model->get_all();
+        $data['all_subjects'] = $this->subjects_model->all();
+        $data['all_levels'] = $this->level_model->all();
+        $this->load->view('new_material/header', $data);
+        $this->load->view('lessons/create.php', $data);
+        $this->load->view('new_material/footer', $data);
+    }
+
+    public function create_modify_folders()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        $data['title'] = $this->lang->line('Lessons');
+        $data['all_users'] = $this->user_model->get_all();
+        $data['all_subjects'] = $this->subjects_model->all();
+        $data['all_levels'] = $this->level_model->all();
+        $this->load->view('new_material/header', $data);
+        $this->load->view('lessons/create_modify_lesson.php', $data);
+        $this->load->view('new_material/footer', $data);
+    }
 
     public function save_lesson()
     {
@@ -90,6 +131,7 @@ class Lessons extends CI_Controller
             $this->session->unset_userdata('logged_in');
             redirect('login');
         }
+
         $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/assessment/upload/lessons/";
         $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
         $folder = $output_dir . $folder_to_create;
@@ -116,7 +158,7 @@ class Lessons extends CI_Controller
             }
 
         }
-        $data = array("lesson_id" => $_POST['lesson_id'], "folder_name" => $_POST['folder_name']);
+        $data = array("lesson_id" => $_POST['lesson_id'], "folder_name" => $_POST['folder_name'], "author" => $_POST['author']);
         $data = $this->lessons_model->get_current_folder($data);
         print_r(json_encode($data[0]['id']));
 
@@ -206,9 +248,9 @@ class Lessons extends CI_Controller
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
-        $this->load->view('new_material/header', $data);
-        $this->load->view('lessons/index.php', $data);
-        $this->load->view('new_material/footer', $data);
+//        $this->load->view('new_material/header', $data);
+        $this->load->view('lessons/modify_folder.php', $data);
+//        $this->load->view('new_material/footer', $data);
 
     }
 
@@ -228,10 +270,14 @@ class Lessons extends CI_Controller
         $data = $this->input->post();
 
         $data = array(
-            "lesson_folder_id" => $data['lesson_folder_id'],
-            "content_type" => "file",
-            "content" => $data['content'][0],
+            "lesson_id" => $data['lesson_id'],
+            "author" => $data['author'],
+            "content_type" => $data['content_type'],
+            "content_name" => $data['content'][0],
+            "folder_name" => $data['folder_name'],
+            "duplicated" => $data['duplicated'],
         );
+
 
         $data = $this->lessons_model->save_files_to_database($data);
 
