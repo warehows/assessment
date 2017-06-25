@@ -91,8 +91,11 @@ Class Lessons_model extends CI_Model
     function save_files_to_database($data)
     {
         $this->db
-            ->where('lesson_folder_id', $data['lesson_folder_id'])
-            ->where('content', $data['content']);
+            ->where('lesson_id', $data['lesson_id'])
+            ->where('author', $data['author'])
+            ->where('folder_name', $data['folder_name'])
+            ->where('content_name', $data['content_name'])
+            ->where('content_type', $data['content_type']);
 
         $query = $this->db->get('lesson_contents');
 
@@ -106,12 +109,13 @@ Class Lessons_model extends CI_Model
             return $id;
         }
 
+
     }
 
     function get_current_folder($data)
     {
-        $data = $this->db->where('lesson_id', $data['lesson_id'])->where('folder_name', $data['folder_name']);
-        $data = $this->db->get('lesson_folder');
+        $data = $this->db->where('lesson_id', $data['lesson_id'])->where('folder_name', $data['folder_name'])->where('author', $data['author']);
+        $data = $this->db->get('lesson_contents');
 
         return $data->result_array();
     }
