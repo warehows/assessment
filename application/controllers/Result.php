@@ -38,7 +38,11 @@ class Result extends CI_Controller {
 		 $this->load->model("user_model");
 		$data['group_list']=$this->user_model->group_list();
 		
-		$this->load->view('header',$data);
+/*		$this->load->view('header',$data);
+		$this->load->view('result_list',$data);
+		$this->load->view('material_part/footer_material',$data);*/
+
+		$this->load->view('new_material/header',$data);
 		$this->load->view('result_list',$data);
 		$this->load->view('material_part/footer_material',$data);
 	}

@@ -1,4 +1,4 @@
- <div class="container">
+ <div class="wrapper">
 <?php 
 $logged_in=$this->session->userdata('logged_in');
 ?>

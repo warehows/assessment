@@ -60,9 +60,13 @@ class Quiz extends CI_Controller
         $data['title'] = $this->lang->line('quiz');
         $data['open_quiz'] = $this->quiz_model->open_quiz($limit);
 
-        $this->load->view('header', $data);
+/*        $this->load->view('header', $data);
         $this->load->view('open_quiz', $data);
-        $this->load->view('material_part/footer_material', $data);
+        $this->load->view('material_part/footer_material', $data);*/
+
+        $this->load->view('new_material/header',$data);
+        $this->load->view('open_quiz',$data);
+        $this->load->view('material_part/footer_material',$data);
 
     }
 
@@ -88,9 +92,13 @@ class Quiz extends CI_Controller
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
         $data['quiz_model'] = $this->quiz_model;
-        $this->load->view('header', $data);
+ /*       $this->load->view('header', $data);
         $this->load->view('new_quiz', $data);
-        $this->load->view('material_part/footer_material', $data);
+        $this->load->view('material_part/footer_material', $data);*/
+
+        $this->load->view('new_material/header',$data);
+        $this->load->view('new_quiz',$data);
+        $this->load->view('material_part/footer_material',$data);
     }
 
 
@@ -126,9 +134,13 @@ class Quiz extends CI_Controller
             $data['category_list'] = $this->qbank_model->category_list();
             $data['level_list'] = $this->qbank_model->level_list();
         }
-        $this->load->view('header', $data);
+/*        $this->load->view('header', $data);
         $this->load->view('edit_quiz', $data);
-        $this->load->view('material_part/footer_material', $data);
+        $this->load->view('material_part/footer_material', $data);*/
+
+        $this->load->view('new_material/header',$data);
+        $this->load->view('edit_quiz',$data);
+        $this->load->view('material_part/footer_material',$data);
     }
 
 
@@ -239,9 +251,13 @@ class Quiz extends CI_Controller
         $data['lid'] = $lid;
         $data['quid'] = $quid;
 
-        $this->load->view('header', $data);
+  /*      $this->load->view('header', $data);
         $this->load->view('add_question_into_quiz', $data);
-        $this->load->view('material_part/footer_material', $data);
+        $this->load->view('material_part/footer_material', $data);*/
+
+        $this->load->view('new_material/header',$data);
+        $this->load->view('add_question_into_quiz',$data);
+        $this->load->view('material_part/footer_material',$data);
     }
 
 
@@ -398,9 +414,13 @@ class Quiz extends CI_Controller
         $data['title'] = $this->lang->line('attempt') . ' ' . $this->lang->line('quiz');
 
         $data['quiz'] = $this->quiz_model->get_quiz($quid);
-        $this->load->view('header', $data);
+/*        $this->load->view('header', $data);
         $this->load->view('quiz_detail', $data);
-        $this->load->view('material_part/footer_material', $data);
+        $this->load->view('material_part/footer_material', $data);*/
+
+        $this->load->view('new_material/header',$data);
+        $this->load->view('quiz_detail',$data);
+        $this->load->view('material_part/footer_material',$data);
 
     }
 
@@ -599,9 +619,13 @@ class Quiz extends CI_Controller
         // get options
         $data['options'] = $this->quiz_model->get_options($data['quiz']['r_qids']);
         $data['title'] = $data['quiz']['quiz_name'];
-        $this->load->view('header', $data);
+/*        $this->load->view('header', $data);
         $this->load->view('quiz_attempt', $data);
-        $this->load->view('material_part/footer_material', $data);
+        $this->load->view('material_part/footer_material', $data);*/
+
+        $this->load->view('new_material/header',$data);
+        $this->load->view('quiz_attempt',$data);
+        $this->load->view('material_part/footer_material',$data);
 
     }
 

@@ -1,5 +1,5 @@
 <?php $level_list = $user_model->getCollection('savsoft_level'); ?>
-<div class="container">
+<div class="wrapper">
 
    
  <h3><?php echo $title;?></h3>

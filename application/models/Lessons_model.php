@@ -23,7 +23,15 @@ Class Lessons_model extends CI_Model
 
     function all_lesson_contents_by_id($data)
     {
-        $this->db->where('lesson_folder_id', $data['lesson_folder_id']);
+        $this->db->where('lesson_id', $data['lesson_id']);
+        $query = $this->db->get('lesson_contents');
+        return $query->result_array();
+    }
+
+    function all_lesson_contents_where($data)
+    {
+        $this->db->where('lesson_id', $data['lesson_id'])
+            ->where('folder_name', $data['folder_name']);
         $query = $this->db->get('lesson_contents');
         return $query->result_array();
     }
@@ -102,12 +110,12 @@ Class Lessons_model extends CI_Model
         $count_row = $query->num_rows();
 
         if ($count_row > 0) {
-            return "Data already exists";
+//            return "Data already exists";
         } else {
             $this->db->insert('lesson_contents', $data);
             $id = $this->db->insert_id($data);
-            return $id;
         }
+        return $data;
 
 
     }

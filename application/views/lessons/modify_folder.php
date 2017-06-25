@@ -39,15 +39,19 @@
         var lesson_contents;
         var selected_quiz_array = new Array();
 
+        var to_update_folder;
+        var to_update_id;
 
-        function update_file_table(lesson_folder_id) {
+
+        function update_file_table(to_update_folder,to_update_id) {
             $.ajax({
                 url: "<?php echo site_url('lessons/update_files');?>",
                 type: "POST",
-                data: {lesson_folder_id: lesson_folder_id}
+                data: {folder_name: to_update_folder,lesson_id:to_update_id}
             }).done(function (values) {
                 lesson_contents = JSON.parse(values);
                 var append;
+                var link;
                 $("#file_container").empty();
                 $.each(lesson_contents, function (key, value) {
                     if (value['content_type'] == "quiz") {
@@ -59,11 +63,14 @@
                         }).done(function (value) {
                             value = JSON.parse(value);
                             value['content'] = value.quiz_name;
+
+
                             append = "<tr><td>" + value['content'] + "</td><td>quiz</td><td><button id='" + value['id'] + "' name='" + value['content'] + "' class='delete_file_content_haha'>Delete</button></td></tr>";
                             $("#file_container").append(append);
                         });
                     } else {
-                        append = "<tr><td>" + value['content'] + "</td><td>" + value['content_type'] + "</td><td><button id='" + value['id'] + "' name='" + value['content'] + "' class='delete_file_content_haha'>Delete</button></td></tr>";
+                        link = "<?php echo base_url('upload/lessons/')?>/"+lesson_id+"_"+folder_name+"/"+value['content_name'];
+                        append = "<tr><td style='cursor:pointer' onclick=window.open('"+link+"','_blank')>"+value['content_name'] + "</td><td>" + value['content_type'] + "</td><td><button id='" + value['id'] + "' name='" + value['content_name'] + "' class='delete_file_content_haha'>Delete</button></td></tr>";
                         $("#file_container").append(append);
                     }
 
@@ -93,7 +100,6 @@
                 location.href = "<?php echo site_url('/lessons/upload_files')?>?myfile=" + files;
             },
             onSuccess: function (files, data, xhr, pd) {
-//                console.log(data);
                 lesson_folder_id = data;
                 lesson_folder_id = lesson_folder_id.replace('"', "");
                 lesson_folder_id = lesson_folder_id.replace('"', "");
@@ -103,9 +109,12 @@
                     type: "POST",
                     data: {content: files, content_type:"file",lesson_id: lesson_id,author:author,folder_name:folder_name,duplicated:duplicated}
                 }).done(function (values) {
-                    console.log(values);
-//                    lesson_contents_id = values;
-//                    update_file_table(lesson_folder_id);
+                    values = JSON.parse(values);
+
+                    to_update_folder = values['folder_name'];
+                    to_update_id = values['lesson_id'];
+
+                    update_file_table(to_update_folder,to_update_id);
                 });
 
 
@@ -120,8 +129,8 @@
                         folder_name: folder_name,
                     },
                     function (resp, textStatus, jqXHR) {
-
-                        update_file_table(lesson_folder_id);
+                        resp = JSON.parse(resp);
+                        update_file_table(folder_name,lesson_id);
 
                     });
             }
@@ -151,7 +160,7 @@
                     }
                 }
             ).done(function (values) {
-                    update_file_table(lesson_folder_id);
+                    update_file_table(folder_name,lesson_id);
                     uploadObj.reset();
 
                 });
@@ -169,7 +178,7 @@
                     {"id": "3", "text": "Explain"},
                     {"id": "4", "text": "Extend"},
                     {"id": "5", "text": "Evaluate"},
-                    {"id": "6", "text": "Others"},
+                    {"id": "6", "text": "Other Resources"},
                 ]
             },
 
@@ -196,10 +205,11 @@
                 }else if(data.selected[0] == 5){
                     folder_name = "Evaluate";
                 }else if(data.selected[0] == 6){
-                    folder_name = "Others";
+                    folder_name = "Other Resources";
                 }
                 uploadObj.reset();
                 $("#folder_content_container").show();
+                update_file_table(folder_name,lesson_id);
 //                folder_name = "" + data.selected[0];
 //                $.ajax({
 //                    url: "<?php //echo site_url('lessons/get_current_folder');?>//",

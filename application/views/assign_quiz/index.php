@@ -1,222 +1,135 @@
-<script type="text/javascript">
-    var jQuery_1_12_4 = $.noConflict(true);
-</script>
 
-<?php $this->load->helper('url'); ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>js/jstree/dist/themes/default/style.min.css"/>
-<script src="<?php echo base_url(); ?>js/jstree/dist/jstree.min.js"></script>
-<div class="mdl-stepper-demo">
-
-    <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--12-col">
-            <!-- markup -->
-            <ul class="mdl-stepper mdl-stepper--horizontal " id="demo-stepper-non-linear">
-                <li class="mdl-step">
-                            <span class="mdl-step__label">
-                                <span class="mdl-step__title">
-                                    <span class="mdl-step__title-text">Title</span>
-                                </span>
-                            </span>
-
-                    <div class="mdl-step__content">
-
-                        <div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                            <form>
-                                <h7 id="test_title_label">Test Title</h7>
-                                <div class="mdl-textfield mdl-js-textfield  extrawide is-upgraded is-dirty">
-                                    <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="text" class="mdl-textfield__input " id="new_quiz_name"
-                                           placeholder="Test Title"/>
+<div class="wrapper">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12">
+            <div class="wizard">
+                <div class="wizard-inner">
+                    <div class="connecting-line"></div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active" role="presentation"> <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Title"><span class="round-tab"> <i class="glyphicon glyphicon-text-color"></i></span> </a></li>
+                        <li class="disabled" role="presentation"> <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Question Creation"><span class="round-tab"> <i class="glyphicon glyphicon-pencil"></i></span> </a></li>
+                        <li class="disabled" role="presentation"> <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Test Settings"><span class="round-tab"> <i class="glyphicon glyphicon-cog"></i></span> </a></li>
+                        <li class="disabled" role="presentation"> <a href="#complete" data-toggle="tab" aria-controls="step1" role="tab" title="Assigning"><span class="round-tab"> <i class="glyphicon glyphicon-tasks"></i></span> </a></li>
+                    </ul>
+                </div>
+                <form role="form">
+                    <div class="tab-content">
+                        <div id="step1" class="tab-pane active" role="tabpanel">
+                            <div style="padding:10%;padding-top:0px">
+                                <h3 class="wizard_title"><strong>Title</strong> </h3>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" name="name" placeholder="Quiz Title" inputmode="email">
                                 </div>
-                                <h7>Subject</h7>
-                                <div class="mdl-textfield mdl-js-textfield  extrawide is-upgraded is-dirty">
-                                    <label for="input_text" class="mdl-textfield__label"></label>
-                                    <select class="mdl-textfield__input " id="subject">
-                                        <?php foreach ($category as $key => $value) { ?>
-
+                                <div class="form-group">
+                                    <select class="form-control" id="subject_id">
+                                        <?php foreach ($all_subjects as $key => $value) { ?>
                                             <option
                                                 value="<?php echo $value['cid'] ?>"><?php echo $value['category_name'] ?></option>
                                         <?php } ?>
                                     </select>
+                                </div>
 
                                 </div>
-                            </form>
-                            <button class="mdl-button mdl-js-ripple-effect mdl-js-button" id="select_quiz">Select Quiz
-                            </button>
-                            <button class="mdl-button mdl-js-ripple-effect mdl-js-button" id="new_quiz_confirm">Next
-                            </button>
-
-                            <!-- datatable -->
-                            <table id="quiz_lists" class="mdl-data-table" cellspacing="0" width="100%"
-                                   align="center">
-                                <thead>
-                                <tr>
-                                    <th>Quiz Name</th>
-                                    <th>Select</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr id="last_tr">
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Quiz Name</th>
-                                    <th>Select</th>
-                                </tr>
-                                </tfoot>
-                            </table>
+                                <ul class="list-inline pull-right">
+                                    <li>
+                                        <button class="btn btn-primary next-step" type="button">Save and continue </button>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-
-                    </div>
-                    <div class="mdl-step__actions">
-                        <button
-                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
-                            id="selected_quiz_confirm"
-                            data-stepper-next>
-                            Done
-                        </button>
-                    </div>
-                </li>
-                <li class="mdl-step">
-                    <span class="mdl-step__label">
-                        <span class="mdl-step__title">
-                            <span class="mdl-step__title-text">Question Creation</span>
-                        </span>
-                    </span>
-
-                    <div class="mdl-step__content">
-                        <!-- datatable -->
-                        <table id="question_lists" class="mdl-data-table" cellspacing="0" width="100%"
-                               align="center">
-                            <thead>
-                            <tr>
-                                <th>Select</th>
-                                <th>Subject</th>
-                                <th>Question Type</th>
-                                <th>Question</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <tr id="last_question_tr">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>Select</th>
-                                <th>Subject</th>
-                                <th>Question Type</th>
-                                <th>Question</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-
-                    </div>
-                    <div class="mdl-step__actions">
-                        <button
-                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
-                            data-stepper-next
-                            id="questions_selected_confirmed"
-                            >
-                            Done
-                        </button>
-                    </div>
-                </li>
-                <li class="mdl-step">
-                    <span class="mdl-step__label">
-                        <span class="mdl-step__title">
-                            <span class="mdl-step__title-text">Test Settings</span>
-                        </span>
-                    </span>
-
-                    <div class="mdl-step__content">
-                        <div class="mdl-cell mdl-cell--12-col-phone mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-
-                            <form>
-
-                                <h7>Start Date (Quiz can be attempted after this date)</h7>
-                                <div class="mdl-textfield mdl-js-textfield  extrawide is-upgraded is-dirty">
-                                    <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="text" class="mdl-textfield__input" value="" id="start_date"/>
-                                    <!--     <input class="c-datepicker-input" /> -->
+                        <div id="step2" class="tab-pane active" role="tabpanel">
+                            <div style="padding:10%;padding-top:0px;">
+                                <h3 class="wizard_title"><strong>Question Creation</strong> </h3>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Column 1</th>
+                                            <th>Column 2</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Cell 1</td>
+                                            <td>Cell 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cell 3</td>
+                                            <td>Cell 4</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <h7>End Date (Quiz can be attempted before this date)</h7>
-                                <div class="mdl-textfield mdl-js-textfield  extrawide">
-                                    <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="text" class="mdl-textfield__input" id="end_date"/>
+                                <p>Paragraph</p>
+                                <ul class="list-inline pull-right">
+                                    <li>
+                                        <button class="btn btn-primary prev-step" type="button">Previous </button>
+                                    </li>
+                                    <li>
+                                        <button class="btn btn-primary next-step" type="button">NEXT </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="step3" class="tab-pane" role="tabpanel">
+                            <div style="padding:10%;padding-top:0px;">
+                                <h3 class="wizard_title"><strong>Test Settings</strong> </h3>
+                                <div class="form-group">
+                                    <label class="control-label" for="start_date">Start Date (Quiz can be attempted after this date. YYYY-MM-DD HH:II:SS ) </label>
+                                    <input class="form-control" type="text" name="start_date" required="" placeholder="Start Date (Quiz can be attempted after this date. YYYY-MM-DD HH:II:SS )"
+                                           inputmode="email">
                                 </div>
-                                <h7>Duration (in min.)</h7>
-                                <div class="mdl-textfield mdl-js-textfield   extrawide">
-                                    <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="number" class="mdl-textfield__input" id="duration"/>
+                                <div class="form-group">
+                                    <label class="control-label" for="end_date">End Date (Quiz can be attempted before this date. eg. 2017-12-31 23:59:00 ) </label>
+                                    <input class="form-control" type="text" name="end_date" required="" placeholder="End Date (Quiz can be attempted before this date. eg. 2017-12-31 23:59:00 )"
+                                           inputmode="email">
                                 </div>
-                                <h7>Allow Maximum Attempts</h7>
-                                <div class="mdl-textfield mdl-js-textfield   extrawide">
-                                    <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="number" class="mdl-textfield__input" id="maximum_attempts"/>
+                                <div class="form-group">
+                                    <label class="control-label" for="duration">Duration (in min.) </label>
+                                    <input class="form-control" type="text" name="duration" required="" placeholder="Duration (in min.)" inputmode="email">
                                 </div>
-                                <h7>Minimum Percentage Required to Pass</h7>
-                                <div class="mdl-textfield mdl-js-textfield   extrawide">
-                                    <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="number" class="mdl-textfield__input" id="pass_percentage"/>
+                                <div class="form-group">
+                                    <label class="control-label" for="view_answer">Allow to view correct answers after submitting quiz </label>
+                                    <div class="radio">
+                                        <label class="control-label">
+                                            <input type="radio" name="view_answer">Yes</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label class="control-label">
+                                            <input type="radio" name="view_answer" checked="">No</label>
+                                    </div>
                                 </div>
-                                <h7>Allow to view contact answers after submiting quiz</h7>
-                                <div class="mdl-layout-spacer"></div>
-
-                                <label for="option-1" class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
-                                    <input type="radio" class="mdl-radio__button" id="option-1" name="view_answer"
-                                           value="0"/>
-                                    <span class="mdl-radio__label">No</span>
-                                </label>
-                                <label for="option-2" class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
-                                    <label for="option-1" class="mdl-textfield__label"></label>
-                                    <input type="radio" class="mdl-radio__button" id="option-2" name="view_answer"
-                                           value="1"/>
-                                    <span class="mdl-radio__label">Yes</span>
-                                </label>
-
-
-                            </form>
+                                <ul class="list-inline pull-right">
+                                    <li>
+                                        <button class="btn btn-primary prev-step" type="button">Previous </button>
+                                    </li>
+                                    <li>
+                                        <button class="btn btn-primary btn-info-full next-step" type="button">Save and continue </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="complete" class="tab-pane" role="tabpanel">
+                            <div style="padding:10%;padding-top:0px;">
+                                <h3 class="wizard_title"><strong>Assigning</strong> </h3>
+                                <p>Paragraph </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="mdl-step__actions">
-                        <button
-                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
-                            data-stepper-next
-                            id="settings_confirmed">
-                            Save & Next
-                        </button>
-                    </div>
-                </li>
-                <li class="mdl-step">
-                    <span class="mdl-step__label">
-                        <span class="mdl-step__title"><span class="mdl-step__title-text">Assigning</span></span>
-                    </span>
-
-                    <div class="mdl-step__content">
-                        <div id="data" class="demo"></div>
-                    </div>
-                    <div class="mdl-step__actions">
-                        <button
-                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
-                            data-stepper-next>
-                            Save & Next
-                        </button>
-                    </div>
-                </li>
-            </ul>
+                </form>
+            </div>
         </div>
     </div>
-
 </div>
+<!--
+<script type="text/javascript">
+    var jQuery_1_12_4 = $.noConflict(true);
+</script>
+
+<?php /*$this->load->helper('url'); */?>
+<link rel="stylesheet" href="<?php /*echo base_url(); */?>js/jstree/dist/themes/default/style.min.css"/>
+<script src="<?php /*echo base_url(); */?>js/jstree/dist/jstree.min.js"></script>
+
 <script>
     $(document).ready(function () {
 //            Variable initiation
@@ -258,7 +171,7 @@
 
 
 </script>
-<!--<script src="--><?php //echo base_url('css/material/js/material-datetime-picker.js'); ?><!--"></script>-->
+<!--<script src="--><?php /*//echo base_url('css/material/js/material-datetime-picker.js'); */?><!--"></script>-->
 <script src="https://unpkg.com/babel-polyfill@6.2.0/dist/polyfill.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rome/2.1.22/rome.standalone.js"></script>
@@ -266,7 +179,7 @@
 
 <script>
     $(document).ready(function () {
-        var all_users = <?php echo json_encode($all_users);?>;
+        var all_users = <?php /*echo json_encode($all_users);*/?>;
         var all_users_array = new Array();
         var all_users_value = new Array();
         $.each(all_users,function(all_user_key,all_user_value){
@@ -304,7 +217,7 @@
             subject = $(this).val();
         });
         $.ajax({
-            url: "<?php echo site_url('assign/assessment_quiz_list/'); ?>",
+            url: "<?php /*echo site_url('assign/assessment_quiz_list/'); */?>",
         }).done(function (value) {
             var quiz_value = JSON.parse(value);
             $.each(quiz_value, function (key, key_value) {
@@ -340,13 +253,13 @@
                 var r = confirm("Are you sure to create " + quiz_name + "?");
                 if (r == true) {
                     $.ajax({
-                        url: "<?php echo site_url('quiz/assessment_insert_quiz/');?>",
+                        url: "<?php /*echo site_url('quiz/assessment_insert_quiz/');*/?>",
                         type: "POST",
                         data: {quiz_name: quiz_name, cid: subject}
                     }).done(function (values) {
                         latest_id = values;
                         $.ajax({
-                            url: "<?php echo site_url('assign/assessment_quiz_list/'); ?>",
+                            url: "<?php /*echo site_url('assign/assessment_quiz_list/'); */?>",
                         }).done(function (value) {
                             var quiz_value = JSON.parse(value);
                             quiz_lists.clear().draw();
@@ -363,7 +276,7 @@
                         });
 
                         $.ajax({
-                            url: "<?php echo site_url('assign/get_all_questions');?>",
+                            url: "<?php /*echo site_url('assign/get_all_questions');*/?>",
                             type: "POST",
                         }).done(function (values) {
                             var all_quizzes = JSON.parse(values);
@@ -398,7 +311,7 @@
         $("#selected_quiz_confirm").click(function () {
             if (quiz_selected) {
                 $.ajax({
-                    url: "<?php echo site_url('assign/get_all_questions');?>",
+                    url: "<?php /*echo site_url('assign/get_all_questions');*/?>",
                     type: "POST",
                 }).done(function (values) {
                     var all_quizzes = JSON.parse(values);
@@ -426,7 +339,7 @@
             $(".mdl-step").eq(2).addClass("is-active");
 
             $.ajax({
-                url: "<?php echo site_url('assign/get_quiz');?>",
+                url: "<?php /*echo site_url('assign/get_quiz');*/?>",
                 type: "POST",
                 data: {quid: quiz_selected}
             }).done(function (values) {
@@ -469,7 +382,7 @@
                 view_answer: view_answer
             };
             $.ajax({
-                url: "<?php echo site_url('assign/get_all_level');?>",
+                url: "<?php /*echo site_url('assign/get_all_level');*/?>",
                 type: "POST",
             }).done(function (values) {
                 var all_data = JSON.parse(values);

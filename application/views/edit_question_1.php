@@ -1,4 +1,4 @@
- <div class="container">
+ <div class="wrapper">
 
    
  <h3><?php echo $title;?></h3>

@@ -1,11 +1,9 @@
 <?php $this->load->helper('url'); ?>
 <div>
     <nav class="navbar navbar-inverse navbar-fixed-top navigation-clean">
-        <div class="container">
-            <div class="navbar-header"><a class="navbar-brand navbar-link" href="#">Logo Here</a>
-                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span
-                        class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
-                        class="icon-bar"></span><span class="icon-bar"></span></button>
+         <div class="container">
+            <div class="navbar-header"><img style="height: 45px!important;" class="navbar-brand image_logo" src="<?php echo base_url('css/new_material/img/main_logo.png'); ?>" alt="School Logo" >
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
             </div>
             <div class="collapse navbar-collapse" id="navcol-1"></div>
         </div>

@@ -1,4 +1,5 @@
-<div class="container">
+
+<div class="wrapper">
 
 
     <h3><?php echo $title; ?></h3>
@@ -12,9 +13,8 @@
                            placeholder="<?php echo $this->lang->line('search'); ?>...">
       <span class="input-group-btn">
         <button class="btn btn-default" type="submit"><?php echo $this->lang->line('search'); ?></button>
+
       </span>
-
-
                 </div>
                 <!-- /input-group -->
             </form>
@@ -84,6 +84,7 @@
 
     <a href="<?php echo site_url('user/index/' . $back); ?>"
        class="btn btn-primary"><?php echo $this->lang->line('back'); ?></a>
+
     &nbsp;&nbsp;
     <?php
     $next = $limit + ($this->config->item('number_of_rows')); ?>

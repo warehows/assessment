@@ -191,7 +191,7 @@ class Lessons extends CI_Controller
         $filename = $_POST['filename'];
 
         $data = array("id" => $_POST['lesson_contents_id']);
-
+//
         $data = $this->lessons_model->delete_file_by_id($data);
         unlink($folder . $filename);
         print_r($folder . $filename);
@@ -221,11 +221,12 @@ class Lessons extends CI_Controller
         unset($filename[$filename_count_minus_one]);
         unset($filename[0]);
         $filename = implode(" ", $filename);
-        $data = array("content" => $filename, "folder_name" => $_POST['folder_name'], "lesson_id" => $_POST['lesson_id']);
-        $data = $this->lessons_model->join_tables($data);
+        $data = array("folder_name" => $_POST['folder_name'], "lesson_id" => $_POST['lesson_id']);
+        $data = $this->lessons_model->all_lesson_contents_where($data);
         $data = $data[0];
         $data = $this->lessons_model->delete_file_by_id($data);
-        print_r($data);
+//        print_r($folder . $filename);
+        print_r(json_encode($data));
 
         unlink($folder . $filename);
 
@@ -281,7 +282,7 @@ class Lessons extends CI_Controller
 
         $data = $this->lessons_model->save_files_to_database($data);
 
-        print_r($data);
+        print_r(json_encode($data));
 
     }
 
@@ -299,7 +300,7 @@ class Lessons extends CI_Controller
 
         $data = $this->input->post();
 
-        $data = $this->lessons_model->all_lesson_contents_by_id($data);
+        $data = $this->lessons_model->all_lesson_contents_where($data);
 
         echo json_encode($data);
 
