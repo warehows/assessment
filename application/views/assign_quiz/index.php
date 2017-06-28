@@ -204,7 +204,7 @@
                     <div class="mdl-step__content">
                         <?php $group = $this->user_model->group_list(); ?>
                         <div class="form-group">
-                            <label><?php echo $this->lang->line('select_group'); ?></label> <br>
+                            <label>Assign</label> <br>
                             <?php
                             foreach ($group as $key => $val) {
                                 ?>
@@ -220,8 +220,8 @@
                     </div>
                     <div class="mdl-step__actions">
                         <button id="quiz_assign_group"
-                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
-                            data-stepper-next>
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
+                                data-stepper-next>
                             Save & Next
                         </button>
                     </div>
@@ -229,7 +229,7 @@
             </ul>
         </div>
     </div>
-<input type="hidden" id="latest-id">
+    <input type="hidden" id="latest-id">
 </div>
 <script>
     $(document).ready(function () {

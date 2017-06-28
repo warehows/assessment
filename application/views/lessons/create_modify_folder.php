@@ -1,3 +1,13 @@
+<script type="text/javascript">
+    var jQuery_1_12_4 = $.noConflict(true);
+</script>
+
+<style>
+    .checked_tr {
+        background-color: rgb(230, 230, 230);
+    }
+</style>
+
 <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
@@ -7,30 +17,85 @@
 <script src="<?php echo base_url(); ?>js/jstree/dist/jstree.min.js"></script>
 <script src="<?php echo base_url(); ?>js/jstree/dist/jstree.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.js"></script>
 
-<div class="col-lg-6 col-lg-offset-0 col-md-6">
-    <div id="data"></div>
-    <div id="folder_content_container" class="folder_content_container">
-        <div id="fileuploader" class="mdl-cell--12-col-desktop">Upload Files</div>
-        <input type="button" id="start_upload" value="Start Uploading">
-        <input type="button" id="add_quiz" value="Add Quiz">
+<div class="wrapper">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
+            <div class="three wizard">
+                <div class="wizard-inner">
+                    <div class="connecting-line"></div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="disabled" role="presentation"><a href="#step1" data-toggle="tab"
+                                                                    aria-controls="step1"
+                                                                    role="tab" title="Title"><span class="round-tab"> <i
+                                        class="glyphicon glyphicon-text-color"></i></span> </a></li>
+                        <li class="active" role="presentation"><a href="#step2" data-toggle="tab"
+                                                                  aria-controls="step2" role="tab"
+                                                                  title="Question Creation"><span
+                                    class="round-tab"> <i class="glyphicon glyphicon-folder-open"></i></span> </a></li>
+                        <li class="disabled" role="presentation">
+                            <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab"
+                               title="Test Settings"><span class="round-tab"> <i
+                                        class="glyphicon glyphicon-ok"></i></span> </a></li>
+                    </ul>
+                </div>
+
+                <div class="tab-content">
+                    <div id="step1" class="tab-pane" role="tabpanel">
+
+                    </div>
+                    <div id="step2" class="tab-pane active" role="tabpanel">
+                        <form>
+                            <div class="col-lg-6 col-lg-offset-0 col-md-6">
+                                <div id="data"></div>
+                                <div id="folder_content_container" class="folder_content_container">
+                                    <div id="fileuploader" class="mdl-cell--12-col-desktop">Upload Files</div>
+                                    <input type="button" id="start_upload" value="Start Uploading">
+                                    <input type="button" id="add_quiz" value="Add Quiz">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <table class="table" id="file_container">
+
+                                </table>
+                                <ul class="list-inline pull-right">
+                                    <li>
+                                        <a href="<?php echo site_url('lessons/create')?>?notif=yes"><button class="btn btn-primary btn-info-full next-step" id="Done"
+                                                type="button">Done</button></a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <div id="step3" class="tab-pane" role="tabpanel"></div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
-<div class="col-lg-6 col-md-6">
-    <table class="table" id="file_container">
-
-    </table>
+<div class="footer-clean">
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-lg-offset-9 col-md-3 col-md-offset-9 item social">
+                    <p class="copyright">Powered by Click Innovation © 2017</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>
-
 
 <script>
     $(document).ready(function () {
 
-        var lesson_id = 1;
-        var author = 1;
-        var duplicated=0;
+        var lesson_id = <?php echo $lesson_id ?>;
+        var author = <?php echo $author ?>;
+        var duplicated = <?php echo $duplicated ?>;
         var folder_name;
         var folder_id_counter = 0;
         var current_selected;
@@ -43,11 +108,11 @@
         var to_update_id;
 
 
-        function update_file_table(to_update_folder,to_update_id) {
+        function update_file_table(to_update_folder, to_update_id) {
             $.ajax({
                 url: "<?php echo site_url('lessons/update_files');?>",
                 type: "POST",
-                data: {folder_name: to_update_folder,lesson_id:to_update_id}
+                data: {folder_name: to_update_folder, lesson_id: to_update_id}
             }).done(function (values) {
                 lesson_contents = JSON.parse(values);
                 var append;
@@ -69,8 +134,9 @@
                             $("#file_container").append(append);
                         });
                     } else {
-                        link = "<?php echo base_url('upload/lessons/')?>/"+lesson_id+"_"+folder_name+"/"+value['content_name'];
-                        append = "<tr><td style='cursor:pointer'><a href='"+link+"' target='_blank'>"+value['content_name'] + "</a></td><td>" + value['content_type'] + "</td><td><button id='" + value['id'] + "' name='" + value['content_name'] + "' class='delete_file_content_haha'>Delete</button></td></tr>";
+                        link = "<?php echo base_url('upload/lessons/')?>/" + lesson_id + "_" + folder_name + "/" + value['content_name'];
+                        append = "<tr><td style='cursor:pointer'><a href='" + link + "' target='_blank'>" + value['content_name'] + "</a></td>" +
+                            "<td>" + value['content_type'] + "</td><td><button id='" + value['id'] + "' name='" + value['content_name'] + "' type='button' class='delete_file_content_haha'>Delete</button></td></tr>";
                         $("#file_container").append(append);
                     }
 
@@ -85,7 +151,7 @@
             showDownload: false,
             dragdropWidth: '100%',
             fileName: "myfile",
-            allowedTypes: "jpg,png,gif,pptx,ppt",
+            allowedTypes: "jpg,png,gif,pptx,ppt,mp4,pdf,docx,doc",
             uploadStr: "Upload Files",
             sequential: true,
             sequentialCount: 1,
@@ -93,7 +159,7 @@
             showDelete: true,
             formData: {key1: 'value1', key2: 'value2'},
             dynamicFormData: function () {
-                var data = {lesson_id: lesson_id, folder_name: folder_name,author:author};
+                var data = {lesson_id: lesson_id, folder_name: folder_name, author: author};
                 return data;
             },
             downloadCallback: function (files, pd) {
@@ -107,14 +173,21 @@
                 $.ajax({
                     url: "<?php echo site_url('lessons/save_files_to_database');?>",
                     type: "POST",
-                    data: {content: files, content_type:"file",lesson_id: lesson_id,author:author,folder_name:folder_name,duplicated:duplicated}
+                    data: {
+                        content: files,
+                        content_type: "file",
+                        lesson_id: lesson_id,
+                        author: author,
+                        folder_name: folder_name,
+                        duplicated: duplicated
+                    }
                 }).done(function (values) {
                     values = JSON.parse(values);
 
                     to_update_folder = values['folder_name'];
                     to_update_id = values['lesson_id'];
 
-                    update_file_table(to_update_folder,to_update_id);
+                    update_file_table(to_update_folder, to_update_id);
                 });
 
 
@@ -130,7 +203,7 @@
                     },
                     function (resp, textStatus, jqXHR) {
                         resp = JSON.parse(resp);
-                        update_file_table(folder_name,lesson_id);
+                        update_file_table(folder_name, lesson_id);
 
                     });
             }
@@ -160,7 +233,7 @@
                     }
                 }
             ).done(function (values) {
-                    update_file_table(folder_name,lesson_id);
+                    update_file_table(folder_name, lesson_id);
                     uploadObj.reset();
 
                 });
@@ -194,22 +267,22 @@
                 $(document).trigger("action_buttons");
 //                $(this).find("#" + data.selected[0]).find("a").after('<input type="button" class="open_folder folder_action_button" id="open_folder_' + data.selected[0] + '" value="Open Folder" />');
                 $("#folder_content_container").hide();
-                if(data.selected[0] == 1){
+                if (data.selected[0] == 1) {
                     folder_name = "Engage";
-                }else if(data.selected[0] == 2){
+                } else if (data.selected[0] == 2) {
                     folder_name = "Explore";
-                }else if(data.selected[0] == 3){
+                } else if (data.selected[0] == 3) {
                     folder_name = "Explain";
-                }else if(data.selected[0] == 4){
+                } else if (data.selected[0] == 4) {
                     folder_name = "Extend";
-                }else if(data.selected[0] == 5){
+                } else if (data.selected[0] == 5) {
                     folder_name = "Evaluate";
-                }else if(data.selected[0] == 6){
+                } else if (data.selected[0] == 6) {
                     folder_name = "Other Resources";
                 }
                 uploadObj.reset();
                 $("#folder_content_container").show();
-                update_file_table(folder_name,lesson_id);
+                update_file_table(folder_name, lesson_id);
 //                folder_name = "" + data.selected[0];
 //                $.ajax({
 //                    url: "<?php //echo site_url('lessons/get_current_folder');?>//",
@@ -291,6 +364,11 @@
                         }).done(function (values) {
                             update_file_table(lesson_folder_id);
                         });
+                    },
+                    create: function () {
+                        //jquery
+                        var current_url = $(location).attr('href');
+                        window.location.replace("<?php echo site_url()?>/assign?redirect="+current_url);
                     },
                     cancel: function () {
                         $.alert('Canceled!');

@@ -31,15 +31,50 @@ class Lessons extends CI_Controller
             redirect('login');
         }
         $logged_in = $this->session->userdata('logged_in');
+
         $data['title'] = $this->lang->line('Lessons');
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
+        $data['all_lessons'] = $this->lessons_model->all_lessons();
+        $data['logged_in'] = $logged_in;
+
+        if ($logged_in["su"] == 1) {
+            $this->load->view('new_material/header', $data);
+            $this->load->view('lessons/index.php', $data);
+        } else if ($logged_in["su"] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+            $this->load->view('lessons/teacher_index.php', $data);
+        }
+
+        $this->load->view('new_material/footer', $data);
+
+
+    }
+
+    public function create()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $data['logged_in'] = $this->session->userdata('logged_in');
+        $data['title'] = $this->lang->line('Lessons');
+        $data['all_users'] = $this->user_model->get_all();
+        $data['all_subjects'] = $this->subjects_model->all();
+        $data['all_levels'] = $this->level_model->all();
+
         $this->load->view('new_material/header', $data);
-        $this->load->view('lessons/index.php', $data);
+        $this->load->view('lessons/create.php', $data);
         $this->load->view('new_material/footer', $data);
     }
-    public function create()
+
+    public function create_modify_folder()
     {
         // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
@@ -55,8 +90,11 @@ class Lessons extends CI_Controller
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
+        $data['lesson_id'] = $this->input->get('lesson_id');
+        $data['author'] = $this->input->get('author');
+        $data['duplicated'] = $this->input->get('duplicated');
         $this->load->view('new_material/header', $data);
-        $this->load->view('lessons/create.php', $data);
+        $this->load->view('lessons/create_modify_folder.php', $data);
         $this->load->view('new_material/footer', $data);
     }
 
@@ -233,7 +271,8 @@ class Lessons extends CI_Controller
 
     }
 
-    public function modify_folders(){
+    public function modify_folders()
+    {
         // redirect if not logged in
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
@@ -395,7 +434,7 @@ class Lessons extends CI_Controller
             redirect('login');
         }
 
-        $data = $this->quiz_model->getCollection("savsoft_quiz","quiz_name,quid");
+        $data = $this->quiz_model->getCollection("savsoft_quiz", "quiz_name,quid");
 
         print_r(json_encode($data));
 
@@ -416,11 +455,11 @@ class Lessons extends CI_Controller
         $data = $this->input->post();
         $data_selected_quizzes = $data['selected_quizzes'];
 
-        foreach($data_selected_quizzes as $key=>$value){
+        foreach ($data_selected_quizzes as $key => $value) {
             $data = array(
-                "lesson_folder_id"=>$data['lesson_folder_id'],
-                "content_type"=>$data['content_type'],
-                "content"=>$value,
+                "lesson_folder_id" => $data['lesson_folder_id'],
+                "content_type" => $data['content_type'],
+                "content" => $value,
             );
             $this->lessons_model->save_files_to_database($data);
         }

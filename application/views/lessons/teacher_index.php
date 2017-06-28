@@ -11,11 +11,8 @@
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                <a href="<?php echo site_url()?>/lessons/create"><button id="new_lesson">New Lesson</button></a>
-                <button id="edit">Edit</button>
                 <button id="duplicate">Duplicate</button>
-                <button id="delete">Delete</button>
-
+                <button id="view">View</button>
                 <table id="lesson_lists" class="display " cellspacing="1" width="100%">
                     <thead>
                     <tr>
@@ -53,6 +50,7 @@
     $("#lesson_lists").DataTable();
     $("#edit").hide();
     $("#delete").hide();
+    $("#view").hide();
     $("#duplicate").hide();
     $(".selected_lesson_class").change(function() {
         selected_count = $(document).find('input[name="selected_lesson"]:checked').length;
@@ -60,17 +58,21 @@
             $("#edit").show();
             $("#delete").show();
             $("#duplicate").show();
+            $("#view").show();
         }else if(selected_count==0){
+            $("#view").hide();
             $("#edit").hide();
             $("#delete").hide();
             $("#duplicate").hide();
         }
         else if(selected_count>=1){
             $("#edit").hide();
+            $("#view").hide();
             $("#delete").show();
             $("#duplicate").show();
         }else{
             $("#edit").hide();
+            $("#view").hide();
             $("#delete").show();
             $("#duplicate").show();
         }
