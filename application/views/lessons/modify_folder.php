@@ -55,19 +55,21 @@
                 $("#file_container").empty();
                 $.each(lesson_contents, function (key, value) {
                     if (value['content_type'] == "quiz") {
-                        var quiz_id = value['content'];
-                        $.ajax({
-                            url: "<?php echo site_url('lessons/get_quiz');?>",
-                            type: "POST",
-                            data: {quid: quiz_id}
-                        }).done(function (value) {
-                            value = JSON.parse(value);
-                            value['content'] = value.quiz_name;
-
-
-                            append = "<tr><td>" + value['content'] + "</td><td>quiz</td><td><button id='" + value['id'] + "' name='" + value['content'] + "' class='delete_file_content_haha'>Delete</button></td></tr>";
+                        console.log("quiz");
+                        append = "<tr><td>" + value['content_name'] + "</td><td>quiz</td><td><button id='" + value['id'] + "' name='" + value['content_name'] + "' class='delete_file_content_haha'>Delete</button></td></tr>";
                             $("#file_container").append(append);
-                        });
+//                        var quiz_id = value['content'];
+//                        $.ajax({
+//                                url: "<?php //echo site_url('lessons/get_quiz');?>//",
+//                            type: "POST",
+//                            data: {quid: quiz_id}
+//                        }).done(function (value) {
+//                            value = JSON.parse(value);
+//                            value['content'] = value.quiz_name;
+//
+//
+//
+//                        });
                     } else {
                         link = "<?php echo base_url('upload/lessons/')?>/" + lesson_id + "_" + folder_name + "/" + value['content_name'];
                         append = "<tr><td style='cursor:pointer'><a href='" + link + "' target='_blank'>" + value['content_name'] + "</a></td>" +
@@ -281,12 +283,12 @@
                             type: "POST",
                             data: {
                                 selected_quizzes: selected_quiz_array,
-                                lesson_folder_id: lesson_folder_id,
                                 lesson_id: lesson_id,
+                                folder_name: folder_name,
                                 content_type: "quiz"
                             },
                         }).done(function (values) {
-                            update_file_table(lesson_folder_id);
+                            update_file_table(folder_name,lesson_id);
                         });
                     },
                     create: function () {

@@ -97,10 +97,15 @@ class Lessons extends CI_Controller
             $this->load->view('lessons/edit',$data);
         }
         elseif($post["submit"]=="delete"){
-            echo "delete";
+            $data['lesson_id'] = $post['selected_lesson'][0];
+            foreach($post['selected_lesson'] as $key=>$value){
+                $this->lessons_model->delete_by_id($value);
+                $this->lessons_model->delete_where("lesson_id",$value);
+            }
+
         }else{
             print_r($post);
-            redirect(site_url()."/lessons");
+//            redirect(site_url()."/lessons");
         }
         $this->load->view('new_material/footer',$data);
 
@@ -336,6 +341,7 @@ class Lessons extends CI_Controller
 
     }
 
+
     public function update_files()
     {
         // redirect if not loggedin
@@ -465,16 +471,20 @@ class Lessons extends CI_Controller
 
         $data = $this->input->post();
         $data_selected_quizzes = $data['selected_quizzes'];
-
+//        print_r($data);
         foreach ($data_selected_quizzes as $key => $value) {
+            $lesson = $this->quiz_model->get_quiz($value);
+            $lesson_name = $lesson["quiz_name"];
+//            print_r($lesson_name);
             $data = array(
-                "lesson_folder_id" => $data['lesson_folder_id'],
+                "lesson_id" => $data['lesson_id'],
+                "author" => "",
+                "folder_name" => $data['folder_name'],
                 "content_type" => $data['content_type'],
-                "content" => $value,
+                "content_name" => $lesson_name,
             );
-            $this->lessons_model->save_files_to_database($data);
+            print_r($this->lessons_model->save_files_to_database($data));
         }
-        print_r(json_encode("kaka"));
 
     }
 

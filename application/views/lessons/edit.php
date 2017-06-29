@@ -1,10 +1,10 @@
-<?php $posts['lesson_id'] = 1 ?>
-<?php $posts['author'] = 1 ?>
+<?php $posts['lesson_id'] = $lesson_id ?>
+<?php $posts['author'] = $author ?>
 <?php if ($logged_in['su'] == 1) { ?>
     <?php $posts['duplicated'] = 0 ?>
 <?php } ?>
 <?php if ($logged_in['su'] == 0) { ?>
-    <?php $posts['duplicated'] = 0 ?>
+    <?php $posts['duplicated'] = 1 ?>
 <?php } ?>
 
 <div class="wrapper">

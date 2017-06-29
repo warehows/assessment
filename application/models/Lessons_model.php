@@ -15,6 +15,18 @@ Class Lessons_model extends CI_Model
         $query = $this->db->get('lessons');
         return $query->result_array();
     }
+    function delete_by_id($data)
+    {
+        $this->db->where('id', $data);
+        $this->db->delete('lessons');
+//        return $query->result_array();
+    }
+    function delete_where($where,$data)
+    {
+        $this->db->where($where, $data);
+        $this->db->delete('lesson_id');
+//        return $query->result_array();
+    }
 
     function all_lesson_folder()
     {
