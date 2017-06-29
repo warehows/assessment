@@ -70,8 +70,40 @@ class Lessons extends CI_Controller
         $data['all_levels'] = $this->level_model->all();
 
         $this->load->view('new_material/header', $data);
-        $this->load->view('lessons/create.php', $data);
+        $this->load->view('lessons/create', $data);
         $this->load->view('new_material/footer', $data);
+    }
+
+    public function index_actions()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $data['logged_in'] = $logged_in;
+        $post = $_POST;
+        $this->load->view('new_material/header',$data);
+        if($post["submit"]=="duplicate") {
+            echo "duplicate";
+        }elseif($post["submit"]=="edit"){
+            $data['lesson_id'] = $post['selected_lesson'][0];
+            $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
+            $data['author'] = $author[0]['author'];
+            $this->load->view('lessons/edit',$data);
+        }
+        elseif($post["submit"]=="delete"){
+            echo "delete";
+        }else{
+            print_r($post);
+            redirect(site_url()."/lessons");
+        }
+        $this->load->view('new_material/footer',$data);
+
     }
 
     public function create_modify_folder()
@@ -95,27 +127,6 @@ class Lessons extends CI_Controller
         $data['duplicated'] = $this->input->get('duplicated');
         $this->load->view('new_material/header', $data);
         $this->load->view('lessons/create_modify_folder.php', $data);
-        $this->load->view('new_material/footer', $data);
-    }
-
-    public function create_modify_folders()
-    {
-        // redirect if not loggedin
-        if (!$this->session->userdata('logged_in')) {
-            redirect('login');
-        }
-        $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['base_url'] != base_url()) {
-            $this->session->unset_userdata('logged_in');
-            redirect('login');
-        }
-        $logged_in = $this->session->userdata('logged_in');
-        $data['title'] = $this->lang->line('Lessons');
-        $data['all_users'] = $this->user_model->get_all();
-        $data['all_subjects'] = $this->subjects_model->all();
-        $data['all_levels'] = $this->level_model->all();
-        $this->load->view('new_material/header', $data);
-        $this->load->view('lessons/create_modify_lesson.php', $data);
         $this->load->view('new_material/footer', $data);
     }
 

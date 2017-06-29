@@ -4,46 +4,51 @@
 <style>
     a {
         text-decoration: none;
-        color:black;
+        color: black;
     }
 </style>
 <div class="wrapper">
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                <a href="<?php echo site_url()?>/lessons/create"><button id="new_lesson">New Lesson</button></a>
-                <button id="edit">Edit</button>
-                <button id="duplicate">Duplicate</button>
-                <button id="delete">Delete</button>
+                <a href="<?php echo site_url() ?>/lessons/create" style="float:right;padding:5px;">
+                    <button id="new_lesson">New Lesson</button>
+                </a>
+                <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
 
-                <table id="lesson_lists" class="display " cellspacing="1" width="100%">
-                    <thead>
-                    <tr>
-                        <th> </th>
-                        <th>Lesson Name</th>
-                        <th>Grade</th>
+                    <button id="edit" name="submit" value="edit">Edit</button>
+                    <button id="duplicate" name="submit" value="duplicate">Duplicate</button>
+                    <button id="delete" value="delete">Delete</button>
 
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    <tr>
-                        <th> </th>
-                        <th>Lesson Name</th>
-                        <th>Grade</th>
-                    </tr>
-                    </tfoot>
-                    <tbody>
-                    <?php foreach($all_lessons as $key=>$value){?>
+                    <table id="lesson_lists" class="display " cellspacing="1" width="100%">
+                        <thead>
                         <tr>
-                            <td><input type="checkbox" class="selected_lesson_class" name="selected_lesson" /></td>
-                            <td><?php echo $value['lesson_name']?></td>
-                            <td><?php echo $value['level_id']?></td>
+                            <th></th>
+                            <th>Lesson Name</th>
+                            <th>Grade</th>
+
                         </tr>
-                    <?php } ?>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th></th>
+                            <th>Lesson Name</th>
+                            <th>Grade</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
 
+                        <?php foreach ($all_lessons as $key => $value) { ?>
+                            <tr>
+                                <td><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['id']?>"/></td>
+                                <td><?php echo $value['lesson_name'] ?></td>
+                                <td><?php echo $value['level_id'] ?></td>
+                            </tr>
+                        <?php } ?>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </div>
     </div>
@@ -54,22 +59,22 @@
     $("#edit").hide();
     $("#delete").hide();
     $("#duplicate").hide();
-    $(".selected_lesson_class").change(function() {
-        selected_count = $(document).find('input[name="selected_lesson"]:checked').length;
-        if(selected_count==1) {
+    $(".selected_lesson_class").change(function () {
+        selected_count = $(document).find('.selected_lesson_class:checked').length;
+        if (selected_count == 1) {
             $("#edit").show();
             $("#delete").show();
             $("#duplicate").show();
-        }else if(selected_count==0){
+        } else if (selected_count == 0) {
             $("#edit").hide();
             $("#delete").hide();
             $("#duplicate").hide();
         }
-        else if(selected_count>=1){
+        else if (selected_count >= 1) {
             $("#edit").hide();
             $("#delete").show();
             $("#duplicate").show();
-        }else{
+        } else {
             $("#edit").hide();
             $("#delete").show();
             $("#duplicate").show();

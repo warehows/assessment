@@ -116,13 +116,14 @@
                 var lesson_name = $("#lesson_name").val();
                 var subject_id = $("#subject_id").val();
                 var level_id = $("#level_id").val();
-
+                var author = <?php echo $logged_in['uid']; ?>;
+                var duplicated = 0;
                 //if there is lesson name or not
                 if (lesson_name) {
                     $.ajax({
                         url: "<?php echo site_url('lessons/save_lesson_with_folder');?>",
                         type: "POST",
-                        data: {lesson_name: lesson_name, subject_id: subject_id, level_id: level_id}
+                        data: {lesson_name: lesson_name, subject_id: subject_id, level_id: level_id, author:author,duplicated:duplicated}
                     }).done(function (values) {
                         lesson_id = values;
                         window.location.replace("<?php echo site_url()?>/lessons/create_modify_folder?lesson_id="+lesson_id+"&author=<?php echo $logged_in['uid'];?>&duplicated=0");

@@ -9,6 +9,13 @@ Class Lessons_model extends CI_Model
         return $query->result_array();
     }
 
+    function lesson_by_id($data)
+    {
+        $this->db->where('id', $data);
+        $query = $this->db->get('lessons');
+        return $query->result_array();
+    }
+
     function all_lesson_folder()
     {
         $query = $this->db->get('lesson_folder');
@@ -53,23 +60,9 @@ Class Lessons_model extends CI_Model
 
     function save_lesson_with_folder($data)
     {
-        $data = array(
-            'lesson_name' => $data['lesson_name'],
-            'subject_id' => $data['subject_id'],
-            'level_id' => $data['level_id'],
-        );
 
         $this->db->insert('lessons', $data);
         $quid = $this->db->insert_id();
-        $count = 5;
-        for($counter = 1;$counter<=$count;$counter++){
-            $data = array(
-                'lesson_id' => $quid,
-                'folder_name' => "E_".$counter,
-            );
-
-            $this->db->insert('lesson_folder', $data);
-        }
 
         return $quid;
     }

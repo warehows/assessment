@@ -28,9 +28,9 @@
 <script>
     $(document).ready(function () {
 
-        var lesson_id = 1;
-        var author = 1;
-        var duplicated=0;
+        var lesson_id = <?php echo $lesson_id ?>;
+        var author = <?php echo $author ?>;
+        var duplicated= <?php echo $duplicated ?>;
         var folder_name;
         var folder_id_counter = 0;
         var current_selected;
@@ -43,11 +43,11 @@
         var to_update_id;
 
 
-        function update_file_table(to_update_folder,to_update_id) {
+        function update_file_table(to_update_folder, to_update_id) {
             $.ajax({
                 url: "<?php echo site_url('lessons/update_files');?>",
                 type: "POST",
-                data: {folder_name: to_update_folder,lesson_id:to_update_id}
+                data: {folder_name: to_update_folder, lesson_id: to_update_id}
             }).done(function (values) {
                 lesson_contents = JSON.parse(values);
                 var append;
@@ -69,8 +69,9 @@
                             $("#file_container").append(append);
                         });
                     } else {
-                        link = "<?php echo base_url('upload/lessons/')?>/"+lesson_id+"_"+folder_name+"/"+value['content_name'];
-                        append = "<tr><td style='cursor:pointer'><a href='"+link+"' target='_blank'>"+value['content_name'] + "</a></td><td>" + value['content_type'] + "</td><td><button id='" + value['id'] + "' name='" + value['content_name'] + "' class='delete_file_content_haha'>Delete</button></td></tr>";
+                        link = "<?php echo base_url('upload/lessons/')?>/" + lesson_id + "_" + folder_name + "/" + value['content_name'];
+                        append = "<tr><td style='cursor:pointer'><a href='" + link + "' target='_blank'>" + value['content_name'] + "</a></td>" +
+                            "<td>" + value['content_type'] + "</td><td><button id='" + value['id'] + "' name='" + value['content_name'] + "' type='button' class='delete_file_content_haha'>Delete</button></td></tr>";
                         $("#file_container").append(append);
                     }
 
@@ -85,7 +86,7 @@
             showDownload: false,
             dragdropWidth: '100%',
             fileName: "myfile",
-            allowedTypes: "jpg,png,gif,pptx,ppt",
+            allowedTypes: "jpg,png,gif,pptx,ppt,mp4,pdf,docx,doc",
             uploadStr: "Upload Files",
             sequential: true,
             sequentialCount: 1,
@@ -93,7 +94,7 @@
             showDelete: true,
             formData: {key1: 'value1', key2: 'value2'},
             dynamicFormData: function () {
-                var data = {lesson_id: lesson_id, folder_name: folder_name,author:author};
+                var data = {lesson_id: lesson_id, folder_name: folder_name, author: author};
                 return data;
             },
             downloadCallback: function (files, pd) {
@@ -107,14 +108,21 @@
                 $.ajax({
                     url: "<?php echo site_url('lessons/save_files_to_database');?>",
                     type: "POST",
-                    data: {content: files, content_type:"file",lesson_id: lesson_id,author:author,folder_name:folder_name,duplicated:duplicated}
+                    data: {
+                        content: files,
+                        content_type: "file",
+                        lesson_id: lesson_id,
+                        author: author,
+                        folder_name: folder_name,
+                        duplicated: duplicated
+                    }
                 }).done(function (values) {
                     values = JSON.parse(values);
 
                     to_update_folder = values['folder_name'];
                     to_update_id = values['lesson_id'];
 
-                    update_file_table(to_update_folder,to_update_id);
+                    update_file_table(to_update_folder, to_update_id);
                 });
 
 
@@ -130,7 +138,7 @@
                     },
                     function (resp, textStatus, jqXHR) {
                         resp = JSON.parse(resp);
-                        update_file_table(folder_name,lesson_id);
+                        update_file_table(folder_name, lesson_id);
 
                     });
             }
@@ -160,7 +168,7 @@
                     }
                 }
             ).done(function (values) {
-                    update_file_table(folder_name,lesson_id);
+                    update_file_table(folder_name, lesson_id);
                     uploadObj.reset();
 
                 });
@@ -194,33 +202,22 @@
                 $(document).trigger("action_buttons");
 //                $(this).find("#" + data.selected[0]).find("a").after('<input type="button" class="open_folder folder_action_button" id="open_folder_' + data.selected[0] + '" value="Open Folder" />');
                 $("#folder_content_container").hide();
-                if(data.selected[0] == 1){
+                if (data.selected[0] == 1) {
                     folder_name = "Engage";
-                }else if(data.selected[0] == 2){
+                } else if (data.selected[0] == 2) {
                     folder_name = "Explore";
-                }else if(data.selected[0] == 3){
+                } else if (data.selected[0] == 3) {
                     folder_name = "Explain";
-                }else if(data.selected[0] == 4){
+                } else if (data.selected[0] == 4) {
                     folder_name = "Extend";
-                }else if(data.selected[0] == 5){
+                } else if (data.selected[0] == 5) {
                     folder_name = "Evaluate";
-                }else if(data.selected[0] == 6){
+                } else if (data.selected[0] == 6) {
                     folder_name = "Other Resources";
                 }
                 uploadObj.reset();
                 $("#folder_content_container").show();
-                update_file_table(folder_name,lesson_id);
-//                folder_name = "" + data.selected[0];
-//                $.ajax({
-//                    url: "<?php //echo site_url('lessons/get_current_folder');?>//",
-//                    type: "POST",
-//                    data: {lesson_id: lesson_id, folder_name: folder_name}
-//                }).done(function (values) {
-//                    lesson_folder_id = JSON.parse(values);
-//                    lesson_folder_id = lesson_folder_id[0];
-//                    lesson_folder_id = lesson_folder_id.id;
-//                    update_file_table(lesson_folder_id);
-//                });
+                update_file_table(folder_name, lesson_id);
 
             });
 
@@ -291,6 +288,11 @@
                         }).done(function (values) {
                             update_file_table(lesson_folder_id);
                         });
+                    },
+                    create: function () {
+                        //jquery
+                        var current_url = $(location).attr('href');
+                        window.location.replace("<?php echo site_url()?>/assign?redirect="+current_url);
                     },
                     cancel: function () {
                         $.alert('Canceled!');
