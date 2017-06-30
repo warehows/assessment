@@ -387,7 +387,7 @@
                             $(".mdl-step").removeClass("is-active");
                             $(".mdl-step").eq(1).addClass("is-active");
                             $.each(all_quizzes, function (key, value) {
-                                question_lists.row.add(['<input type="checkbox" name="' + value["qid"] + '" class="question_checkbox" />', value["cid"], value["question_type"], value["question"]]).draw();
+                                question_lists.row.add(['<input type="checkbox" name="' + value["qid"] + '" value="' + value["qid"] + '" class="question_checkbox" />', value["cid"], value["question_type"], value["question"]]).draw();
                             });
                         });
 
@@ -432,6 +432,20 @@
 
         $("#questions_selected_confirmed").click(function () {
 
+
+            var question_id = $('.question_checkbox:checked').serialize();
+
+            var quid = $('#latest-id').val();
+            $.ajax({
+                url: "<?php echo site_url('quiz/addQuestionsToQuiz');?>",
+                type: "POST",
+                data: {quid:quid,question_id:question_id},
+            }).done(function (values) {
+
+            });
+
+
+
             var selected_questions = $(".question_checkbox:checkbox:checked");
             var selected_questions_array = new Array();
             $.each(selected_questions, function (key, value) {
@@ -443,7 +457,7 @@
             $.ajax({
                 url: "<?php echo site_url('assign/get_quiz');?>",
                 type: "POST",
-                data: {quid: quiz_selected}
+                data: {quid: quid,}
             }).done(function (values) {
                 values = JSON.parse(values);
                 $("#start_date").val(values['start_date']);
@@ -458,11 +472,13 @@
         });
         $("#settings_confirmed").click(function () {
             var settings_array = new Array();
+
             var start_date;
             var end_date;
             var duration;
             var maximum_attempts;
             var pass_percentage;
+            var question_id = $('.question_checkbox:checked').serialize();
             start_date = $("#start_date").val();
             end_date = $("#end_date").val();
             duration = $("#duration").val();
@@ -476,6 +492,7 @@
             });
             settings_array = {
                 quid: quiz_selected,
+                question_id: question_id,
                 start_date: start_date,
                 end_date: end_date,
                 duration: duration,
@@ -483,6 +500,15 @@
                 pass_percentage: pass_percentage,
                 view_answer: view_answer
             };
+            $.ajax({
+                url: "<?php echo site_url('quiz/addSettingsToQuiz');?>",
+                type: "POST",
+                data: settings_array,
+            }).done(function (values) {
+                console.log(values);
+            });
+
+
             $.ajax({
                 url: "<?php echo site_url('assign/get_all_level');?>",
                 type: "POST",
@@ -543,7 +569,7 @@
                 type: "POST",
                 data: {gids:gids,quid:quid},
             }).done(function (values) {
-                alert(values);
+
             });
 
         });

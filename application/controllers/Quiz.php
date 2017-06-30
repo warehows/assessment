@@ -769,6 +769,21 @@ class Quiz extends CI_Controller
 
     }
 
+    public function addQuestionsToQuiz(){
+        $post = $this->input->post();
+        parse_str($post['question_id'],$myArray);
+        $question_ids = implode(',', $myArray);
+        $quid = $post['quid'];
+
+        echo '<pre>';
+
+        $userdata = array(
+            'qids' => $question_ids,
+        );
+        $this->db->where('quid', $quid);
+        $this->db->update('savsoft_quiz', $userdata);
+    }
+
     public function addGroupToQuiz(){
         $post = $this->input->post();
         parse_str($post['gids'],$myArray);
@@ -780,6 +795,31 @@ class Quiz extends CI_Controller
         );
         $this->db->where('quid', $quid);
         $this->db->update('savsoft_quiz', $userdata);
+    }
+
+    public function addSettingsToQuiz(){
+        $post = $this->input->post();
+
+        parse_str($post['question_id'],$questionArray);
+
+        $quid = $post['quid'];
+        $startTime = strtotime($post['start_date']);
+        $endTime = strtotime($post['end_date']);
+        $quizdata = array(
+            'start_date' => (int)$startTime,
+            'end_date' => (int)$endTime,
+            'duration' => $post['duration'],
+            'maximum_attempts' => $post['maximum_attempts'],
+            'pass_percentage' => $post['pass_percentage'],
+            'view_answer' => $post['view_answer'],
+            'camera_req' => 0,
+            'noq' => count($questionArray),
+            'correct_score' => 1,
+            'incorrect_score' => 1
+        );
+
+        $this->db->where('quid', $quid);
+        $this->db->update('savsoft_quiz', $quizdata);
     }
 
 
