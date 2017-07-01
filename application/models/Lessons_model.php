@@ -213,7 +213,7 @@ Class Lessons_model extends CI_Model
             }
         }
 
-        redirect(site_url()."lessons");
+        redirect(site_url()."/lessons");
         return "success";
     }
 
