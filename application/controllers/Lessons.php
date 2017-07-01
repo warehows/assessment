@@ -36,7 +36,9 @@ class Lessons extends CI_Controller
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
-        $data['all_lessons'] = $this->lessons_model->all_lessons();
+        $data['subject_model'] = $this->subjects_model;
+        $data['grade_model'] = $this->grades_model;
+        $data['all_lessons'] = $this->lessons_model->all_lessons_non_duplicated();
         $data['logged_in'] = $logged_in;
 
         if ($logged_in["su"] == 1) {
@@ -88,22 +90,35 @@ class Lessons extends CI_Controller
         $data['logged_in'] = $logged_in;
         $post = $_POST;
         $this->load->view('new_material/header',$data);
-        if($post["submit"]=="duplicate") {
-            echo "duplicate";
+        if($post["submit"]=="import") {
+            $data = array(
+                "lesson_ids"=>$post['selected_lesson'],
+                "user_id"=>$logged_in['uid'],
+                "content_type"=>"lesson",
+            );
+            $imported = $this->lessons_model->import_to_workspace($data);
+            print_r($imported);
+//            print_r($post['selected_lesson']);
         }elseif($post["submit"]=="edit"){
             $data['lesson_id'] = $post['selected_lesson'][0];
             $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
             $data['author'] = $author[0]['author'];
             $this->load->view('lessons/edit',$data);
-        }
-        elseif($post["submit"]=="delete"){
+        }elseif($post["submit"]=="view"){
+            $data['lesson_id'] = $post['selected_lesson'][0];
+            $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
+            $data['author'] = $author[0]['author'];
+            $this->load->view('lessons/view',$data);
+        } elseif($post["submit"]=="delete"){
             $data['lesson_id'] = $post['selected_lesson'][0];
             foreach($post['selected_lesson'] as $key=>$value){
                 $this->lessons_model->delete_by_id($value);
                 $this->lessons_model->delete_where("lesson_id",$value);
             }
+            redirect(site_url()."/lessons");
 
-        }else{
+        }
+        else{
             print_r($post);
 //            redirect(site_url()."/lessons");
         }

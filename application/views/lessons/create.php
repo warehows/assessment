@@ -17,7 +17,7 @@
 <div class="wrapper">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-            <div class="three wizard">
+            <div class="two wizard">
                 <div class="wizard-inner">
                     <div class="connecting-line"></div>
                     <ul class="nav nav-tabs" role="tablist">
@@ -28,10 +28,6 @@
                                                                     aria-controls="step2" role="tab"
                                                                     title="Question Creation"><span
                                     class="round-tab"> <i class="glyphicon glyphicon-folder-open"></i></span> </a></li>
-                        <li class="disabled" role="presentation">
-                            <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab"
-                               title="Test Settings"><span class="round-tab"> <i
-                                        class="glyphicon glyphicon-ok"></i></span> </a></li>
                     </ul>
                 </div>
 
@@ -101,43 +97,43 @@
 <script>
     $(document).ready(function () {
 
-            var lesson_id;
-            var folder_name;
-            var folder_id_counter = 0;
-            var current_selected;
-            var lesson_folder_id;
-            var lesson_contents_id;
-            var lesson_contents;
-            var selected_quiz_array = new Array();
+        var lesson_id;
+        var folder_name;
+        var folder_id_counter = 0;
+        var current_selected;
+        var lesson_folder_id;
+        var lesson_contents_id;
+        var lesson_contents;
+        var selected_quiz_array = new Array();
 
-            //save lesson to database
-            $("#step_1_submit").click(function (e) {
+        //save lesson to database
+        $("#step_1_submit").click(function (e) {
 
-                var lesson_name = $("#lesson_name").val();
-                var subject_id = $("#subject_id").val();
-                var level_id = $("#level_id").val();
-                var author = <?php echo $logged_in['uid']; ?>;
-                var duplicated = 0;
-                //if there is lesson name or not
-                if (lesson_name) {
-                    $.ajax({
-                        url: "<?php echo site_url('lessons/save_lesson_with_folder');?>",
-                        type: "POST",
-                        data: {lesson_name: lesson_name, subject_id: subject_id, level_id: level_id, author:author,duplicated:duplicated}
-                    }).done(function (values) {
-                        lesson_id = values;
-                        window.location.replace("<?php echo site_url()?>/lessons/create_modify_folder?lesson_id="+lesson_id+"&author=<?php echo $logged_in['uid'];?>&duplicated=0");
-                    });
+            var lesson_name = $("#lesson_name").val();
+            var subject_id = $("#subject_id").val();
+            var level_id = $("#level_id").val();
+            var author = <?php echo $logged_in['uid']; ?>;
+            var duplicated = 0;
+            //if there is lesson name or not
+            if (lesson_name) {
+                $.ajax({
+                    url: "<?php echo site_url('lessons/save_lesson_with_folder');?>",
+                    type: "POST",
+                    data: {lesson_name: lesson_name, subject_id: subject_id, level_id: level_id, author:author,duplicated:duplicated}
+                }).done(function (values) {
+                    lesson_id = values;
+                    window.location.replace("<?php echo site_url()?>/lessons/create_modify_folder?lesson_id="+lesson_id+"&author=<?php echo $logged_in['uid'];?>&duplicated=0");
+                });
 
-                    $("#lesson_name").prop("disabled", true)
-                    $("#subject_id").prop("disabled", true)
-                    $("#level_id").prop("disabled", true)
+                $("#lesson_name").prop("disabled", true)
+                $("#subject_id").prop("disabled", true)
+                $("#level_id").prop("disabled", true)
 
-                } else {
-                    $("#lesson_name").focus();
+            } else {
+                $("#lesson_name").focus();
 
-                }
-            });
+            }
+        });
 
     });
 </script>

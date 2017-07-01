@@ -1,13 +1,3 @@
-<script type="text/javascript">
-    var jQuery_1_12_4 = $.noConflict(true);
-</script>
-
-<style>
-    .checked_tr {
-        background-color: rgb(230, 230, 230);
-    }
-</style>
-
 <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
@@ -17,73 +7,19 @@
 <script src="<?php echo base_url(); ?>js/jstree/dist/jstree.min.js"></script>
 <script src="<?php echo base_url(); ?>js/jstree/dist/jstree.js"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
 
-<div class="wrapper">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-            <div class="two wizard">
-                <div class="wizard-inner">
-                    <div class="connecting-line"></div>
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="disabled" role="presentation"><a href="#step1" data-toggle="tab"
-                                                                    aria-controls="step1"
-                                                                    role="tab" title="Title"><span class="round-tab"> <i
-                                        class="glyphicon glyphicon-text-color"></i></span> </a></li>
-                        <li class="active" role="presentation"><a href="#step2" data-toggle="tab"
-                                                                  aria-controls="step2" role="tab"
-                                                                  title="Question Creation"><span
-                                    class="round-tab"> <i class="glyphicon glyphicon-folder-open"></i></span> </a></li>
-                    </ul>
-                </div>
+<div class="col-lg-6 col-lg-offset-0 col-md-6">
+    <div id="data"></div>
+    <div id="folder_content_container" class="folder_content_container">
 
-                <div class="tab-content">
-                    <div id="step1" class="tab-pane" role="tabpanel">
-
-                    </div>
-                    <div id="step2" class="tab-pane active" role="tabpanel">
-                        <form>
-                            <div class="col-lg-6 col-lg-offset-0 col-md-6">
-                                <div id="data"></div>
-                                <div id="folder_content_container" class="folder_content_container">
-                                    <div id="fileuploader" class="mdl-cell--12-col-desktop">Upload Files</div>
-                                    <input type="button" id="start_upload" value="Start Uploading">
-                                    <input type="button" id="add_quiz" value="Add Quiz">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <table class="table" id="file_container">
-
-                                </table>
-                                <ul class="list-inline pull-right">
-                                    <li>
-                                        <a href="<?php echo site_url('lessons/')?>?notif=yes"><button class="btn btn-primary btn-info-full next-step" id="Done"
-                                                                                                            type="button">Done</button></a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        </form>
-
-                    </div>
-                    <div id="step3" class="tab-pane" role="tabpanel"></div>
-                </div>
-
-            </div>
-        </div>
     </div>
 </div>
-<div class="footer-clean">
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-lg-offset-9 col-md-3 col-md-offset-9 item social">
-                    <p class="copyright">Powered by Click Innovation © 2017</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+<div class="col-lg-6 col-md-6">
+    <table class="table" id="file_container">
+
+    </table>
 </div>
 
 <script>
@@ -91,7 +27,7 @@
 
         var lesson_id = <?php echo $lesson_id ?>;
         var author = <?php echo $author ?>;
-        var duplicated = <?php echo $duplicated ?>;
+        var duplicated= <?php echo $duplicated ?>;
         var folder_name;
         var folder_id_counter = 0;
         var current_selected;
@@ -117,7 +53,7 @@
                 $.each(lesson_contents, function (key, value) {
                     if (value['content_type'] == "quiz") {
                         console.log("quiz");
-                        append = "<tr><td>" + value['content_name'] + "</td><td>quiz</td><td><button id='" + value['id'] + "' name='" + value['content_name'] + "' class='delete_file_content_haha'>Delete</button></td></tr>";
+                        append = "<tr><td>" + value['content_name'] + "</td><td>quiz</td></td></tr>";
                         $("#file_container").append(append);
 //                        var quiz_id = value['content'];
 //                        $.ajax({
@@ -134,7 +70,7 @@
                     } else {
                         link = "<?php echo base_url('upload/lessons/')?>/" + lesson_id + "_" + folder_name + "/" + value['content_name'];
                         append = "<tr><td style='cursor:pointer'><a href='" + link + "' target='_blank'>" + value['content_name'] + "</a></td>" +
-                            "<td>" + value['content_type'] + "</td><td><button id='" + value['id'] + "' name='" + value['content_name'] + "' type='button' class='delete_file_content_haha'>Delete</button></td></tr>";
+                            "<td>" + value['content_type'] + "</td><td></td></tr>";
                         $("#file_container").append(append);
                     }
 

@@ -9,22 +9,38 @@ Class Lessons_model extends CI_Model
         return $query->result_array();
     }
 
+    function where($where,$data)
+    {
+        $this->db->where($where,$data);
+        $query = $this->db->get('lessons');
+        return $query->result_array();
+    }
+
+    function all_lessons_non_duplicated()
+    {
+        $this->db->where('duplicated',0);
+        $query = $this->db->get('lessons');
+        return $query->result_array();
+    }
+
     function lesson_by_id($data)
     {
         $this->db->where('id', $data);
         $query = $this->db->get('lessons');
         return $query->result_array();
     }
+
     function delete_by_id($data)
     {
         $this->db->where('id', $data);
         $this->db->delete('lessons');
 //        return $query->result_array();
     }
-    function delete_where($where,$data)
+
+    function delete_where($where, $data)
     {
         $this->db->where($where, $data);
-        $this->db->delete('lesson_id');
+        $this->db->delete('lesson_contents');
 //        return $query->result_array();
     }
 
@@ -86,7 +102,8 @@ Class Lessons_model extends CI_Model
         return $data['folder_name'];
     }
 
-    function join_tables($data){
+    function join_tables($data)
+    {
         $this->db->select('*');
         $this->db->from('lesson_folder');
         $this->db->join('lesson_contents', 'lesson_contents.lesson_folder_id = lesson_folder.id');
@@ -95,7 +112,9 @@ Class Lessons_model extends CI_Model
         return $data->result_array();
 //        return $data;
     }
-    function delete_file_by_id($data){
+
+    function delete_file_by_id($data)
+    {
         $this->db->where('id', $data['id']);
         $this->db->delete('lesson_contents');
         return $data;
@@ -133,18 +152,85 @@ Class Lessons_model extends CI_Model
         return $data->result_array();
     }
 
+    function import_to_workspace($data)
+    {
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $data['logged_in'] = $logged_in;
+
+        foreach ($data['lesson_ids'] as $key => $value) {
+            $loop_data = $this->lesson_by_id($value);
+            $lesson_id = array("lesson_id"=>$value);
+            $lesson_contents = $this->all_lesson_contents_by_id($lesson_id);
+
+            $data = array(
+                'lesson_name' => $loop_data[0]['lesson_name'],
+                'subject_id' => $loop_data[0]['subject_id'],
+                'level_id' => $loop_data[0]['level_id'],
+                'author' => $logged_in['uid'],
+                'duplicated' => 1,
+            );
+
+            $this->db->insert('lessons', $data);
+            $new_lesson_id = $this->db->insert_id();
+
+            $workspace_data = array(
+                'user_id' => $logged_in['uid'],
+                'content_id' => $new_lesson_id,
+                'content_type' => "lesson",
+                'content_name' => $loop_data[0]['lesson_name'],
+            );
+            $this->db->insert('workspace', $workspace_data);
+
+            foreach($lesson_contents as $lesson_content_key=>$lesson_content_value){
+                $lesson_data = array(
+                    'lesson_id' => $new_lesson_id,
+                    'content_name' => $lesson_content_value['content_name'],
+                    'author' => 1,
+                    'content_type' => $lesson_content_value['content_type'],
+                    'folder_name' => $lesson_content_value['folder_name'],
+                    'duplicated' => 1,
+                );
+                $this->save_files_to_database($lesson_data);
+
+                $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/assessment/upload/lessons/";
+                $folder_to_create = $new_lesson_id . "_" . $lesson_content_value['folder_name'];
+                $folder = $output_dir . $folder_to_create;
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+                $document_root= $_SERVER['DOCUMENT_ROOT']."/assessment";
+                $file = $document_root."/upload/lessons/".$value."_".$lesson_content_value['folder_name']."/".$lesson_content_value['content_name'];
+                $newfile = $document_root."/upload/lessons/".$new_lesson_id."_".$lesson_content_value['folder_name']."/".$lesson_content_value['content_name'];
+                copy($file, $newfile);
+
+            }
+        }
+
+        redirect(site_url()."lessons");
+        return "success";
+    }
+
     function delete_folder($data)
     {
         $this->db->where('lesson_id', $data['lesson_id'])->where('folder_name', $data['folder_name']);
         $this->db->delete('lesson_folder');
         return $data['folder_name'];
     }
+
     function delete_upload_files_by_id($data)
     {
         $this->db->where('id', $data['lesson_folder_id']);
         $query = $this->db->delete('lesson_contents');
         return $data['lesson_folder_id'];
     }
+
     function edit_folder($data)
     {
 

@@ -223,6 +223,10 @@ form .btn {
   width:33.33%;
 }
 
+.two.wizard .nav-tabs > li {
+  width:50%;
+}
+
 select:focus, select.form-control:focus {
   -webkit-box-shadow:inset 0 -2px 0 #2196f3;
   box-shadow:inset 0 -2px 0 #2196f3;
