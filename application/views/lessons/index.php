@@ -19,9 +19,10 @@
                 <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
-                    <button class="btn btn-primary" id="import" name="submit" value="import">Import</button>
+                    <button class="btn btn-primary" id="import" name="submit" value="import">Share to Lesson Bank</button>
                     <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
                     <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
+                    <button class="btn btn-primary" id="assign" name="submit" value="assign" disabled>Assign</button>
 
                     <table id="lesson_lists" class="table table-bordered table-hover" >
                         <thead>
@@ -58,6 +59,7 @@
     $("#view").hide();
     $("#import").hide();
     $("#delete").hide();
+    $("#assign").hide();
     $(".selected_lesson_class").change(function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {
@@ -65,9 +67,11 @@
             $("#import").show();
             $("#view").show();
             $("#delete").show();
+            $("#assign").show();
         } else if (selected_count == 0) {
             $("#edit").hide();
             $("#delete").hide();
+            $("#assign").hide();
             $("#import").hide();
             $("#view").hide();
         }
@@ -75,11 +79,13 @@
             $("#edit").hide();
             $("#delete").show();
             $("#import").show();
+            $("#assign").show();
             $("#view").hide();
         } else {
             $("#edit").hide();
             $("#view").hide();
             $("#import").hide();
+            $("#assign").show();
             $("#delete").show();
         }
     });

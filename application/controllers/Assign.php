@@ -45,9 +45,14 @@ class Assign extends CI_Controller {
         $data['all_subjects']=$this->subjects_model->all();
 
 /*        $this->load->view('material_part/header_material',$data);*/
-        $this->load->view('material_part/header_material',$data);
-        $this->load->view('assign_quiz/index.php', $data);
-        $this->load->view('material_part/footer_material',$data);
+
+//        $this->load->view('material_part/header_material',$data);
+//        $this->load->view('assign_quiz/index.php', $data);
+//        $this->load->view('material_part/footer_material',$data);
+
+        $this->load->view('new_material/header',$data);
+        $this->load->view('assign_quiz/index_new', $data);
+        $this->load->view('new_material/footer',$data);
     }
 
     public function update($quid){

@@ -95,7 +95,7 @@
                             <thead>
                             <tr>
                                 <th>Select</th>
-                                <th>Subject</th>
+                                <th>quiz_lists</th>
                                 <th>Question Type</th>
                                 <th>Question</th>
                             </tr>
@@ -219,11 +219,11 @@
                         </div>
                     </div>
                     <div class="mdl-step__actions">
-                        <button id="quiz_assign_group"
+                        <a href="<?php echo site_url()?>"/assign><button id="quiz_assign_group"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
                                 data-stepper-next>
                             Save & Next
-                        </button>
+                        </button></a>
                     </div>
                 </li>
             </ul>

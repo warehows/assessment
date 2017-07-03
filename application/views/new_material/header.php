@@ -27,11 +27,11 @@
         </div>
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav navbar-right">
+                <li role="presentation"><a href="<?php echo site_url('workspace');?>">Lesson Bank</a></li>
+                <li role="presentation"><a href="<?php echo site_url('lessons');?>">My Lesson</a></li>
 
-                <li role="presentation"><a href="<?php echo site_url('lessons');?>">Lesson Bank</a></li>
-                <li role="presentation"><a href="<?php echo site_url('workspace');?>">My Lesson</a></li>
                 <li role="presentation"><a href="<?php echo site_url('assign');?>">My Quiz</a></li>
-                <li role="presentation"><a href="<?php echo site_url('qbank/pre_new_question');?>">S Planner</a></li>
+                <li role="presentation"><a href="<?php echo site_url('qbank/pre_new_question');?>">C Planner</a></li>
                 <li role="presentation"><a href="<?php echo site_url('result');?>">Report</a></li>
 
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin <span class="caret"></span></a>

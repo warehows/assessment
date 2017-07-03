@@ -33,7 +33,7 @@
                                         class="glyphicon glyphicon-text-color"></i></span> </a></li>
                         <li class="active" role="presentation"><a href="#step2" data-toggle="tab"
                                                                   aria-controls="step2" role="tab"
-                                                                  title="Question Creation"><span
+                                                                  title="Lesson Creation"><span
                                     class="round-tab"> <i class="glyphicon glyphicon-folder-open"></i></span> </a></li>
                     </ul>
                 </div>
