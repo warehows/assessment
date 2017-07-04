@@ -9,6 +9,13 @@ Class Group_model extends CI_Model
         return $query->result_array();
     }
 
+    public function load($table,$key,$value){
+
+        $query = $this->db->query("select * from ".$table." where ".$key."='".$value."'");
+
+        return $query->row_array();
+    }
+
 }
 
 ?>

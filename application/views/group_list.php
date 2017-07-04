@@ -1,21 +1,21 @@
 <?php $level_list = $user_model->getCollection('savsoft_level'); ?>
 <div class="wrapper">
 
-   
+
  <h3><?php echo $title;?></h3>
 
 
   <div class="row">
- 
+
 <div class="col-md-12">
-<br> 
-			<?php 
+<br>
+			<?php
 		if($this->session->flashdata('message')){
-			echo $this->session->flashdata('message');	
+			echo $this->session->flashdata('message');
 		}
-		?>	
+		?>
 		<div id="message"></div>
-		
+
 		 <form method="post" action="<?php echo site_url('user/insert_group/');?>">
              <table class="table table-bordered">
                  <tr>
@@ -36,20 +36,21 @@
                  </tr>
              </table>
          </form>
-	
+
 <table class="table table-bordered">
 <tr>
  <th><?php echo $this->lang->line('group_name');?></th>
+ <th><?php echo 'Grade';?></th>
 <th><?php echo $this->lang->line('action');?> </th>
 </tr>
-<?php 
+<?php
 if(count($group_list)==0){
 	?>
 <tr>
  <td colspan="3"><?php echo $this->lang->line('no_record_found');?></td>
-</tr>	
-	
-	
+</tr>
+
+
 	<?php
 }
 
@@ -61,13 +62,18 @@ foreach($group_list as $key => $val){
  <input type="hidden"      value="0" onBlur="updategroupprice(this.value,'<?php echo $val['gid'];?>');" >
 
  <input type="hidden"   class="form-control"  value="0" onBlur="updategroupvalid(this.value,'<?php echo $val['gid'];?>');" >
+    <td>
+
+    <?php echo $user_model->load('savsoft_level','lid',$val['lid'])['level_name']; ?>
+
+    </td>
 <td>
 <a href="javascript:remove_entry('user/remove_group/<?php echo $val['gid'];?>');"><img src="<?php echo base_url('images/cross.png');?>"></a>
 
 </td>
 </tr>
 
-<?php 
+<?php
 }
 ?>
 </table>

@@ -21,9 +21,7 @@
 		}
 		?>	
 		
-				<div class="form-group">	 
-				<?php echo $this->lang->line('group_name');?>: <?php echo $result['group_name'];?> (<?php echo $this->lang->line('price_');?>: <?php echo $result['price'];?>)
-				</div>
+
 				
 				
 		
@@ -54,15 +52,15 @@
 					foreach($group_list as $key => $val){
 						?>
 						
-						<option value="<?php echo $val['gid'];?>" <?php if($result['gid']==$val['gid']){ echo 'selected';}?> ><?php echo $val['group_name'];?> (<?php echo $this->lang->line('price_');?>: <?php echo $val['price'];?>)</option>
+						<option value="<?php echo $val['gid'];?>" <?php if($result['gid']==$val['gid']){ echo 'selected';}?> ><?php echo $val['group_name'];?> </option>
 						<?php 
 					}
 					?>
 					</select>
 			</div>
-			<div class="form-group">	 
+			<div class="form-group" style="display:none;">
 					<label for="inputEmail"  ><?php echo $this->lang->line('subscription_expired');?></label> 
-					<input type="text" name="subscription_expired"  id="subscription_expired" class="form-control" value="<?php if($result['subscription_expired']!='0'){ echo date('Y-m-d',$result['subscription_expired']); }else{ echo '0';} ?>" placeholder="<?php echo $this->lang->line('subscription_expired');?>"  value=""  autofocus>
+					<input type="hidden" name="subscription_expired"  id="subscription_expired" class="form-control" value="<?php if($result['subscription_expired']!='0'){ echo date('Y-m-d',$result['subscription_expired']); }else{ echo '0';} ?>" placeholder="<?php echo $this->lang->line('subscription_expired');?>"  value=""  autofocus>
 			</div>
 
 
@@ -90,7 +88,7 @@
 
 
 
-<div class="row">
+<div class="row" style="display:none">
 <div class="col-md-8">
 <h3><?php echo $this->lang->line('payment_history');?></h3>
 <table class="table table-bordered">
