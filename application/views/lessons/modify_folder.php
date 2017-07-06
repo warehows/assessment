@@ -66,9 +66,7 @@
 //                        }).done(function (value) {
 //                            value = JSON.parse(value);
 //                            value['content'] = value.quiz_name;
-//
-//
-//
+///
 //                        });
                     } else {
                         link = "<?php echo base_url('upload/lessons/')?>/" + lesson_id + "_" + folder_name + "/" + value['content_name'];
