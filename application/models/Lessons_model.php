@@ -56,6 +56,15 @@ Class Lessons_model extends CI_Model
         return $query->result_array();
     }
 
+    function checkIfLessonNameExist($lessonName)
+    {
+        $this->db->where('lesson_name', $lessonName);
+        $query = $this->db->get('lessons');
+
+        $result = count($query->result_array());
+        return ($result > 0) ? 1 : 0;
+    }
+
     function all_lesson_contents()
     {
         $query = $this->db->get('lessons');

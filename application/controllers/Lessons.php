@@ -208,6 +208,15 @@ class Lessons extends CI_Controller
 
     }
 
+    public function checkIfLessonNameExist(){
+        $post = $this->input->post();
+
+        $data = $this->lessons_model->checkIfLessonNameExist($post['lesson_name']);
+
+        echo $data;
+
+    }
+
     public function save_lesson_with_folder()
     {
         // redirect if not loggedin
