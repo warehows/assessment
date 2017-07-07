@@ -55,18 +55,6 @@
                         console.log("quiz");
                         append = "<tr><td>" + value['content_name'] + "</td><td>quiz</td></td></tr>";
                         $("#file_container").append(append);
-//                        var quiz_id = value['content'];
-//                        $.ajax({
-//                                url: "<?php //echo site_url('lessons/get_quiz');?>//",
-//                            type: "POST",
-//                            data: {quid: quiz_id}
-//                        }).done(function (value) {
-//                            value = JSON.parse(value);
-//                            value['content'] = value.quiz_name;
-//
-//
-//
-//                        });
                     } else {
                         link = "<?php echo base_url('upload/lessons/')?>/" + lesson_id + "_" + folder_name + "/" + value['content_name'];
                         append = "<tr><td style='cursor:pointer'><a href='" + link + "' target='_blank'>" + value['content_name'] + "</a></td>" +

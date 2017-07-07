@@ -52,6 +52,40 @@ class Assign extends CI_Controller {
 
     }
 
+    public function create_question()
+    {
+        // redirect if not loggedin
+        if(!$this->session->userdata('logged_in')){
+            redirect('login');
+
+        }
+        $logged_in=$this->session->userdata('logged_in');
+        if($logged_in['base_url'] != base_url()){
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $logged_in=$this->session->userdata('logged_in');
+        $data['title']=$this->lang->line('quiz');
+        $data['su'] = $logged_in['su'];
+        // fetching quiz list
+        $data['category']=$this->category_model->get_all();
+        $data['all_users']=$this->user_model->get_all();
+        $data['all_subjects']=$this->subjects_model->all();
+        $data['all_quiz']=$this->quiz_model->getCollection("savsoft_quiz");
+
+        /*        $this->load->view('material_part/header_material',$data);*/
+
+//        $this->load->view('material_part/header_material',$data);
+//        $this->load->view('assign_quiz/index.php', $data);
+//        $this->load->view('material_part/footer_material',$data);
+
+        $this->load->view('new_material/header',$data);
+        $this->load->view('assign_quiz/create_question', $data);
+        $this->load->view('new_material/footer',$data);
+
+    }
+
     public function create(){
         // redirect if not loggedin
         if(!$this->session->userdata('logged_in')){
@@ -79,9 +113,9 @@ class Assign extends CI_Controller {
 //        $this->load->view('assign_quiz/index.php', $data);
 //        $this->load->view('material_part/footer_material',$data);
 
-        $this->load->view('new_material/header',$data);
+        $this->load->view('material_part/header_material',$data);
         $this->load->view('assign_quiz/create', $data);
-        $this->load->view('new_material/footer',$data);
+        $this->load->view('material_part/footer_material',$data);
     }
 
     public function update($quid){

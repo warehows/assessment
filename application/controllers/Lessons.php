@@ -83,11 +83,11 @@ class Lessons extends CI_Controller
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
         }
-        $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['base_url'] != base_url()) {
-            $this->session->unset_userdata('logged_in');
-            redirect('login');
-        }
+            $logged_in = $this->session->userdata('logged_in');
+            if ($logged_in['base_url'] != base_url()) {
+                $this->session->unset_userdata('logged_in');
+                redirect('login');
+            }
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
