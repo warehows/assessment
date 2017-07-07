@@ -11,6 +11,8 @@
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">
+
+                <h2>My Lesson</h2>
                 <form action="<?php echo site_url() ?>/lessons/create">
                     <a href="" style="float:right;padding:5px;">
                         <button class="btn btn-primary" id="new_lesson">New Lesson</button>
@@ -20,7 +22,6 @@
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
                     <button class="btn btn-primary" id="share" name="submit" value="share">Share to Lesson Bank</button>
-                    <button class="btn btn-primary" id="remove" name="submit" value="remove">Remove</button>
                     <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
                     <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
 
