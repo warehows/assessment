@@ -27,6 +27,15 @@
 
 </div>
 
+<?php
+if($logged_in['su'] == 1){
+    $update_info_redirect = "update_lesson_info";
+}elseif($logged_in['su'] == 2){
+    $update_info_redirect = "update_lesson_info_workspace";
+}
+
+?>
+
 <script>
     $(document).ready(function(){
         var lesson_id = <?php echo $lesson_id; ?>;
@@ -38,11 +47,11 @@
             subject_id = $("#subject_id").val();
             level_id = $("#level_id").val();
             $.ajax({
-                url: "<?php echo site_url('lessons/update_lesson_info'); ?>",
+                url: "<?php echo site_url('lessons/'.$update_info_redirect); ?>",
                 type: "POST",
-                data: {id: lesson_id, lesson_name:lesson_name, subject_id:subject_id, level_id:level_id,}
+                data: {id: lesson_id, lesson_name:lesson_name, subject_id:subject_id, level_id:level_id}
             }).done(function (values) {
-
+                console.log(values);
             });
         });
 
@@ -51,7 +60,7 @@
             subject_id = $("#subject_id").val();
             level_id = $("#level_id").val();
             $.ajax({
-                url: "<?php echo site_url('lessons/update_lesson_info'); ?>",
+                url: "<?php echo site_url('lessons/'.$update_info_redirect); ?>",
                 type: "POST",
                 data: {id: lesson_id, lesson_name:lesson_name, subject_id:subject_id, level_id:level_id,}
             }).done(function (values) {
@@ -63,7 +72,7 @@
             subject_id = $("#subject_id").val();
             level_id = $("#level_id").val();
             $.ajax({
-                url: "<?php echo site_url('lessons/update_lesson_info'); ?>",
+                url: "<?php echo site_url('lessons/'.$update_info_redirect); ?>",
                 type: "POST",
                 data: {id: lesson_id, lesson_name:lesson_name, subject_id:subject_id, level_id:level_id,}
             }).done(function (values) {

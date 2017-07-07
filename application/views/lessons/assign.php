@@ -29,12 +29,12 @@
                         <li>
                             <?php if ($logged_in['su'] == 2) { ?>
                                 <a href="<?php echo site_url('workspace/')?>"><button class="btn btn-primary btn-info-full next-step" id="Done"
-                                                                                              type="button">Done</button></a>
+                                                                                      type="button">Done</button></a>
                             <?php } ?>
 
                             <?php if ($logged_in['su'] == 1) { ?>
                                 <a href="<?php echo site_url('lessons/')?>"><button class="btn btn-primary btn-info-full next-step" id="Done"
-                                                                                      type="button">Done</button></a>
+                                                                                    type="button">Done</button></a>
                             <?php } ?>
 
                         </li>

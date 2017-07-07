@@ -55,6 +55,7 @@
                         console.log("quiz");
                         append = "<tr><td>" + value['content_name'] + "</td><td>quiz</td></td></tr>";
                         $("#file_container").append(append);
+//
                     } else {
                         link = "<?php echo base_url('upload/lessons/')?>/" + lesson_id + "_" + folder_name + "/" + value['content_name'];
                         append = "<tr><td style='cursor:pointer'><a href='" + link + "' target='_blank'>" + value['content_name'] + "</a></td>" +

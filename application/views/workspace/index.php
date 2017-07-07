@@ -11,12 +11,13 @@
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">
-                <>
+                <h2>My Lesson</h2>
                 <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
-                    <button class="btn btn-primary" id="import" name="submit" value="import" disabled>Import to My Lesson</button>
-                    <!--<button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>-->
+                    <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
+                    <button class="btn btn-primary" id="assign" name="submit" value="assign">Assign</button>
+                    <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
 
                     <table id="lesson_lists" class="table table-bordered table-hover" >
                         <thead>
@@ -24,7 +25,6 @@
                             <th></th>
                             <th>Content Name</th>
                             <th>Content Type</th>
-
                         </tr>
                         </thead>
                         <tbody>
@@ -48,6 +48,7 @@
 <script>
     $("#lesson_lists").DataTable();
     $("#edit").hide();
+    $("#assign").hide();
     $("#view").hide();
     $("#delete").hide();
     $("#import").hide();
@@ -55,22 +56,26 @@
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {
             $("#edit").show();
+            $("#assign").show();
             $("#view").show();
             $("#delete").show();
             $("#import").show();
         } else if (selected_count == 0) {
             $("#edit").hide();
+            $("#assign").hide();
             $("#delete").hide();
             $("#view").hide();
             $("#import").hide();
         }
         else if (selected_count >= 1) {
             $("#edit").hide();
+            $("#assign").hide();
             $("#delete").show();
             $("#view").hide();
             $("#import").hide();
         } else {
             $("#edit").hide();
+            $("#assign").hide();
             $("#view").hide();
             $("#delete").show();
             $("#import").show();

@@ -180,12 +180,12 @@ Class Lessons_model extends CI_Model
         $data['logged_in'] = $logged_in;
 
         foreach ($data['lesson_ids'] as $key => $value) {
-            $loop_data = $this->lesson_by_id($value);
+                $loop_data = $this->lesson_by_id($value);
             $lesson_id = array("lesson_id"=>$value);
             $lesson_contents = $this->all_lesson_contents_by_id($lesson_id);
 
             $data = array(
-                'lesson_name' => $loop_data[0]['lesson_name'],
+                'lesson_name' => $loop_data[0]['lesson_name']."-copy",
                 'subject_id' => $loop_data[0]['subject_id'],
                 'level_id' => $loop_data[0]['level_id'],
                 'author' => $logged_in['uid'],
@@ -199,7 +199,7 @@ Class Lessons_model extends CI_Model
                 'user_id' => $logged_in['uid'],
                 'content_id' => $new_lesson_id,
                 'content_type' => "lesson",
-                'content_name' => $loop_data[0]['lesson_name'],
+                'content_name' => $loop_data[0]['lesson_name']."-copy",
             );
             $this->db->insert('workspace', $workspace_data);
 
@@ -227,8 +227,6 @@ Class Lessons_model extends CI_Model
 
             }
         }
-
-        redirect(site_url()."/lessons");
         return "success";
     }
 

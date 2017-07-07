@@ -11,10 +11,11 @@
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">
-                <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
 
+                <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
+                    <h2>Lesson Bank</h2>
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
-                    <button class="btn btn-primary" id="import" name="submit" value="import">Import To My Lesson</button>
+                    <button class="btn btn-primary" id="import" name="submit" value="import">Import to My Lessons</button>
 
                     <table id="lesson_lists" class="table table-bordered table-hover" >
                         <thead>
@@ -50,6 +51,7 @@
     $("#edit").hide();
     $("#view").hide();
     $("#import").hide();
+    $("#remove").hide();
     $("#delete").hide();
     $("#assign").hide();
     $(".selected_lesson_class").change(function () {
@@ -57,6 +59,7 @@
         if (selected_count == 1) {
             $("#edit").show();
             $("#import").show();
+            $("#remove").show();
             $("#view").show();
             $("#delete").show();
             $("#assign").show();
@@ -65,18 +68,21 @@
             $("#delete").hide();
             $("#assign").hide();
             $("#import").hide();
+            $("#remove").hide();
             $("#view").hide();
         }
         else if (selected_count >= 1) {
             $("#edit").hide();
             $("#delete").show();
             $("#import").show();
+            $("#remove").show();
             $("#assign").show();
             $("#view").hide();
         } else {
             $("#edit").hide();
             $("#view").hide();
             $("#import").hide();
+            $("#remove").hide();
             $("#assign").show();
             $("#delete").show();
         }
