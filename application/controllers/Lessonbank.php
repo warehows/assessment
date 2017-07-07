@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Lessons extends CI_Controller
+class Lessonbank extends CI_Controller
 {
 
     function __construct()
@@ -38,7 +38,7 @@ class Lessons extends CI_Controller
         $data['all_levels'] = $this->level_model->all();
         $data['subject_model'] = $this->subjects_model;
         $data['grade_model'] = $this->grades_model;
-        $data['all_lessons'] = $this->lessons_model->all_lessons_non_duplicated();
+        $data['all_lessons'] = $this->lessons_model->all_lessons_shared();
         $data['logged_in'] = $logged_in;
 
         if ($logged_in["su"] == 1) {
@@ -46,14 +46,13 @@ class Lessons extends CI_Controller
             $this->load->view('lessons/index.php', $data);
         } else if ($logged_in["su"] == 2) {
             $this->load->view('new_material/teacher_header', $data);
-            $this->load->view('lessons/teacher_index.php', $data);
+            $this->load->view('lesson_bank/teacher_index', $data);
         }
 
         $this->load->view('new_material/footer', $data);
 
 
     }
-
 
     public function create()
     {
@@ -88,10 +87,9 @@ class Lessons extends CI_Controller
             $this->session->unset_userdata('logged_in');
             redirect('login');
         }
-
         $data['logged_in'] = $logged_in;
         $post = $_POST;
-//        $this->load->view('new_material/header',$data);
+        $this->load->view('new_material/header',$data);
         if($post["submit"]=="import") {
             $data = array(
                 "lesson_ids"=>$post['selected_lesson'],
@@ -99,7 +97,7 @@ class Lessons extends CI_Controller
                 "content_type"=>"lesson",
             );
             $imported = $this->lessons_model->import_to_workspace($data);
-
+            print_r($imported);
 //            print_r($post['selected_lesson']);
         }elseif($post["submit"]=="edit"){
             $data['lesson_id'] = $post['selected_lesson'][0];
@@ -119,12 +117,6 @@ class Lessons extends CI_Controller
             }
             redirect(site_url()."/lessons");
 
-        }
-        elseif($post["submit"]=="share"){
-            $data['id'] = $post['selected_lesson'][0];
-            $data['share'] = 1;
-            $return_value = $this->lessons_model->change_share($data);
-            redirect(site_url()."/lessons");
         }
         else{
             print_r($post);

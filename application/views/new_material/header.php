@@ -27,7 +27,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav navbar-right">
-                <li role="presentation"><a href="<?php echo site_url('workspace');?>">Lesson Bank</a></li>
+                <li role="presentation"><a href="<?php echo site_url('lessonbank');?>">Lesson Bank</a></li>
                 <li role="presentation"><a href="<?php echo site_url('lessons');?>">My Lesson</a></li>
 
                 <li role="presentation"><a href="<?php echo site_url('assign');?>">My Quiz</a></li>

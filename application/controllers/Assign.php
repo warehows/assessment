@@ -66,12 +66,9 @@ class Assign extends CI_Controller {
 
         $logged_in=$this->session->userdata('logged_in');
 
-        $data['list_view']=$list_view;
-        $data['limit']=$limit;
         $data['title']=$this->lang->line('quiz');
         $data['su'] = $logged_in['su'];
         // fetching quiz list
-        $data['result']=$this->quiz_model->quiz_list($limit);
         $data['category']=$this->category_model->get_all();
         $data['all_users']=$this->user_model->get_all();
         $data['all_subjects']=$this->subjects_model->all();

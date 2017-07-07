@@ -37,7 +37,13 @@ class Workspace extends CI_Controller
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
         $data['all_lessons'] = $this->workspace_model->where("user_id",$logged_in['uid']);
-        $this->load->view('new_material/header', $data);
+
+        if ($logged_in["su"] == 1) {
+            $this->load->view('new_material/header', $data);
+        }elseif($logged_in["su"] == 2){
+            $this->load->view('new_material/teacher_header', $data);
+        }
+
         $this->load->view('workspace/index.php', $data);
         $this->load->view('new_material/footer', $data);
     }

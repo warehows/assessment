@@ -33,7 +33,7 @@ class Dashboard extends CI_Controller
         $data['num_users'] = $this->user_model->num_users();
         $data['num_qbank'] = $this->qbank_model->num_qbank();
         $data['num_quiz'] = $this->quiz_model->num_quiz();
-        if ($logged_in['su'] == '1') {
+        if ($logged_in['su'] == 1) {
 
             $this->load->view('new_material/header', $data);
             $this->load->view('new_dashboard', $data);

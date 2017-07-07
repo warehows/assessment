@@ -19,10 +19,11 @@
                 <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
-                    <button class="btn btn-primary" id="share" name="submit" value="share">Share to Lesson Bank</button>
-                    <button class="btn btn-primary" id="remove" name="submit" value="remove">Remove</button>
+                    <button class="btn btn-primary" id="import" name="submit" value="import">Import to My Lesson</button>
+                    <button class="btn btn-primary" id="remove" name="submit" value="remove">Unshare</button>
                     <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
                     <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
+                    <button class="btn btn-primary" id="assign" name="submit" value="assign" disabled>Assign</button>
 
                     <table id="lesson_lists" class="table table-bordered table-hover" >
                         <thead>
@@ -57,16 +58,16 @@
     $("#lesson_lists").DataTable();
     $("#edit").hide();
     $("#view").hide();
-    $("#share").hide();
     $("#import").hide();
+    $("#remove").hide();
     $("#delete").hide();
     $("#assign").hide();
     $(".selected_lesson_class").change(function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {
             $("#edit").show();
-            $("#share").show();
             $("#import").show();
+            $("#remove").show();
             $("#view").show();
             $("#delete").show();
             $("#assign").show();
@@ -75,21 +76,21 @@
             $("#delete").hide();
             $("#assign").hide();
             $("#import").hide();
-            $("#share").hide();
+            $("#remove").hide();
             $("#view").hide();
         }
         else if (selected_count >= 1) {
             $("#edit").hide();
             $("#delete").show();
-            $("#share").show();
             $("#import").show();
+            $("#remove").show();
             $("#assign").show();
             $("#view").hide();
         } else {
             $("#edit").hide();
             $("#view").hide();
-            $("#share").hide();
             $("#import").hide();
+            $("#remove").hide();
             $("#assign").show();
             $("#delete").show();
         }

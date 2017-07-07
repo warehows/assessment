@@ -22,6 +22,12 @@ Class Lessons_model extends CI_Model
         $query = $this->db->get('lessons');
         return $query->result_array();
     }
+    function all_lessons_shared()
+    {
+        $this->db->where('shared',1);
+        $query = $this->db->get('lessons');
+        return $query->result_array();
+    }
 
     function lesson_by_id($data)
     {
@@ -229,6 +235,16 @@ Class Lessons_model extends CI_Model
         $this->db->where('id', $data['lesson_folder_id']);
         $query = $this->db->delete('lesson_contents');
         return $data['lesson_folder_id'];
+    }
+
+    function change_share($data)
+    {
+
+        $update_data=array("shared"=>$data['share']);
+
+        $this->db->where("id",$data['id']);
+        $return_value = $this->db->update("lessons",$update_data);
+        return $return_value;
     }
 
     function edit_folder($data)
