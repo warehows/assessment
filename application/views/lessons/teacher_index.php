@@ -4,43 +4,46 @@
 <style>
     a {
         text-decoration: none;
-        color:black;
+        color: black;
     }
 </style>
 <div class="wrapper">
     <div class="wrapper">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                <button id="duplicate">Duplicate</button>
-                <button id="view">View</button>
-                <table id="lesson_lists" class="display " cellspacing="1" width="100%">
-                    <thead>
-                    <tr>
-                        <th> </th>
-                        <th>Lesson Name</th>
-                        <th>Grade</th>
+            <div class="col-lg-12 col-md-12col-sm-12">
+                <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
 
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    <tr>
-                        <th> </th>
-                        <th>Lesson Name</th>
-                        <th>Grade</th>
-                    </tr>
-                    </tfoot>
-                    <tbody>
-                    <?php foreach($all_lessons as $key=>$value){?>
+                    <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
+                    <button class="btn btn-primary" id="share" name="submit" value="share">Share to Lesson Bank</button>
+                    <button class="btn btn-primary" id="import" name="submit" value="import">Import To My Lessons</button>
+                    <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
+                    <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
+                    <button class="btn btn-primary" id="assign" name="submit" value="assign" disabled>Assign</button>
+
+                    <table id="lesson_lists" class="table table-bordered table-hover" >
+                        <thead>
                         <tr>
-                            <td><input type="checkbox" class="selected_lesson_class" name="selected_lesson" /></td>
-                            <td><?php echo $value['lesson_name']?></td>
-                            <td><?php echo $value['level_id']?></td>
+                            <th></th>
+                            <th>Lesson Name</th>
+                            <th>Subject</th>
+                            <th>Grade</th>
+
                         </tr>
-                    <?php } ?>
+                        </thead>
+                        <tbody>
 
+                        <?php foreach ($all_lessons as $key => $value) { ?>
+                            <tr>
+                                <td><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['id']?>"/></td>
+                                <td><?php echo $value['lesson_name'] ?></td>
+                                <td><?php print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?></td>
+                                <td><?php echo $value['level_id'] ?></td>
+                            </tr>
+                        <?php } ?>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </div>
     </div>
@@ -49,32 +52,42 @@
 <script>
     $("#lesson_lists").DataTable();
     $("#edit").hide();
-    $("#delete").hide();
     $("#view").hide();
-    $("#duplicate").hide();
-    $(".selected_lesson_class").change(function() {
-        selected_count = $(document).find('input[name="selected_lesson"]:checked').length;
-        if(selected_count==1) {
+    $("#share").hide();
+    $("#import").hide();
+    $("#delete").hide();
+    $("#assign").hide();
+    $(".selected_lesson_class").change(function () {
+        selected_count = $(document).find('.selected_lesson_class:checked').length;
+        if (selected_count == 1) {
             $("#edit").show();
-            $("#delete").show();
-            $("#duplicate").show();
+            $("#share").show();
+            $("#import").show();
             $("#view").show();
-        }else if(selected_count==0){
-            $("#view").hide();
+            $("#delete").show();
+            $("#assign").show();
+        } else if (selected_count == 0) {
             $("#edit").hide();
             $("#delete").hide();
-            $("#duplicate").hide();
+            $("#assign").hide();
+            $("#import").hide();
+            $("#share").hide();
+            $("#view").hide();
         }
-        else if(selected_count>=1){
+        else if (selected_count >= 1) {
+            $("#edit").hide();
+            $("#delete").show();
+            $("#share").show();
+            $("#import").show();
+            $("#assign").show();
+            $("#view").hide();
+        } else {
             $("#edit").hide();
             $("#view").hide();
+            $("#share").hide();
+            $("#import").hide();
+            $("#assign").show();
             $("#delete").show();
-            $("#duplicate").show();
-        }else{
-            $("#edit").hide();
-            $("#view").hide();
-            $("#delete").show();
-            $("#duplicate").show();
         }
     });
 </script>

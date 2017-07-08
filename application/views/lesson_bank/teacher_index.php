@@ -11,35 +11,30 @@
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">
-                <form action="<?php echo site_url() ?>/lessons/create">
-                    <a href="" style="float:right;padding:5px;">
-                        <button class="btn btn-primary" id="new_lesson">New Lesson</button>
-                    </a>
-                </form>
-                <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
 
+                <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
+                    <h2>Lesson Bank</h2>
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
-                    <button class="btn btn-primary" id="import" name="submit" value="import">Share to Lesson Bank</button>
-                    <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
-                    <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
-                    <button class="btn btn-primary" id="assign" name="submit" value="assign" disabled>Assign</button>
+                    <button class="btn btn-primary" id="import" name="submit" value="import">Import to My Lessons</button>
 
                     <table id="lesson_lists" class="table table-bordered table-hover" >
                         <thead>
                         <tr>
                             <th></th>
-                            <th>Quiz Name</th>
+                            <th>Lesson Name</th>
+                            <th>Subject</th>
+                            <th>Grade</th>
 
                         </tr>
                         </thead>
                         <tbody>
 
-                        <?php foreach ($all_quiz as $key => $value) { ?>
+                        <?php foreach ($all_lessons as $key => $value) { ?>
                             <tr>
-                                <td><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['quid']?>"/></td>
-                                <td><?php echo $value['quiz_name'] ?></td>
-<!--                                <td>--><?php //print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?><!--</td>-->
-<!--                                <td>--><?php //echo $value['level_id'] ?><!--</td>-->
+                                <td><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['id']?>"/></td>
+                                <td><?php echo $value['lesson_name'] ?></td>
+                                <td><?php print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?></td>
+                                <td><?php echo $value['level_id'] ?></td>
                             </tr>
                         <?php } ?>
 
@@ -56,6 +51,7 @@
     $("#edit").hide();
     $("#view").hide();
     $("#import").hide();
+    $("#remove").hide();
     $("#delete").hide();
     $("#assign").hide();
     $(".selected_lesson_class").change(function () {
@@ -63,6 +59,7 @@
         if (selected_count == 1) {
             $("#edit").show();
             $("#import").show();
+            $("#remove").show();
             $("#view").show();
             $("#delete").show();
             $("#assign").show();
@@ -71,18 +68,21 @@
             $("#delete").hide();
             $("#assign").hide();
             $("#import").hide();
+            $("#remove").hide();
             $("#view").hide();
         }
         else if (selected_count >= 1) {
             $("#edit").hide();
             $("#delete").show();
             $("#import").show();
+            $("#remove").show();
             $("#assign").show();
             $("#view").hide();
         } else {
             $("#edit").hide();
             $("#view").hide();
             $("#import").hide();
+            $("#remove").hide();
             $("#assign").show();
             $("#delete").show();
         }

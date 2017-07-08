@@ -23,11 +23,11 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="active" role="presentation"><a href="#step1" data-toggle="tab" aria-controls="step1"
                                                                   role="tab" title="Title"><span class="round-tab"> <i
-                                        class="glyphicon glyphicon-text-color"></i></span> </a></li>
+                                            class="glyphicon glyphicon-text-color"></i></span> </a></li>
                         <li class="disabled" role="presentation"><a href="#step2" data-toggle="tab"
                                                                     aria-controls="step2" role="tab"
                                                                     title="Question Creation"><span
-                                    class="round-tab"> <i class="glyphicon glyphicon-folder-open"></i></span> </a></li>
+                                        class="round-tab"> <i class="glyphicon glyphicon-folder-open"></i></span> </a></li>
                     </ul>
                 </div>
 
@@ -42,6 +42,7 @@
                                     <label class="control-label" for="start_date">Lesson Title </label>
                                     <input class="form-control" type="text" name="lesson_name" required=""
                                            placeholder="Lesson Title" inputmode="email" id="lesson_name">
+                                    <div class="error-name" style="display:none; width:100%;"><span style="color:darkred; margin:2px; top:5px;"><strong>Lesson already exist! Please input a unique lesson name.</strong></span></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="end_date">Subject </label>
@@ -49,7 +50,7 @@
                                         <?php foreach ($all_subjects as $key => $value) { ?>
 
                                             <option
-                                                value="<?php echo $value['cid'] ?>"><?php echo $value['category_name'] ?></option>
+                                                    value="<?php echo $value['cid'] ?>"><?php echo $value['category_name'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -59,7 +60,7 @@
                                         <?php foreach ($all_levels as $key => $value) { ?>
 
                                             <option
-                                                value="<?php echo $value['lid'] ?>">
+                                                    value="<?php echo $value['lid'] ?>">
                                                 Grade <?php echo $value['level_name'] ?></option>
                                         <?php } ?>
                                     </select>
@@ -87,7 +88,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-lg-offset-9 col-md-3 col-md-offset-9 item social">
-                    <p class="copyright">Powered by Click Innovation © 2017</p>
+                    <p class="copyright">Powered by Click Innovation ï¿½ 2017</p>
                 </div>
             </div>
         </div>
@@ -134,6 +135,25 @@
 
             }
         });
+
+        $( "#lesson_name" ).on('input',function(e){
+            var lesson_name = $("#lesson_name").val();
+            $.ajax({
+                url: "<?php echo site_url('lessons/checkIfLessonNameExist');?>",
+                type: "POST",
+                data: {lesson_name: lesson_name}
+            }).success(function ($data) {
+                if($data > 0){
+                    $('.error-name').show();
+                    $('.btn.next-step').prop('disabled', true);
+                }else{
+                    $('.error-name').hide()
+                    $('.btn.next-step').prop('disabled', false);
+                }
+
+            });
+        });
+        $('.btn.next-step').prop('disabled', true);
 
     });
 </script>

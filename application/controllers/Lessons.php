@@ -14,8 +14,10 @@ class Lessons extends CI_Controller
         $this->load->model("grades_model");
         $this->load->model("subjects_model");
         $this->load->model("quiz_model");
+        $this->load->model("group_model");
         $this->load->model("user_model");
         $this->load->model("lessons_model");
+        $this->load->model("workspace_model");
 
     }
 
@@ -54,6 +56,7 @@ class Lessons extends CI_Controller
 
     }
 
+
     public function create()
     {
         // redirect if not loggedin
@@ -87,43 +90,135 @@ class Lessons extends CI_Controller
             $this->session->unset_userdata('logged_in');
             redirect('login');
         }
+        $data['all_users'] = $this->user_model->get_all();
+        $data['all_subjects'] = $this->subjects_model->all();
+        $data['all_levels'] = $this->level_model->all();
+        $data['all_sections'] = $this->group_model->get_all();
         $data['logged_in'] = $logged_in;
         $post = $_POST;
-        $this->load->view('new_material/header',$data);
-        if($post["submit"]=="import") {
+        if ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+        }
+        if ($logged_in['su'] == 1) {
+            $this->load->view('new_material/header', $data);
+        }
+
+
+        if ($post["submit"] == "import") {
             $data = array(
-                "lesson_ids"=>$post['selected_lesson'],
-                "user_id"=>$logged_in['uid'],
-                "content_type"=>"lesson",
+                "lesson_ids" => $post['selected_lesson'],
+                "user_id" => $logged_in['uid'],
+                "content_type" => "lesson",
+                "all_users" => $this->user_model->get_all(),
+                "all_subjects" => $this->subjects_model->all(),
+                "all_levels" => $this->level_model->all(),
+                "all_sections" => $this->group_model->get_all(),
             );
             $imported = $this->lessons_model->import_to_workspace($data);
-            print_r($imported);
-//            print_r($post['selected_lesson']);
-        }elseif($post["submit"]=="edit"){
-            $data['lesson_id'] = $post['selected_lesson'][0];
-            $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
-            $data['author'] = $author[0]['author'];
-            $this->load->view('lessons/edit',$data);
-        }elseif($post["submit"]=="view"){
-            $data['lesson_id'] = $post['selected_lesson'][0];
-            $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
-            $data['author'] = $author[0]['author'];
-            $this->load->view('lessons/view',$data);
-        } elseif($post["submit"]=="delete"){
-            $data['lesson_id'] = $post['selected_lesson'][0];
-            foreach($post['selected_lesson'] as $key=>$value){
-                $this->lessons_model->delete_by_id($value);
-                $this->lessons_model->delete_where("lesson_id",$value);
-            }
-            redirect(site_url()."/lessons");
 
-        }
-        else{
+            if ($logged_in['su'] == 2) {
+                redirect(site_url() . "/lessonbank");
+            }
+            if ($logged_in['su'] == 1) {
+                redirect(site_url() . "/lessons");
+            }
+        } elseif ($post["submit"] == "edit") {
+            $data['lesson_id'] = $post['selected_lesson'][0];
+            $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
+            $data['author'] = $author[0]['author'];
+            $this->load->view('lessons/edit', $data);
+        }elseif ($post["submit"] == "assign") {
+            $data['lesson_id'] = $post['selected_lesson'][0];
+            $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
+            $data['author'] = $author[0]['author'];
+            $this->load->view('lessons/assign', $data);
+        } elseif ($post["submit"] == "view") {
+            $data['lesson_id'] = $post['selected_lesson'][0];
+            $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
+            $data['author'] = $author[0]['author'];
+            $this->load->view('lessons/view', $data);
+        } elseif ($post["submit"] == "remove") {
+            $data['lesson_id'] = $post['selected_lesson'][0];
+            foreach ($post['selected_lesson'] as $key => $value) {
+                $data['id'] = $value;
+                $data['share'] = 0;
+                $return_value = $this->lessons_model->change_share($data);
+            }
+            redirect(site_url() . "/lessonbank");
+        } elseif ($post["submit"] == "delete") {
+            $data['lesson_id'] = $post['selected_lesson'][0];
+            foreach ($post['selected_lesson'] as $key => $value) {
+                $current_lesson = $this->lessons_model->lesson_by_id($value);
+                if($current_lesson[0]['duplicated'] == "1"){
+                    $this->workspace_model->delete_by_content($value);
+                }
+                $this->lessons_model->delete_by_id($value);
+                $this->lessons_model->delete_where("lesson_id", $value);
+            }
+//            print_r($current_lesson);
+            if ($logged_in['su'] == 2) {
+                redirect(site_url() . "/workspace");
+            }
+            if ($logged_in['su'] == 1) {
+                redirect(site_url() . "/lessons");
+            }
+
+
+        } elseif ($post["submit"] == "share") {
+            $data['lesson_id'] = $post['selected_lesson'][0];
+            foreach ($post['selected_lesson'] as $key => $value) {
+                $data['id'] = $value;
+                $data['share'] = 1;
+                $return_value = $this->lessons_model->change_share($data);
+            }
+            redirect(site_url() . "/lessons");
+        } else {
             print_r($post);
 //            redirect(site_url()."/lessons");
         }
-        $this->load->view('new_material/footer',$data);
+        $this->load->view('new_material/footer', $data);
 
+    }
+
+
+    public function update_lesson_info()
+    {
+        $data = $this->input->post();
+
+        $update_data = array(
+            "lesson_name" => $data["lesson_name"],
+            "subject_id" => $data["subject_id"],
+            "level_id" => $data["level_id"],
+        );
+
+        $this->db->where("id", $data["id"]);
+        $this->db->update("lessons", $update_data);
+    }
+
+    public function update_lesson_info_workspace()
+    {
+        $data = $this->input->post();
+
+        $update_data = array(
+            "lesson_name" => $data["lesson_name"],
+            "subject_id" => $data["subject_id"],
+            "level_id" => $data["level_id"],
+        );
+        $update_workspace_data = array(
+            "content_name" => $data["lesson_name"],
+        );
+
+        $this->db->where("id", $data["id"]);
+        $this->db->update("lessons", $update_data);
+        $this->db->where("content_id", $data["id"])->where("content_type","lesson");
+        $this->db->update("workspace", $update_workspace_data);
+//        if($current_lesson[0]['duplicated'] == "1"){
+//            $workspace_data = $this->workspace_model->where_is_lesson($data["id"]);
+//
+//        }
+//        $this->db->update("lessons", $update_data);
+
+        print_r($data);
     }
 
     public function create_modify_folder()
@@ -165,6 +260,16 @@ class Lessons extends CI_Controller
 
         $data = $this->input->post();
         $data = $this->lessons_model->save_lesson($data);
+
+        echo $data;
+
+    }
+
+    public function checkIfLessonNameExist()
+    {
+        $post = $this->input->post();
+
+        $data = $this->lessons_model->checkIfLessonNameExist($post['lesson_name']);
 
         echo $data;
 
