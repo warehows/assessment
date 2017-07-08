@@ -14,6 +14,7 @@ class Lessons extends CI_Controller
         $this->load->model("grades_model");
         $this->load->model("subjects_model");
         $this->load->model("quiz_model");
+        $this->load->model("group_model");
         $this->load->model("user_model");
         $this->load->model("lessons_model");
         $this->load->model("workspace_model");
@@ -92,6 +93,7 @@ class Lessons extends CI_Controller
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
+        $data['all_sections'] = $this->group_model->get_all();
         $data['logged_in'] = $logged_in;
         $post = $_POST;
         if ($logged_in['su'] == 2) {
@@ -110,6 +112,7 @@ class Lessons extends CI_Controller
                 "all_users" => $this->user_model->get_all(),
                 "all_subjects" => $this->subjects_model->all(),
                 "all_levels" => $this->level_model->all(),
+                "all_sections" => $this->group_model->get_all(),
             );
             $imported = $this->lessons_model->import_to_workspace($data);
 
