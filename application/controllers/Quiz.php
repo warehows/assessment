@@ -615,6 +615,7 @@ class Quiz extends CI_Controller
         // remaining time in seconds
         $data['seconds'] = ($data['quiz']['duration'] * 60) - (time() - $data['quiz']['start_time']);
         // get questions
+        var_dump($data['quiz']);
         $data['questions'] = $this->quiz_model->get_questions($data['quiz']['r_qids']);
         // get options
         $data['options'] = $this->quiz_model->get_options($data['quiz']['r_qids']);
@@ -806,8 +807,8 @@ class Quiz extends CI_Controller
         $startTime = strtotime($post['start_date']);
         $endTime = strtotime($post['end_date']);
         $quizdata = array(
-            'start_date' => (int)$startTime,
-            'end_date' => (int)$endTime,
+            'start_date' => $startTime,
+            'end_date' => $endTime,
             'duration' => $post['duration'],
             'maximum_attempts' => $post['maximum_attempts'],
             'pass_percentage' => $post['pass_percentage'],

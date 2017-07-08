@@ -137,7 +137,9 @@ class Assign extends CI_Controller {
     }
 
     public function get_all_questions(){
-        $data = $this->qbank_model->get_all_question();
+        $post = $this->input->post();
+        $quiz_id = $post["quiz_id"];
+        $data = $this->qbank_model->get_all_question($quiz_id);
         echo json_encode($data);
     }
 

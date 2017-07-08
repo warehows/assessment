@@ -84,56 +84,7 @@
                 <li class="mdl-step">
                     <span class="mdl-step__label">
                         <span class="mdl-step__title">
-                            <span class="mdl-step__title-text">Question Creation</span>
-                        </span>
-                    </span>
-
-                    <div class="mdl-step__content">
-                        <!-- datatable -->
-                        <table id="question_lists" class="mdl-data-table" cellspacing="0" width="100%"
-                               align="center">
-                            <thead>
-                            <tr>
-                                <th>Select</th>
-                                <th>Subject</th>
-                                <th>Question Type</th>
-                                <th>Question</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <tr id="last_question_tr">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>Select</th>
-                                <th>Subject</th>
-                                <th>Question Type</th>
-                                <th>Question</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-
-                    </div>
-                    <div class="mdl-step__actions">
-                        <button
-                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
-                            data-stepper-next
-                            id="questions_selected_confirmed"
-                            >
-                            Done
-                        </button>
-                    </div>
-                </li>
-                <li class="mdl-step">
-                    <span class="mdl-step__label">
-                        <span class="mdl-step__title">
-                            <span class="mdl-step__title-text">Test Settings</span>
+                            <span class="mdl-step__title-text">Quiz Information</span>
                         </span>
                     </span>
 
@@ -145,13 +96,13 @@
                                 <h7>Start Date (Quiz can be attempted after this date)</h7>
                                 <div class="mdl-textfield mdl-js-textfield  extrawide is-upgraded is-dirty">
                                     <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="text" class="mdl-textfield__input" value="" id="start_date"/>
+                                    <input type="date" data-date-inline-picker="true"  type="text" class="mdl-textfield__input" value="" id="start_date"/>
                                     <!--     <input class="c-datepicker-input" /> -->
                                 </div>
                                 <h7>End Date (Quiz can be attempted before this date)</h7>
                                 <div class="mdl-textfield mdl-js-textfield  extrawide">
                                     <label for="input_text" class="mdl-textfield__label"></label>
-                                    <input type="text" class="mdl-textfield__input" id="end_date"/>
+                                    <input type="date" data-date-inline-picker="true"   type="text" class="mdl-textfield__input" id="end_date"/>
                                 </div>
                                 <h7>Duration (in min.)</h7>
                                 <div class="mdl-textfield mdl-js-textfield   extrawide">
@@ -198,7 +149,7 @@
                 </li>
                 <li class="mdl-step">
                     <span class="mdl-step__label">
-                        <span class="mdl-step__title"><span class="mdl-step__title-text">Assigning</span></span>
+                        <span class="mdl-step__title"><span class="mdl-step__title-text">Assigning(Optional)</span></span>
                     </span>
 
                     <div class="mdl-step__content">
@@ -223,6 +174,61 @@
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
                                 data-stepper-next>
                             Save & Next
+                        </button>
+                    </div>
+                </li>
+                <li class="mdl-step">
+                    <span class="mdl-step__label">
+                        <span class="mdl-step__title">
+                            <span class="mdl-step__title-text">Question Added To this Quiz</span>
+                        </span>
+                    </span>
+                    <div class="mdl-step__content">
+                        <!-- datatable -->
+                        <span class="mdl-step__label">
+                        <span class="mdl-step__title">
+                            <span class="mdl-step__title-text">
+                                <a href="link" onClick="javascript:window.open('<?php echo base_url().'index.php/qbank/pre_new_question/'; ?>','Windows','width=650,height=350,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,location=no,directories=no,status=no');return false">Add Questions to this Quiz</a>
+                             </span>
+                        </span>
+                    </span>
+                        <table id="question_lists" class="mdl-data-table" cellspacing="0" width="100%"
+                               align="center">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Subject</th>
+                                <th>Question Type</th>
+                                <th>Question</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr id="last_question_tr">
+                                <td ></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Subject</th>
+                                <th>Question Type</th>
+                                <th>Question</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <div class="mdl-step__actions">
+                        <button
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
+                                data-stepper-next
+                                id="questions_selected_confirmed"
+                        >
+                            Done
                         </button>
                     </div>
                 </li>
@@ -322,7 +328,7 @@
         }).done(function (value) {
             var quiz_value = JSON.parse(value);
             $.each(quiz_value, function (key, key_value) {
-                quiz_lists.row.add([key_value["quiz_name"], '<input type="button" id="selected_' + key_value["quid"] + '" value="Select" class="selected_quiz">']).draw();
+                quiz_lists.row.add([key_value["quiz_name"], '<input  style="display:none;" type="button" id="selected_' + key_value["quid"] + '" value="Select" class="selected_quiz">']).draw();
             });
 
             $(".selected_quiz").click(function () {
@@ -359,6 +365,7 @@
                         data: {quiz_name: quiz_name, cid: subject}
                     }).done(function (values) {
                         latest_id = values;
+                        localStorage.setItem('latest_id', latest_id);
                         $('#latest-id').val(latest_id);
                         $.ajax({
                             url: "<?php echo site_url('assign/assessment_quiz_list/'); ?>",
@@ -376,20 +383,8 @@
                             });
 
                         });
-
-                        $.ajax({
-                            url: "<?php echo site_url('assign/get_all_questions');?>",
-                            type: "POST",
-                        }).done(function (values) {
-                            var all_quizzes = JSON.parse(values);
-                            $("#second_table").show();
-                            quiz_selected = latest_id;
-                            $(".mdl-step").removeClass("is-active");
-                            $(".mdl-step").eq(1).addClass("is-active");
-                            $.each(all_quizzes, function (key, value) {
-                                question_lists.row.add(['<input type="checkbox" name="' + value["qid"] + '" value="' + value["qid"] + '" class="question_checkbox" />', value["cid"], value["question_type"], value["question"]]).draw();
-                            });
-                        });
+                        $(".mdl-step").removeClass("is-active");
+                        $(".mdl-step").eq(1).addClass("is-active");
 
                     });
 
@@ -432,42 +427,43 @@
 
         $("#questions_selected_confirmed").click(function () {
 
+            window.location.href='<?php echo base_url().'index.php/quiz'; ?>';
+//
+//            var question_id = $('.question_checkbox:checked').serialize();
+//
+//            var quid = $('#latest-id').val();
+//            $.ajax({
+//                url: "<?php //echo site_url('quiz/addQuestionsToQuiz');?>//",
+//                type: "POST",
+//                data: {quid:quid,question_id:question_id},
+//            }).done(function (values) {
+//
+//            });
 
-            var question_id = $('.question_checkbox:checked').serialize();
-
-            var quid = $('#latest-id').val();
-            $.ajax({
-                url: "<?php echo site_url('quiz/addQuestionsToQuiz');?>",
-                type: "POST",
-                data: {quid:quid,question_id:question_id},
-            }).done(function (values) {
-
-            });
 
 
-
-            var selected_questions = $(".question_checkbox:checkbox:checked");
-            var selected_questions_array = new Array();
-            $.each(selected_questions, function (key, value) {
-                selected_questions_array.push($(value).attr("name"));
-            });
+//            var selected_questions = $(".question_checkbox:checkbox:checked");
+//            var selected_questions_array = new Array();
+//            $.each(selected_questions, function (key, value) {
+//                selected_questions_array.push($(value).attr("name"));
+//            });
             $(".mdl-step").removeClass("is-active");
             $(".mdl-step").eq(2).addClass("is-active");
 
-            $.ajax({
-                url: "<?php echo site_url('assign/get_quiz');?>",
-                type: "POST",
-                data: {quid: quid,}
-            }).done(function (values) {
-                values = JSON.parse(values);
-                $("#start_date").val(values['start_date']);
-                $("#end_date").val(values['start_date']);
-                $("#duration").val(values['duration']);
-                $("#maximum_attempts").val(values['maximum_attempts']);
-                $("#pass_percentage").val(values['pass_percentage']);
-                $("input[name='view_answer']").eq(values['view_answer']).attr("checked", "");
-                $("input[name='view_answer']").eq(values['view_answer']).parents("label").addClass("is-checked");
-            });
+//            $.ajax({
+//                url: "<?php //echo site_url('assign/get_quiz');?>//",
+//                type: "POST",
+//                data: {quid: quid,}
+//            }).done(function (values) {
+//                values = JSON.parse(values);
+//                $("#start_date").val(values['start_date']);
+//                $("#end_date").val(values['start_date']);
+//                $("#duration").val(values['duration']);
+//                $("#maximum_attempts").val(values['maximum_attempts']);
+//                $("#pass_percentage").val(values['pass_percentage']);
+//                $("input[name='view_answer']").eq(values['view_answer']).attr("checked", "");
+//                $("input[name='view_answer']").eq(values['view_answer']).parents("label").addClass("is-checked");
+//            });
 
         });
         $("#settings_confirmed").click(function () {
@@ -571,6 +567,24 @@
             }).done(function (values) {
 
             });
+
+            setInterval(function(){
+                question_lists.clear();
+                $.ajax({
+                    url: "<?php echo site_url('assign/get_all_questions');?>",
+                    type: "POST",
+                    data: {quiz_id: latest_id}
+                }).done(function (values) {
+                    var all_quizzes = JSON.parse(values);
+                    $("#second_table").show();
+                    quiz_selected = latest_id;
+
+                    $.each(all_quizzes, function (key, value) {
+                        question_lists.row.add(['<input style="display:none;" type="checkbox" name="' + value["qid"] + '" value="' + value["qid"] + '" class="question_checkbox" />', value["cid"], value["question_type"], value["question"]]).draw();
+
+                    });
+                });
+            }, 3000);
 
         });
 

@@ -23,8 +23,8 @@
 <table class="table table-bordered">
 <tr><td><?php echo $this->lang->line('quiz_name');?></td><td><?php echo $quiz['quiz_name'];?></td></tr>
 <tr><td colspan='2'><?php echo $this->lang->line('description');?><br><?php echo $quiz['description'];?></td></tr>
-<tr><td><?php echo $this->lang->line('start_date');?></td><td><?php echo date('Y-m-d H:i:s',$quiz['start_date']);?></td></tr>
-<tr><td><?php echo $this->lang->line('end_date');?></td><td><?php echo date('Y-m-d H:i:s',$quiz['end_date']);?></td></tr>
+<tr><td><?php echo $this->lang->line('start_date');?></td><td><?php echo $quiz['start_date'] ? date('Y-m-d H:i:s',$quiz['start_date']): 'Date not specified in quiz';?></td></tr>
+<tr><td><?php echo $this->lang->line('end_date');?></td><td><?php echo $quiz['end_date'] ? date('Y-m-d H:i:s',$quiz['end_date']): 'Date not specified in quiz';?></td></tr>
 <tr><td><?php echo $this->lang->line('duration');?></td><td><?php echo $quiz['duration'];?></td></tr>
 <tr><td><?php echo $this->lang->line('maximum_attempts');?></td><td><?php echo $quiz['maximum_attempts'];?></td></tr>
 <tr><td><?php echo $this->lang->line('pass_percentage');?></td><td><?php echo $quiz['pass_percentage'];?></td></tr>

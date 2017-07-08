@@ -50,8 +50,17 @@ Class Qbank_model extends CI_Model
 
     }
 
-    function get_all_question()
+    function get_all_question($quiz_id = null)
     {
+        $questionIds = null;
+        if($quiz_id){
+            $quiz = $this->quiz_model->get_quiz($quiz_id);
+            $questionIds = explode(',',$quiz['qids']);
+
+        }
+        if(!empty($questionIds)) {
+            $this->db->where_in('qid', $questionIds);
+        }
         $query = $this->db->get('savsoft_qbank');
         return $query->result_array();
     }
@@ -87,6 +96,7 @@ Class Qbank_model extends CI_Model
         $uid = $logged_in['uid'];
 
 
+
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
@@ -97,6 +107,11 @@ Class Qbank_model extends CI_Model
         );
         $this->db->insert('savsoft_qbank', $userdata);
         $qid = $this->db->insert_id();
+        $quizId = $this->input->post('quiz_id');
+        if($quizId){
+            $this->addQuestionToQuiz($quizId,$qid);
+        }
+
         foreach ($this->input->post('option') as $key => $val) {
             if ($this->input->post('score') == $key) {
                 $score = 1;
@@ -116,6 +131,32 @@ Class Qbank_model extends CI_Model
 
     }
 
+    function addQuestionToQuiz($quizId,$qid){
+
+        $currentQuestions = $this->getCurrentQuestionsFromQuiz($quizId);
+        if($currentQuestions > 0){
+            $data = array(
+                'qids' => $currentQuestions.','.$qid
+            );
+        }else{
+            $data = array(
+                'qids' => $qid
+            );
+        }
+
+        $this->db->where('quid', $quizId);
+        $this->db->update('savsoft_quiz', $data);
+
+    }
+
+    function getCurrentQuestionsFromQuiz($quizId){
+        $query = $this->db->query("select * from savsoft_quiz where quid='".$quizId."'");
+        $result = $query->row_array();
+
+        return $result['qids'];
+
+    }
+
     function insert_question_2()
     {
 
@@ -132,6 +173,10 @@ Class Qbank_model extends CI_Model
         );
         $this->db->insert('savsoft_qbank', $userdata);
         $qid = $this->db->insert_id();
+        $quizId = $this->input->post('quiz_id');
+        if($quizId){
+            $this->addQuestionToQuiz($quizId,$qid);
+        }
         foreach ($this->input->post('option') as $key => $val) {
             if (in_array($key, $this->input->post('score'))) {
                 $score = (1 / count($this->input->post('score')));
@@ -168,6 +213,10 @@ Class Qbank_model extends CI_Model
         );
         $this->db->insert('savsoft_qbank', $userdata);
         $qid = $this->db->insert_id();
+        $quizId = $this->input->post('quiz_id');
+        if($quizId){
+            $this->addQuestionToQuiz($quizId,$qid);
+        }
         foreach ($this->input->post('option') as $key => $val) {
             $score = (1 / count($this->input->post('option')));
             $userdata = array(
@@ -201,6 +250,10 @@ Class Qbank_model extends CI_Model
         );
         $this->db->insert('savsoft_qbank', $userdata);
         $qid = $this->db->insert_id();
+        $quizId = $this->input->post('quiz_id');
+        if($quizId){
+            $this->addQuestionToQuiz($quizId,$qid);
+        }
         foreach ($this->input->post('option') as $key => $val) {
             $score = 1;
             $userdata = array(
@@ -231,6 +284,10 @@ Class Qbank_model extends CI_Model
         );
         $this->db->insert('savsoft_qbank', $userdata);
         $qid = $this->db->insert_id();
+        $quizId = $this->input->post('quiz_id');
+        if($quizId){
+            $this->addQuestionToQuiz($quizId,$qid);
+        }
 
 
         return true;

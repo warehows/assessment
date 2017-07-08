@@ -981,10 +981,13 @@ Class Quiz_model extends CI_Model
     //custom
     function assessment_insert_quiz($variable)
     {
+        $logged_in = $this->session->userdata('logged_in');
+        $uid = $logged_in['uid'];
 
         $userdata = array(
             'quiz_name' => $variable['quiz_name'],
             'cid' => $variable['cid'],
+            'uid' => $uid
         );
 
         $this->db->insert('savsoft_quiz', $userdata);

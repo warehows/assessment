@@ -69,9 +69,10 @@
 					<label for="inputEmail"  ><?php echo $this->lang->line('description');?></label> 
 					<textarea  name="description"  class="form-control"></textarea>
 			</div>
-	 
 
- 
+
+
+            <input id="magic_quiz_id" name="quiz_id" type="hidden" value="">
 	<button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit');?></button>
  
 		</div>
@@ -84,8 +85,11 @@
       </form>
 </div>
 
- 
-
 
 
 </div>
+ <script>
+     jQuery( document ).ready(function() {
+         jQuery('#magic_quiz_id').val(localStorage.getItem('latest_id'));
+     });
+ </script>
