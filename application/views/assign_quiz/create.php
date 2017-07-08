@@ -487,7 +487,7 @@
                 }
             });
             settings_array = {
-                quid: quiz_selected,
+                quid: $('#latest-id').val(),
                 question_id: question_id,
                 start_date: start_date,
                 end_date: end_date,
