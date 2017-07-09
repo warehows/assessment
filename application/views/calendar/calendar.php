@@ -186,12 +186,6 @@
         });//end
 
 
-
-
-
-
-
-
         $('#grade').change(function(event) {
             $.post('calendar/getSection', {grade: $('#grade').val()}, function(data, textStatus, xhr) {
                 $('#section').html("<option>Select section</option>");
@@ -210,10 +204,6 @@
                 });
             });
             });
-        });
-
-        $('#submit').click(function(){
-
         });
 
     });
