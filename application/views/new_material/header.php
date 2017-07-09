@@ -24,14 +24,13 @@
         <div class="navbar-header"><a href="<?php echo site_url('dashboard');?>"> <img style="height: 45px!important;" class="navbar-brand image_logo" src="<?php echo base_url('css/new_material/img/main_logo.png'); ?>" alt="School Logo" >
             <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></a>
         </div>
-        <div class="collapse n
-        avbar-collapse" id="navcol-1">
+        <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav navbar-right">
                 <li role="presentation"><a href="<?php echo site_url('lessonbank');?>">Lesson Bank</a></li>
                 <li role="presentation"><a href="<?php echo site_url('lessons');?>">My Lesson</a></li>
 
                 <li role="presentation"><a href="<?php echo site_url('assign');?>">My Quiz</a></li>
-                <li role="presentation"><a href="<?php echo site_url('qbank/pre_new_question');?>">C Planner</a></li>
+                <li role="presentation"><a href="<?php echo site_url('calendar');?>">C Planner</a></li>
                 <li role="presentation"><a href="<?php echo site_url('result');?>">Report</a></li>
 
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin <span class="caret"></span></a>
