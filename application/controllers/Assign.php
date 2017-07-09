@@ -52,6 +52,16 @@ class Assign extends CI_Controller {
 
     }
 
+    function change_share($data)
+    {
+
+        $update_data=array("shared"=>$data['share']);
+
+        $this->db->where("id",$data['id']);
+        $return_value = $this->db->update("savsoft_quiz",$update_data);
+        return $return_value;
+    }
+
     public function create_question()
     {
         // redirect if not loggedin
