@@ -39,15 +39,6 @@
         color: black;
         font-weight: 900;
     }
-    /*.closeon:after {
-        content: '×'; 
-    }*/
-
-    /*.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-    }*/
 
     .tiptool .tiptooltext {
         visibility: hidden;
@@ -142,10 +133,9 @@
 
                 var calendar_id = event.id
 
-                if (!confirm("is this okay?")) {
+                if (!confirm("Are you sure you want to change event schedule?")) {
                     revertFunc();
                 } else {
-                    console.log(dateFrom+" === "+dateTo)
                     $.post('calendar/update', {dateFrom: dateFrom,dateTo: dateTo, calendar_id: calendar_id}, function(data, textStatus, xhr) {
                         console.log(data);
                     });
@@ -167,10 +157,9 @@
 
                 var calendar_id = event.id
 
-                if (!confirm("is this okay?")) {
+                if (!confirm("Are you sure you want to change event schedule?")) {
                     revertFunc();
                 } else {
-                    console.log(dateFrom+" === "+dateTo)
                     
                     $.post('calendar/update', {dateFrom: dateFrom,dateTo: dateTo, calendar_id: calendar_id}, function(data, textStatus, xhr) {
                         console.log(data);
@@ -179,9 +168,9 @@
             },
             eventRender: function(event, element, view) {
                 if (view.name == 'listDay') {
-                    element.find(".fc-list-item-time").append("<span class='closeon pull-right tiptool'><span>X</span class='tiptooltext'><span>this text</span></span>");
+                    element.find(".fc-list-item-time").append("<span class='closeon pull-right tiptool'><span>X</span class='tiptooltext'><span>Delete</span></span>");
                 } else {
-                    element.find(".fc-content").prepend("<span class='closeon pull-right tiptool'><span>X</span><span class='tiptooltext'>this text</span></span>");
+                    element.find(".fc-content").prepend("<span class='closeon pull-right tiptool'><span>X</span><span class='tiptooltext'>Delete</span></span>");
                 }
                 element.find(".closeon").on('click', function() {
                     if (confirm("Are you sure you want to delete this schedule?")) {
@@ -190,6 +179,9 @@
                         });
                     }
                 });
+            },
+            eventClick: function(calEvent, jsEvent, view) {
+                console.log(calEvent);
             }
         });//end
 
@@ -223,5 +215,6 @@
         $('#submit').click(function(){
 
         });
+
     });
 </script>
