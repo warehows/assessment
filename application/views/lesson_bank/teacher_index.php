@@ -7,6 +7,7 @@
         color: black;
     }
 </style>
+
 <div class="wrapper">
     <div class="wrapper">
         <div class="row">
