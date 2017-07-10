@@ -35,9 +35,10 @@ class Calendar extends CI_Controller
         $data['section'] = $this->group_model->get_all();
         $data['subject'] = $this->subjects_model->all();
 
-        if ($logged_in["su"] == 1) {
+        if ($logged_in["su"] == 1 || $logged_in["su"] == 2) {
             $this->load->view('new_material/header', $data);
             $this->load->view('calendar/calendar', $data);
+            $this->load->view('new_material/footer', $data);
         }
     }
 
@@ -56,9 +57,10 @@ class Calendar extends CI_Controller
         $data['lesson'] = $this->calendar_model->get_lessons();
         $data['section'] = $this->class_model->getCollection('savsoft_group');
 
-        if ($logged_in["su"] == 1) {
+        if ($logged_in["su"] == 2) {
             $this->load->view('new_material/header', $data);
             $this->load->view('calendar/calendar_create', $data);
+            $this->load->view('new_material/footer', $data);
         }
     }
 
@@ -115,6 +117,7 @@ class Calendar extends CI_Controller
     public function getSection() {
         $grade = $this->input->post('grade');
         $data = $this->calendar_model->get_section($grade);
+        $result = [];
         foreach ($data as &$row) {
             $result[] = array(
                 'gid' => $row['gid'],
