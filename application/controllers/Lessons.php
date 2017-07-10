@@ -90,6 +90,7 @@ class Lessons extends CI_Controller
             $this->session->unset_userdata('logged_in');
             redirect('login');
         }
+        $this->session->set_flashdata('message', "<div class='alert alert-success'> Successfull Shared Lesson </div>");
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();

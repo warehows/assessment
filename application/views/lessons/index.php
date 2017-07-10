@@ -13,6 +13,11 @@
             <div class="col-lg-12 col-md-12col-sm-12">
 
                 <h2>My Lesson</h2>
+                <?php
+                if ($this->session->flashdata('message')) {
+                    echo $this->session->flashdata('message');
+                }
+                ?>
                 <form action="<?php echo site_url() ?>/lessons/create">
                     <a href="" style="float:right;padding:5px;">
                         <button class="btn btn-primary" id="new_lesson">New Lesson</button>

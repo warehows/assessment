@@ -12,6 +12,11 @@
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">
 
+                <?php
+                if ($this->session->flashdata('message')) {
+                    echo $this->session->flashdata('message');
+                }
+                ?>
                 <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
                     <h2>Lesson Bank</h2>
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
