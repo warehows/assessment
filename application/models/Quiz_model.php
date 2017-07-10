@@ -17,6 +17,13 @@ Class Quiz_model extends CI_Model
         return $query->result_array();
     }
 
+    function all_shared()
+    {
+        $this->db->where('shared',1);
+        $query = $this->db->get('savsoft_quiz');
+        return $query->result_array();
+    }
+
     function quiz_list($limit)
     {
 

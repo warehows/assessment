@@ -35,6 +35,7 @@ class Lessonbank extends CI_Controller
         $data['title'] = $this->lang->line('Lessons');
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
+        $data['all_quizzes'] = $this->quiz_model->all_shared("savsoft_quiz","*","shared",1);
         $data['all_levels'] = $this->level_model->all();
         $data['subject_model'] = $this->subjects_model;
         $data['grade_model'] = $this->grades_model;

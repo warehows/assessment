@@ -16,10 +16,10 @@
                         <button class="btn btn-primary" id="new_lesson">New Lesson</button>
                     </a>
                 </form>
-                <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
+                <form action="<?php echo site_url()?>/assign/actions" method="POST">
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
-                    <button class="btn btn-primary" id="import" name="submit" value="import">Share to Lesson Bank</button>
+                    <button class="btn btn-primary" id="share" name="submit" value="share">Share to Lesson Bank</button>
                     <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
                     <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
                     <button class="btn btn-primary" id="assign" name="submit" value="assign" disabled>Assign</button>
@@ -36,7 +36,7 @@
 
                         <?php foreach ($all_quiz as $key => $value) { ?>
                             <tr>
-                                <td><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['quid']?>"/></td>
+                                <td><input type="checkbox" class="selected_lesson_class" name="selected_quiz[]" value="<?php echo $value['quid']?>"/></td>
                                 <td><?php echo $value['quiz_name'] ?></td>
 <!--                                <td>--><?php //print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?><!--</td>-->
 <!--                                <td>--><?php //echo $value['level_id'] ?><!--</td>-->
@@ -55,14 +55,14 @@
     $("#lesson_lists").DataTable();
     $("#edit").hide();
     $("#view").hide();
-    $("#import").hide();
+    $("#share").hide();
     $("#delete").hide();
     $("#assign").hide();
     $(".selected_lesson_class").change(function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {
             $("#edit").show();
-            $("#import").show();
+            $("#share").show();
             $("#view").show();
             $("#delete").show();
             $("#assign").show();
@@ -70,19 +70,19 @@
             $("#edit").hide();
             $("#delete").hide();
             $("#assign").hide();
-            $("#import").hide();
+            $("#share").hide();
             $("#view").hide();
         }
         else if (selected_count >= 1) {
             $("#edit").hide();
             $("#delete").show();
-            $("#import").show();
+            $("#share").show();
             $("#assign").show();
             $("#view").hide();
         } else {
             $("#edit").hide();
             $("#view").hide();
-            $("#import").hide();
+            $("#share").hide();
             $("#assign").show();
             $("#delete").show();
         }
