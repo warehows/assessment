@@ -209,7 +209,7 @@ class Lessons extends CI_Controller
             "content_name" => $data["lesson_name"],
         );
 
-        $this->db->where("id", $data["id"]);
+        $this->db->where("id",  $data["id"]);
         $this->db->update("lessons", $update_data);
         $this->db->where("content_id", $data["id"])->where("content_type","lesson");
         $this->db->update("workspace", $update_workspace_data);
