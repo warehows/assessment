@@ -224,10 +224,10 @@
                     </div>
                     <div class="mdl-step__actions">
                         <button
-                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
-                                data-stepper-next
-                                id="questions_selected_confirmed"
-                        >
+                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised"
+                            data-stepper-next
+                            id="questions_selected_confirmed"
+                            >
                             Done
                         </button>
                     </div>

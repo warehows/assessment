@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Assign extends CI_Controller
 {
-
+    public $data;
     function __construct()
     {
         parent::__construct();
@@ -17,11 +17,6 @@ class Assign extends CI_Controller
         $this->load->model("subjects_model");
         $this->lang->load('basic', $this->config->item('language'));
 
-    }
-
-    public function index()
-    {
-        // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
 
@@ -32,20 +27,35 @@ class Assign extends CI_Controller
             redirect('login');
         }
 
+        $data['title'] = $this->lang->line('quiz');
+        $data['su'] = $logged_in['su'];
+        $data['category'] = $this->category_model->get_all();
+        $data['all_users'] = $this->user_model->get_all();
+        $data['all_subjects'] = $this->subjects_model->all();
+
+        $this->data = $data;
+
+        if($logged_in['su']==1){
+            $this->load->view('new_material/header', $data);
+        }elseif($logged_in['su']==2){
+            $this->load->view('new_material/teacher_header', $data);
+        }elseif($logged_in['su']==0){
+            $this->load->view('new_material/student_header', $data);
+        }
+
+    }
+
+    public function index()
+    {
+        $logged_in = $this->session->userdata('logged_in');
+
         $logged_in = $this->session->userdata('logged_in');
         $data['title'] = $this->lang->line('quiz');
         $data['su'] = $logged_in['su'];
-        // fetching quiz list
         $data['category'] = $this->category_model->get_all();
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_quiz'] = $this->quiz_model->getCollection("savsoft_quiz");
-
-        /*        $this->load->view('material_part/header_material',$data);*/
-
-//        $this->load->view('material_part/header_material',$data);
-//        $this->load->view('assign_quiz/index.php', $data);
-//        $this->load->view('material_part/footer_material',$data);
 
         $this->load->view('new_material/header', $data);
         $this->load->view('assign_quiz/index_new', $data);
@@ -146,7 +156,10 @@ class Assign extends CI_Controller
 //        $this->load->view('assign_quiz/index.php', $data);
 //        $this->load->view('material_part/footer_material',$data);
 
-        $this->load->view('new_material/header', $data);
+
+
+
+
         $this->load->view('assign_quiz/create_question', $data);
         $this->load->view('new_material/footer', $data);
 
@@ -165,24 +178,10 @@ class Assign extends CI_Controller
             redirect('login');
         }
 
-        $logged_in = $this->session->userdata('logged_in');
+        $data = $this->data;
 
-        $data['title'] = $this->lang->line('quiz');
-        $data['su'] = $logged_in['su'];
-        // fetching quiz list
-        $data['category'] = $this->category_model->get_all();
-        $data['all_users'] = $this->user_model->get_all();
-        $data['all_subjects'] = $this->subjects_model->all();
-
-        /*        $this->load->view('material_part/header_material',$data);*/
-
-//        $this->load->view('material_part/header_material',$data);
-//        $this->load->view('assign_quiz/index.php', $data);
-//        $this->load->view('material_part/footer_material',$data);
-
-        $this->load->view('material_part/header_material', $data);
         $this->load->view('assign_quiz/create', $data);
-        $this->load->view('material_part/footer_material', $data);
+        $this->load->view('new_material/footer', $data);
     }
 
     public function update($quid)
@@ -265,5 +264,34 @@ class Assign extends CI_Controller
         echo json_encode($data);
     }
 
+
+
+//    public function create()
+//    {
+//        // redirect if not loggedin
+//        if (!$this->session->userdata('logged_in')) {
+//            redirect('login');
+//
+//        }
+//        $logged_in = $this->session->userdata('logged_in');
+//        if ($logged_in['base_url'] != base_url()) {
+//            $this->session->unset_userdata('logged_in');
+//            redirect('login');
+//        }
+//
+//        $logged_in = $this->session->userdata('logged_in');
+//
+//        $data['title'] = $this->lang->line('quiz');
+//        $data['su'] = $logged_in['su'];
+//        // fetching quiz list
+//        $data['category'] = $this->category_model->get_all();
+//        $data['all_users'] = $this->user_model->get_all();
+//        $data['all_subjects'] = $this->subjects_model->all();
+//
+//
+//        $this->load->view('material_part/header_material', $data);
+//        $this->load->view('assign_quiz/create', $data);
+//        $this->load->view('material_part/footer_material', $data);
+//    }
 
 }

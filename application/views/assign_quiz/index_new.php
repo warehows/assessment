@@ -11,9 +11,9 @@
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">
-                <form action="<?php echo site_url() ?>/lessons/create">
+                <form action="<?php echo site_url() ?>/assign/create">
                     <a href="" style="float:right;padding:5px;">
-                        <button class="btn btn-primary" id="new_lesson">New Lesson</button>
+                        <button class="btn btn-primary" id="new_quiz">Create Quiz</button>
                     </a>
                 </form>
                 <form action="<?php echo site_url()?>/assign/actions" method="POST">
