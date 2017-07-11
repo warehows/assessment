@@ -46,13 +46,13 @@
                         <div class="form-group">
                             <label for="inputEmail"><?php echo $this->lang->line('start_date'); ?></label>
                             <input type="text" name="start_date"
-                                   value="<?php echo date('Y-m-d H:i:s', $quiz['start_date']); ?>" class="form-control"
+                                   value="<?php echo $quiz['start_date'] ?  date('Y-m-d H:i:s', $quiz['start_date']) : $quiz['start_date']; ?>" class="form-control"
                                    placeholder="<?php echo $this->lang->line('start_date'); ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail"><?php echo $this->lang->line('end_date'); ?></label>
                             <input type="text" name="end_date"
-                                   value="<?php echo date('Y-m-d H:i:s', $quiz['end_date']); ?>" class="form-control"
+                                   value="<?php echo $quiz['end_date'] ? date('Y-m-d H:i:s', $quiz['end_date']) : $quiz['end_date']; ?>" class="form-control"
                                    placeholder="<?php echo $this->lang->line('end_date'); ?>" required>
                         </div>
                         <div class="form-group">

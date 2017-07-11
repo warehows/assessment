@@ -84,13 +84,17 @@ foreach($result as $key => $val){
     <?php $name = array(); ?>
     <?php $name['first'] = $quiz_model->assigned_by($val['with_login'])['first_name']; ?>
     <?php $name['last'] = $quiz_model->assigned_by($val['with_login'])['last_name']; ?>
+    <?php $start_date = null; $end_date = null; $days_left = 'N/A'?>
     <?php
     $timestamp = date('Y-m-d H:i:s');
-    $start_date = date('Y-m-d H:i:s',$val['start_date']);
+    if($val['start_date'] && $val['end_date']) {
+        $start_date = date('Y-m-d H:i:s', $val['start_date']);
+
     $end_date = date('Y-m-d H:i:s',$val['end_date']);
     $expires = strtotime('+0 days', strtotime(date($end_date)));
     $date_diff = ($expires-strtotime($timestamp)) / 86400;
     $days_left = round($date_diff, 0);
+    }
     $no_of_attempts = count($result_model->get_student_result($logged_in['uid'],$val['quid']));
     ?>
 
