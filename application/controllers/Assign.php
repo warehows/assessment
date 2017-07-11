@@ -180,7 +180,26 @@ class Assign extends CI_Controller
 
         $data = $this->data;
 
-        $this->load->view('assign_quiz/create', $data);
+        $this->load->view('assign_quiz/modify_info', $data);
+        $this->load->view('new_material/footer', $data);
+    }
+
+    public function test_part()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $data = $this->data;
+
+        $this->load->view('assign_quiz/modify_test_part', $data);
         $this->load->view('new_material/footer', $data);
     }
 
