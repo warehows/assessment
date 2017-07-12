@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Assign extends CI_Controller
 {
     public $data;
+
     function __construct()
     {
         parent::__construct();
@@ -15,6 +16,7 @@ class Assign extends CI_Controller
         $this->load->model("level_model");
         $this->load->model("group_model");
         $this->load->model("subjects_model");
+        $this->load->model("assign_model");
         $this->lang->load('basic', $this->config->item('language'));
 
         if (!$this->session->userdata('logged_in')) {
@@ -32,16 +34,18 @@ class Assign extends CI_Controller
         $data['category'] = $this->category_model->get_all();
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
+        $data['logged_in'] = $logged_in;
 
         $this->data = $data;
 
-        if($logged_in['su']==1){
-            $this->load->view('new_material/header', $data);
-        }elseif($logged_in['su']==2){
-            $this->load->view('new_material/teacher_header', $data);
-        }elseif($logged_in['su']==0){
-            $this->load->view('new_material/student_header', $data);
-        }
+//        $logged_in = $this->session->userdata('logged_in');
+//        if ($logged_in['su'] == 1) {
+//            $this->load->view('new_material/header', $data);
+//        } elseif ($logged_in['su'] == 2) {
+//            $this->load->view('new_material/teacher_header', $data);
+//        } elseif ($logged_in['su'] == 0) {
+//            $this->load->view('new_material/student_header', $data);
+//        }
 
     }
 
@@ -157,15 +161,98 @@ class Assign extends CI_Controller
 //        $this->load->view('material_part/footer_material',$data);
 
 
-
-
-
         $this->load->view('assign_quiz/create_question', $data);
         $this->load->view('new_material/footer', $data);
 
     }
 
     public function create()
+    {
+        $data = $this->data;
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] == 1) {
+            $this->load->view('new_material/header', $data);
+        } elseif ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+        } elseif ($logged_in['su'] == 0) {
+            $this->load->view('new_material/student_header', $data);
+        }
+        $post = $this->input->post();
+        $data['page'] = $post['page'];
+        $data['all_data'] = $data;
+
+        $this->load->view('assign_quiz/create', $data);
+        $this->load->view('new_material/footer', $data);
+    }
+
+    public function insert_quiz()
+    {
+        $post = $this->input->post();
+
+        $filter_data = array(
+            'quiz_name',
+            'cid',
+            'uid',
+            'description',
+            'start_date',
+            'end_date',
+            'duration',
+            'maximum_attempts',
+            'pass_percentage',
+            'correct_score',
+            'incorrect_score',
+            'ip_address',
+            'view_answer',
+            'camera_req',
+            'with_login',
+            'gids',
+            'question_selection',
+            'lid',
+        );
+        foreach($filter_data as $key => $value){
+            if(array_key_exists($value,$post)){
+                $data[$value] = $post[$value];
+            }else{
+
+                if($value == "gids"){
+                    $data[$value] = array();
+                }else{
+                    $data[$value] = "";
+                }
+            }
+        }
+
+        $data = array(
+            'quiz_name' => $data['quiz_name'],
+            'cid' => $data['cid'],
+            'uid' => $data['uid'],
+            'description' => $data['description'],
+            'start_date' => strtotime($data['start_date']),
+            'end_date' => strtotime($data['end_date']),
+            'duration' => $data['duration'],
+            'maximum_attempts' => $data['maximum_attempts'],
+            'pass_percentage' => $data['pass_percentage'],
+            'correct_score' => $data['correct_score'],
+            'incorrect_score' => $data['incorrect_score'],
+            'ip_address' => $data['ip_address'],
+            'view_answer' => $data['view_answer'],
+            'camera_req' => $data['camera_req'],
+            'with_login' => $data['with_login'],
+            'gids' => implode(',', $data['gids']),
+            'question_selection' => $data['question_selection'],
+            'lid' => $data['lid'],
+        );
+
+        $quid = $this->assign_model->insert_quiz($data);
+        if($quid){
+            echo $quid;
+        }else{
+            echo "Error";
+        }
+    }
+
+    public function modify_settings()
     {
         // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
@@ -180,7 +267,7 @@ class Assign extends CI_Controller
 
         $data = $this->data;
 
-        $this->load->view('assign_quiz/modify_info', $data);
+        $this->load->view('assign_quiz/modify_settings', $data);
         $this->load->view('new_material/footer', $data);
     }
 
@@ -253,24 +340,68 @@ class Assign extends CI_Controller
     {
         $post = $this->input->post();
 
-        $settings = json_decode($post['settings']);
-        $quid = $this->quiz_model->assessment_update_quiz($settings['quid'], $settings);
-        print_r($quid);
+        $filter_data = array(
+            'quiz_name',
+            'cid',
+            'uid',
+            'quid',
+            'description',
+            'start_date',
+            'end_date',
+            'duration',
+            'maximum_attempts',
+            'pass_percentage',
+            'correct_score',
+            'incorrect_score',
+            'ip_address',
+            'view_answer',
+            'camera_req',
+            'with_login',
+            'gids',
+            'question_selection',
+            'lid',
+        );
+        foreach($filter_data as $key => $value){
+            if(array_key_exists($value,$post)){
+                $data[$value] = $post[$value];
+            }else{
 
-//       lo $gged_in = $this->session->userdata('logged_in');
-//        if ($logged_in['su'] < '1') {
-//            exit($this->lang->line('permission_denied'));
-//        }
-//        $this->load->library('form_validation');
-//        $this->form_validation->set_rules('quiz_name', 'quiz_name', 'required');
-//
-//
-//        if ($this->form_validation->run() == FALSE) {
-//            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . validation_errors() . " </div>");
-//            redirect('quiz/edit_quiz/' . $quid);
-//        } else {
+                if($value == "gids"){
+                    $data[$value] = array();
+                }else{
+                    $data[$value] = "";
+                }
+            }
+        }
 
-//        }
+        $data = array(
+            'quid' => $data['quid'],
+            'quiz_name' => $data['quiz_name'],
+            'cid' => $data['cid'],
+            'uid' => $data['uid'],
+            'description' => $data['description'],
+            'start_date' => strtotime($data['start_date']),
+            'end_date' => strtotime($data['end_date']),
+            'duration' => $data['duration'],
+            'maximum_attempts' => $data['maximum_attempts'],
+            'pass_percentage' => $data['pass_percentage'],
+            'correct_score' => $data['correct_score'],
+            'incorrect_score' => $data['incorrect_score'],
+            'ip_address' => $data['ip_address'],
+            'view_answer' => $data['view_answer'],
+            'camera_req' => $data['camera_req'],
+            'with_login' => $data['with_login'],
+            'gids' => implode(',', $data['gids']),
+            'question_selection' => $data['question_selection'],
+            'lid' => $data['lid'],
+        );
+
+        $quid = $this->assign_model->update_quiz($data);
+        if($quid){
+            echo $quid;
+        }else{
+            echo "Error";
+        }
 
     }
 
