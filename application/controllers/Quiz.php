@@ -41,10 +41,13 @@ class Quiz extends CI_Controller
         $data['su'] = $logged_in['su'];
         // fetching quiz list
         $data['result'] = $this->quiz_model->quiz_list($limit);
-        $this->load->view('header', $data);
+
+
         if ($logged_in['su'] > 0) {
+            $this->load->view('header', $data);
             $this->load->view('quiz_list', $data);
         } else {
+            $this->load->view('new_material/student_header', $data);
             $this->load->view('quiz_list_student', $data);
         }
         $this->load->view('material_part/footer_material', $data);
@@ -418,7 +421,13 @@ class Quiz extends CI_Controller
         $this->load->view('quiz_detail', $data);
         $this->load->view('material_part/footer_material', $data);*/
 
-        $this->load->view('new_material/header',$data);
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] > 0) {
+            $this->load->view('new_material/header',$data);
+        }else{
+            $this->load->view('new_material/student_header',$data);
+        }
+
         $this->load->view('quiz_detail',$data);
         $this->load->view('material_part/footer_material',$data);
 

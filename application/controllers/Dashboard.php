@@ -61,7 +61,7 @@ class Dashboard extends CI_Controller
         $data['num_quiz'] = $this->quiz_model->num_quiz();
 
 
-        $this->load->view('header', $data);
+        $this->load->view('new_material/student_header', $data);
         $this->load->view('dashboard_student', $data);
         $this->load->view('material_part/footer_material', $data);
 

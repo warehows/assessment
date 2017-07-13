@@ -27,7 +27,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav navbar-right">
-                <li role="presentation"><a href="<?php echo site_url('user/edit_user/'.$logged_in['uid']);?>"><?php echo $this->lang->line('myaccount');?></a></li>
+                <li role="presentation"><a href="<?php echo site_url('quiz');?>"><?php echo $this->lang->line('quiz');?> <?php echo $this->lang->line('list');?></a></li>
                 <li role="presentation"><a href="<?php echo site_url('result');?>">Report</a></li>
                 <li role="presentation"><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
             </ul>
