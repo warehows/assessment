@@ -619,13 +619,13 @@ class Quiz extends CI_Controller
         // get options
         $data['options'] = $this->quiz_model->get_options($data['quiz']['r_qids']);
         $data['title'] = $data['quiz']['quiz_name'];
-/*        $this->load->view('header', $data);
+        $this->load->view('header', $data);
         $this->load->view('quiz_attempt', $data);
-        $this->load->view('material_part/footer_material', $data);*/
+        $this->load->view('material_part/footer_material', $data);
 
-        $this->load->view('new_material/header',$data);
-        $this->load->view('quiz_attempt',$data);
-        $this->load->view('material_part/footer_material',$data);
+//        $this->load->view('new_material/header',$data);
+//        $this->load->view('quiz_attempt',$data);
+//        $this->load->view('material_part/footer_material',$data);
 
     }
 
