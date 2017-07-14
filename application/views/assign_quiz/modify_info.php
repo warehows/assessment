@@ -1,6 +1,18 @@
+<?php $post = $this->input->get() ?>
+<?php
+if (array_key_exists("quid",$post)) {
+    $quiz_id = $post['quid'];
+    $quiz_detail = $this->quiz_model->get_quiz($quiz_id);
+} else {
+    $quiz_id = false;
+}
+?>
+
 <h3>Quiz Info</h3>
 <div class="form-group">
-    <input class="form-control quiz_name" id="quiz_name" placeholder="Quiz Name"/>
+    <input type="hidden" name="quiz_id" value="<?php if($quiz_id){ echo $quiz_id; }?>" />
+
+    <input class="form-control quiz_name" id="quiz_name" placeholder="Quiz Name" value="<?php if($quiz_id){ echo $quiz_detail['quiz_name'];}?>"/>
 </div>
 <div class="form-group">
     <select class="form-control grade" id="grade">
@@ -20,17 +32,11 @@
     </select>
 </div>
 
+
 <div class="form-group">
     <button class="form-control" type="submit">Next</button>
 </div>
-<?php $post = $this->input->get() ?>
-<?php
-if ($post) {
-    $quiz_id = $post['quid'];
-} else {
-    $quiz_id = false;
-}
-?>
+
 
 <script>
 

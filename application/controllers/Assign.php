@@ -180,7 +180,7 @@ class Assign extends CI_Controller
             $this->load->view('new_material/student_header', $data);
         }
         $post = $this->input->get();
-        $data['page'] = $post['page'];
+        $data['next_page'] = $post['next_page'];
         $data['all_data'] = $data;
 
         $this->load->view('assign_quiz/create', $data);
