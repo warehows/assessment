@@ -34,6 +34,7 @@ class Assign extends CI_Controller
         $data['category'] = $this->category_model->get_all();
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
+        $data['all_grades'] = $this->level_model->all();
         $data['logged_in'] = $logged_in;
 
         $this->data = $data;
@@ -178,7 +179,7 @@ class Assign extends CI_Controller
         } elseif ($logged_in['su'] == 0) {
             $this->load->view('new_material/student_header', $data);
         }
-        $post = $this->input->post();
+        $post = $this->input->get();
         $data['page'] = $post['page'];
         $data['all_data'] = $data;
 

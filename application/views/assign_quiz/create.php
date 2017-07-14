@@ -6,7 +6,8 @@
                     <?php if ($page == "assign_quiz/modify_info") { ?>
 
                         <?php $this->load->view($page, $all_data) ?>
-                        <input type="hidden" id="next_page" value="">
+                        <input type="hidden" id="next_page" value="assign_quiz/modify_settings">
+                        <input type="hidden" id="previous_page" value="">
 
                     <?php } ?>
 
@@ -14,6 +15,7 @@
 
                         <?php $this->load->view($page, $all_data) ?>
                         <input type="hidden" id="next_page" value="">
+                        <input type="hidden" id="previous_page" value="">
 
                     <?php } ?>
 

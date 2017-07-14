@@ -11,8 +11,9 @@
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">
-                <form action="<?php echo site_url() ?>/assign/create" method="POST">
+                <form action="<?php echo site_url() ?>/assign/create" method="GET">
                     <input type="hidden" value="assign_quiz/modify_info" name="page" />
+                    <input type="hidden" value="" name="" />
                     <a href="" style="float:right;padding:5px;">
                         <button class="btn btn-primary" id="new_quiz">Create Quiz</button>
                     </a>
