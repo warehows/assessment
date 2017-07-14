@@ -51,7 +51,7 @@ if (array_key_exists("quid", $post)) {
 </div>
 <div class="form-group">
     Allow to View Answers After Quiz
-    <select class="form-control" name="view_answer">
+    <select class="form-control" id="view_answer" name="view_answer">
         <?php if ($quiz_id) { ?>
             <option value="1" <?php if ($quiz_detail['view_answer'] == 1) {
                 echo "selected";
@@ -67,7 +67,7 @@ if (array_key_exists("quid", $post)) {
 
 
 <div class="form-group">
-    <button class="form-control" type="submit">Next</button>
+    <a href="<?php echo site_url('quiz/add_question/')."/".$quiz_id ?>"><button class="form-control" type="button">Next</button></a>
 </div>
 
 
@@ -89,8 +89,31 @@ if (array_key_exists("quid", $post)) {
             t.setSeconds(secs);
             return t;
         }
+        var month_names = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
 
-        console.log(toDateTime(1499797800));
+        function convertDate(seconds){
+            var date = toDateTime(seconds);
+            var month = month_names[date.getMonth()];
+            var month_number = date.getMonth()+1;
+            month_number = "0"+month_number;
+            var day = date.getDay();
+            day = "0"+day;
+            var year = date.getFullYear();
+            return month_number+"/"+day+"/"+year;
+        }
+        var to_convert_start_date = $("#start_date").val();
+        var to_convert_end_date = $("#end_date").val();
+
+        if(to_convert_start_date != 0){
+            var to_convert_start_date = convertDate(to_convert_start_date);
+            var to_convert_end_date = convertDate(to_convert_end_date);
+            $("#start_date").val(to_convert_start_date);
+            $("#end_date").val(to_convert_end_date);
+        }
+
+        console.log();
 
 
         function create_new_quiz() {
@@ -208,7 +231,7 @@ if (array_key_exists("quid", $post)) {
 
 
         });
-        $("#grade").change(function () {
+        $("#view_answer").click(function () {
             if (!quid) {
                 if ($(this).val() != "") {
                     quid = create_new_quiz();
