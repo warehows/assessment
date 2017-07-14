@@ -21,7 +21,7 @@
 
             <option
                 value="<?php echo $value['lid'] ?>" <?php if($value['lid']==$current_lesson_data[0]['level_id']){echo "selected";}?>>
-                Grade <?php echo $value['level_name'] ?></option>
+                <?php echo $value['level_name'] ?></option>
         <?php } ?>
     </select>
 

@@ -1,4 +1,5 @@
 <?php $posts['lesson_id'] = $lesson_id ?>
+<?php $posts['workspace_id'] = $workspace_id ?>
 <?php $posts['author'] = $author ?>
 <?php $posts['all_subjects'] = $all_subjects ?>
 <?php $posts['all_sections'] = $all_sections ?>

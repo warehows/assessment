@@ -33,6 +33,20 @@ Class Workspace_model extends CI_Model
         return $query->result_array();
     }
 
+    function insert($data)
+    {
+        $data = array(
+            'lesson_id' => $data['lesson_id'],
+            'workspace_id' => $data['workspace_id'],
+            'gid' => $data['gid'],
+            'date_start' => $data['date_start'],
+            'date_end' => $data['date_end'],
+        );
+
+        $this->db->insert('lesson_assigned', $data);
+        $quid = $this->db->insert_id();
+    }
+
 
 
 }

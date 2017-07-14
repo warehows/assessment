@@ -61,7 +61,7 @@
 
                                             <option
                                                     value="<?php echo $value['lid'] ?>">
-                                                Grade <?php echo $value['level_name'] ?></option>
+                                                <?php echo $value['level_name'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>

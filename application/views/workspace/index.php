@@ -28,9 +28,10 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         <?php foreach ($all_lessons as $key => $value) { ?>
+
                             <tr>
+                                <input type="hidden" name="workspace_id" value="<?php echo $value['id']; ?>" />
                                 <td><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['content_id']?>"/></td>
                                 <td><?php echo $value['content_name'] ?></td>
                                 <td><?php echo $value['content_type'] ?></td>

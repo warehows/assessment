@@ -30,7 +30,7 @@
 
                 <li role="presentation"><a href="<?php echo site_url('lessonbank');?>">Lesson Bank</a></li>
                 <li role="presentation"><a href="<?php echo site_url('workspace');?>">My Lesson</a></li>
-                <li role="presentation"><a href="<?php echo site_url('qbank/pre_new_question');?>">C Planner</a></li>
+                <li role="presentation"><a href="<?php echo site_url('calendar/');?>">C Planner</a></li>
                 <li role="presentation"><a href="<?php echo site_url('result');?>">Report</a></li>
 
                 <li role="presentation"><a href="<?php echo site_url('user/logout');?>">Logout</a></li>

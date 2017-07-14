@@ -48,4 +48,47 @@ class Workspace extends CI_Controller
         $this->load->view('new_material/footer', $data);
     }
 
+    public function mass_assignation()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        $data['title'] = "Workspace";
+        $data['all_users'] = $this->user_model->get_all();
+        $data['all_subjects'] = $this->subjects_model->all();
+        $data['all_levels'] = $this->level_model->all();
+        $data['all_lessons'] = $this->workspace_model->where("user_id",$logged_in['uid']);
+
+        $posts = $this->input->post();
+
+        $sections = $posts['sections'][0];
+        $grades = $posts['grades'][0];
+        $workspace_id = $posts['workspace_id'];
+        $lesson_id = $posts['lesson_id'];
+        $sections = explode(",",$sections);
+        $grades = explode(",",$grades);
+
+        foreach($sections as $key=>$value){
+
+            $data = array(
+                'lesson_id' => $lesson_id,
+                'workspace_id' => $workspace_id,
+                'gid' => $value,
+                'date_start' => "",
+                'date_end' => "",
+            );
+
+           $this->workspace_model->insert($data);
+        }
+        print_r($sections);
+
+    }
+
 }
