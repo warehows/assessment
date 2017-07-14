@@ -70,8 +70,11 @@ class Workspace extends CI_Controller
 
         $sections = $posts['sections'][0];
         $grades = $posts['grades'][0];
+        $uid = $posts['uid'];
         $workspace_id = $posts['workspace_id'];
         $lesson_id = $posts['lesson_id'];
+        $date_start = $posts['date_start'];
+        $date_end = $posts['date_end'];
         $sections = explode(",",$sections);
         $grades = explode(",",$grades);
 
@@ -80,9 +83,10 @@ class Workspace extends CI_Controller
             $data = array(
                 'lesson_id' => $lesson_id,
                 'workspace_id' => $workspace_id,
+                'uid' => $uid,
                 'gid' => $value,
-                'date_start' => "",
-                'date_end' => "",
+                'date_start' => $date_start,
+                'date_end' => $date_end,
             );
 
            $this->workspace_model->insert($data);

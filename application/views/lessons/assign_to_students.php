@@ -7,22 +7,42 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
-<form action="<?php echo site_url('workspace/mass_assignation')?>" method="POST">
+<form action="<?php echo site_url('workspace/mass_assignation') ?>" method="POST">
     <div class="col-lg-6 col-lg-offset-0 col-md-6">
         <div id="data"></div>
+
     </div>
     <div class="col-lg-6 col-lg-offset-0 col-md-6">
-        <input type="hidden" id="section_checked" name="sections[]" />
-        <input type="hidden" id="grade_checked" name="grades[]" />
-        <input type="hidden" id="workspace_id" name="workspace_id" value="<?php echo $workspace_id ?>" />
-        <input type="hidden" id="lesson_id" name="lesson_id" value="<?php echo $lesson_id ?>" />
+        <div class="form-group">
+            <h6>Date Start</h6>
+            <input id="date_start" class="form-control" name="date_start" placeholder="mm/dd/yyyy"/>
+        </div>
+        <div class="form-group">
+            <h6>Date End</h6>
+            <input id="date_end" class="form-control" name="date_end" placeholder="mm/dd/yyyy"/>
+        </div>
+        <input type="hidden" id="section_checked" name="sections[]"/>
+        <input type="hidden" id="grade_checked" name="grades[]"/>
+        <input type="hidden" id="uid" name="uid" value="<?php echo $logged_in['uid'] ?>"/>
+        <input type="hidden" id="workspace_id" name="workspace_id" value="<?php echo $workspace_id ?>"/>
+        <input type="hidden" id="lesson_id" name="lesson_id" value="<?php echo $lesson_id ?>"/>
         <input type="submit" class="btn btn-primary" id="submit">
 
     </div>
 </form>
 
 <script>
+
+    $(function () {
+        $("#date_start").datepicker();
+        $("#date_end").datepicker();
+    });
     $(document).ready(function () {
         var grade = [
             <?php foreach($all_levels as $key =>$value){
@@ -53,18 +73,18 @@
 
             });
 
-        $("#submit").click(function(){
-            var checked = $('#data').jstree("get_checked",null,true);
+        $("#submit").click(function () {
+            var checked = $('#data').jstree("get_checked", null, true);
             var section_checked = [];
             var grade_checked = [];
-            $.each(checked,function(key,value){
-                if(!value.indexOf("section_")){
+            $.each(checked, function (key, value) {
+                if (!value.indexOf("section_")) {
 
-                    value = value.replace("section_","");
+                    value = value.replace("section_", "");
 
                     section_checked.push(value);
-                }else{
-                    value = value.replace("grade_","");
+                } else {
+                    value = value.replace("grade_", "");
                     grade_checked.push(value);
                 }
             });
