@@ -10,7 +10,8 @@ if (array_key_exists("quid",$post)) {
 
 <h3>Quiz Info</h3>
 <div class="form-group">
-    <input type="hidden" name="quiz_id" value="<?php if($quiz_id){ echo $quiz_id; }?>" />
+    <input type="hidden" id="quiz_id" name="quiz_id" value="<?php if($quiz_id){ echo $quiz_id; }?>" />
+    <input type="hidden" id="quid" name="quid" value="<?php if($quiz_id){ echo $quiz_id; }?>" />
 
     <input class="form-control quiz_name" id="quiz_name" placeholder="Quiz Name" value="<?php if($quiz_id){ echo $quiz_detail['quiz_name'];}?>"/>
 </div>
@@ -111,6 +112,11 @@ if (array_key_exists("quid",$post)) {
             if (!quid) {
                 if ($(this).val() != "") {
                     quid = create_new_quiz();
+
+                    console.log(quid);
+
+                    $("#quid").val(quid);
+                    $("#quiz_id").val(quid);
                 } else {
                     //add error here
                 }
