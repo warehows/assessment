@@ -53,6 +53,7 @@ class Dashboard extends CI_Controller
         $data['result'] = $this->quiz_model->quiz_list($limit);
         $data['result_model'] = $this->result_model->result_list($limit);
         $data['has_new_quiz'] = $this->quiz_model->hasNewQuiz();
+        $data['has_lesson'] = $this->quiz_model->hasLesson();
         $data['unfinished_test'] = $this->result_model->no_unfinished();
         $logged_in = $this->session->userdata('logged_in');
 
