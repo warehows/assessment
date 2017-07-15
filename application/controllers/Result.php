@@ -42,7 +42,15 @@ class Result extends CI_Controller {
                 $this->load->view('result_list',$data);
                 $this->load->view('material_part/footer_material',$data);*/
 
-		$this->load->view('new_material/header',$data);
+        if ($logged_in['su'] > 0) {
+            $this->load->view('new_material/header',$data);
+
+        } else {
+            $this->load->view('new_material/student_header', $data);
+
+        }
+
+
 		$this->load->view('result_list',$data);
 		$this->load->view('material_part/footer_material',$data);
 	}
