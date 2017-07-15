@@ -109,6 +109,20 @@ Class Quiz_model extends CI_Model
         return $query->result_array();
     }
 
+    function hasLesson()
+    {
+        $logged_in = $this->session->userdata('logged_in');
+        $uid = $logged_in['uid'];
+        $gid = $logged_in['gid'];
+        $quizquery = $this->db->query("select id from lesson_assigned where gid in ($gid) ");
+        $quizids = $quizquery->result_array();
+
+
+
+        return $quizids;
+
+    }
+
     function hasNewQuiz()
     {
         $logged_in = $this->session->userdata('logged_in');
@@ -415,6 +429,15 @@ Class Quiz_model extends CI_Model
     function get_quiz($quid)
     {
         $this->db->where('quid', $quid);
+        $query = $this->db->get('savsoft_quiz');
+        return $query->row_array();
+
+
+    }
+
+    function get_quiz_where($where,$data)
+    {
+        $this->db->where($where, $data);
         $query = $this->db->get('savsoft_quiz');
         return $query->row_array();
 
