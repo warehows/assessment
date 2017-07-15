@@ -64,6 +64,59 @@ class Calendar extends CI_Controller
         }
     }
 
+
+    public function mass_create() {
+
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        $data['logged_in'] = $logged_in;
+
+        $posts = $this->input->post();
+
+        $gradeArray = [];
+        foreach ($posts['grades'] as $row) {
+            foreach (explode( ",", $row ) as $gradeRow) {
+                $gradeArray[] =  $gradeRow;
+            }
+        }
+        
+        $sectionArray = [];
+        foreach ($posts['sections'] as $row) {
+            foreach (explode( ",", $row ) as $sectionID) {
+                $section = $this->group_model->getSectionById($sectionID);
+                foreach ($section as &$row) {
+                    $sectionArray[] = array(
+                        'gid' => $row['gid'],
+                        'group_name' => $row['group_name']
+                    );
+                }
+            }
+        }
+
+        $data['lesson_id'] = $posts['lesson_id'];
+        $data['grades'] = $gradeArray;
+        $data['date_from'] = $posts['date_start'];
+        $data['date_to'] = $posts['date_end'];
+        $data['sections'] = $sectionArray;
+        $data['lesson'] = $this->calendar_model->get_lessons();
+        $data['section'] = $this->class_model->getCollection('savsoft_group');
+        $data['lesson'] = $this->calendar_model->get_lessons();
+        $data['subject'] = $this->calendar_model->get_subject($data['lesson_id']);
+
+        if ($logged_in["su"] == 2) {
+            $this->load->view('new_material/header', $data);
+            $this->load->view('calendar/calendar_mass_create', $data);
+            $this->load->view('new_material/footer', $data);
+        }
+    }
+
     public function save() {
         $data = $this->input->post();
         $this->calendar_model->create_schedule($data);
