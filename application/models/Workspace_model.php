@@ -20,6 +20,13 @@ Class Workspace_model extends CI_Model
         $this->db->delete('workspace');
     }
 
+    function select_by_gid($id)
+    {
+        $this->db->where('gid',$id);
+        $query = $this->db->get('lesson_assigned');
+        return $query->result_array();
+    }
+
     function where($where,$data)
     {
         $this->db->where($where,$data);

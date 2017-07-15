@@ -41,6 +41,16 @@ class Lessons extends CI_Controller
         $data['subject_model'] = $this->subjects_model;
         $data['grade_model'] = $this->grades_model;
         $data['all_lessons'] = $this->lessons_model->all_lessons_non_duplicated();
+        $gid = $logged_in['gid'];
+
+
+        $data['lesson_assigned'] = $this->workspace_model->select_by_gid($gid);
+        foreach($data['lesson_assigned'] as $key=>$value){
+            $data['lessons_array'][] = $value['lesson_id'];
+
+        }
+
+
         $data['logged_in'] = $logged_in;
 
         if ($logged_in["su"] == 1) {
@@ -49,6 +59,9 @@ class Lessons extends CI_Controller
         } else if ($logged_in["su"] == 2) {
             $this->load->view('new_material/teacher_header', $data);
             $this->load->view('lessons/teacher_index.php', $data);
+        }else if ($logged_in["su"] == 0) {
+            $this->load->view('new_material/student_header', $data);
+            $this->load->view('lessons/student_index.php', $data);
         }
 
         $this->load->view('new_material/footer', $data);
@@ -100,6 +113,7 @@ class Lessons extends CI_Controller
         if ($logged_in['su'] == 2) {
             $this->load->view('new_material/teacher_header', $data);
         }
+
         if ($logged_in['su'] == 1) {
             $this->load->view('new_material/header', $data);
         }
