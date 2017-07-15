@@ -12,7 +12,6 @@ class Quiz extends CI_Controller
         $this->load->model("qbank_model");
         $this->load->model("user_model");
         $this->lang->load('basic', $this->config->item('language'));
-
     }
 
     public function index($limit = '0', $list_view = 'table')
@@ -217,7 +216,6 @@ class Quiz extends CI_Controller
 
     public function add_question($quid, $limit = '0', $cid = '0', $lid = '0')
     {
-        // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
 
@@ -232,7 +230,7 @@ class Quiz extends CI_Controller
 
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] < '1') {
+        if ($logged_in['su'] != '1') {
             exit($this->lang->line('permission_denied'));
         }
 
@@ -254,13 +252,9 @@ class Quiz extends CI_Controller
         $data['lid'] = $lid;
         $data['quid'] = $quid;
 
-  /*      $this->load->view('header', $data);
+        $this->load->view('new_material/header', $data);
         $this->load->view('add_question_into_quiz', $data);
-        $this->load->view('material_part/footer_material', $data);*/
-
-        $this->load->view('new_material/header',$data);
-        $this->load->view('add_question_into_quiz',$data);
-        $this->load->view('material_part/footer_material',$data);
+        $this->load->view('new_material/footer', $data);
     }
 
 
