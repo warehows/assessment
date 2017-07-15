@@ -91,7 +91,8 @@ class Workspace extends CI_Controller
 
            $this->workspace_model->insert($data);
         }
-        print_r($sections);
+        redirect(site_url() . "/workspace");
+//        print_r($sections);
 
     }
 
