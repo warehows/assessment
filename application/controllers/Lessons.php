@@ -110,6 +110,9 @@ class Lessons extends CI_Controller
         $data['all_sections'] = $this->group_model->get_all();
         $data['logged_in'] = $logged_in;
         $post = $_POST;
+        if ($logged_in['su'] == 0) {
+            $this->load->view('new_material/student_header', $data);
+        }
         if ($logged_in['su'] == 2) {
             $this->load->view('new_material/teacher_header', $data);
         }
@@ -151,7 +154,7 @@ class Lessons extends CI_Controller
             $this->load->view('lessons/assign', $data);
         } elseif ($post["submit"] == "view") {
             $data['lesson_id'] = $post['selected_lesson'][0];
-            $author = $this->lessons_model->lesson_by_id($data['lesson  _id']);
+            $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
             $data['author'] = $author[0]['author'];
             $this->load->view('lessons/view', $data);
         } elseif ($post["submit"] == "remove") {
