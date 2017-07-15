@@ -17,6 +17,7 @@ class Workspace extends CI_Controller
         $this->load->model("user_model");
         $this->load->model("lessons_model");
         $this->load->model("workspace_model");
+        $this->load->model("assign_model");
 
     }
 
@@ -36,11 +37,11 @@ class Workspace extends CI_Controller
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
-        $data['all_lessons'] = $this->workspace_model->where("user_id",$logged_in['uid']);
+        $data['all_lessons'] = $this->workspace_model->where("user_id", $logged_in['uid']);
 
         if ($logged_in["su"] == 1) {
             $this->load->view('new_material/header', $data);
-        }elseif($logged_in["su"] == 2){
+        } elseif ($logged_in["su"] == 2) {
             $this->load->view('new_material/teacher_header', $data);
         }
 
@@ -64,9 +65,9 @@ class Workspace extends CI_Controller
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
-        $data['all_lessons'] = $this->workspace_model->where("user_id",$logged_in['uid']);
+        $data['all_lessons'] = $this->workspace_model->where("user_id", $logged_in['uid']);
 
-        $posts = $this->input->post();
+        $posts = $this->input->get();
 
         $sections = $posts['sections'][0];
         $grades = $posts['grades'][0];
@@ -75,10 +76,10 @@ class Workspace extends CI_Controller
         $lesson_id = $posts['lesson_id'];
         $date_start = $posts['date_start'];
         $date_end = $posts['date_end'];
-        $sections = explode(",",$sections);
-        $grades = explode(",",$grades);
+        $sections = explode(",", $sections);
+        $grades = explode(",", $grades);
 
-        foreach($sections as $key=>$value){
+        foreach ($sections as $key => $value) {
 
             $data = array(
                 'lesson_id' => $lesson_id,
@@ -89,10 +90,50 @@ class Workspace extends CI_Controller
                 'date_end' => $date_end,
             );
 
-           $this->workspace_model->insert($data);
+            $this->workspace_model->insert($data);
+
+
         }
-        redirect(site_url() . "/workspace");
-//        print_r($sections);
+        $current_lesson = $this->lessons_model->lesson_by_id($lesson_id);
+        $current_lesson = $current_lesson[0];
+        $lesson_id_for_content['lesson_id'] = $lesson_id;
+        $current_lesson_contents = $this->lessons_model->all_lesson_contents_by_id($lesson_id_for_content);
+
+
+//        print_r($current_lesson_contents);
+        foreach ($current_lesson_contents as $current_lesson_contents_key=> $current_lesson_contents_value){
+            if($current_lesson_contents_value['content_type'] == "quiz"){
+                $section_to_quiz = implode(",",$sections);
+                $current_quiz = $this->quiz_model->get_quiz_where('quiz_name',$current_lesson_contents_value['content_name']);
+
+                $data = array(
+                    'quiz_name'=>$current_quiz['quiz_name'],
+                    'cid'=>$current_quiz['cid'],
+                    'uid'=>$current_quiz['uid'],
+                    'quid'=>$current_quiz['quid'],
+                    'description'=>$current_quiz['description'],
+                    'start_date'=>$current_quiz['start_date'],
+                    'end_date'=>$current_quiz['end_date'],
+                    'duration'=>$current_quiz['duration'],
+                    'maximum_attempts'=>$current_quiz['maximum_attempts'],
+                    'pass_percentage'=>$current_quiz['pass_percentage'],
+                    'correct_score'=>$current_quiz['correct_score'],
+                    'incorrect_score'=>$current_quiz['incorrect_score'],
+                    'ip_address'=>$current_quiz['ip_address'],
+                    'view_answer'=>$current_quiz['view_answer'],
+                    'camera_req'=>$current_quiz['camera_req'],
+                    'with_login'=>$current_quiz['with_login'],
+                    'gids'=>$section_to_quiz,
+                    'question_selection'=>$current_quiz['question_selection'],
+                    'lid'=>$current_quiz['lid'],
+                );
+                $this->assign_model->update_quiz($data);
+            }
+
+        }
+        redirect(site_url('assign'));
+
+//
 
     }
 

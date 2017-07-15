@@ -421,6 +421,15 @@ Class Quiz_model extends CI_Model
 
     }
 
+    function get_quiz_where($where,$data)
+    {
+        $this->db->where($where, $data);
+        $query = $this->db->get('savsoft_quiz');
+        return $query->row_array();
+
+
+    }
+
     function remove_quiz($quid)
     {
 
