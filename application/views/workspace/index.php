@@ -12,6 +12,11 @@
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">
                 <h2>My Lesson</h2>
+                <form action="<?php echo site_url() ?>/lessons/create">
+                    <a href="" style="float:right;padding:5px;">
+                        <button class="btn btn-primary" id="new_lesson">New Lesson</button>
+                    </a>
+                </form>
                 <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
