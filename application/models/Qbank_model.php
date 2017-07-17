@@ -195,6 +195,44 @@ Class Qbank_model extends CI_Model
         return true;
 
     }
+    function insert_question_2_bool()
+    {
+
+        $logged_in = $this->session->userdata('logged_in');
+        $uid = $logged_in['uid'];
+
+        $userdata = array(
+            'question' => $this->input->post('question'),
+            'description' => $this->input->post('description'),
+            'question_type' => 'True or False',
+            'cid' => $this->input->post('cid'),
+            'uid' => $uid,
+            'lid' => $this->input->post('lid')
+        );
+        $this->db->insert('savsoft_qbank', $userdata);
+        $qid = $this->db->insert_id();
+        $quizId = $this->input->post('quiz_id');
+        if($quizId){
+            $this->addQuestionToQuiz($quizId,$qid);
+        }
+        foreach ($this->input->post('option') as $key => $val) {
+            if (in_array($key, $this->input->post('score'))) {
+                $score = (1 / count($this->input->post('score')));
+            } else {
+                $score = 0;
+            }
+            $userdata = array(
+                'q_option' => $val,
+                'qid' => $qid,
+                'score' => $score,
+            );
+            $this->db->insert('savsoft_options', $userdata);
+
+        }
+
+        return true;
+
+    }
 
 
     function insert_question_3()

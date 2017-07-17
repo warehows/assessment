@@ -36,32 +36,56 @@ if (array_key_exists("quid", $post)) {
         echo $quiz_detail['end_date'];
     } ?>"/>
 </div>
+<!--<div class="form-group">-->
+<!--    Duration (In Minutes)-->
+<!--    <input type="number" class="form-control duration" id="duration" placeholder="Duration" value="--><?php //if ($quiz_id) {
+//        echo $quiz_detail['duration'];
+//    } ?><!--"/>-->
+<!--</div>-->
 <div class="form-group">
-    Duration (In Minutes)
-    <input type="number" class="form-control duration" id="duration" placeholder="Duration" value="<?php if ($quiz_id) {
-        echo $quiz_detail['duration'];
-    } ?>"/>
+    <label>Duration (In Minutes)</label>
+    <select class="form-control duration" id="duration" placeholder="Duration">
+        <?php if ($quiz_id): ?>
+            <option value="<?php echo $quiz_detail['duration']; ?>"><?php echo $quiz_detail['duration']; ?>(current)</option>
+        <?php endif ?>
+        <option value="10">10 minutes</option>
+        <option value="30">30 minutes</option>
+        <option value="30">30 minutes</option>
+        <option value="30">30 minutes</option>
+        <option value="120">120 minutes</option>
+
+    </select>
+</div>
+<!--<div class="form-group">-->
+<!--    Percentage to Pass-->
+<!--    <input type="number" class="form-control pass_percentage" id="pass_percentage" placeholder="Percentage"-->
+<!--           value="--><?php //if ($quiz_id) {
+//               echo $quiz_detail['pass_percentage'];
+//           } ?><!--"/>-->
+<!--</div>-->
+<div class="form-group">
+    <label>Percentage to Pass</label>
+    <select class="form-control pass_percentage" id="pass_percentage" placeholder="Percentage">
+        <?php if ($quiz_id): ?>
+            <option value="<?php echo $quiz_detail['pass_percentage']; ?>"><?php echo $quiz_detail['pass_percentage']; ?>(current)</option>
+        <?php endif ?>
+        <option value="50">50%</option>
+        <option value="60">60%</option>
+        <option value="70">70%</option>
+        <option value="80">80%</option>
+        <option value="90">90%</option>
+        <option value="100">100%</option>
+
+    </select>
 </div>
 <div class="form-group">
-    Percentage to Pass
-    <input type="number" class="form-control pass_percentage" id="pass_percentage" placeholder="Percentage"
-           value="<?php if ($quiz_id) {
-               echo $quiz_detail['pass_percentage'];
-           } ?>"/>
-</div>
-<div class="form-group">
-    Allow to View Answers After Quiz
+    <label>Allow to View Answers After Quiz</label>
     <select class="form-control" id="view_answer" name="view_answer">
-        <?php if ($quiz_id) { ?>
-            <option value="1" <?php if ($quiz_detail['view_answer'] == 1) {
-                echo "selected";
-            } ?>>Yes
-            </option>
-            <option value="0" <?php if ($quiz_detail['view_answer'] == 0) {
-                echo "selected";
-            } ?>>No
-            </option>
-        <?php } ?>
+        <?php if(!empty($quiz_detail['view_answer'])): ?>
+            <option value="<?php echo $quiz_detail['view_answer']; ?>"><?php echo $quiz_detail['view_answer'] ? 'Yes' : 'No'; ?>(current)</option>
+        <?php endif; ?>
+        <option value="0">Yes</option>
+        <option value="1">No</option>
     </select>
 </div>
 

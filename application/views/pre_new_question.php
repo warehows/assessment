@@ -40,7 +40,8 @@
 						<option value="2"><?php echo $this->lang->line('multiple_choice_multiple_answer');?></option>
 						<option value="3"><?php echo $this->lang->line('match_the_column');?></option>
 						<option value="4"><?php echo $this->lang->line('short_answer');?></option>
-						<option value="5"><?php echo $this->lang->line('long_answer');?></option>
+						<option value="5">Open-ended Questions</option>
+						<option value="8">True or False</option>
 
 					</select>
 			</div>
