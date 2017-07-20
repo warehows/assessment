@@ -81,7 +81,6 @@ True Or False
 		<?php 
 		}
 		?>
-
  
 	<button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit');?></button>
  
