@@ -4,7 +4,7 @@ $data = array("lesson_id" => $lesson_id);
 ?>
 <?php $lesson_contents = $this->lessons_model->all_lesson_contents_by_id($data); ?>
 <?php $lesson_information = $this->lessons_model->lesson_by_id($lesson_id); ?>
-<?php $root_link = "http://localhost/assessment/upload/lessons/"?>
+<?php $root_link = base_url('upload/lessons/')."/";?>
 <div class="left-container" id="right_container"
      style="margin-left: 0px; background-color: rgb(242, 207, 165); height: 690px; width: 230px; float: left; padding-top: 0px;">
 
