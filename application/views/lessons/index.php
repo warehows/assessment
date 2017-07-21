@@ -46,6 +46,7 @@
 
                         <?php foreach ($all_lessons as $key => $value) { ?>
                             <tr>
+                                <input type="hidden" name="workspace_id" value="0" />
                                 <td><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['id']?>"/></td>
                                 <td><?php echo $value['lesson_name'] ?></td>
                                 <td><?php print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?></td>

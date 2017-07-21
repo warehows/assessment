@@ -19,6 +19,13 @@ Class User_model extends CI_Model
         return $query->result_array();
     }
 
+    function where($where,$data)
+    {
+        $this->db->where($where,$data);
+        $query = $this->db->get('savsoft_users');
+        return $query->result_array();
+    }
+
     function login($username, $password)
     {
 

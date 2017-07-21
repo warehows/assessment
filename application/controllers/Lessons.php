@@ -139,6 +139,7 @@ class Lessons extends CI_Controller
                 "all_levels" => $this->level_model->all(),
                 "all_sections" => $this->group_model->get_all(),
             );
+
             $imported = $this->lessons_model->import_to_workspace($data);
 
             if ($logged_in['su'] == 2) {

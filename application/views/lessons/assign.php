@@ -1,5 +1,11 @@
-<?php $posts['lesson_id'] = $lesson_id ?>
+<?php $posts['lesson_id'] = $lesson_id; ?>
+<?php //print_r($workspace_id);exit; ?>
+<?php if($workspace_id!=0){?>
+
 <?php $posts['workspace_id'] = $workspace_id ?>
+<?php }else{
+    $workspace_id = 0;
+} ?>
 <?php $posts['author'] = $author ?>
 <?php $posts['all_subjects'] = $all_subjects ?>
 <?php $posts['all_sections'] = $all_sections ?>
