@@ -27,7 +27,7 @@
                     <table id="lesson_lists" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th></th>
+                            <th width="3px"></th>
                             <th>Lesson Name</th>
                             <th>Subject</th>
                             <th>Grade</th>
@@ -37,12 +37,12 @@
                         <tbody>
 
                         <?php foreach ($all_lessons as $key => $value) { ?>
-                            <tr>
-                                <td><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]"
+                            <tr style="cursor:pointer">
+                                <td class="input_row"><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]"
                                            value="<?php echo $value['id'] ?>"/></td>
-                                <td><?php echo $value['lesson_name'] ?></td>
-                                <td><?php print_r($subject_model->where('cid', $value['subject_id'])[0]['category_name']); ?></td>
-                                <td><?php echo $value['level_id'] ?></td>
+                                <td class="lesson_row"><?php echo $value['lesson_name'] ?></td>
+                                <td class="lesson_row"><?php print_r($subject_model->where('cid', $value['subject_id'])[0]['category_name']); ?></td>
+                                <td class="lesson_row"><?php echo $value['level_id'] ?></td>
                             </tr>
                         <?php } ?>
                         </tbody>
@@ -63,10 +63,11 @@
                         <tbody>
                         <?php foreach ($all_quizzes as $key => $value) { ?>
                             <tr>
-                                <td><input type="checkbox" class="selected_quiz_class" name="selected_quiz[]"
-                                           value="<?php echo $value['quid'] ?>"/></td>
-                                <td><?php echo $value['quiz_name'] ?></td>
-                                <td>Quiz</td>
+                                <td class="input_row"><input type="checkbox" class="selected_quiz_class"
+                                                             name="selected_quiz[]"
+                                                             value="<?php echo $value['quid'] ?>"/></td>
+                                <td class="lesson_row"><?php echo $value['quiz_name'] ?></td>
+                                <td class="lesson_row">Quiz</td>
                             </tr>
                         <?php } ?>
 
@@ -88,13 +89,17 @@
     $("#remove").hide();
     $("#delete").hide();
     $("#assign").hide();
+    $(".lesson_row").click(function(){
+        $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
+        $("#view").click();
+    });
     $(".selected_lesson_class").change(function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {
             $("#edit").show();
             $("#import").show();
             $("#remove").show();
-            $("#view").show();
+            $("#view").hide();
             $("#delete").show();
             $("#assign").show();
         } else if (selected_count == 0) {
