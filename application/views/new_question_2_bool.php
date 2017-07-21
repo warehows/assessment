@@ -57,7 +57,6 @@
 					?>
 					</select>
 			</div>
-
 			
 			
 
@@ -75,7 +74,7 @@
 		for($i=1; $i<=$nop; $i++){
 			?>
 			<div class="form-group">
-					<input type="checkbox" name="score[]" value="<?php echo $i-1;?>" <?php if($i==1){ echo 'checked'; } ?> > Select Correct Option
+					<input type="radio" name="score[]" value="<?php echo $i-1;?>" <?php if($i==1){ echo 'checked'; } ?> > Select Correct Option
 					<br><textarea disabled name="option[]"  class="form-control"   ><?php echo $booleanArr[$i-1]; ?></textarea>
 			</div>
 		<?php

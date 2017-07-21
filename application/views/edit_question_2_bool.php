@@ -75,13 +75,12 @@ True Or False
 			?>
 			<div class="form-group">	 
 					<label for="inputEmail"  ><?php echo $this->lang->line('options');?> <?php echo $key+1;?>)</label> <br>
-					<input type="checkbox" name="score[]" value="<?php echo $key;?>" <?php if($val['score']>=0.1){ echo 'checked'; } ?> > Select Correct Option 
+					<input type="radio" name="score[]" value="<?php echo $key;?>" <?php if($val['score']>=0.1){ echo 'checked'; } ?> > Select Correct Option
 					<br><textarea disabled name="option[]"  class="form-control"  ><?php echo $val['q_option'];?></textarea>
 			</div>
 		<?php 
 		}
 		?>
-
  
 	<button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit');?></button>
  
