@@ -22,6 +22,7 @@
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
                     <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
                     <button class="btn btn-primary" id="assign" name="submit" value="assign">Assign</button>
+                    <button class="btn btn-primary" id="duplicate" name="submit" value="duplicate">Duplicate</button>
                     <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
 
                     <table id="lesson_lists" class="table table-bordered table-hover" >
@@ -58,6 +59,7 @@
     $("#view").hide();
     $("#delete").hide();
     $("#import").hide();
+    $("#duplicate").hide();
     $(".lesson_row").click(function(){
         $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
         $("#view").click();
@@ -66,12 +68,15 @@
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {
             $("#edit").show();
+            $("#duplicate").show();
             $("#assign").show();
             $("#view").hide();
             $("#delete").show();
+
             $("#import").show();
         } else if (selected_count == 0) {
             $("#edit").hide();
+            $("#duplicate").hide();
             $("#assign").hide();
             $("#delete").hide();
             $("#view").hide();
@@ -79,12 +84,14 @@
         }
         else if (selected_count >= 1) {
             $("#edit").hide();
+            $("#duplicate").hide();
             $("#assign").hide();
             $("#delete").show();
             $("#view").hide();
             $("#import").hide();
         } else {
             $("#edit").hide();
+            $("#duplicate").hide();
             $("#assign").hide();
             $("#view").hide();
             $("#delete").show();
