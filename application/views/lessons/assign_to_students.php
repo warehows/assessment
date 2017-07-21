@@ -13,7 +13,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
-<form action="<?php echo site_url('calendar/mass_create') ?>" method="POST">
+<form action="<?php echo site_url('workspace/mass_assignation') ?>" method="GET">
     <div class="col-lg-6 col-lg-offset-0 col-md-6">
         <div id="data"></div>
 
