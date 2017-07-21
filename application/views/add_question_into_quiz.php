@@ -4,7 +4,8 @@
     <h3><?php echo $title; ?></h3>
     <a href="<?php echo site_url('assign'); ?>"
        class="btn btn-info">Done</a>
-    <a href="<?php echo site_url('qbank/pre_new_question'); ?>" class="btn btn-info">Add new question</a><br><br>
+    <a href="<?php echo site_url('qbank/pre_new_question'); ?>?back_url=<?php echo site_url('quiz/add_question')?>/<?php echo $quid ?>"
+       class="btn btn-info">Add new question</a><br><br>
 
     <div class="row">
 
@@ -14,9 +15,11 @@
                 <div class="input-group">
                     <input type="text" class="form-control" name="search"
                            placeholder="<?php echo $this->lang->line('search'); ?>...">
+
       <span class="input-group-btn">
         <button class="btn btn-default" type="submit"><?php echo $this->lang->line('search'); ?></button>
       </span>
+
 
 
                 </div>
@@ -68,6 +71,7 @@
                         }
                         ?>
                     </select>
+
                     <button class="btn btn-default" type="submit"><?php echo $this->lang->line('filter'); ?></button>
                 </form>
             </div>
@@ -183,19 +187,19 @@
 </div>
 
 <script>
-    function addquestion(quid,qid){
+    function addquestion(quid, qid) {
         var base_url = "<?php echo base_url()?>";
-        var did='#q'+qid;
-        var formData = {quid:quid};
+        var did = '#q' + qid;
+        var formData = {quid: quid};
         $.ajax({
             type: "POST",
-            data : formData,
-            url: base_url + "index.php/quiz/add_qid/"+quid+'/'+qid,
-            success: function(data){
+            data: formData,
+            url: base_url + "index.php/quiz/add_qid/" + quid + '/' + qid,
+            success: function (data) {
                 $(did).html(document.getElementById('added').value);
 
             },
-            error: function(xhr,status,strErr){
+            error: function (xhr, status, strErr) {
                 //alert(status);
             }
         });
