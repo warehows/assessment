@@ -22,7 +22,6 @@
             <div class="three wizard">
                 <h2>Assigning</h2>
                 <?php $this->load->view('lessons/assign_to_students', $posts) ?>
-
             </div>
         </div>
     </div>
