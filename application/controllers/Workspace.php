@@ -164,4 +164,49 @@ class Workspace extends CI_Controller
 
     }
 
+    public function assign_quiz_only()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+
+        $posts = $this->input->get();
+        $current_quiz = $this->quiz_model->get_quiz($posts['quid']);
+
+        print_r($posts);
+        echo "<br>";
+
+        $data = array(
+            'quiz_name' => $current_quiz['quiz_name'],
+            'cid' => $current_quiz['cid'],
+            'uid' => $current_quiz['uid'],
+            'quid' => $current_quiz['quid'],
+            'description' => $current_quiz['description'],
+            'start_date' => $posts['date_start'],
+            'end_date' => $posts['date_end'],
+            'duration' => $current_quiz['duration'],
+            'maximum_attempts' => $current_quiz['maximum_attempts'],
+            'pass_percentage' => $current_quiz['pass_percentage'],
+            'correct_score' => $current_quiz['correct_score'],
+            'incorrect_score' => $current_quiz['incorrect_score'],
+            'ip_address' => $current_quiz['ip_address'],
+            'view_answer' => $current_quiz['view_answer'],
+            'camera_req' => $current_quiz['camera_req'],
+            'with_login' => $current_quiz['with_login'],
+            'gids' => $posts['sections'][0],
+            'question_selection' => $current_quiz['question_selection'],
+            'lid' => $current_quiz['lid'],
+        );
+//        print_r($data);
+        $this->assign_model->update_quiz($data);
+        redirect('assign');
+    }
+
 }

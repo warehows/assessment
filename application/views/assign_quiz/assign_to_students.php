@@ -13,7 +13,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
-<form action="<?php echo site_url('workspace/mass_assignation') ?>" method="GET">
+<form action="<?php echo site_url('workspace/assign_quiz_only') ?>" method="GET">
     <div class="col-lg-6 col-lg-offset-0 col-md-6">
         <div id="data"></div>
 
@@ -27,17 +27,9 @@
             <h6>Date End</h6>
             <input id="date_end" class="form-control" name="date_end" placeholder="mm/dd/yyyy"/>
         </div>
-        <?php $all_teachers = $this->user_model->where("su", 2); ?>
-        <div class="form-group">
-            <h6>Select Teacher</h6>
-            <select class="form-control" name="uid" id="uid">
-                <?php foreach ($all_teachers as $all_teachers_key => $all_teachers_value) { ?>
-                    <option
-                        value="<?php echo $all_teachers_value['uid'] ?>"><?php echo $all_teachers_value['first_name'] ?><?php echo $all_teachers_value['last_name'] ?></option>
-                <?php } ?>
-            </select>
-        </div>
 
+
+        <input type="hidden" id="quid" name="quid" value="<?php echo $quid?>"/>
         <input type="hidden" id="section_checked" name="sections[]"/>
         <input type="hidden" id="grade_checked" name="grades[]"/>
 

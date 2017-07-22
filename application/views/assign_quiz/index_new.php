@@ -78,7 +78,7 @@
             $("#edit").hide();
             $("#delete").show();
             $("#share").show();
-            $("#assign").show();
+            $("#assign").hide();
             $("#view").hide();
         } else {
             $("#edit").hide();
