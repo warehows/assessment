@@ -109,13 +109,7 @@ class Lessons extends CI_Controller
         $data['all_levels'] = $this->level_model->all();
         $data['all_sections'] = $this->group_model->get_all();
         $data['logged_in'] = $logged_in;
-        if($_POST){
-            $post = $_POST;
-        }else{
-            $post = $_GET;
-        }
-
-
+        $post = $_POST;
         if ($logged_in['su'] == 0) {
             $this->load->view('new_material/student_header', $data);
         }
@@ -127,6 +121,8 @@ class Lessons extends CI_Controller
             $this->load->view('new_material/header', $data);
         }
 
+
+
         if ($post["submit"] == "import") {
             $data = array(
                 "lesson_ids" => $post['selected_lesson'],
@@ -137,7 +133,6 @@ class Lessons extends CI_Controller
                 "all_levels" => $this->level_model->all(),
                 "all_sections" => $this->group_model->get_all(),
             );
-
             $imported = $this->lessons_model->import_to_workspace($data);
 
             if ($logged_in['su'] == 2) {
@@ -146,29 +141,7 @@ class Lessons extends CI_Controller
             if ($logged_in['su'] == 1) {
                 redirect(site_url() . "/lessons");
             }
-        }
-        elseif ($post["submit"] == "duplicate") {
-            $data = array(
-                "lesson_ids" => $post['selected_lesson'],
-                "user_id" => $logged_in['uid'],
-                "content_type" => "lesson",
-                "all_users" => $this->user_model->get_all(),
-                "all_subjects" => $this->subjects_model->all(),
-                "all_levels" => $this->level_model->all(),
-                "all_sections" => $this->group_model->get_all(),
-            );
-            print_r($post["submit"]);
-
-            $imported = $this->lessons_model->duplicate($data);
-
-            if ($logged_in['su'] == 2) {
-                redirect(site_url() . "/lessonbank");
-            }
-            if ($logged_in['su'] == 1) {
-                redirect(site_url() . "/lessons");
-            }
-        }
-        elseif ($post["submit"] == "edit") {
+        } elseif ($post["submit"] == "edit") {
             $data['lesson_id'] = $post['selected_lesson'][0];
             $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
             $data['author'] = $author[0]['author'];
@@ -357,9 +330,7 @@ class Lessons extends CI_Controller
         $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
         $folder = $output_dir . $folder_to_create;
         if (!file_exists($folder)) {
-            $oldmask = umask(0);
-            mkdir($folder, 0777);
-            umask($oldmask);
+            mkdir($folder, 0777, true);
         }
 
         $ret = array();
