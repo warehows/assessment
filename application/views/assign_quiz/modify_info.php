@@ -16,6 +16,9 @@ if (array_key_exists("quid",$post)) {
     <input class="form-control quiz_name" id="quiz_name" placeholder="Quiz Name" value="<?php if($quiz_id){ echo $quiz_detail['quiz_name'];}?>"/>
 </div>
 <div class="form-group">
+    <input class="form-control description" id="description" placeholder="Description" value="<?php if($quiz_id){ echo $quiz_detail['description'];}?>"/>
+</div>
+<div class="form-group">
     <select class="form-control grade" id="grade">
         <?php foreach ($all_grades as $grade_key => $grade_value) { ?>
 
@@ -54,6 +57,7 @@ if (array_key_exists("quid",$post)) {
             var quiz_name = $("#quiz_name").val();
             var lid = $("#grade").val();
             var cid = $("#subject").val();
+            var description = $("#description").val();
             var uid = <?php echo $logged_in['uid']?>;
             var returned_value;
 
@@ -66,6 +70,7 @@ if (array_key_exists("quid",$post)) {
                     cid: cid,
                     uid: uid,
                     lid: lid,
+                    description: description,
                 }
             }).done(function (value) {
                 if (value != "Error") {
@@ -83,6 +88,7 @@ if (array_key_exists("quid",$post)) {
             var quiz_name = $("#quiz_name").val();
             var lid = $("#grade").val();
             var cid = $("#subject").val();
+            var description = $("#description").val();
             var uid = <?php echo $logged_in['uid']?>;
             var returned_value;
 
@@ -95,6 +101,7 @@ if (array_key_exists("quid",$post)) {
                     uid: uid,
                     lid: lid,
                     quid: quid,
+                    description: description,
                 }
             }).done(function (value) {
                 if (value != "Error") {
@@ -125,8 +132,28 @@ if (array_key_exists("quid",$post)) {
                 update_quiz();
             }
 
+        });
+
+        $("#description").focusout(function () {
+            if (!quid) {
+                if ($(this).val() != "") {
+                    quid = create_new_quiz();
+
+                    console.log(quid);
+
+                    $("#quid").val(quid);
+                    $("#quiz_id").val(quid);
+                } else {
+                    //add error here
+                }
+
+            } else {
+                update_quiz();
+            }
+
 
         });
+
         $("#grade").change(function () {
             if (!quid) {
                 if ($(this).val() != "") {

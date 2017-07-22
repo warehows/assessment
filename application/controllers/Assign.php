@@ -124,7 +124,21 @@ class Assign extends CI_Controller
                 $this->change_share($data);
             }
 
-        } elseif ($post["submit"] == "delete") {
+        }elseif ($post["submit"] == "edit") {
+            $quid = $this->input->post();
+            $quid = $quid['selected_quiz'][0];
+            redirect(site_url('assign/edit')."?next_page=assign_quiz%2Fmodify_info&quid=".$quid);
+        }
+        elseif ($post["submit"] == "assign") {
+            $quid = $this->input->post();
+            $quid = $quid['selected_quiz'][0];
+
+            $data['quid'] = $quid;
+            $data['logged_in'] = $logged_in;
+
+            $this->load->view('new_material/header', $data);
+            $this->load->view('assign_quiz/assign', $data);
+            $this->load->view('new_material/footer', $data);
 
         } else {
 
@@ -168,6 +182,26 @@ class Assign extends CI_Controller
     }
 
     public function create()
+    {
+        $data = $this->data;
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] == 1) {
+            $this->load->view('new_material/header', $data);
+        } elseif ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+        } elseif ($logged_in['su'] == 0) {
+            $this->load->view('new_material/student_header', $data);
+        }
+        $post = $this->input->get();
+        $data['next_page'] = $post['next_page'];
+        $data['all_data'] = $data;
+
+        $this->load->view('assign_quiz/create', $data);
+        $this->load->view('new_material/footer', $data);
+    }
+
+    public function edit()
     {
         $data = $this->data;
 
