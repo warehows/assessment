@@ -358,7 +358,7 @@ class Lessons extends CI_Controller
         $folder = $output_dir . $folder_to_create;
         if (!file_exists($folder)) {
             $oldmask = umask(0);
-            mkdir($folder, 0777, true);
+            mkdir($folder, 0777);
             umask($oldmask);
         }
 
