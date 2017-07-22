@@ -129,7 +129,16 @@ class Assign extends CI_Controller
             $quid = $quid['selected_quiz'][0];
             redirect(site_url('assign/edit')."?next_page=assign_quiz%2Fmodify_info&quid=".$quid);
         }
-        elseif ($post["submit"] == "delete") {
+        elseif ($post["submit"] == "assign") {
+            $quid = $this->input->post();
+            $quid = $quid['selected_quiz'][0];
+
+            $data['quid'] = $quid;
+            $data['logged_in'] = $logged_in;
+
+            $this->load->view('new_material/header', $data);
+            $this->load->view('assign_quiz/assign', $data);
+            $this->load->view('new_material/footer', $data);
 
         } else {
 
