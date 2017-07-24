@@ -16,12 +16,12 @@ if (array_key_exists("quid", $post)) {
 <input type="hidden" id="cid" name="cid" value="<?php echo $quiz_detail['cid']; ?>">
 <input type="hidden" id="uid" name="uid" value="<?php echo $quiz_detail['uid']; ?>">
 <input type="hidden" id="lid" name="lid" value="<?php echo $quiz_detail['lid']; ?>">
-<input type="hidden" name="correct_score">
-<input type="hidden" name="incorrect_score">
-<input type="hidden" name="ip_address" value="">
-<input type="hidden" name="maximum_attempts" value="10000">
-<input type="hidden" name="camera_req" value="0">
-<input type="hidden" name="question_selection" value="0">
+<input type="hidden" id="correct_score" name="correct_score">
+<input type="hidden" id="incorrect_score" name="incorrect_score">
+<input type="hidden" id="ip_address" name="ip_address" value="">
+<input type="hidden" id="maximum_attempts" name="maximum_attempts" value="100">
+<input type="hidden" id="camera_req" name="camera_req" value="0">
+<input type="hidden" id="question_selection" name="question_selection" value="0">
 
 
 <div class="form-group">
@@ -50,8 +50,8 @@ if (array_key_exists("quid", $post)) {
         <?php endif ?>
         <option value="10">10 minutes</option>
         <option value="30">30 minutes</option>
-        <option value="30">30 minutes</option>
-        <option value="30">30 minutes</option>
+        <option value="40">40 minutes</option>
+        <option value="60">60 minutes</option>
         <option value="120">120 minutes</option>
 
     </select>

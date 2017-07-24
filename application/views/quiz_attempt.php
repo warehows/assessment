@@ -95,38 +95,7 @@ window.location="<?php echo site_url('quiz/submit_quiz/');?>";
 <div style="clear:both;"></div>
 
 <!-- Category button -->
-
- <div class="row"  >
-<?php 
-$categories=explode(',',$quiz['categories']);
-$category_range=explode(',',$quiz['category_range']);
- 
-function getfirstqn($cat_keys='0',$category_range){
-	if($cat_keys==0){
-		return 0;
-	}else{
-		$r=0;
-		for($g=0; $g < $cat_keys; $g++){
-		$r+=$category_range[$g];	
-		}
-		return $r;
-	}
-	
-	
-}
-
-
-if(count($categories) > 1 ){
-	$jct=0;
-	foreach($categories as $cat_key => $category){
-?>
-<a href="javascript:switch_category('cat_<?php echo $cat_key;?>');"   class="btn btn-info"  style="cursor:pointer;"><?php echo $category;?></a>
-<input type="hidden" id="cat_<?php echo $cat_key;?>" value="<?php echo getfirstqn($cat_key,$category_range);?>">
-<?php 
-}
-}
-?>
-</div> 
+<!---->
 
    
  

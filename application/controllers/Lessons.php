@@ -109,13 +109,7 @@ class Lessons extends CI_Controller
         $data['all_levels'] = $this->level_model->all();
         $data['all_sections'] = $this->group_model->get_all();
         $data['logged_in'] = $logged_in;
-        if($_POST){
-            $post = $_POST;
-        }else{
-            $post = $_GET;
-        }
-
-
+        $post = $_POST;
         if ($logged_in['su'] == 0) {
             $this->load->view('new_material/student_header', $data);
         }

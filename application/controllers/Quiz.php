@@ -236,6 +236,7 @@ class Quiz extends CI_Controller
 
 
         $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        $data['quid'] = $quid;
         $data['title'] = $this->lang->line('add_question_into_quiz') . ': ' . $data['quiz']['quiz_name'];
         if ($data['quiz']['question_selection'] == '0') {
 

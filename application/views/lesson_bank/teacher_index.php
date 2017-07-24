@@ -18,15 +18,16 @@
                     echo $this->session->flashdata('message');
                 }
                 ?>
-                <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
+                <form action="<?php echo site_url() ?>/lessons/index_actions" method="POST">
                     <h2>Lesson Bank</h2>
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
-                    <button class="btn btn-primary" id="import" name="submit" value="import">Import to My Lessons</button>
+                    <button class="btn btn-primary" id="import" name="submit" value="import">Import to My Lessons
+                    </button>
 
-                    <table id="lesson_lists" class="table table-bordered table-hover" >
+                    <table id="lesson_lists" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th></th>
+                            <th width="3px"></th>
                             <th>Lesson Name</th>
                             <th>Subject</th>
                             <th>Grade</th>
@@ -36,11 +37,12 @@
                         <tbody>
 
                         <?php foreach ($all_lessons as $key => $value) { ?>
-                            <tr>
-                                <td><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['id']?>"/></td>
-                                <td><?php echo $value['lesson_name'] ?></td>
-                                <td><?php print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?></td>
-                                <td><?php echo $value['level_id'] ?></td>
+                            <tr style="cursor:pointer">
+                                <td class="input_row"><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]"
+                                           value="<?php echo $value['id'] ?>"/></td>
+                                <td class="lesson_row"><?php echo $value['lesson_name'] ?></td>
+                                <td class="lesson_row"><?php print_r($subject_model->where('cid', $value['subject_id'])[0]['category_name']); ?></td>
+                                <td class="lesson_row"><?php echo $value['level_id'] ?></td>
                             </tr>
                         <?php } ?>
 
@@ -60,6 +62,10 @@
     $("#remove").hide();
     $("#delete").hide();
     $("#assign").hide();
+    $(".lesson_row").click(function(){
+        $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
+        $("#view").click();
+    });
     $(".selected_lesson_class").change(function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {

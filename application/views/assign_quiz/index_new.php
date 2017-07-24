@@ -23,7 +23,7 @@
                     <button class="btn btn-primary" id="share" name="submit" value="share">Share to Lesson Bank</button>
                     <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
                     <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
-                    <button class="btn btn-primary" id="assign" name="submit" value="assign" disabled>Assign</button>
+                    <button class="btn btn-primary" id="assign" name="submit" value="assign">Assign</button>
 
                     <table id="lesson_lists" class="table table-bordered table-hover" >
                         <thead>
@@ -78,7 +78,7 @@
             $("#edit").hide();
             $("#delete").show();
             $("#share").show();
-            $("#assign").show();
+            $("#assign").hide();
             $("#view").hide();
         } else {
             $("#edit").hide();
