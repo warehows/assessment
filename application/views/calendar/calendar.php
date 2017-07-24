@@ -1,7 +1,9 @@
 <link href='../css/fullCalendar/fullcalendar.min.css' rel='stylesheet' />
+<link href='../css/new_material/css/alertify.css' rel='stylesheet' />
 <link href='../css/fullCalendar/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 <script src='../js/fullCalendar/moment.min.js'></script>
 <script src='../js/fullCalendar/fullcalendar.min.js'></script>
+<script src='../css/new_material/js/alertify.js'></script>
 
 <style>
 
@@ -36,7 +38,6 @@
     }
 
     .tiptool .tiptooltext {
-        visibility: hidden;
         width: 120px;
         background-color: #555;
         color: #fff;
@@ -63,12 +64,6 @@
         border-color: #555 transparent transparent transparent;
     }
 
-    .tiptool:hover .tiptooltext {
-        visibility: visible;
-        z-index: 1000;
-        opacity: 1;
-    }
-
     .filterOptions {
         margin-right: 20px;
     }
@@ -83,6 +78,15 @@
 
     .btn {
         border-radius: 50px;
+    }
+
+    .msg p {
+        text-align: left !important;
+    }
+    .msg .tab {
+        width: 110px;
+        font-weight: bold;
+        float: left;
     }
 </style>
 
@@ -217,9 +221,9 @@
             },
             eventRender: function(event, element, view) {
                 if (view.name == 'listDay') {
-                    element.find(".fc-list-item-time").append("<span class='closeon pull-right tiptool'><span>X</span class='tiptooltext'><span>Delete</span></span>");
+                    element.find(".fc-list-item-time").append("<span class='closeon pull-right tiptool'><span>X</span title='delete' class='tiptooltext'><span>Delete</span></span>");
                 } else {
-                    element.find(".fc-content").prepend("<span class='closeon pull-right tiptool'><span>X</span><span class='tiptooltext'>Delete</span></span>");
+                    element.find(".fc-content").prepend("<span class='closeon pull-right tiptool'><span>X</span><span title='delete' class='tiptooltext'>Delete</span></span>");
                 }
                 element.find(".closeon").on('click', function() {
                     if (confirm("Are you sure you want to delete this schedule?")) {
@@ -230,7 +234,30 @@
                 });
             },
             eventClick: function(calEvent, jsEvent, view) {
-                console.log(calEvent);
+                var monthNames = ["January", "February", "March", "April", "May", "June",
+                  "July", "August", "September", "October", "November", "December"
+                ];
+                var df = new Date(calEvent.start.format());
+                var df_year = df.getFullYear();
+                var df_month = df.getMonth();
+                var df_day = df.getDate();
+                var dateFrom = monthNames[df_month]+" "+df_day+", "+df_year
+
+                var dt = new Date(calEvent.end.format());
+                var dt_year = dt.getFullYear();
+                var dt_month = dt.getMonth() + 1;
+                var dt_day = dt.getDate() - 1;
+                var dateTo = monthNames[dt_month]+" "+dt_day+", "+dt_year;
+
+                var message = "<div class='msg'>"
+                message += "<p><div class='tab'>Subject:</div>"+calEvent.title+"</p>"
+                message += "<p><div class='tab'>Grade/Section:</div>"+calEvent.section_name+"</p>"
+                message += "<p><div class='tab'>From:</div>"+dateFrom+"</p>"
+                message += "<p><div class='tab'>To:</div>"+dateTo+"</p>"
+                message += "<p><div class='tab'>Teacher:</div>"+calEvent.teacher+"</p>"
+                message += "<div>"
+                alertify.okBtn("Ok").alert(message);
+                console.log(calEvent)
             }
         });//end
 
@@ -253,7 +280,15 @@
             $('#subject').val("");
 
             $('#calendar').fullCalendar('removeEvents');
-
+            $.ajax({
+                url: 'calendar/getEvents',
+                type: 'POST',
+                dataType: 'json'
+            })
+            .done(function(data) {
+                console.log(data);
+            });
+            
             $('#calendar').fullCalendar('addEventSource',{url: 'calendar/getEvents'})
         });
 
