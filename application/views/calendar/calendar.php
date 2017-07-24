@@ -169,6 +169,7 @@
         $('#calendar').fullCalendar({
             events: 'calendar/getEvents',
             editable: true,
+            eventLimit: true,
             displayEventTime: false,
             defaultDate: '2017-07-17',
             eventResize: function(event, delta, revertFunc) {
