@@ -63,10 +63,18 @@
         <div class="col-lg-6">
             <form method="post" action="<?php echo site_url('result/index/'); ?>">
                 <div class="input-group">
-                    <input type="text" class="form-control" name="search"
-                           placeholder="<?php echo $this->lang->line('search'); ?>...">
+                    <select type="text" class="form-control" name="search">
+                        <?php
+                        foreach ($group_list as $gk => $group) {
+                            ?>
+                            <option
+                                    value="<?php echo $group['gid']; ?>"><?php echo $group['group_name']; ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
       <span class="input-group-btn">
-        <button class="btn btn-default" type="submit"><?php echo $this->lang->line('search'); ?></button>
+        <button class="btn btn-default" type="submit">Filter</button>
       </span>
 
 
