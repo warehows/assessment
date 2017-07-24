@@ -430,12 +430,12 @@ class Assign extends CI_Controller
             'question_selection' => $data['question_selection'],
             'lid' => $data['lid'],
         );
-
+        print_r($data);
 
         $quid = $this->assign_model->update_quiz($data);
         if($quid){
-            echo $quid;
-            print_r($data);
+//            echo $quid;
+
         }else{
             echo "Error";
         }

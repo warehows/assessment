@@ -180,17 +180,16 @@ class Workspace extends CI_Controller
         $posts = $this->input->get();
         $current_quiz = $this->quiz_model->get_quiz($posts['quid']);
 
-        print_r($posts);
-        echo "<br>";
-
+        echo strtotime($posts['date_start']);
+        echo strtotime($posts['date_end']);
         $data = array(
             'quiz_name' => $current_quiz['quiz_name'],
             'cid' => $current_quiz['cid'],
             'uid' => $current_quiz['uid'],
             'quid' => $current_quiz['quid'],
             'description' => $current_quiz['description'],
-            'start_date' => $posts['date_start'],
-            'end_date' => $posts['date_end'],
+            'start_date' => strtotime($posts['date_start']),
+            'end_date' => strtotime($posts['date_end']),
             'duration' => $current_quiz['duration'],
             'maximum_attempts' => $current_quiz['maximum_attempts'],
             'pass_percentage' => $current_quiz['pass_percentage'],
@@ -204,7 +203,6 @@ class Workspace extends CI_Controller
             'question_selection' => $current_quiz['question_selection'],
             'lid' => $current_quiz['lid'],
         );
-//        print_r($data);
         $this->assign_model->update_quiz($data);
         redirect('assign');
     }

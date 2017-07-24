@@ -91,7 +91,7 @@ if (array_key_exists("quid",$post)) {
             var description = $("#description").val();
             var uid = <?php echo $logged_in['uid']?>;
             var returned_value;
-
+            alert(description);
             $.ajax({
                 url: "<?php echo site_url('assign/update_quiz');?>",
                 type: "POST",
@@ -104,6 +104,7 @@ if (array_key_exists("quid",$post)) {
                     description: description,
                 }
             }).done(function (value) {
+                console.log(value);
                 if (value != "Error") {
                     returned_value = value;
                 } else {
@@ -117,7 +118,7 @@ if (array_key_exists("quid",$post)) {
 
         $("#quiz_name").focusout(function () {
             if (!quid) {
-                if ($(this).val() != "") {
+                if ($("#quiz_name").val() != "") {
                     quid = create_new_quiz();
 
                     console.log(quid);
@@ -136,18 +137,17 @@ if (array_key_exists("quid",$post)) {
 
         $("#description").focusout(function () {
             if (!quid) {
-                if ($(this).val() != "") {
+                if ($("#quiz_name").val() != "") {
+                    alert();
                     quid = create_new_quiz();
-
-                    console.log(quid);
-
                     $("#quid").val(quid);
-                    $("#quiz_id").val(quid);
+                    $("#qui z_id").val(quid);
                 } else {
                     //add error here
                 }
 
             } else {
+                alert("update");
                 update_quiz();
             }
 
@@ -156,7 +156,7 @@ if (array_key_exists("quid",$post)) {
 
         $("#grade").change(function () {
             if (!quid) {
-                if ($(this).val() != "") {
+                if ($("#quiz_name").val() != "") {
                     quid = create_new_quiz();
                 } else {
                     //add error here
@@ -168,8 +168,9 @@ if (array_key_exists("quid",$post)) {
         });
         $("#subject").change(function () {
             if (!quid) {
-                if ($(this).val() != "") {
-                    quid = create_new_quiz();
+                if ($("#quiz_name").val() != "") {
+                    alert();
+//                    quid = create_new_quiz();
                 } else {
                     //add error here
                 }
