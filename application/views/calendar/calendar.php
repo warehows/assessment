@@ -128,7 +128,7 @@
                         <span class="glyphicon glyphicon-repeat"></span>
                     </button>
                 <?php endif; ?>
-                <a href="calendar/create" class="btn btn-primary pull-right offset-right-1"><span class="glyphicon glyphicon-plus"></span> Add event</a>
+<!--                <a href="calendar/create" class="btn btn-primary pull-right offset-right-1"><span class="glyphicon glyphicon-plus"></span> Add event</a>-->
             </div>
         </div>
         <div class="row">
@@ -144,7 +144,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-lg-offset-9 col-md-3 col-md-offset-9 item social">
-                    <p class="copyright">Powered by Click Innovation © 2017</p>
+                    <p class="copyright">Powered by Click Innovation ï¿½ 2017</p>
                 </div>
             </div>
         </div>

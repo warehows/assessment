@@ -36,10 +36,10 @@
                             }
                             ?>
                         </select>
-                        <input type="text" name="date1" value=""
+                        <input  type="date" data-date-inline-picker="true"  name="date1" value=""
                                placeholder="<?php echo $this->lang->line('date_from'); ?>">
 
-                        <input type="text" name="date2" value=""
+                        <input  type="date" data-date-inline-picker="true"  name="date2" value=""
                                placeholder="<?php echo $this->lang->line('date_to'); ?>">
 
                         <button class="btn btn-info"
