@@ -42,7 +42,15 @@
 							<label for="inputEmail" class="sr-only"><?php echo $this->lang->line('contact_no');?></label>
 							<input type="text" name="contact_no"  class="form-control" placeholder="<?php echo $this->lang->line('contact_no');?>"   autofocus>
 						</div>
-						<div class="form-group">
+                        <div class="form-group">
+                            <label ><?php echo $this->lang->line('account_type');?></label>
+                            <select id="user-type-field"  class="form-control" name="su">
+                                <option value="0">Student</option>
+                                <option value="2">Teacher</option>
+                                <option value="1">Admin</option>
+                            </select>
+                        </div>
+						<div id="section-field" class="form-group">
 							<label>Select Section</label>
 							<select class="form-control" name="gid" id="gid" onChange="getexpiry();">
 								<?php
@@ -56,14 +64,7 @@
 							</select>
 						</div>
 
-						<div class="form-group">
-							<label   ><?php echo $this->lang->line('account_type');?></label>
-							<select class="form-control" name="su">
-								<option value="0">Student</option>
-								<option value="2">Teacher</option>
-								<option value="1">Admin</option>
-							</select>
-						</div>
+
 
 
 						<button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit');?></button>
@@ -84,5 +85,19 @@
 
 </div>
 <script>
+    jQuery( document ).ready(function() {
+
+        jQuery('#user-type-field').change(function(){
+            if(jQuery(this).val() == '2' || jQuery(this).val() == '1'){ // or this.value == 'volvo'
+                jQuery('#section-field').hide();
+            }else{
+                jQuery('#section-field').show();
+            }
+        });
+    });
 	getexpiry();
+
+
+
+
 </script>
