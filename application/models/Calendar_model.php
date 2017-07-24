@@ -5,9 +5,11 @@ Class Calendar_model extends CI_Model
     {
         $logged_in = $this->session->userdata('logged_in');
 
-        $this->db->select('c.id as calendar_id, c.workspace_id,c.lesson_id,c.cid,c.gid,c.lid,c.date_from,c.date_to,c.uid,csc.color,l.lesson_name');
+        $this->db->select('c.id as calendar_id, c.workspace_id,c.lesson_id,c.cid,c.gid,c.lid,c.date_from,c.date_to,c.uid,csc.color,l.lesson_name,s.group_name,u.first_name,u.last_name');
         $this->db->from('calendar AS c');
         $this->db->join('lessons as l', 'l.id = c.lesson_id')
+            ->join('savsoft_users as u','u.uid = c.uid')
+            ->join('savsoft_group as s','s.gid = c.gid')
             ->join('calendar_subject_color as csc', 'csc.cid = c.cid');
 
         if ($logged_in['su'] == '2') {
@@ -69,30 +71,38 @@ Class Calendar_model extends CI_Model
         $this->db->where('user_id',$logged_in['uid'])
             ->where('content_id', $data['lesson']);
         $query = $this->db->get('workspace');
+        if (is_array($data['section'])) {
+            foreach ($data['section'] as $section) {
+                $newSchedule = array(
+                    'lesson_id' => $data['lesson'],
+                    'gid' => $section,
+                    'date_from' => $dateFrom->format('Y-m-d'),
+                    'date_to' => $dateTo->format('Y-m-d'),
+                    'uid' => $logged_in['uid'],
+                    'workspace_id' => $query->row('id')
+                );
 
-        // $workspace = $query->result_array();
-
-
-        $newSchedule = array(
-
-            'lesson_id' => $data['lesson'],
-            'cid' => $data['subject'],
-            'gid' => $data['section'],
-            'lid' => $data['grade'],
-            'date_from' => $dateFrom->format('Y-m-d'),
-            'date_to' => $dateTo->format('Y-m-d'),
-            'uid' => $logged_in['uid'],
-            'workspace_id' => $query->row('id')
-
-        );
-
-        if ($this->db->insert('calendar', $newSchedule)) {
-
+                $this->db->insert('calendar', $newSchedule);
+            }
             return true;
         } else {
-
-            return false;
+            $newSchedule = array(
+                'lesson_id' => $data['lesson'],
+                'cid' => $data['subject'],
+                'gid' => $data['section'],
+                'lid' => $data['grade'],
+                'date_from' => $dateFrom->format('Y-m-d'),
+                'date_to' => $dateTo->format('Y-m-d'),
+                'uid' => $logged_in['uid'],
+                'workspace_id' => $query->row('id')
+            );
+            if ($this->db->insert('calendar', $newSchedule)) {
+                return true;
+            } else {
+                return false;
+            }
         }
+
 
     }
 

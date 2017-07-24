@@ -153,10 +153,12 @@ class Calendar extends CI_Controller
                     'id' => $row['calendar_id'],
                     'title' => $row['lesson_name'],
                     'section' => $row['gid'],
+                    'section_name' => $row['group_name'],
                     'grade' => $row['lid'],
                     'lesson' => $row['lesson_id'],
                     'start' => $row['date_from']."T00:00:00",
                     'end' => $row['date_to']."T24:00:00",
+                    'teacher' => $row['first_name']." ".$row['last_name'],
                     'color' => $row['color'],
                     'allDay' => true,
                     'editable' => true
