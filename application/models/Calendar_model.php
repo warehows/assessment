@@ -72,17 +72,23 @@ Class Calendar_model extends CI_Model
             ->where('content_id', $data['lesson']);
         $query = $this->db->get('workspace');
         if (is_array($data['section'])) {
-            foreach ($data['section'] as $section) {
-                $newSchedule = array(
-                    'lesson_id' => $data['lesson'],
-                    'gid' => $section,
-                    'date_from' => $dateFrom->format('Y-m-d'),
-                    'date_to' => $dateTo->format('Y-m-d'),
-                    'uid' => $logged_in['uid'],
-                    'workspace_id' => $query->row('id')
-                );
+            foreach ($data['section'] as $row) {
+                foreach (explode( ",", $row ) as $sectionID) {
+                    print $sectionID."<br>";
+                    $this->db->where('id',$data['lesson']);
+                    $sec = $this->db->get('lessons');
+                    $newSchedule = array(
+                        'lesson_id' => $data['lesson'],
+                        'gid' => $sectionID,
+                        'cid' => $sec->row('subject_id'),
+                        'date_from' => $dateFrom->format('Y-m-d'),
+                        'date_to' => $dateTo->format('Y-m-d'),
+                        'uid' => $logged_in['uid'],
+                        'workspace_id' => $query->row('id')
+                    );
 
-                $this->db->insert('calendar', $newSchedule);
+                    $this->db->insert('calendar', $newSchedule);
+                }
             }
             return true;
         } else {
