@@ -398,6 +398,7 @@ if($result['camera_req']=='1'){
 					 
 					 
 						?>
+
 						<tr><td>
 						<?php echo $category; ?>
 						</td>
