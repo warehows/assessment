@@ -401,8 +401,9 @@ if($result['camera_req']=='1'){
 						<tr><td>
 						<?php echo $category; ?>
 						</td>
-						<td><?php echo $cia_cat[0][$vk]*$result['correct_score'];?></td>
-						<td><?php echo secintomin($cia_tim_cate[0][$vk]);?> Min.</td>
+                            <?php $fuckThisShit = isset($cia_cat[0][$vk]) ? $cia_cat[0][$vk] : 0; ?>
+						<td><?php echo $fuckThisShit*$result['correct_score'];?></td>
+						<td><?php echo secintomin($fuckThisShit);?> Min.</td>
 						<td><?php if(isset($cia_cat[0][$vk])){ echo $cia_cat[0][$vk]; $correct+=$cia_cat[0][$vk]; }else{ echo '0'; } ?></td>
 						<td><?php   if(isset($cia_cat[1][$vk])){ echo $cia_cat[1][$vk]; $incorrect+=$cia_cat[1][$vk]; }else{ echo '0';  } ?></td>
 						<td><?php   if(isset($cia_cat[2][$vk])){ echo $cia_cat[2][$vk]; $notattempted+=$cia_cat[2][$vk]; }else{ echo '0';  } ?></td>
