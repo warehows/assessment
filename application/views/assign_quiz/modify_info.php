@@ -21,7 +21,6 @@ if (array_key_exists("quid",$post)) {
 <div class="form-group">
     <select class="form-control grade" id="grade">
         <?php foreach ($all_grades as $grade_key => $grade_value) { ?>
-
             <option value="<?php echo $grade_value['lid'] ?>"><?php echo $grade_value['level_name'] ?></option>
         <?php } ?>
     </select>
@@ -81,7 +80,7 @@ if (array_key_exists("quid",$post)) {
 
             });
 
-            return returned_value;
+            return $.trim(returned_value);;
         }
 
         function update_quiz() {
@@ -91,7 +90,6 @@ if (array_key_exists("quid",$post)) {
             var description = $("#description").val();
             var uid = <?php echo $logged_in['uid']?>;
             var returned_value;
-            alert(description);
             $.ajax({
                 url: "<?php echo site_url('assign/update_quiz');?>",
                 type: "POST",
@@ -113,6 +111,7 @@ if (array_key_exists("quid",$post)) {
 
             });
 
+
             return returned_value;
         }
 
@@ -120,9 +119,6 @@ if (array_key_exists("quid",$post)) {
             if (!quid) {
                 if ($("#quiz_name").val() != "") {
                     quid = create_new_quiz();
-
-                    console.log(quid);
-
                     $("#quid").val(quid);
                     $("#quiz_id").val(quid);
                 } else {
@@ -138,7 +134,6 @@ if (array_key_exists("quid",$post)) {
         $("#description").focusout(function () {
             if (!quid) {
                 if ($("#quiz_name").val() != "") {
-                    alert();
                     quid = create_new_quiz();
                     $("#quid").val(quid);
                     $("#qui z_id").val(quid);
@@ -147,7 +142,6 @@ if (array_key_exists("quid",$post)) {
                 }
 
             } else {
-                alert("update");
                 update_quiz();
             }
 
@@ -169,8 +163,7 @@ if (array_key_exists("quid",$post)) {
         $("#subject").change(function () {
             if (!quid) {
                 if ($("#quiz_name").val() != "") {
-                    alert();
-//                    quid = create_new_quiz();
+                    quid = create_new_quiz();
                 } else {
                     //add error here
                 }

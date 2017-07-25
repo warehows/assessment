@@ -281,10 +281,80 @@ class Assign extends CI_Controller
 
         $quid = $this->assign_model->insert_quiz($data);
         if($quid){
-            echo $quid;
+            echo trim($quid);
         }else{
             echo "Error";
         }
+    }
+
+    public function update_quiz()
+    {
+        $post = $this->input->post();
+
+        $filter_data = array(
+            'quid',
+            'quiz_name',
+            'cid',
+            'uid',
+            'description',
+            'start_date',
+            'end_date',
+            'duration',
+            'maximum_attempts',
+            'pass_percentage',
+            'correct_score',
+            'incorrect_score',
+            'ip_address',
+            'view_answer',
+            'camera_req',
+            'with_login',
+            'gids',
+            'question_selection',
+            'lid',
+        );
+        foreach($filter_data as $key => $value){
+            if(array_key_exists($value,$post)){
+                $data[$value] = $post[$value];
+            }else{
+
+                if($value == "gids"){
+                    $data[$value] = array();
+                }else{
+                    $data[$value] = "";
+                }
+            }
+        }
+
+        $data = array(
+            'quid' => $data['quid'],
+            'quiz_name' => $data['quiz_name'],
+            'cid' => $data['cid'],
+            'uid' => $data['uid'],
+            'description' => $data['description'],
+            'start_date' => strtotime($data['start_date']),
+            'end_date' => strtotime($data['end_date']),
+            'duration' => $data['duration'],
+            'maximum_attempts' => $data['maximum_attempts'],
+            'pass_percentage' => $data['pass_percentage'],
+            'correct_score' => $data['correct_score'],
+            'incorrect_score' => $data['incorrect_score'],
+            'ip_address' => $data['ip_address'],
+            'view_answer' => $data['view_answer'],
+            'camera_req' => $data['camera_req'],
+            'with_login' => $data['with_login'],
+            'gids' => implode(',', $data['gids']),
+            'question_selection' => $data['question_selection'],
+            'lid' => $data['lid'],
+        );
+
+        $quid = $this->assign_model->update_quiz($data);
+        if($quid){
+//            echo $quid;
+            print_r($data);
+        }else{
+            echo "Error";
+        }
+
     }
 
     public function modify_settings()
@@ -369,77 +439,6 @@ class Assign extends CI_Controller
             "view_answer" => $data['view_answer'],
         );
         echo json_encode($array);
-    }
-
-    public function update_quiz()
-    {
-        $post = $this->input->post();
-
-        $filter_data = array(
-            'quiz_name',
-            'cid',
-            'uid',
-            'quid',
-            'description',
-            'start_date',
-            'end_date',
-            'duration',
-            'maximum_attempts',
-            'pass_percentage',
-            'correct_score',
-            'incorrect_score',
-            'ip_address',
-            'view_answer',
-            'camera_req',
-            'with_login',
-            'gids',
-            'question_selection',
-            'lid',
-        );
-        foreach($filter_data as $key => $value){
-            if(array_key_exists($value,$post)){
-                $data[$value] = $post[$value];
-            }else{
-
-                if($value == "gids"){
-                    $data[$value] = array();
-                }else{
-                    $data[$value] = "";
-                }
-            }
-        }
-
-        $data = array(
-            'quid' => $data['quid'],
-            'quiz_name' => $data['quiz_name'],
-            'cid' => $data['cid'],
-            'uid' => $data['uid'],
-            'description' => $data['description'],
-            'start_date' => strtotime($data['start_date']),
-            'end_date' => strtotime($data['end_date']),
-            'duration' => $data['duration'],
-            'maximum_attempts' => $data['maximum_attempts'],
-            'pass_percentage' => $data['pass_percentage'],
-            'correct_score' => $data['correct_score'],
-            'incorrect_score' => $data['incorrect_score'],
-            'ip_address' => $data['ip_address'],
-            'view_answer' => $data['view_answer'],
-            'camera_req' => $data['camera_req'],
-            'with_login' => $data['with_login'],
-            'gids' => implode(',', $data['gids']),
-            'question_selection' => $data['question_selection'],
-            'lid' => $data['lid'],
-        );
-        print_r($data);
-
-        $quid = $this->assign_model->update_quiz($data);
-        if($quid){
-//            echo $quid;
-
-        }else{
-            echo "Error";
-        }
-
     }
 
     public function get_all_level()

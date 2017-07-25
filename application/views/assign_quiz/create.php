@@ -8,17 +8,21 @@
                     <?php if ($next_page == "assign_quiz/modify_info") { ?>
 
                         <?php $this->load->view($next_page, $all_data) ?>
-                        <input type="hidden" id="next_page" name="next_page" value="assign_quiz/modify_settings">
+                        <input type="hidden" id="next_page" name="next_page" value="assign_quiz/redirect">
                         <input type="hidden" id="previous_page" name="previous_page" value="">
+
 
                     <?php } ?>
 
-                    <?php if ($next_page == "assign_quiz/modify_settings") { ?>
 
-                        <?php $this->load->view($next_page, $all_data) ?>
-                        <input type="hidden" id="next_page" value="assign_quiz/add_questions">
-                        <input type="hidden" id="previous_page" value="">
-
+                    <?php if ($next_page == "assign_quiz/redirect") { ?>
+<!---->             <?php $redirect = $this->input->get(); $quid = $redirect["quid"]; ?>
+<!---->             <?php redirect(site_url('quiz/add_question/')."/".$quid) ?>
+<!--                        --><?php //$this->load->view($next_page, $all_data) ?>
+<!--
+       <input type="hidden" id="next_page" value="assign_quiz/add_questions">-->
+<!--                        <input type="hidden" id="previous_page" value="">-->
+<!---->
                     <?php } ?>
 
                 </form>
