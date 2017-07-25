@@ -4,7 +4,6 @@ $current_lesson_id = $sent_data['back_url'];
 $current_lesson_id = str_replace(site_url('quiz/add_question') . "/", "", $current_lesson_id);
 $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
 
-//exit;
 ?>
 <div class="wrapper">
     <div class="row">
@@ -36,9 +35,9 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                                 </div>
 
 
-                                <div class="form-group">
+                                <div class="form-group" style="display: none">
                                     <label>Subject</label>
-                                    <select class="form-control" name="cid" disabled>
+                                    <select class="form-control" name="cid">
                                         <?php
                                         foreach ($category_list as $key => $val) {
                                             ?>
@@ -57,9 +56,9 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                                 </div>
 
 
-                                <div class="form-group">
+                                <div class="form-group" style="display: none">
                                     <label>Grade</label>
-                                    <select class="form-control" name="lid" disabled>
+                                    <select class="form-control" name="lid">
                                         <?php
                                         foreach ($level_list as $key => $val) {
                                             ?>
@@ -82,10 +81,11 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                                     <label for="inputEmail"><?php echo $this->lang->line('question'); ?></label>
                                     <textarea name="question" class="form-control"><?php echo $lesson_information['description']?></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputEmail"><?php echo $this->lang->line('description'); ?></label>
-                                    <textarea name="description" class="form-control"></textarea>
-                                </div>
+                                <input type="hidden" name="description" />
+<!--                                <div class="form-group">-->
+<!--                                    <label for="inputEmail">--><?php //echo $this->lang->line('description'); ?><!--</label>-->
+<!--                                    <textarea name="description" class="form-control"></textarea>-->
+<!--                                </div>-->
                                 <?php
                                 for ($i = 1; $i <= $nop; $i++) {
                                     ?>
