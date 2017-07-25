@@ -13,7 +13,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
 
 
             <div class="row">
-                <form method="post" action="<?php echo site_url('qbank/new_question_2/' . $nop); ?>">
+                <form method="post" action="<?php echo site_url('qbank/new_question_2/' . $nop."?back_url=".$sent_data['back_url']); ?>">
 
                     <div class="col-md-8">
                         <br>
@@ -35,35 +35,45 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                                 </div>
 
 
-                                <div class="form-group">
-                                    <label><?php echo $this->lang->line('select_category'); ?></label>
+                                <div class="form-group" style="display: none">
+                                    <label>Subject</label>
                                     <select class="form-control" name="cid">
                                         <?php
                                         foreach ($category_list as $key => $val) {
                                             ?>
-
-                                            <option
-                                                value="<?php echo $val['cid']; ?>"><?php echo $val['category_name']; ?></option>
+                                            <?php if ($val['cid'] == $lesson_information['cid']) { ?>
+                                                <option selected
+                                                        value="<?php echo $val['cid']; ?>"><?php echo $val['category_name']; ?></option>
+                                            <?php } else { ?>
+                                                <option
+                                                    value="<?php echo $val['cid']; ?>"><?php echo $val['category_name']; ?></option>
+                                            <?php } ?>
                                             <?php
                                         }
                                         ?>
                                     </select>
+                                    <input type="hidden" name="cid" value="<?php echo $lesson_information['cid'] ?>">
                                 </div>
 
 
-                                <div class="form-group">
-                                    <label><?php echo $this->lang->line('select_level'); ?></label>
+                                <div class="form-group" style="display: none">
+                                    <label>Grade</label>
                                     <select class="form-control" name="lid">
                                         <?php
                                         foreach ($level_list as $key => $val) {
                                             ?>
-
-                                            <option
-                                                value="<?php echo $val['lid']; ?>"><?php echo $val['level_name']; ?></option>
+                                            <?php if ($val['lid'] == $lesson_information['lid']) { ?>
+                                                <option selected
+                                                        value="<?php echo $val['lid']; ?>"><?php echo $val['level_name']; ?></option>
+                                            <?php } else { ?>
+                                                <option
+                                                    value="<?php echo $val['lid']; ?>"><?php echo $val['level_name']; ?></option>
+                                            <?php } ?>
                                             <?php
                                         }
                                         ?>
                                     </select>
+                                    <input type="hidden" name="lid" value="<?php echo $lesson_information['lid'] ?>">
                                 </div>
 
 
