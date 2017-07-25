@@ -166,20 +166,23 @@ class Workspace extends CI_Controller
             redirect('login');
         }
 
-
         $posts = $this->input->get();
+        echo "<pre/>";
+
+
         $current_quiz = $this->quiz_model->get_quiz($posts['quid']);
 
-        echo strtotime($posts['date_start']);
-        echo strtotime($posts['date_end']);
-        $data = array(
+        $teachers = $posts['teachers'][0];
+        $teachers = explode(",",$teachers);
+
+        $current_quiz_data = array(
+//            'quid' => $current_quiz['quid'],
             'quiz_name' => $current_quiz['quiz_name'],
             'cid' => $current_quiz['cid'],
             'uid' => $current_quiz['uid'],
-            'quid' => $current_quiz['quid'],
             'description' => $current_quiz['description'],
-            'start_date' => strtotime($posts['date_start']),
-            'end_date' => strtotime($posts['date_end']),
+            'start_date' => strtotime($current_quiz['start_date']),
+            'end_date' => strtotime($current_quiz['end_date']),
             'duration' => $current_quiz['duration'],
             'maximum_attempts' => $current_quiz['maximum_attempts'],
             'pass_percentage' => $current_quiz['pass_percentage'],
@@ -189,11 +192,58 @@ class Workspace extends CI_Controller
             'view_answer' => $current_quiz['view_answer'],
             'camera_req' => $current_quiz['camera_req'],
             'with_login' => $current_quiz['with_login'],
-            'gids' => $posts['sections'][0],
+            'noq' => count(explode(",",$current_quiz['qids'])),
+            'qids' => $current_quiz['qids'],
+            'gids' => $current_quiz['gids'],
             'question_selection' => $current_quiz['question_selection'],
             'lid' => $current_quiz['lid'],
+            'assigned' => $current_quiz['assigned'],
         );
-        $this->assign_model->update_quiz($data);
+
+
+        //replicate quiz foreach teacher
+        //save to workspace
+        foreach($teachers as $teacher_key => $teacher_value){
+
+            $assigned_quiz_data = array(
+//            'quid' => $current_quiz['quid'],
+                'quiz_name' => $current_quiz['quiz_name'],
+                'cid' => $current_quiz['cid'],
+                'uid' => $current_quiz['uid'],
+                'description' => $current_quiz['description'],
+                'start_date' => strtotime($posts['date_start']),
+                'end_date' => strtotime($posts['date_end']),
+                'duration' => $posts['duration'],
+                'maximum_attempts' => 10000,
+                'pass_percentage' => $posts['pass_percentage'],
+                'correct_score' => $posts['correct_score'],
+                'incorrect_score' => 0,
+                'noq' => count(explode(",",$current_quiz['qids'])),
+                'qids' => $current_quiz['qids'],
+                'ip_address' => $current_quiz['ip_address'],
+                'view_answer' => $posts['view_answer'],
+                'camera_req' => $current_quiz['camera_req'],
+                'with_login' => 1,
+                'gids' => $posts['sections'][0],
+                'question_selection' => $current_quiz['question_selection'],
+                'lid' => $current_quiz['lid'],
+                'author' => $current_quiz['author'],
+                'assigned_by' => $logged_in['uid'],
+                'assigned' => 1,
+            );
+
+
+            $recently_inserted_quid = $this->assign_model->insert_quiz($assigned_quiz_data);
+
+            $current_workspace_data = array(
+                "user_id"=>$teacher_value,
+                "content_id"=>$recently_inserted_quid,
+                "content_type"=>"quiz",
+                "content_name"=>$current_quiz["quiz_name"],
+
+            );
+            $recently_inserted_workspace_id = $this->workspace_model->insert_workspace($current_workspace_data);
+        }
         redirect('assign');
     }
 

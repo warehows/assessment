@@ -17,6 +17,13 @@ Class Assign_model extends CI_Model
 
     }
 
+    function where($where,$data)
+    {
+        $this->db->where($where,$data);
+        $query = $this->db->get('savsoft_quiz');
+        return $query->result_array();
+    }
+
 }
 
 ?>

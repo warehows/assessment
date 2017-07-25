@@ -60,7 +60,7 @@ class Assign extends CI_Controller
         $data['category'] = $this->category_model->get_all();
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
-        $data['all_quiz'] = $this->quiz_model->getCollection("savsoft_quiz");
+        $data['all_quiz'] = $this->assign_model->where("assigned","");
 
         $this->load->view('new_material/header', $data);
         $this->load->view('assign_quiz/index_new', $data);
@@ -130,9 +130,10 @@ class Assign extends CI_Controller
             redirect(site_url('assign/edit')."?next_page=assign_quiz%2Fmodify_info&quid=".$quid);
         }
         elseif ($post["submit"] == "assign") {
+            $data["data"] = $data;
             $quid = $this->input->post();
             $quid = $quid['selected_quiz'][0];
-
+            $data["posts"] = $this->input->post();
             $data['quid'] = $quid;
             $data['logged_in'] = $logged_in;
 
@@ -168,12 +169,6 @@ class Assign extends CI_Controller
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_quiz'] = $this->quiz_model->getCollection("savsoft_quiz");
-
-        /*        $this->load->view('material_part/header_material',$data);*/
-
-//        $this->load->view('material_part/header_material',$data);
-//        $this->load->view('assign_quiz/index.php', $data);
-//        $this->load->view('material_part/footer_material',$data);
 
 
         $this->load->view('assign_quiz/create_question', $data);
@@ -257,7 +252,7 @@ class Assign extends CI_Controller
                 }
             }
         }
-
+        $logged_in = $this->session->userdata('logged_in');
         $data = array(
             'quiz_name' => $data['quiz_name'],
             'cid' => $data['cid'],
@@ -277,6 +272,7 @@ class Assign extends CI_Controller
             'gids' => implode(',', $data['gids']),
             'question_selection' => $data['question_selection'],
             'lid' => $data['lid'],
+            'author' => $logged_in['uid'],
         );
 
         $quid = $this->assign_model->insert_quiz($data);
@@ -290,7 +286,7 @@ class Assign extends CI_Controller
     public function update_quiz()
     {
         $post = $this->input->post();
-
+        $logged_in = $this->session->userdata('logged_in');
         $filter_data = array(
             'quid',
             'quiz_name',
@@ -345,6 +341,7 @@ class Assign extends CI_Controller
             'gids' => implode(',', $data['gids']),
             'question_selection' => $data['question_selection'],
             'lid' => $data['lid'],
+            'author' => $logged_in['uid'],
         );
 
         $quid = $this->assign_model->update_quiz($data);
