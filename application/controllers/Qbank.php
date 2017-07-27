@@ -302,7 +302,7 @@ class Qbank extends CI_Controller {
 
         $this->load->view('new_material/header',$data);
         $this->load->view('new_question_4',$data);
-        $this->load->view('material_part/footer_material',$data);
+        $this->load->view('new_material/footer',$data);
     }
 
 
