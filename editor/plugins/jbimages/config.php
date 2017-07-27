@@ -42,7 +42,6 @@
 	$config['upload_path'] = $_SERVER['DOCUMENT_ROOT'] . $config['img_path']; // Physical path. [Usually works fine like this]
 
 
-
 /*-------------------------------------------------------------------
 | 
 | Allowed image filetypes. Specifying something other, than image types will result in error. 
