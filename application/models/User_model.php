@@ -277,6 +277,11 @@ Class User_model extends CI_Model
     { $logged_in=$this->session->userdata('logged_in');
 
 
+        if($this->input->post('changePassword') && $logged_in['su'] != 1){
+            if($logged_in['password'] != md5($this->input->post('oldpassword'))){
+                return false;
+            }
+        }
         $userdata=array(
             'first_name'=>$this->input->post('first_name'),
             'last_name'=>$this->input->post('last_name'),
