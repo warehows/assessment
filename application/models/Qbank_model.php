@@ -318,6 +318,7 @@ Class Qbank_model extends CI_Model
             'description' => $this->input->post('description'),
             'question_type' => $this->lang->line('long_answer'),
             'uid' => $uid,
+            'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
         $this->db->insert('savsoft_qbank', $userdata);
