@@ -147,6 +147,7 @@ foreach($questions as $qk => $question){
 			 <input type="hidden"  name="question_type[]"  id="q_type<?php echo $qk;?>" value="1">
 			 <?php
 			$i=0;
+			var_dump($options);
 			foreach($options as $ok => $option){
 				if($option['qid']==$question['qid']){
 			?>
@@ -192,6 +193,34 @@ foreach($questions as $qk => $question){
 				}
 			}
 		 }
+
+         if($question['question_type']=='True or False'){
+             $save_ans=array();
+             foreach($saved_answers as $svk => $saved_answer){
+                 if($question['qid']==$saved_answer['qid']){
+                     $save_ans[]=$saved_answer['q_option'];
+                 }
+             }
+
+             ?>
+             <input type="hidden"  name="question_type[]"  id="q_type<?php echo $qk;?>" value="2">
+             <?php
+             $i=0;
+             foreach($options as $ok => $option){
+                 if($option['qid']==$question['qid']){
+                     ?>
+
+                     <div class="op"><?php echo $abc[$i];?>) <input type="checkbox" name="answer[<?php echo $qk;?>][]" id="answer_value<?php echo $qk.'-'.$i;?>"   value="<?php echo $option['oid'];?>"  <?php if(in_array($option['oid'],$save_ans)){ echo 'checked'; } ?> > <?php echo strip_tags($option['q_option']); ?> </div>
+
+
+                     <?php
+                     $i+=1;
+                 }else{
+                     $i=0;
+
+                 }
+             }
+         }
 			 
 	// short answer	
 
