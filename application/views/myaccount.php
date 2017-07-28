@@ -28,21 +28,25 @@
 
 				<div class="form-group">
 					<label for="inputEmail" class="sr-only"><?php echo $this->lang->line('email_address');?></label>
-					<input disabled type="text" id="inputEmail" name="email" value="<?php echo $result['email'];?>" readonly=readonly class="form-control" placeholder="<?php echo $this->lang->line('email_address');?>" required autofocus>
+                    <span class="form-control"><?php echo $result['email'];?></span>
+					<input type="hidden" id="inputEmail" name="email" value="<?php echo $result['email'];?>" readonly=readonly class="form-control" placeholder="<?php echo $this->lang->line('email_address');?>" required autofocus>
 			</div>
 
 
 				<div class="form-group">
 					<label for="inputEmail" class="sr-only"><?php echo $this->lang->line('first_name');?></label>
-					<input disabled type="text"  name="first_name"  class="form-control"  value="<?php echo $result['first_name'];?>"  placeholder="<?php echo $this->lang->line('first_name');?>"   autofocus>
+                    <span class="form-control"><?php echo $result['first_name'];?></span>
+					<input type="hidden"  name="first_name"  class="form-control"  value="<?php echo $result['first_name'];?>"  placeholder="<?php echo $this->lang->line('first_name');?>"   autofocus>
 			</div>
 				<div class="form-group">
 					<label for="inputEmail" class="sr-only"><?php echo $this->lang->line('last_name');?></label>
-					<input disabled type="text"   name="last_name"  class="form-control"  value="<?php echo $result['last_name'];?>"  placeholder="<?php echo $this->lang->line('last_name');?>"   autofocus>
+                    <span class="form-control"><?php echo $result['last_name'];?></span>
+					<input type="hidden"   name="last_name"  class="form-control"  value="<?php echo $result['last_name'];?>"  placeholder="<?php echo $this->lang->line('last_name');?>"   autofocus>
 			</div>
 				<div class="form-group">
 					<label for="inputEmail" class="sr-only"><?php echo $this->lang->line('contact_no');?></label>
-					<input disabled type="text" name="contact_no"  class="form-control"  value="<?php echo $result['contact_no'];?>"  placeholder="<?php echo $this->lang->line('contact_no');?>"   autofocus>
+                    <span class="form-control"><?php echo $result['contact_no'];?></span>
+					<input type="hidden" name="contact_no"  class="form-control"  value="<?php echo $result['contact_no'];?>"  placeholder="<?php echo $this->lang->line('contact_no');?>"   autofocus>
 			</div>
             <div class="form-group">
                 <input id="changePassword" type="checkbox" name="changePassword" value="1"><span>Change Password</span>
