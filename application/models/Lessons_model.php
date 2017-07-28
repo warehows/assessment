@@ -151,7 +151,7 @@ Class Lessons_model extends CI_Model
         if ($count_row > 0) {
 //            return "Data already exists";
         } else {
-            $this->db->insert('dlesson_contents', $data);
+            $this->db->insert('lesson_contents', $data);
             $id = $this->db->insert_id($data);
         }
         return $data;
