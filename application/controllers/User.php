@@ -112,7 +112,7 @@ class User extends CI_Controller
 
     }
 
-    public function edit_user($uid)
+    public function edit_user($uid = null)
     {
 
         $logged_in = $this->session->userdata('logged_in');
@@ -129,7 +129,7 @@ class User extends CI_Controller
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
         $this->load->view('new_material/header', $data);
-        if ($logged_in['su']>'0') {
+        if ($logged_in['su']== 1) {
             $this->load->view('edit_user', $data);
         } else {
             $this->load->view('myaccount', $data);

@@ -32,7 +32,7 @@
                 <li role="presentation"><a href="<?php echo site_url('workspace');?>">My Lesson</a></li>
                 <li role="presentation"><a href="<?php echo site_url('calendar/');?>">C Planner</a></li>
                 <li role="presentation"><a href="<?php echo site_url('result');?>">Report</a></li>
-
+                <li role="presentation"><a href="<?php echo site_url('user/edit_user');?>">My Account</a></li>
                 <li role="presentation"><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
             </ul>
         </div>
