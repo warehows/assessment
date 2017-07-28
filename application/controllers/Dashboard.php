@@ -36,11 +36,11 @@ class Dashboard extends CI_Controller
         if ($logged_in['su'] == 1) {
 
             $this->load->view('new_material/header', $data);
-            $this->load->view('new_dashboard', $data);
+            $this->load->view('newest_dashboard', $data);
             $this->load->view('material_part/footer_material', $data);
         } elseif ($logged_in['su'] == 2) {
             $this->load->view('new_material/teacher_header', $data);
-            $this->load->view('new_dashboard', $data);
+            $this->load->view('newest_dashboard', $data);
             $this->load->view('material_part/footer_material', $data);
         } else {
             redirect('');

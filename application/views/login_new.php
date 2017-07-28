@@ -1,22 +1,22 @@
 <?php $this->load->helper('url'); ?>
 <div>
-    <nav class="navbar navbar-inverse navbar-fixed-top navigation-clean">
+    <nav class="navbar navbar-inverse navbar-fixed-top navigation-clean" style="background-color: #ff4e3b!important;">
          <div class="container">
-            <div class="navbar-header"><img style="height: 45px!important;" class="navbar-brand image_logo" src="<?php echo base_url('css/new_material/img/main_logo.png'); ?>" alt="School Logo" >
-                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            <div class="navbar-header"><img style="height: 45px!important;" class="navbar-brand image_logo" src="<?php echo base_url('css/new_material/img/brainee.png'); ?>" alt="School Logo" >
+
             </div>
-            <div class="collapse navbar-collapse" id="navcol-1"></div>
+
         </div>
     </nav>
 </div>
 <div class="contact-clean">
     <form method="post" method="post" action="<?php echo site_url('login/verifylogin'); ?>">
 
-        <h3 align="center">St. Therese Private School </h3>
+        <h2 align="center" style="margin-top:-10px!important;">St. Therese Private School</h2>
+        <p align="center" style="margin-top:-30px!important;">Learning Management System</p>
 
-        <div class="avatar-login" align="center"><img
-                src="<?php echo base_url('css/new_material/img/263916_142079905869802_5338795_n.jpg'); ?>"
-                alt="School Logo" class="avatar-img"></div>
+        <div class="illustration" style="margin-top:-20px!important;"><img style="height: 190px!important;" class="navbar-brand image_logo" src="<?php echo base_url('css/new_material/img/steps.png'); ?>" alt="School Logo" ></div>
+
         <?php
         if ($this->session->flashdata('message')) {
         ?>
@@ -51,13 +51,14 @@
             <div class="form-group has-feedback">
                 <input class="form-control" type="password" name="password" placeholder="Password">
 
-                <p class="help-block">Please enter the correct credentials</p>
+                <p class="help-block" align="center">Please enter the correct credentials</p>
             </div>
 
         <?php } ?>
         <div class="form-group" align="center">
-            <button class="btn btn-primary" type="submit" align="center">Login</button>
-            <button class="btn btn-primary" type="button" align="center">Forgot password</button>
+
+            <button class="btn btn-primary btn-block" type="submit">Log In</button>
+            <a href="#" class="forgot">Forgot your email or password?</a>
         </div>
     </form>
 </div>
