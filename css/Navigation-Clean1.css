@@ -2,7 +2,7 @@
 
 #first-section {
   background:#ffffff;
-  height:650px;
+  height:350px;
 }
 
 @media (max-width:767px){
@@ -73,11 +73,11 @@ main.faea32ab.css:5 100% {
 }
 
 .train {
-  position:absolute;
+  /*position:absolute;*/
   bottom:400px;
   height:230px;
   width:100%;
-  background:url('../sample2.png');
+  background:url('./sample2.png');
   background-repeat:repeat-x;
   background-position:top center;
   background-size:contain;
