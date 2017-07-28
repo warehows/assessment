@@ -12,7 +12,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
 
 
             <div class="row">
-                <form method="post" action="<?php echo site_url('qbank/new_question_1/' . $nop."?back_url=".$sent_data['back_url']); ?>">
+                <form method="post" action="<?php echo site_url('qbank/new_question_2_bool/' . $nop."?back_url=".$sent_data['back_url']); ?>">
 
                     <div class="col-md-8">
                         <br>
@@ -87,16 +87,18 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
 <!--                                </div>-->
 
                                 <?php
-                                $booleanArr = array('False', 'True');
+                                $arrayBool = array('True','False');
                                 for ($i = 1; $i <= $nop; $i++) {
                                     ?>
                                     <div class="form-group">
+                                        <label
+                                                for="inputEmail"><?php echo $this->lang->line('options'); ?> <?php echo $i; ?>
+                                            )</label> <br>
                                         <input type="radio" name="score[]"
                                                value="<?php echo $i - 1; ?>" <?php if ($i == 1) {
                                             echo 'checked';
                                         } ?> > Select Correct Option
-                                        <br><textarea disabled name="option[]"
-                                                      class="form-control"><?php echo $booleanArr[$i - 1]; ?></textarea>
+                                        <br><input type="hidden" name="option[]" class="form-control" value="<?php echo $arrayBool[$i - 1]?>"/><h4><?php echo $arrayBool[$i - 1]?></h4>
                                     </div>
                                     <?php
                                 }

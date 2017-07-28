@@ -217,12 +217,13 @@ class Qbank extends CI_Controller {
             exit($this->lang->line('permission_denied'));
         }
         if($this->input->post('question')){
+            $back_url = $this->input->get('back_url');
             if($this->qbank_model->insert_question_2_bool()){
                 $this->session->set_flashdata('message', "<div class='alert alert-success'>".$this->lang->line('data_added_successfully')." </div>");
             }else{
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('error_to_add_data')." </div>");
             }
-            redirect('qbank/pre_new_question/');
+            redirect($back_url);
         }
 
         $data['nop']=$nop;
