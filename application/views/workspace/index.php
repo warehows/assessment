@@ -12,19 +12,26 @@
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">
                 <h2>My Lesson</h2>
+                <div class="form-container">
+                    <select id="list_type" class="form-control">
+                        <option value="lesson_type" id="lesson_type">Lessons</option>
+                        <option value="quiz_type" id="quiz_type">Quiz</option>
+                    </select>
+                </div>
                 <form action="<?php echo site_url() ?>/lessons/create">
                     <a href="" style="float:right;padding:5px;">
                         <button class="btn btn-primary" id="new_lesson">New Lesson</button>
                     </a>
                 </form>
-                <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
+                <form action="<?php echo site_url()?>/lessons/index_actions" id="form_type" method="POST">
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
                     <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
-                    <button class="btn btn-primary" id="assign" name="submit" value="assign">Assign</button>
+                    <button class="btn btn-primary" id="assign" name="submit" value="teacher_assign">Assign</button>
                     <button class="btn btn-primary" id="duplicate" name="submit" value="duplicate">Duplicate</button>
                     <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
-
+                    <?php $all_quizzes = $this->assign_model->where("uid",$logged_in['uid']); ?>
+<!--                    --><?php //print_r($logged_in) ?>
                     <table id="lesson_lists" class="table table-bordered table-hover" >
                         <thead>
                         <tr>
@@ -41,6 +48,29 @@
                                 <td class="input_row"><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['content_id']?>"/></td>
                                 <td class="lesson_row"><?php echo $value['content_name'] ?></td>
                                 <td class="lesson_row"><?php echo $value['content_type'] ?></td>
+                            </tr>
+                        <?php } ?>
+
+                        </tbody>
+                    </table>
+
+                    <table id="quiz_lists" class="table table-bordered table-hover" >
+                        <thead>
+                        <tr>
+                            <th width="3px"></th>
+                            <th>Content Name</th>
+                            <th>Content Type</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php print_r($all_quizzes)?>
+                        <?php foreach ($all_quizzes as $quiz_key => $quiz_value) { ?>
+
+                            <tr style="cursor:pointer" >
+                                <input type="hidden" name="workspace_id" value="<?php echo $value['id']; ?>" />
+                                <td class="input_row"><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $quiz_value['content_id']?>"/></td>
+                                <td class="lesson_row"><?php echo $quiz_value['quiz_name'] ?></td>
+                                <td class="lesson_row"><?php echo $quiz_value['assigned_by'] ?></td>
                             </tr>
                         <?php } ?>
 
@@ -98,5 +128,14 @@
             $("#import").show();
 
         }
+    });
+    $("#list_type").change(function(){
+        var url = "";
+        if($(this).val() == "lesson_type"){
+            url ="<?php echo site_url()?>/lessons/index_actions";
+        }else{
+            url = "<?php echo site_url()?>/assign/actions";
+        }
+
     });
 </script>

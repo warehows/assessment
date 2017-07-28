@@ -27,7 +27,12 @@
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
             <div class="three wizard">
                 <h2>Assigning</h2>
-                <?php $this->load->view('lessons/assign_to_students', $posts) ?>
+                <?php if ($logged_in['su'] == 1) { ?>
+                    <?php $this->load->view('lessons/assign_to_students', $posts) ?>
+                <?php } ?>
+                <?php if ($logged_in['su'] == 2) { ?>
+                    <?php $this->load->view('lessons/teacher_assign', $posts) ?>
+                <?php } ?>
             </div>
         </div>
     </div>

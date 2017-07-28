@@ -33,6 +33,12 @@ Class Workspace_model extends CI_Model
         $query = $this->db->get('workspace');
         return $query->result_array();
     }
+    function where_where($where,$data,$where2,$data2)
+    {
+        $this->db->where($where,$data)->where($where2,$data2);
+        $query = $this->db->get('workspace');
+        return $query->result_array();
+    }
     function where_is_lesson($id)
     {
         $this->db->where("content_id",$id)->where("content_type","lesson");
@@ -51,6 +57,7 @@ Class Workspace_model extends CI_Model
         $this->db->insert('workspace', $data);
         $quid = $this->db->insert_id();
     }
+
     function insert_to($where,$data)
     {
         $this->db->update($where, $data);

@@ -146,13 +146,39 @@ class Lessons extends CI_Controller
             $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
             $data['author'] = $author[0]['author'];
             $this->load->view('lessons/edit', $data);
+        }elseif ($post["submit"] == "duplicate") {
+            $data = array(
+                "lesson_ids" => $post['selected_lesson'],
+                "user_id" => $logged_in['uid'],
+                "content_type" => "lesson",
+                "all_users" => $this->user_model->get_all(),
+                "all_subjects" => $this->subjects_model->all(),
+                "all_levels" => $this->level_model->all(),
+                "all_sections" => $this->group_model->get_all(),
+            );
+            print_r($post["submit"]);
+
+            $imported = $this->lessons_model->duplicate($data);
+
+            if ($logged_in['su'] == 2) {
+                redirect(site_url() . "/lessonbank");
+            }
+            if ($logged_in['su'] == 1) {
+                redirect(site_url() . "/lessons");
+            }
         }elseif ($post["submit"] == "assign") {
             $data['lesson_id'] = $post['selected_lesson'][0];
             $data['workspace_id'] = $post['workspace_id'];
             $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
             $data['author'] = $author[0]['author'];
             $this->load->view('lessons/assign', $data);
-        } elseif ($post["submit"] == "view") {
+        }elseif ($post["submit"] == "teacher_assign") {
+            $data['lesson_id'] = $post['selected_lesson'][0];
+            $data['workspace_id'] = $post['workspace_id'];
+            $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
+            $data['author'] = $author[0]['author'];
+            $this->load->view('lessons/assign', $data);
+        }elseif ($post["submit"] == "view") {
             $data['lesson_id'] = $post['selected_lesson'][0];
             $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
             $data['author'] = $author[0]['author'];

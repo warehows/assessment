@@ -151,12 +151,80 @@ Class Lessons_model extends CI_Model
         if ($count_row > 0) {
 //            return "Data already exists";
         } else {
-            $this->db->insert('lesson_contents', $data);
+            $this->db->insert('dlesson_contents', $data);
             $id = $this->db->insert_id($data);
         }
         return $data;
 
 
+    }
+
+    function duplicate($data)
+    {
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $data['logged_in'] = $logged_in;
+
+        $user_id_real = $data["user_id"];
+
+        foreach ($data['lesson_ids'] as $key => $value) {
+            $loop_data = $this->lesson_by_id($value);
+            $lesson_id = array("lesson_id"=>$value);
+            $lesson_contents = $this->all_lesson_contents_by_id($lesson_id);
+
+            $data = array(
+                'lesson_name' => $loop_data[0]['lesson_name']."-duplicated",
+                'subject_id' => $loop_data[0]['subject_id'],
+                'level_id' => $loop_data[0]['level_id'],
+                'author' => $user_id_real,
+                'duplicated' => 1,
+            );
+
+            $this->db->insert('lessons', $data);
+            $new_lesson_id = $this->db->insert_id();
+
+            $workspace_data = array(
+                'user_id' => $user_id_real,
+                'content_id' => $new_lesson_id,
+                'content_type' => "lesson",
+                'content_name' => $loop_data[0]['lesson_name']."-duplicated",
+            );
+            $this->db->insert('workspace', $workspace_data);
+            $new_workspace_id = $this->db->insert_id();
+            foreach($lesson_contents as $lesson_content_key=>$lesson_content_value){
+                $lesson_data = array(
+                    'lesson_id' => $new_lesson_id,
+                    'content_name' => $lesson_content_value['content_name'],
+                    'author' => 1,
+                    'content_type' => $lesson_content_value['content_type'],
+                    'folder_name' => $lesson_content_value['folder_name'],
+                    'duplicated' => 1,
+                );
+                $this->save_files_to_database($lesson_data);
+
+                $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/assessment/upload/lessons/";
+                $folder_to_create = $new_lesson_id . "_" . $lesson_content_value['folder_name'];
+                $folder = $output_dir . $folder_to_create;
+                if (!file_exists($folder)) {
+                    $oldmask = umask(0);
+                    mkdir($folder, 0777, true);
+                    umask($oldmask);
+                }
+                $document_root= $_SERVER['DOCUMENT_ROOT']."/assessment";
+                $file = $document_root."/upload/lessons/".$value."_".$lesson_content_value['folder_name']."/".$lesson_content_value['content_name'];
+                $newfile = $document_root."/upload/lessons/".$new_lesson_id."_".$lesson_content_value['folder_name']."/".$lesson_content_value['content_name'];
+                copy($file, $newfile);
+
+            }
+        }
+
+        return $new_workspace_id;
     }
 
     function get_current_folder($data)
@@ -178,6 +246,7 @@ Class Lessons_model extends CI_Model
             redirect('login');
         }
         $data['logged_in'] = $logged_in;
+        $user_id = $data['user_id'];
 
         foreach ($data['lesson_ids'] as $key => $value) {
                 $loop_data = $this->lesson_by_id($value);
@@ -196,7 +265,7 @@ Class Lessons_model extends CI_Model
             $new_lesson_id = $this->db->insert_id();
 
             $workspace_data = array(
-                'user_id' => $logged_in['uid'],
+                'user_id' => $user_id,
                 'content_id' => $new_lesson_id,
                 'content_type' => "lesson",
                 'content_name' => $loop_data[0]['lesson_name']."-copy",

@@ -38,8 +38,9 @@ class Workspace extends CI_Controller
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
-        $data['all_lessons'] = $this->workspace_model->where("user_id", $logged_in['uid']);
-        $data['all_quizzes'] = $this->assign_model->where("", $logged_in['uid']);
+        $data['all_lessons'] = $this->workspace_model->where_where("user_id", $logged_in['uid'],"content_type","lesson");
+        $data['logged_in'] = $logged_in;
+//        $data['all_quizzes'] = $this->assign_model->where("", $logged_in['uid']);
 
         if ($logged_in["su"] == 1) {
             $this->load->view('new_material/header', $data);
@@ -95,7 +96,9 @@ class Workspace extends CI_Controller
                 "all_levels" => $this->level_model->all(),
                 "all_sections" => $this->group_model->get_all(),
             );
+
             $workspace_id = $this->lessons_model->import_to_workspace($import_to_workspace);
+
         }else{
             $workspace_id = $posts['workspace_id'];
         }
