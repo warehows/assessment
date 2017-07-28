@@ -23,15 +23,13 @@
                         <button class="btn btn-primary" id="new_lesson">New Lesson</button>
                     </a>
                 </form>
-                <form action="<?php echo site_url()?>/lessons/index_actions" id="form_type" method="POST">
+                <form action="<?php echo site_url()?>/lessons/index_actions" id="lesson_form" method="POST">
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
                     <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
                     <button class="btn btn-primary" id="assign" name="submit" value="teacher_assign">Assign</button>
                     <button class="btn btn-primary" id="duplicate" name="submit" value="duplicate">Duplicate</button>
                     <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
-                    <?php $all_quizzes = $this->assign_model->where("uid",$logged_in['uid']); ?>
-<!--                    --><?php //print_r($logged_in) ?>
                     <table id="lesson_lists" class="table table-bordered table-hover" >
                         <thead>
                         <tr>
@@ -53,6 +51,15 @@
 
                         </tbody>
                     </table>
+                </form>
+                <form action="<?php echo site_url()?>/assign/actions" id="quiz_form" method="POST">
+
+                    <button class="btn btn-primary" id="quiz_view" name="submit" value="view">View</button>
+                    <button class="btn btn-primary" id="quiz_edit" name="submit" value="edit">Edit</button>
+                    <button class="btn btn-primary" id="quiz_assign" name="submit" value="teacher_assign">Assign</button>
+                    <button class="btn btn-primary" id="quiz_duplicate" name="submit" value="duplicate">Duplicate</button>
+                    <button class="btn btn-primary" id="quiz_delete" name="submit" value="delete">Delete</button>
+
 
                     <table id="quiz_lists" class="table table-bordered table-hover" >
                         <thead>
@@ -63,14 +70,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php print_r($all_quizzes)?>
-                        <?php foreach ($all_quizzes as $quiz_key => $quiz_value) { ?>
 
+                        <?php foreach ($all_quizzes as $quiz_key => $quiz_value) { ?>
                             <tr style="cursor:pointer" >
-                                <input type="hidden" name="workspace_id" value="<?php echo $value['id']; ?>" />
-                                <td class="input_row"><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $quiz_value['content_id']?>"/></td>
-                                <td class="lesson_row"><?php echo $quiz_value['quiz_name'] ?></td>
-                                <td class="lesson_row"><?php echo $quiz_value['assigned_by'] ?></td>
+                                <td class="quiz_input_row"><input type="checkbox" class="selected_quiz_class" name="selected_quiz[]" value="<?php echo $quiz_value['id']?>"/></td>
+                                <td class="quiz_row"><?php echo $quiz_value['content_name'] ?></td>
+                                <td class="quiz_row"></td>
                             </tr>
                         <?php } ?>
 
@@ -84,16 +89,37 @@
 
 <script>
     $("#lesson_lists").DataTable();
+    $("#quiz_lists").DataTable();
+
+    $("#lesson_form").show();
+    $("#quiz_form").hide();
+
     $("#edit").hide();
     $("#assign").hide();
     $("#view").hide();
     $("#delete").hide();
     $("#import").hide();
     $("#duplicate").hide();
+
+    //quiz
+    $("#quiz_edit").hide();
+    $("#quiz_assign").hide();
+    $("#quiz_view").hide();
+    $("#quiz_delete").hide();
+    $("#quiz_import").hide();
+    $("#quiz_duplicate").hide();
+    //quiz
+
     $(".lesson_row").click(function(){
         $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
         $("#view").click();
     });
+    //quiz
+    $(".quiz_row").click(function(){
+        $(this).siblings(".quiz_input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
+        $("#view").click();
+    });
+    //quiz
     $(".selected_lesson_class").change(function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {
@@ -115,7 +141,7 @@
         else if (selected_count >= 1) {
             $("#edit").hide();
             $("#duplicate").hide();
-            $("#assign").hide();
+            $("#assign").show();
             $("#delete").show();
             $("#view").hide();
             $("#import").hide();
@@ -129,13 +155,58 @@
 
         }
     });
-    $("#list_type").change(function(){
+
+    //quiz
+    $(".selected_quiz_class").change(function () {
+        selected_count = $(document).find('.selected_quiz_class:checked').length;
+        if (selected_count == 1) {
+            $("#quiz_edit").show();
+            $("#quiz_duplicate").show();
+            $("#quiz_assign").show();
+            $("#quiz_view").hide();
+            $("#quiz_delete").show();
+
+            $("#import").show();
+        } else if (selected_count == 0) {
+            $("#quiz_edit").hide();
+            $("#quiz_duplicate").hide();
+            $("#quiz_assign").hide();
+            $("#quiz_delete").hide();
+            $("#quiz_view").hide();
+            $("#quiz_import").hide();
+        }
+        else if (selected_count >= 1) {
+            $("#quiz_edit").hide();
+            $("#quiz_duplicate").hide();
+            $("#quiz_assign").hide();
+            $("#quiz_delete").show();
+            $("#quiz_view").hide();
+            $("#quiz_import").hide();
+        } else {
+            $("#quiz_edit").hide();
+            $("#quiz_duplicate").hide();
+            $("#quiz_assign").hide();
+            $("#quiz_view").hide();
+            $("#quiz_delete").show();
+            $("#quiz_import").show();
+
+        }
+    });
+    //quiz
+
+    $("#list_type").on('change',function(){
         var url = "";
         if($(this).val() == "lesson_type"){
-            url ="<?php echo site_url()?>/lessons/index_actions";
+            $("#lesson_form").show();
+            $("#quiz_form").hide();
+            url = "<?php echo site_url()?>/assign/actions";
+
         }else{
+            $("#lesson_form").hide();
+            $("#quiz_form").show();
             url = "<?php echo site_url()?>/assign/actions";
         }
+        $("#form_type").attr("form_type",url);
 
     });
 </script>

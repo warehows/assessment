@@ -17,6 +17,7 @@ class Assign extends CI_Controller
         $this->load->model("group_model");
         $this->load->model("subjects_model");
         $this->load->model("assign_model");
+        $this->load->model("workspace_model");
         $this->lang->load('basic', $this->config->item('language'));
 
         if (!$this->session->userdata('logged_in')) {
@@ -38,15 +39,6 @@ class Assign extends CI_Controller
         $data['logged_in'] = $logged_in;
 
         $this->data = $data;
-
-//        $logged_in = $this->session->userdata('logged_in');
-//        if ($logged_in['su'] == 1) {
-//            $this->load->view('new_material/header', $data);
-//        } elseif ($logged_in['su'] == 2) {
-//            $this->load->view('new_material/teacher_header', $data);
-//        } elseif ($logged_in['su'] == 0) {
-//            $this->load->view('new_material/student_header', $data);
-//        }
 
     }
 
@@ -79,7 +71,7 @@ class Assign extends CI_Controller
 
     public function actions()
     {
-        // redirect if not loggedin
+        // redirect if not logged in
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
         }
@@ -141,7 +133,20 @@ class Assign extends CI_Controller
             $this->load->view('assign_quiz/assign', $data);
             $this->load->view('new_material/footer', $data);
 
-        } else {
+        }elseif ($post["submit"] == "teacher_assign") {
+            $data["data"] = $data;
+            $quid = $this->input->post();
+            $quid = $quid['selected_quiz'][0];
+            $data["posts"] = $this->input->post();
+            $data['quid'] = $quid;
+            $data['logged_in'] = $logged_in;
+
+            $this->load->view('new_material/header', $data);
+            $this->load->view('assign_quiz/assign', $data);
+            $this->load->view('new_material/footer', $data);
+
+        }
+        else {
 
         }
         $this->load->view('new_material/footer', $data);

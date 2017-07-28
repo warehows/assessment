@@ -39,6 +39,7 @@ class Workspace extends CI_Controller
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
         $data['all_lessons'] = $this->workspace_model->where_where("user_id", $logged_in['uid'],"content_type","lesson");
+        $data['all_quizzes'] = $this->workspace_model->where_where("user_id", $logged_in['uid'],"content_type","quiz");
         $data['logged_in'] = $logged_in;
 //        $data['all_quizzes'] = $this->assign_model->where("", $logged_in['uid']);
 
@@ -159,6 +160,29 @@ class Workspace extends CI_Controller
 
     }
 
+    public function teacher_assign_quiz()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $posts = $this->input->get();
+
+        $current_quiz = $this->quiz_model->get_quiz($posts['quid']);
+
+        $teachers = $posts['teachers'][0];
+        $teachers = explode(",",$teachers);
+
+        print_r($posts);
+
+    }
+
     public function assign_quiz_only()
     {
         // redirect if not loggedin
@@ -180,32 +204,6 @@ class Workspace extends CI_Controller
         $teachers = $posts['teachers'][0];
         $teachers = explode(",",$teachers);
 
-        $current_quiz_data = array(
-//            'quid' => $current_quiz['quid'],
-            'quiz_name' => $current_quiz['quiz_name'],
-            'cid' => $current_quiz['cid'],
-            'uid' => $current_quiz['uid'],
-            'description' => $current_quiz['description'],
-            'start_date' => strtotime($current_quiz['start_date']),
-            'end_date' => strtotime($current_quiz['end_date']),
-            'duration' => $current_quiz['duration'],
-            'maximum_attempts' => $current_quiz['maximum_attempts'],
-            'pass_percentage' => $current_quiz['pass_percentage'],
-            'correct_score' => $current_quiz['correct_score'],
-            'incorrect_score' => $current_quiz['incorrect_score'],
-            'ip_address' => $current_quiz['ip_address'],
-            'view_answer' => $current_quiz['view_answer'],
-            'camera_req' => $current_quiz['camera_req'],
-            'with_login' => $current_quiz['with_login'],
-            'noq' => count(explode(",",$current_quiz['qids'])),
-            'qids' => $current_quiz['qids'],
-            'gids' => $current_quiz['gids'],
-            'question_selection' => $current_quiz['question_selection'],
-            'lid' => $current_quiz['lid'],
-            'assigned' => $current_quiz['assigned'],
-        );
-
-
         //replicate quiz foreach teacher
         //save to workspace
         foreach($teachers as $teacher_key => $teacher_value){
@@ -214,7 +212,7 @@ class Workspace extends CI_Controller
 //            'quid' => $current_quiz['quid'],
                 'quiz_name' => $current_quiz['quiz_name'],
                 'cid' => $current_quiz['cid'],
-                'uid' => $current_quiz['uid'],
+                'uid' => $teacher_value,
                 'description' => $current_quiz['description'],
                 'start_date' => strtotime($posts['date_start']),
                 'end_date' => strtotime($posts['date_end']),

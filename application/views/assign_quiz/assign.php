@@ -19,7 +19,12 @@
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
             <div class="three wizard">
                 <h2>Assign Quiz</h2>
-                <?php $this->load->view('assign_quiz/assign_to_students', $posts) ?>
+                <?php if ($logged_in['su'] == 1) { ?>
+                    <?php $this->load->view('assign_quiz/assign_to_students', $posts) ?>
+                <?php } ?>
+                <?php if ($logged_in['su'] == 2) { ?>
+                    <?php $this->load->view('assign_quiz/teacher_assign', $posts) ?>
+                <?php } ?>
             </div>
         </div>
     </div>
