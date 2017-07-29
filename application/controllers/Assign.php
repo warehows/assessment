@@ -312,6 +312,9 @@ class Assign extends CI_Controller
             'gids',
             'question_selection',
             'lid',
+            'author',
+            'assigned_by',
+            'assigned',
         );
         foreach($filter_data as $key => $value){
             if(array_key_exists($value,$post)){

@@ -166,6 +166,7 @@ class Workspace extends CI_Controller
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
         }
+
         $logged_in = $this->session->userdata('logged_in');
         if ($logged_in['base_url'] != base_url()) {
             $this->session->unset_userdata('logged_in');
@@ -173,13 +174,47 @@ class Workspace extends CI_Controller
         }
 
         $posts = $this->input->get();
+        $sections = $posts['sections'][0];
+        $grades = $posts['grades'][0];
+        $workspace_information = $this->workspace_model->where("id",$posts['workspace_id']);
+        $quiz_information = $this->quiz_model->get_quiz($posts['quiz_id']);
+        $grades = $this->quiz_model->get_quiz($posts['quiz_id']);
+        $current_quiz = $quiz_information;
 
-        $current_quiz = $this->quiz_model->get_quiz($posts['quid']);
 
         $teachers = $posts['teachers'][0];
         $teachers = explode(",",$teachers);
-
-        print_r($posts);
+        foreach($teachers as $teacher_key => $teacher_value) {
+            $assigned_quiz_data = array(
+                'quid' => $current_quiz['quid'],
+                'quiz_name' => $current_quiz['quiz_name'],
+                'cid' => $current_quiz['cid'],
+                'uid' => $teacher_value,
+                'description' => $current_quiz['description'],
+                'start_date' => strtotime($posts['date_start']),
+                'end_date' => strtotime($posts['date_end']),
+                'duration' => $posts['duration'],
+                'maximum_attempts' => 10000,
+                'pass_percentage' => $posts['pass_percentage'],
+                'correct_score' => $posts['correct_score'],
+                'incorrect_score' => 0,
+                'noq' => count(explode(",", $current_quiz['qids'])),
+                'qids' => $current_quiz['qids'],
+                'ip_address' => $current_quiz['ip_address'],
+                'view_answer' => $posts['view_answer'],
+                'camera_req' => $current_quiz['camera_req'],
+                'with_login' => 1,
+                'gids' => $posts['sections'][0],
+                'question_selection' => $current_quiz['question_selection'],
+                'lid' => $current_quiz['lid'],
+                'author' => $current_quiz['author'],
+                'assigned_by' => $logged_in['uid'],
+                'assigned' => 1,
+            );
+            $recently_inserted_quid = $this->assign_model->update_quiz($assigned_quiz_data);
+//            print_r($assigned_quiz_data);
+        }
+        redirect(site_url("workspace"));
 
     }
 

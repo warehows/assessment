@@ -23,11 +23,16 @@
 <?php $quiz_gids = $quiz_information['gids']; ?>
 <?php $quiz_gids = explode(",", $quiz_gids); ?>
 <?php $logged_in = $this->session->userdata('logged_in');?>
-<?php print_r($logged_in); ?>
-<?php //print_r($quiz_information); ?>
+<?php $pass_percentage = $quiz_information['pass_percentage'];?>
+<?php $duration = $quiz_information['duration'];?>
+<?php $correct_score = $quiz_information['correct_score'];?>
+<?php $pass_percentage = $quiz_information['pass_percentage'];?>
+<?php $view_answer = $quiz_information['view_answer'];?>
 
 
-<form action="<?php echo site_url('workspace/mass_assignation') ?>" method="GET">
+
+
+<form action="<?php echo site_url('workspace/teacher_assign_quiz') ?>" method="GET">
     <div class="col-lg-6 col-lg-offset-0 col-md-6">
         <div id="data"></div>
 
@@ -48,6 +53,38 @@
             <input id="date_end" class="form-control" name="date_end" placeholder="mm/dd/yyyy" value="<?php echo $end_date?>"/>
         </div>
 
+        <div class="form-group">
+            <label>Percentage to Pass</label>
+            <select class="form-control pass_percentage" id="pass_percentage" name="pass_percentage" placeholder="Percentage">
+                <!--                --><?php //if ($quiz_id): ?>
+                <!--                    <option value="--><?php //echo $quiz_detail['pass_percentage']; ?><!--">-->
+                <?php //echo $quiz_detail['pass_percentage']; ?><!--(current)</option>-->
+                <!--                --><?php //endif ?>
+                <option value="50" <?php if(50 == $pass_percentage){ echo "selected"; }?>>50%</option>
+                <option value="60" <?php if(60 == $pass_percentage){ echo "selected"; }?>>60%</option>
+                <option value="70" <?php if(70 == $pass_percentage){ echo "selected"; }?>>70%</option>
+                <option value="80" <?php if(80 == $pass_percentage){ echo "selected"; }?>>80%</option>
+                <option value="90" <?php if(90 == $pass_percentage){ echo "selected"; }?>>90%</option>
+                <option value="100" <?php if(100 == $pass_percentage){ echo "selected"; }?>>100%</option>
+
+            </select>
+        </div>
+        <div class="form-group">
+            Duration (In Minutes)
+            <input type="number" class="form-control duration" id="duration" name="duration" placeholder="Duration" value="<?php echo $duration?>"/>
+        </div>
+        <div class="form-group">
+            Points per Question
+            <input type="number" class="form-control correct_score" name="correct_score" id="correct_score" placeholder="Points" value="<?php echo $correct_score?>"/>
+        </div>
+        <div class="form-group">
+            <label>Allow to View Answers After Quiz</label>
+            <select class="form-control" id="view_answer" name="view_answer">
+
+                <option value="0" <?php if(0 == $view_answer){ echo "selected"; }?>>Yes</option>
+                <option value="1" <?php if(1 == $view_answer){ echo "selected"; }?>>No</option>
+            </select>
+        </div>
         <input type="hidden" id="section_checked" name="sections[]"/>
         <input type="hidden" id="grade_checked" name="grades[]"/>
 
