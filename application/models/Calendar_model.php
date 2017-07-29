@@ -61,6 +61,35 @@ Class Calendar_model extends CI_Model
         return $query->result_array();
     }
 
+    function mass_create_schedule($data) {
+        $logged_in = $this->session->userdata('logged_in');
+        $dateFrom = new DateTime($data['date_start']);
+        $dateTo = new DateTime($data['date_end']);
+
+        foreach ($data['workspace_id'] as $val) {
+            foreach (explode( ",", $val ) as $wsid) {
+                foreach ($data['sections'] as $row) {
+                        foreach (explode( ",", $row ) as $sectionID) {
+                            print $sectionID."<br>";
+                            $this->db->where('id',$data['lesson_id']);
+                            $sec = $this->db->get('lessons');
+                            $newSchedule = array(
+                                'lesson_id' => $data['lesson_id'],
+                                'gid' => $sectionID,
+                                'cid' => $sec->row('subject_id'),
+                                'date_from' => $dateFrom->format('Y-m-d'),
+                                'date_to' => $dateTo->format('Y-m-d'),
+                                'uid' => $logged_in['uid'],
+                                'workspace_id' => $wsid
+                            );
+
+                            $this->db->insert('calendar', $newSchedule);
+                        }
+                }   
+            }
+        }
+    }
+
     function create_schedule($data)
     {
 
