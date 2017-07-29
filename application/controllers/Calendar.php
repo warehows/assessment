@@ -66,7 +66,10 @@ class Calendar extends CI_Controller
 
 
     public function mass_create() {
-
+        $data = $this->input->get();
+        $this->calendar_model->mass_create_schedule($data);
+        redirect(site_url()."/calendar");
+/*
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
         }
@@ -114,7 +117,7 @@ class Calendar extends CI_Controller
             $this->load->view('new_material/header', $data);
             $this->load->view('calendar/calendar_mass_create', $data);
             $this->load->view('new_material/footer', $data);
-        }
+        }*/
     }
 
     public function save() {
