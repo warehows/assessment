@@ -36,7 +36,7 @@ class Calendar extends CI_Controller
         $data['subject'] = $this->subjects_model->all();
 
         if ($logged_in["su"] == 1 || $logged_in["su"] == 2) {
-            $this->load->view('new_material/header', $data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
             $this->load->view('calendar/calendar', $data);
             $this->load->view('new_material/footer', $data);
         }
@@ -58,7 +58,7 @@ class Calendar extends CI_Controller
         $data['section'] = $this->class_model->getCollection('savsoft_group');
 
         if ($logged_in["su"] == 2) {
-            $this->load->view('new_material/header', $data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
             $this->load->view('calendar/calendar_create', $data);
             $this->load->view('new_material/footer', $data);
         }
@@ -114,7 +114,7 @@ class Calendar extends CI_Controller
         $data['subject'] = $this->calendar_model->get_subject($data['lesson_id']);
 
         if ($logged_in["su"] == 2) {
-            $this->load->view('new_material/header', $data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
             $this->load->view('calendar/calendar_mass_create', $data);
             $this->load->view('new_material/footer', $data);
         }*/

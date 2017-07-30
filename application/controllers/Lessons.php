@@ -54,7 +54,7 @@ class Lessons extends CI_Controller
         $data['logged_in'] = $logged_in;
 
         if ($logged_in["su"] == 1) {
-            $this->load->view('new_material/header', $data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
             $this->load->view('lessons/index.php', $data);
         } else if ($logged_in["su"] == 2) {
             $this->load->view('new_material/teacher_header', $data);
@@ -87,7 +87,7 @@ class Lessons extends CI_Controller
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
 
-        $this->load->view('new_material/header', $data);
+        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('lessons/create', $data);
         $this->load->view('new_material/footer', $data);
     }
@@ -118,7 +118,7 @@ class Lessons extends CI_Controller
         }
 
         if ($logged_in['su'] == 1) {
-            $this->load->view('new_material/header', $data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         }
 
 
@@ -286,7 +286,7 @@ class Lessons extends CI_Controller
         $data['lesson_id'] = $this->input->get('lesson_id');
         $data['author'] = $this->input->get('author');
         $data['duplicated'] = $this->input->get('duplicated');
-        $this->load->view('new_material/header', $data);
+        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('lessons/create_modify_folder.php', $data);
         $this->load->view('new_material/footer', $data);
     }
@@ -470,7 +470,7 @@ class Lessons extends CI_Controller
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
-//        $this->load->view('new_material/header', $data);
+//        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('lessons/modify_folder.php', $data);
 //        $this->load->view('new_material/footer', $data);
 

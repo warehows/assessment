@@ -44,7 +44,7 @@ class Workspace extends CI_Controller
 //        $data['all_quizzes'] = $this->assign_model->where("", $logged_in['uid']);
 
         if ($logged_in["su"] == 1) {
-            $this->load->view('new_material/header', $data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         } elseif ($logged_in["su"] == 2) {
             $this->load->view('new_material/teacher_header', $data);
         }

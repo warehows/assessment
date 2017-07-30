@@ -40,7 +40,7 @@ class User extends CI_Controller
         /*$this->load->view('header', $data);
         $this->load->view('user_list', $data);
         $this->load->view('material_part/footer_material', $data);*/
-        $this->load->view('new_material/header', $data);
+        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('user_list', $data);
         $this->load->view('new_material/footer', $data);
     }
@@ -60,7 +60,7 @@ class User extends CI_Controller
 //        $this->load->view('new_user', $data);
 //        $this->load->view('material_part/footer_material', $data);
 
-        $this->load->view('new_material/header', $data);
+        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('new_user', $data);
         $this->load->view('new_material/footer', $data);
     }
@@ -128,7 +128,7 @@ class User extends CI_Controller
         $data['payment_history'] = $this->payment_model->get_payment_history($uid);
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
-        $this->load->view('new_material/header', $data);
+        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         if ($logged_in['su']== 1) {
             $this->load->view('edit_user', $data);
         } else {
@@ -172,7 +172,7 @@ class User extends CI_Controller
         $data['group_list'] = $this->user_model->group_list();
         $data['user_model'] = $this->user_model;
         $data['title'] = $this->lang->line('group_list');
-        $this->load->view('new_material/header', $data);
+        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('group_list', $data);
         $this->load->view('material_part/footer_material', $data);
 
