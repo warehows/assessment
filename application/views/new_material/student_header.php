@@ -14,6 +14,7 @@
     <link href="<?php echo base_url('css/new_material/css/MUSA_form-wizard.css'); ?>" rel="stylesheet">
     <link href="<?php echo base_url('css/new_material/css/styles.css'); ?>" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery.js'); ?>"></script>
 
 </head>
 
