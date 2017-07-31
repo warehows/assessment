@@ -44,7 +44,7 @@ class Workspace extends CI_Controller
 //        $data['all_quizzes'] = $this->assign_model->where("", $logged_in['uid']);
 
         if ($logged_in["su"] == 1) {
-            $this->load->view('new_material/header', $data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         } elseif ($logged_in["su"] == 2) {
             $this->load->view('new_material/teacher_header', $data);
         }
@@ -155,8 +155,10 @@ class Workspace extends CI_Controller
             }
 
         }
-//        redirect(site_url('calendar/save') . "?date_start=07%2F17%2F2017&date_end=07%2F21%2F2017&sections[]=1%2C2%2C3%2C4%2C5%2C6%2C7%2C14%2C15%2C16%2C17%2C18&grades[]=1%2C3&uid=2&workspace_id=1&lesson_id=2");
-        redirect(site_url('lessons/'));
+        $sDate = urlencode($date_start);
+        $eDate = urlencode($date_end);
+        redirect(site_url('calendar/mass_create') . "?date_start=".$sDate."&date_end=".$eDate."&sections[]=1%2C2%2C3%2C4%2C5%2C6%2C7%2C14%2C15%2C16%2C17%2C18&grades[]=1%2C3&uid=2&workspace_id[]=1%2C2%2C3%2C4&lesson_id=".$lesson_id);
+        // redirect(site_url('lessons/'));
 
     }
 

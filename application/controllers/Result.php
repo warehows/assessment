@@ -43,7 +43,7 @@ class Result extends CI_Controller {
                 $this->load->view('material_part/footer_material',$data);*/
 
         if ($logged_in['su'] > 0) {
-            $this->load->view('new_material/header',$data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
 
         } else {
             $this->load->view('new_material/student_header', $data);
@@ -188,7 +188,7 @@ class Result extends CI_Controller {
 		$query=$this->db->query(" select * from savsoft_result where quid ='$quid'  group by score_obtained  order by score_obtained asc limit 1 ");
 		$data['looser']=$query->row_array();
 
-		$this->load->view('new_material/header',$data);
+		if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
 		if($this->session->userdata('logged_in')){
 			$this->load->view('view_result',$data);
 		}else{

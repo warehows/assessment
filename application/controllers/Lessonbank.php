@@ -43,7 +43,7 @@ class Lessonbank extends CI_Controller
         $data['logged_in'] = $logged_in;
 
         if ($logged_in["su"] == 1) {
-            $this->load->view('new_material/header', $data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
             $this->load->view('lesson_bank/index.php', $data);
         } else if ($logged_in["su"] == 2) {
             $this->load->view('new_material/teacher_header', $data);

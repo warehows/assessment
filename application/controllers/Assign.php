@@ -54,7 +54,7 @@ class Assign extends CI_Controller
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_quiz'] = $this->assign_model->where("assigned","");
 
-        $this->load->view('new_material/header', $data);
+        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('assign_quiz/index_new', $data);
         $this->load->view('new_material/footer', $data);
 
@@ -90,7 +90,7 @@ class Assign extends CI_Controller
 //            $this->load->view('new_material/teacher_header', $data);
         }
         if ($logged_in['su'] == 1) {
-//            $this->load->view('new_material/header', $data);
+//            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         }
 
         $selected = $post['selected_quiz'];
@@ -129,7 +129,7 @@ class Assign extends CI_Controller
             $data['quid'] = $quid;
             $data['logged_in'] = $logged_in;
 
-            $this->load->view('new_material/header', $data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
             $this->load->view('assign_quiz/assign', $data);
             $this->load->view('new_material/footer', $data);
 
@@ -141,7 +141,7 @@ class Assign extends CI_Controller
             $data['quid'] = $quid;
             $data['logged_in'] = $logged_in;
 
-            $this->load->view('new_material/header', $data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
             $this->load->view('assign_quiz/assign', $data);
             $this->load->view('new_material/footer', $data);
 
@@ -187,7 +187,7 @@ class Assign extends CI_Controller
 
         $logged_in = $this->session->userdata('logged_in');
         if ($logged_in['su'] == 1) {
-            $this->load->view('new_material/header', $data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         } elseif ($logged_in['su'] == 2) {
             $this->load->view('new_material/teacher_header', $data);
         } elseif ($logged_in['su'] == 0) {
@@ -207,7 +207,7 @@ class Assign extends CI_Controller
 
         $logged_in = $this->session->userdata('logged_in');
         if ($logged_in['su'] == 1) {
-            $this->load->view('new_material/header', $data);
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         } elseif ($logged_in['su'] == 2) {
             $this->load->view('new_material/teacher_header', $data);
         } elseif ($logged_in['su'] == 0) {
