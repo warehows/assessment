@@ -22,7 +22,7 @@
         <div id="data"></div>
     </div>
     <div class="col-lg-4 col-lg-offset-0 col-md-4">
-<!--        --><?php //print_r($all_teachers);?>
+        <!--        --><?php //print_r($all_teachers);?>
         Select Teacher
         <div id="teacher"></div>
 
@@ -39,7 +39,8 @@
         </div>
         <div class="form-group">
             <label>Percentage to Pass</label>
-            <select class="form-control pass_percentage" id="pass_percentage" name="pass_percentage" placeholder="Percentage">
+            <select class="form-control pass_percentage" id="pass_percentage" name="pass_percentage"
+                    placeholder="Percentage">
                 <!--                --><?php //if ($quiz_id): ?>
                 <!--                    <option value="--><?php //echo $quiz_detail['pass_percentage']; ?><!--">-->
                 <?php //echo $quiz_detail['pass_percentage']; ?><!--(current)</option>-->
@@ -55,11 +56,13 @@
         </div>
         <div class="form-group">
             Duration (In Minutes)
-            <input type="number" class="form-control duration" id="duration" name="duration" placeholder="Duration" value=""/>
+            <input type="number" class="form-control duration" id="duration" name="duration" placeholder="Duration"
+                   value=""/>
         </div>
         <div class="form-group">
             Points per Question
-            <input type="number" class="form-control correct_score" name="correct_score" id="correct_score" placeholder="Points" value=""/>
+            <input type="number" class="form-control correct_score" name="correct_score" id="correct_score"
+                   placeholder="Points" value=""/>
         </div>
 
 
@@ -76,8 +79,6 @@
         </div>
 
 
-
-
         <input type="hidden" id="quid" name="quid" value="<?php echo $quid ?>"/>
         <input type="hidden" id="section_checked" name="sections[]"/>
         <input type="hidden" id="grade_checked" name="grades[]"/>
@@ -89,7 +90,13 @@
 </form>
 
 
-
+<?php $quiz_data = $this->quiz_model->get_quiz($quid); ?>
+<?php $quiz_gids = explode(",", $quiz_data['gids']); ?>
+<?php $quiz_teacher_ids = explode(",", $quiz_data['teacher_ids']); ?>
+<?php $quiz_teacher_ids_count = count($quiz_teacher_ids); ?>
+<?php print_r($quiz_teacher_ids_count); ?>
+<?php //print_r($quiz_gids); ?>
+<?php //exit; ?>
 <script>
 
     $(function () {
@@ -112,7 +119,7 @@
 
         var teacher = [
             <?php foreach($all_teachers as $key =>$value){
-                        echo '{"id": "'.$value['uid'].'","icon": "jstree-file", "text": "'.$value['first_name'].'"},';
+                        echo '{"id": "teacher_'.$value['uid'].'","icon": "jstree-file", "text": "'.$value['first_name'].'"},';
                     }
                     ?>
         ];
@@ -121,11 +128,15 @@
             'core': {
                 "check_callback": true,
                 'data': teacher,
-
             },
             "plugins": ["checkbox"]
 
+        }).on("ready.jstree", function (e, data) {
+            <?php foreach($quiz_teacher_ids as $quiz_teacher_ids_key => $quiz_teacher_ids_value):?>
+            $("#teacher_<?php echo $quiz_teacher_ids_value?>_anchor").click();
+            <?php endforeach; ?>
         });
+        ;
 
         $('#data').jstree({
             'core': {
@@ -139,8 +150,39 @@
             .on('create_node.jstree', function (e, data) {
 
             })
-            .on("select_node.jstree", function (e, data) {
+            .on("ready.jstree", function (e, data) {
+                <?php $number_of_folders = 6; ?>
+                <?php for($x=1;$x<=$number_of_folders;$x++):?>
+                var grade_<?php echo $x;?>_parent_status = false;
+                <?php endfor;?>
 
+                <?php for($x=1;$x<=$number_of_folders;$x++):?>
+                var grade_<?php echo $x;?>_aria_status = false;
+                <?php endfor;?>
+                $("#grade_1").find("i").eq(0).click();
+                $("#grade_2").find("i").eq(0).click();
+                $("#grade_3").find("i").eq(0).click();
+                $("#grade_4").find("i").eq(0).click();
+                $("#grade_5").find("i").eq(0).click();
+                $("#grade_6").find("i").eq(0).click();
+
+                <?php foreach($quiz_gids as $quiz_gids_key => $quiz_gids_value):?>
+                $("#section_<?php echo $quiz_gids_value?>_anchor").click();
+                <?php endforeach; ?>
+
+
+                <?php for($x=1;$x<=$number_of_folders;$x++):?>
+                setTimeout(
+                    function () {
+                        //true and false
+                        grade_<?php echo $x?>_aria_status = $("#grade_<?php echo $x?>").attr("aria-selected");
+                        grade_<?php echo $x?>_parent_status = $("#grade_<?php echo $x?>").find("a").eq(0).find("i").eq(0).hasClass("jstree-undetermined");
+                        if (grade_<?php echo $x?>_aria_status == "false" && !grade_<?php echo $x?>_parent_status) {
+                            $("#grade_<?php echo $x?>").find("i").eq(0).click();
+                        }
+                    }, 100
+                );
+                <?php endfor;?>
             });
 
         $("#submit").click(function () {

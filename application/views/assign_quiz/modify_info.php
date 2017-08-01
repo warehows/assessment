@@ -7,7 +7,6 @@ if (array_key_exists("quid",$post)) {
     $quiz_id = false;
 }
 ?>
-
 <h3>Quiz Info</h3>
 <div class="form-group">
     <input type="hidden" id="quiz_id" name="quiz_id" value="<?php if($quiz_id){ echo $quiz_id; }?>" />
@@ -19,9 +18,10 @@ if (array_key_exists("quid",$post)) {
     <input class="form-control description" id="description" placeholder="Description" value="<?php if($quiz_id){ echo $quiz_detail['description'];}?>"/>
 </div>
 <div class="form-group">
+
     <select class="form-control grade" id="grade">
         <?php foreach ($all_grades as $grade_key => $grade_value) { ?>
-            <option value="<?php echo $grade_value['lid'] ?>"><?php echo $grade_value['level_name'] ?></option>
+            <option <?php if($quiz_id&&$quiz_detail['lid'] == $grade_value['lid']){ echo "selected"; }?> value="<?php echo $grade_value['lid'] ?>"><?php echo $grade_value['level_name'] ?></option>
         <?php } ?>
     </select>
 </div>
@@ -29,7 +29,7 @@ if (array_key_exists("quid",$post)) {
     <select class="form-control subject" id="subject">
         <?php foreach ($all_subjects as $subject_key => $subject_value) { ?>
 
-            <option
+            <option <?php if($quiz_id&&$quiz_detail['cid'] == $subject_value['cid']){ echo "selected"; }?>
                 value="<?php echo $subject_value['cid'] ?>"><?php echo $subject_value['category_name'] ?></option>
         <?php } ?>
     </select>
@@ -50,7 +50,6 @@ if (array_key_exists("quid",$post)) {
         <?php }else{ ?>
         var quid;
         <?php } ?>
-
 
         function create_new_quiz() {
             var quiz_name = $("#quiz_name").val();

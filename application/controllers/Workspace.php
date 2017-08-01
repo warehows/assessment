@@ -240,13 +240,23 @@ class Workspace extends CI_Controller
 
         $teachers = $posts['teachers'][0];
         $teachers = explode(",",$teachers);
+//        print_r($current_quiz);
+
+        $current_quiz_data = array(
+            'quid' => $current_quiz['quid'],
+            'teacher_ids'=>$posts['teachers'][0],
+            'gids'=>$posts['sections'][0],
+        );
+        print_r($current_quiz_data);
+        $current_quiz_id = $this->assign_model->update_quiz($current_quiz_data);
+
 
         //replicate quiz foreach teacher
         //save to workspace
+        $implode_inserted_quid = array();
         foreach($teachers as $teacher_key => $teacher_value){
 
             $assigned_quiz_data = array(
-//            'quid' => $current_quiz['quid'],
                 'quiz_name' => $current_quiz['quiz_name'],
                 'cid' => $current_quiz['cid'],
                 'uid' => $teacher_value,
@@ -283,8 +293,17 @@ class Workspace extends CI_Controller
 
             );
             $recently_inserted_workspace_id = $this->workspace_model->insert_workspace($current_workspace_data);
+
+            $implode_inserted_quid[] = $recently_inserted_quid;
         }
-        redirect('assign');
+
+        $current_quiz_data = array(
+            'quid' => $current_quiz['quid'],
+            'quiz_ids'=>implode(",",$implode_inserted_quid),
+        );
+        print_r($current_quiz_data);
+
+//        redirect('assign');
     }
 
 }

@@ -22,14 +22,12 @@
 <?php $quiz_information = $this->quiz_model->get_quiz($quid); ?>
 <?php $quiz_gids = $quiz_information['gids']; ?>
 <?php $quiz_gids = explode(",", $quiz_gids); ?>
-<?php $logged_in = $this->session->userdata('logged_in');?>
-<?php $pass_percentage = $quiz_information['pass_percentage'];?>
-<?php $duration = $quiz_information['duration'];?>
-<?php $correct_score = $quiz_information['correct_score'];?>
-<?php $pass_percentage = $quiz_information['pass_percentage'];?>
-<?php $view_answer = $quiz_information['view_answer'];?>
-
-
+<?php $logged_in = $this->session->userdata('logged_in'); ?>
+<?php $pass_percentage = $quiz_information['pass_percentage']; ?>
+<?php $duration = $quiz_information['duration']; ?>
+<?php $correct_score = $quiz_information['correct_score']; ?>
+<?php $pass_percentage = $quiz_information['pass_percentage']; ?>
+<?php $view_answer = $quiz_information['view_answer']; ?>
 
 
 <form action="<?php echo site_url('workspace/teacher_assign_quiz') ?>" method="GET">
@@ -41,48 +39,77 @@
         <?php $start_date = $quiz_information['start_date'] ?>
         <?php $start_date = date('m/d/Y', $start_date); ?>
 
-            <div class="form-group">
+        <div class="form-group">
             <h6>Date Start</h6>
-            <input id="date_start" class="form-control" name="date_start" placeholder="mm/dd/yyyy" value="<?php echo $start_date?>"/>
+            <input id="date_start" class="form-control" name="date_start" placeholder="mm/dd/yyyy"
+                   value="<?php echo $start_date ?>"/>
         </div>
         <?php $end_date = $quiz_information['end_date'] ?>
         <?php $end_date = date('m/d/Y', $end_date); ?>
 
         <div class="form-group">
             <h6>Date End</h6>
-            <input id="date_end" class="form-control" name="date_end" placeholder="mm/dd/yyyy" value="<?php echo $end_date?>"/>
+            <input id="date_end" class="form-control" name="date_end" placeholder="mm/dd/yyyy"
+                   value="<?php echo $end_date ?>"/>
         </div>
 
         <div class="form-group">
             <label>Percentage to Pass</label>
-            <select class="form-control pass_percentage" id="pass_percentage" name="pass_percentage" placeholder="Percentage">
+            <select class="form-control pass_percentage" id="pass_percentage" name="pass_percentage"
+                    placeholder="Percentage">
                 <!--                --><?php //if ($quiz_id): ?>
                 <!--                    <option value="--><?php //echo $quiz_detail['pass_percentage']; ?><!--">-->
                 <?php //echo $quiz_detail['pass_percentage']; ?><!--(current)</option>-->
                 <!--                --><?php //endif ?>
-                <option value="50" <?php if(50 == $pass_percentage){ echo "selected"; }?>>50%</option>
-                <option value="60" <?php if(60 == $pass_percentage){ echo "selected"; }?>>60%</option>
-                <option value="70" <?php if(70 == $pass_percentage){ echo "selected"; }?>>70%</option>
-                <option value="80" <?php if(80 == $pass_percentage){ echo "selected"; }?>>80%</option>
-                <option value="90" <?php if(90 == $pass_percentage){ echo "selected"; }?>>90%</option>
-                <option value="100" <?php if(100 == $pass_percentage){ echo "selected"; }?>>100%</option>
+                <option value="50" <?php if (50 == $pass_percentage) {
+                    echo "selected";
+                } ?>>50%
+                </option>
+                <option value="60" <?php if (60 == $pass_percentage) {
+                    echo "selected";
+                } ?>>60%
+                </option>
+                <option value="70" <?php if (70 == $pass_percentage) {
+                    echo "selected";
+                } ?>>70%
+                </option>
+                <option value="80" <?php if (80 == $pass_percentage) {
+                    echo "selected";
+                } ?>>80%
+                </option>
+                <option value="90" <?php if (90 == $pass_percentage) {
+                    echo "selected";
+                } ?>>90%
+                </option>
+                <option value="100" <?php if (100 == $pass_percentage) {
+                    echo "selected";
+                } ?>>100%
+                </option>
 
             </select>
         </div>
         <div class="form-group">
             Duration (In Minutes)
-            <input type="number" class="form-control duration" id="duration" name="duration" placeholder="Duration" value="<?php echo $duration?>"/>
+            <input type="number" class="form-control duration" id="duration" name="duration" placeholder="Duration"
+                   value="<?php echo $duration ?>"/>
         </div>
         <div class="form-group">
             Points per Question
-            <input type="number" class="form-control correct_score" name="correct_score" id="correct_score" placeholder="Points" value="<?php echo $correct_score?>"/>
+            <input type="number" class="form-control correct_score" name="correct_score" id="correct_score"
+                   placeholder="Points" value="<?php echo $correct_score ?>"/>
         </div>
         <div class="form-group">
             <label>Allow to View Answers After Quiz</label>
             <select class="form-control" id="view_answer" name="view_answer">
 
-                <option value="0" <?php if(0 == $view_answer){ echo "selected"; }?>>Yes</option>
-                <option value="1" <?php if(1 == $view_answer){ echo "selected"; }?>>No</option>
+                <option value="0" <?php if (0 == $view_answer) {
+                    echo "selected";
+                } ?>>Yes
+                </option>
+                <option value="1" <?php if (1 == $view_answer) {
+                    echo "selected";
+                } ?>>No
+                </option>
             </select>
         </div>
         <input type="hidden" id="section_checked" name="sections[]"/>
@@ -90,7 +117,7 @@
 
         <input type="hidden" id="workspace_id" name="workspace_id" value="<?php echo $workspace_id ?>"/>
         <input type="hidden" id="quid" name="quiz_id" value="<?php echo $quid ?>"/>
-        <input type="hidden" id="teachers" name="teachers[]" value="<?php echo $logged_in['uid']?>"/>
+        <input type="hidden" id="teachers" name="teachers[]" value="<?php echo $logged_in['uid'] ?>"/>
         <input type="submit" class="btn btn-primary" id="submit">
 
     </div>
@@ -108,7 +135,6 @@
                 echo '{"id": "grade_'.$value['lid'].'", "text": "'.$value['level_name'].'","children":[';
                     foreach($all_sections as $section_key => $section_value){
                         if($section_value['lid'] == $value['lid']){
-
 
                             echo "{'id' : 'section_".$section_value['gid']."', 'text' : '".$section_value['group_name']."' },";
                         }
