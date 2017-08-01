@@ -28,8 +28,8 @@ class User extends CI_Controller
 
         $logged_in = $this->session->userdata('logged_in');
 
-        if ($logged_in['su'] < '1') {
-            exit($this->lang->line('permission_denied'));
+        if ($logged_in['su'] != '1') {
+                redirect('/');
         }
 
 
@@ -48,9 +48,11 @@ class User extends CI_Controller
     public function new_user()
     {
 
+
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] < '1') {
-            exit($this->lang->line('permission_denied'));
+
+        if ($logged_in['su'] != '1') {
+            redirect('/');
         }
 
         $data['title'] = $this->lang->line('add_new') . ' ' . $this->lang->line('user');
@@ -69,8 +71,8 @@ class User extends CI_Controller
     {
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] < '1') {
-            exit($this->lang->line('permission_denied'));
+        if ($logged_in['su'] != '1') {
+            redirect('/');
         }
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email', 'Email', 'required|is_unique[savsoft_users.email]');
@@ -116,9 +118,9 @@ class User extends CI_Controller
     {
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] < '1') {
+
             $uid = $logged_in['uid'];
-        }
+
 
         $data['uid'] = $uid;
         $data['title'] = $this->lang->line('edit') . ' ' . $this->lang->line('user');
@@ -167,6 +169,11 @@ class User extends CI_Controller
 
     public function group_list()
     {
+        $logged_in = $this->session->userdata('logged_in');
+
+        if ($logged_in['su'] != '1') {
+            redirect('/');
+        }
 
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
@@ -184,9 +191,14 @@ class User extends CI_Controller
     {
 
 
+
         $logged_in = $this->session->userdata('logged_in');
         if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
+        }
+
+        if ($logged_in['su'] != '1') {
+            redirect('/');
         }
 
         if ($this->user_model->insert_group()) {
@@ -204,6 +216,10 @@ class User extends CI_Controller
 
 
         $logged_in = $this->session->userdata('logged_in');
+
+        if ($logged_in['su'] != '1') {
+            redirect('/');
+        }
         if ($logged_in['su'] < '1') {
             exit($this->lang->line('permission_denied'));
         }
@@ -231,8 +247,9 @@ class User extends CI_Controller
     {
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] < '1') {
-            exit($this->lang->line('permission_denied'));
+
+        if ($logged_in['su'] != '1') {
+            redirect('/');
         }
 
         if ($this->user_model->remove_group($gid)) {
