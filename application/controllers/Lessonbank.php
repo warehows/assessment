@@ -16,6 +16,10 @@ class Lessonbank extends CI_Controller
         $this->load->model("quiz_model");
         $this->load->model("user_model");
         $this->load->model("lessons_model");
+        $this->load->model("assign_model");
+        $this->load->model("general_model");
+        $this->load->model("workspace_model");
+        $this->load->model("subjects_model");
 
     }
 
@@ -54,6 +58,75 @@ class Lessonbank extends CI_Controller
 
 
     }
+
+    public function import_lesson($data="")
+    {
+
+        $logged_in = $this->session->userdata('logged_in');
+
+        $selected_quizzes =  $data['selected_quiz'];
+
+        foreach($selected_quizzes as $selected_quizzes_key => $selected_quizzes_value){
+            $quiz_data = $this->quiz_model->get_quiz($selected_quizzes_value);
+            $uid = $logged_in['uid'];
+            $quiz_data_to_insert = array(
+                'quiz_name' => $quiz_data['quiz_name'],
+                'cid' => $quiz_data['cid'],
+                'uid' => $uid,
+                'description' => $quiz_data['description'],
+                'start_date' => strtotime($quiz_data['start_date']),
+                'end_date' => strtotime($quiz_data['end_date']),
+                'duration' => $quiz_data['duration'],
+                'maximum_attempts' => 10000,
+                'pass_percentage' => $quiz_data['pass_percentage'],
+                'correct_score' => $quiz_data['correct_score'],
+                'incorrect_score' => 0,
+                'noq' => count(explode(",",$quiz_data['qids'])),
+                'qids' => $quiz_data['qids'],
+                'ip_address' => $quiz_data['ip_address'],
+                'view_answer' => $quiz_data['view_answer'],
+                'camera_req' => $quiz_data['camera_req'],
+                'with_login' => 1,
+                'gids' => $quiz_data['gids'],
+                'question_selection' => $quiz_data['question_selection'],
+                'lid' => $quiz_data['lid'],
+                'author' => $quiz_data['author'],
+            );
+
+            $added_quiz_id = $this->assign_model->insert_quiz($quiz_data_to_insert);
+
+            $workspace_data_to_insert = array(
+                "user_id"=>$uid,
+                "content_id"=>$added_quiz_id,
+                "content_type"=>"quiz",
+                "content_name"=>$quiz_data['quiz_name'],
+
+            );
+            $this->workspace_model->insert_workspace($workspace_data_to_insert);
+            redirect(site_url("workspace"));
+        }
+
+
+    }
+
+    public function actions(){
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $data = $this->input->post();
+        if($data['submit']=="import"){
+            $this->import_lesson($data);
+        }
+    }
+
+
+
 
 
 

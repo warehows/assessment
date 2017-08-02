@@ -18,6 +18,7 @@ class Assign extends CI_Controller
         $this->load->model("subjects_model");
         $this->load->model("assign_model");
         $this->load->model("workspace_model");
+        $this->load->model("general_model");
         $this->lang->load('basic', $this->config->item('language'));
 
         if (!$this->session->userdata('logged_in')) {
@@ -103,7 +104,7 @@ class Assign extends CI_Controller
                 );
                 $this->change_share($data);
             }
-
+            redirect(site_url()."/assign");
         } elseif ($post["submit"] == "edit") {
 
         }

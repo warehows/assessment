@@ -7,7 +7,7 @@ if (array_key_exists("quid",$post)) {
     $quiz_id = false;
 }
 ?>
-<?php print_r($quiz_detail);?>
+<?php //print_r($quiz_detail);?>
 <h3>Quiz Info</h3>
 <div class="form-group">
     <input type="hidden" id="quiz_id" name="quiz_id" value="<?php if($quiz_id){ echo $quiz_id; }?>" />
