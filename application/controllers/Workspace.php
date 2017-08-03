@@ -158,7 +158,7 @@ class Workspace extends CI_Controller
         $sDate = urlencode($date_start);
         $eDate = urlencode($date_end);
         redirect(site_url('calendar/mass_create') . "?date_start=".$sDate."&date_end=".$eDate."&sections[]=1%2C2%2C3%2C4%2C5%2C6%2C7%2C14%2C15%2C16%2C17%2C18&grades[]=1%2C3&uid=2&workspace_id[]=1%2C2%2C3%2C4&lesson_id=".$lesson_id);
-        // redirect(site_url('lessons/'));
+
 
     }
 
@@ -174,51 +174,36 @@ class Workspace extends CI_Controller
             $this->session->unset_userdata('logged_in');
             redirect('login');
         }
+        echo "<pre>";
 
         $posts = $this->input->get();
-        $sections = $posts['sections'][0];
-        $grades = $posts['grades'][0];
-        $workspace_information = $this->workspace_model->where("id",$posts['workspace_id']);
-        $quiz_information = $this->quiz_model->get_quiz($posts['quiz_id']);
-        $grades = $this->quiz_model->get_quiz($posts['quiz_id']);
-        $current_quiz = $quiz_information;
+
+        $workspace_id = $posts['quid'];
+        $sections = implode(",",$posts['sections']);
+        $teachers = implode(",",$posts['teachers']);
+        $workspace_data = $this->workspace_model->where("id",$workspace_id);
+        $quiz_data = $this->quiz_model->get_quiz($workspace_data[0]['content_id']);
 
 
-        $teachers = $posts['teachers'][0];
-        $teachers = explode(",",$teachers);
-        foreach($teachers as $teacher_key => $teacher_value) {
-            $assigned_quiz_data = array(
-                'quid' => $current_quiz['quid'],
-                'quiz_name' => $current_quiz['quiz_name'],
-                'cid' => $current_quiz['cid'],
-                'uid' => $teacher_value,
-                'description' => $current_quiz['description'],
-                'start_date' => strtotime($posts['date_start']),
-                'end_date' => strtotime($posts['date_end']),
-                'duration' => $posts['duration'],
-                'maximum_attempts' => 10000,
-                'pass_percentage' => $posts['pass_percentage'],
-                'correct_score' => $posts['correct_score'],
-                'incorrect_score' => 0,
-                'noq' => count(explode(",", $current_quiz['qids'])),
-                'qids' => $current_quiz['qids'],
-                'ip_address' => $current_quiz['ip_address'],
-                'view_answer' => $posts['view_answer'],
-                'camera_req' => $current_quiz['camera_req'],
-                'with_login' => 1,
-                'gids' => $posts['sections'][0],
-                'question_selection' => $current_quiz['question_selection'],
-                'lid' => $current_quiz['lid'],
-                'author' => $current_quiz['author'],
-                'assigned_by' => $logged_in['uid'],
-                'assigned' => 1,
-            );
-            $recently_inserted_quid = $this->assign_model->update_quiz($assigned_quiz_data);
-//            print_r($assigned_quiz_data);
-        }
-        redirect(site_url("workspace"));
-
+        $update_quiz = array(
+            "quid"=>$quiz_data['quid'],
+            "start_date"=>$posts['date_start'],
+            "end_date"=>$posts['date_end'],
+            "pass_percentage"=>$posts['pass_percentage'],
+            "duration"=>$posts['duration'],
+            "correct_score"=>$posts['correct_score'],
+            "view_answer"=>$posts['view_answer'],
+            "gids"=>$sections,
+            "teacher_ids"=>$teachers,
+            "assigned"=>1,
+            "assigned_by"=>$logged_in['uid'],
+        );
+        print_r($update_quiz);
+        $this->assign_model->update_quiz($update_quiz);
+        redirect("workspace");
     }
+
+
 
     public function assign_quiz_only()
     {
@@ -247,7 +232,7 @@ class Workspace extends CI_Controller
             'teacher_ids'=>$posts['teachers'][0],
             'gids'=>$posts['sections'][0],
         );
-        print_r($current_quiz_data);
+
         $current_quiz_id = $this->assign_model->update_quiz($current_quiz_data);
 
 

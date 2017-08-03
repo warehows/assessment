@@ -65,17 +65,31 @@
                         <thead>
                         <tr>
                             <th width="3px"></th>
-                            <th>Content Name</th>
+                            <th>Quiz Name</th>
                             <th>Content Type</th>
+                            <th>Date Start</th>
+                            <th>Date End</th>
+                            <th>Author</th>
+                            <th>Assigned</th>
                         </tr>
                         </thead>
                         <tbody>
 
                         <?php foreach ($all_quizzes as $quiz_key => $quiz_value) { ?>
+                            <?php $get_current_quiz = $this->quiz_model->get_quiz($quiz_value['content_id']);?>
                             <tr style="cursor:pointer" >
-                                <td class="quiz_input_row"><input type="checkbox" class="selected_quiz_class" name="selected_quiz[]" value="<?php echo $quiz_value['id']?>"/></td>
+                                <td class="quiz_input_row">
+                                    <input type="checkbox" class="selected_quiz_class" name="selected_quiz[]"
+                                           value="<?php echo $quiz_value['id']?>"/>
+                                </td>
                                 <td class="quiz_row"><?php echo $quiz_value['content_name'] ?></td>
-                                <td class="quiz_row"></td>
+                                <td class="quiz_row">quiz</td>
+                                <td class="quiz_row"><?php echo $get_current_quiz['start_date'] ?></td>
+                                <td class="quiz_row"><?php echo $get_current_quiz['end_date'] ?></td>
+                                <?php $author = $this->user_model->get_user($get_current_quiz['author']) ?>
+                                <td class="quiz_row"><?php echo $author['first_name'] ?> <?php echo $author['last_name'] ?></td>
+                                <?php if($get_current_quiz['assigned']=="1"): $assigned="Yes"; else: $assigned="No"; endif; ?>
+                                <td class="quiz_row"><?php echo $assigned ?></td>
                             </tr>
                         <?php } ?>
 

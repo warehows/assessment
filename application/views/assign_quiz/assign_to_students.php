@@ -23,7 +23,7 @@
     </div>
     <div class="col-lg-4 col-lg-offset-0 col-md-4">
         <!--        --><?php //print_r($all_teachers);?>
-        Select Teacher
+        Select Teacher for monitoring
         <div id="teacher"></div>
 
     </div>
