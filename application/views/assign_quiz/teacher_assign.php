@@ -15,7 +15,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
 
 <?php $all_teachers = $this->user_model->where('su', 2); ?>
-
+<?php $workspace_current_data = $this->workspace_model->where("id",$quid); ?>
+<?php $workspace_current_data = $workspace_current_data[0]; ?>
+<?php $quiz_current_data = $this->quiz_model->get_quiz($workspace_current_data['content_id']); ?>
+<?php print_r($quiz_current_data); ?>
 <form action="<?php echo site_url('workspace/teacher_assign_quiz') ?>" method="GET">
     <div class="col-lg-4 col-lg-offset-0 col-md-4">
         Select Section
@@ -28,10 +31,11 @@
 
     </div>
     <div class="col-lg-4 col-lg-offset-0 col-md-4">
-        <?php echo "quid:" . $quid ?>
+<!--        --><?php //if($quiz_current_data['start_date']!=0): $start_date = date('m/d/Y', $quiz_current_data['start_date']);; else: $start_date=""; endif; ?>
+
         <div class="form-group">
             <h6>Date Start</h6>
-            <input id="date_start" class="form-control" name="date_start" placeholder="mm/dd/yyyy"/>
+            <input id="date_start" class="form-control" name="date_start" value="" placeholder="mm/dd/yyyy"/>
         </div>
         <div class="form-group">
             <h6>Date End</h6>
@@ -90,13 +94,14 @@
 </form>
 
 
+<?php $quid = $this->workspace_model->where("id",$quid); ?>
+<?php $quid = $quid[0]['content_id']; ?>
 <?php $quiz_data = $this->quiz_model->get_quiz($quid); ?>
+
 <?php $quiz_gids = explode(",", $quiz_data['gids']); ?>
 <?php $quiz_teacher_ids = explode(",", $quiz_data['teacher_ids']); ?>
 <?php $quiz_teacher_ids_count = count($quiz_teacher_ids); ?>
-<?php print_r($quiz_teacher_ids_count); ?>
-<?php //print_r($quiz_gids); ?>
-<?php //exit; ?>
+
 <script>
 
     $(function () {
@@ -133,7 +138,7 @@
 
         }).on("ready.jstree", function (e, data) {
             <?php foreach($quiz_teacher_ids as $quiz_teacher_ids_key => $quiz_teacher_ids_value):?>
-            $("#teacher_<?php echo $quiz_teacher_ids_value?>_anchor").click();
+            $("#<?php echo $quiz_teacher_ids_value?>_anchor").click();
             <?php endforeach; ?>
         });
         ;

@@ -58,6 +58,13 @@ Class Workspace_model extends CI_Model
         $quid = $this->db->insert_id();
     }
 
+    function delete_workspace($data)
+    {
+        $this->db->where('id', $data["id"]);
+        $quid = $this->db->delete("workspace");
+        return true;
+    }
+
     function insert_to($where,$data)
     {
         $this->db->update($where, $data);

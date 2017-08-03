@@ -187,8 +187,8 @@ class Workspace extends CI_Controller
 
         $update_quiz = array(
             "quid"=>$quiz_data['quid'],
-            "start_date"=>$posts['date_start'],
-            "end_date"=>$posts['date_end'],
+            "start_date"=>strtotime($posts['date_start']),
+            "end_date"=>strtotime($posts['date_end']),
             "pass_percentage"=>$posts['pass_percentage'],
             "duration"=>$posts['duration'],
             "correct_score"=>$posts['correct_score'],
