@@ -18,9 +18,9 @@
                         <option value="quiz_type" id="quiz_type">Quiz</option>
                     </select>
                 </div>
-                <form action="<?php echo site_url() ?>/lessons/create">
+                <form action="<?php echo site_url() ?>/lessons/create" id="new_lesson">
                     <a href="" style="float:right;padding:5px;">
-                        <button class="btn btn-primary" id="new_lesson">New Lesson</button>
+                        <button class="btn btn-primary">New Lesson</button>
                     </a>
                 </form>
                 <form action="<?php echo site_url()?>/lessons/index_actions" id="lesson_form" method="POST">
@@ -52,6 +52,13 @@
                         </tbody>
                     </table>
                 </form>
+
+                <form action="<?php echo site_url() ?>/assign/create" id="new_quiz">
+                    <a href="" style="float:right;padding:5px;">
+                        <button class="btn btn-primary" >New Quiz</button>
+                    </a>
+                    <input type="hidden" value="assign_quiz/modify_info" name="next_page" />
+                </form>
                 <form action="<?php echo site_url()?>/assign/actions" id="quiz_form" method="POST">
 
                     <button class="btn btn-primary" id="quiz_view" name="submit" value="view">View</button>
@@ -59,6 +66,8 @@
                     <button class="btn btn-primary" id="quiz_assign" name="submit" value="teacher_assign">Assign</button>
                     <button class="btn btn-primary" id="quiz_duplicate" name="submit" value="duplicate">Duplicate</button>
                     <button class="btn btn-primary" id="quiz_delete" name="submit" value="delete">Delete</button>
+
+<!--                    <input class="btn btn-primary" id="quid" name="quid" type="hidden" value=""/>-->
 
 
                     <table id="quiz_lists" class="table table-bordered table-hover" >
@@ -142,7 +151,6 @@
             $("#assign").show();
             $("#view").hide();
             $("#delete").show();
-
             $("#import").show();
         } else if (selected_count == 0) {
             $("#edit").hide();
@@ -181,6 +189,8 @@
             $("#quiz_delete").show();
 
             $("#import").show();
+            console.log($(document).find('.selected_quiz_class:checked').val());
+            $("#quid").val();
         } else if (selected_count == 0) {
             $("#quiz_edit").hide();
             $("#quiz_duplicate").hide();
@@ -207,17 +217,21 @@
         }
     });
     //quiz
-
+    $("#new_quiz").hide();
     $("#list_type").on('change',function(){
         var url = "";
         if($(this).val() == "lesson_type"){
             $("#lesson_form").show();
             $("#quiz_form").hide();
+            $("#new_quiz").hide();
+            $("#new_lesson").show();
             url = "<?php echo site_url()?>/assign/actions";
 
         }else{
             $("#lesson_form").hide();
             $("#quiz_form").show();
+            $("#new_quiz").show();
+            $("#new_lesson").hide();
             url = "<?php echo site_url()?>/assign/actions";
         }
         $("#form_type").attr("form_type",url);

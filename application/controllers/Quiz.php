@@ -230,7 +230,7 @@ class Quiz extends CI_Controller
 
 
         $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
+        if ($logged_in['su'] == '0') {
             exit($this->lang->line('permission_denied'));
         }
 

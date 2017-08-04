@@ -53,7 +53,7 @@ class Assign extends CI_Controller
         $data['category'] = $this->category_model->get_all();
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
-        $data['all_quiz'] = $this->assign_model->where("assigned","");
+        $data['all_quiz'] = $this->assign_model->where("author",$logged_in['uid']);
 
         if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('assign_quiz/index_new', $data);
@@ -142,6 +142,10 @@ class Assign extends CI_Controller
 
             $this->duplicate_quiz($new_data);
 
+
+            redirect(site_url('workspace'));
+
+
         }elseif ($post["submit"] == "delete") {
             $data["data"] = $data;
             $quid = $this->input->post();
@@ -151,6 +155,8 @@ class Assign extends CI_Controller
             $new_data['logged_in'] = $logged_in;
 
             $this->delete_quiz($new_data);
+
+            redirect(site_url('workspace'));
 
         }elseif ($post["submit"] == "teacher_assign") {
             $data["data"] = $data;
@@ -187,7 +193,7 @@ class Assign extends CI_Controller
             );
             $this->workspace_model->delete_workspace($workspace_to_delete);
             $this->assign_model->delete_quiz($quiz_to_delete);
-            print_r($quiz_data);
+
         }
 
 
@@ -231,7 +237,6 @@ class Assign extends CI_Controller
             $this->workspace_model->insert_workspace($insert_to_workspace);
 
         }
-        redirect("workspace");
 
 
     }
@@ -365,7 +370,19 @@ class Assign extends CI_Controller
             'author' => $logged_in['uid'],
         );
 
+
         $quid = $this->assign_model->insert_quiz($data);
+        if($logged_in['uid']=='2'){
+            $new_quiz_data = $this->quiz_model->get_quiz($quid);
+
+            $insert_to_workspace = array(
+                "user_id"=>$logged_in['uid'],
+                "content_id"=>$quid,
+                "content_type"=>"quiz",
+                "content_name"=>$new_quiz_data['quiz_name'],
+            );
+            $this->workspace_model->insert_workspace($insert_to_workspace);
+        }
         if($quid){
             echo trim($quid);
         }else{

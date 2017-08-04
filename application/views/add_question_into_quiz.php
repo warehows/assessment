@@ -2,9 +2,18 @@
 
 
     <h3><?php echo $title; ?></h3>
-    <a href="<?php echo site_url('assign'); ?>"
-       class="btn btn-info">Done</a>
-    <a href="<?php echo site_url('qbank/pre_new_question'); ?>?back_url=<?php echo site_url('quiz/add_question')?>/<?php echo $quid ?>"
+    <?php $logged_in = $this->session->userdata('logged_in'); ?>
+    <?php if ($logged_in['uid'] == 1){ ?>
+        <a href="<?php echo site_url('assign'); ?>"
+           class="btn btn-info">Done
+        </a>
+
+    <?php }else{ ?>
+        <a href="<?php echo site_url('workspace'); ?>"
+           class="btn btn-info">Done
+        </a>
+    <?php } ?>
+    <a href="<?php echo site_url('qbank/pre_new_question'); ?>?back_url=<?php echo site_url('quiz/add_question') ?>/<?php echo $quid ?>"
        class="btn btn-info">Add new question</a><br><br>
 
     <div class="row">
@@ -19,7 +28,6 @@
       <span class="input-group-btn">
         <button class="btn btn-default" type="submit"><?php echo $this->lang->line('search'); ?></button>
       </span>
-
 
 
                 </div>

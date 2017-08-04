@@ -24,6 +24,13 @@ Class Assign_model extends CI_Model
         return $query->result_array();
     }
 
+    function admin_quizzes($where,$data)
+    {
+        $this->db->where("",$data);
+        $query = $this->db->get('savsoft_quiz');
+        return $query->result_array();
+    }
+
     function delete_quiz($data)
     {
         $this->db->where("quid",$data['quid']);

@@ -59,7 +59,7 @@ class Lessonbank extends CI_Controller
 
     }
 
-    public function import_lesson($data="")
+    public function import_quiz($data="")
     {
 
         $logged_in = $this->session->userdata('logged_in');
@@ -70,7 +70,7 @@ class Lessonbank extends CI_Controller
             $quiz_data = $this->quiz_model->get_quiz($selected_quizzes_value);
             $uid = $logged_in['uid'];
             $quiz_data_to_insert = array(
-                'quiz_name' => $quiz_data['quiz_name'],
+                'quiz_name' => $quiz_data['quiz_name']."-imported",
                 'cid' => $quiz_data['cid'],
                 'uid' => $uid,
                 'description' => $quiz_data['description'],
@@ -90,7 +90,7 @@ class Lessonbank extends CI_Controller
                 'gids' => $quiz_data['gids'],
                 'question_selection' => $quiz_data['question_selection'],
                 'lid' => $quiz_data['lid'],
-                'author' => $quiz_data['author'],
+                'author' => $uid,
             );
 
             $added_quiz_id = $this->assign_model->insert_quiz($quiz_data_to_insert);
@@ -99,7 +99,7 @@ class Lessonbank extends CI_Controller
                 "user_id"=>$uid,
                 "content_id"=>$added_quiz_id,
                 "content_type"=>"quiz",
-                "content_name"=>$quiz_data['quiz_name'],
+                "content_name"=>$quiz_data['quiz_name']."-imported",
 
             );
             $this->workspace_model->insert_workspace($workspace_data_to_insert);
@@ -121,7 +121,7 @@ class Lessonbank extends CI_Controller
         }
         $data = $this->input->post();
         if($data['submit']=="import"){
-            $this->import_lesson($data);
+            $this->import_quiz($data);
         }
     }
 

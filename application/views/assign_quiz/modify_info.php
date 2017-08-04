@@ -3,6 +3,7 @@
 if (array_key_exists("quid",$post)) {
     $quiz_id = $post['quid'];
     $quiz_detail = $this->quiz_model->get_quiz($quiz_id);
+
 } else {
     $quiz_id = false;
 }
@@ -13,19 +14,16 @@ if (array_key_exists("quid",$post)) {
     <input type="hidden" id="quiz_id" name="quiz_id" value="<?php if($quiz_id){ echo $quiz_id; }?>" />
     <input type="hidden" id="quid" name="quid" value="<?php if($quiz_id){ echo $quiz_id; }?>" />
 
-    <input class="form-control quiz_name" id="quiz_name" placeholder="Quiz Name" value="<?php if($quiz_id){ echo $quiz_detail['quiz_name'];}?>"/>
+    <input class="form-control quiz_name" id="quiz_name" required placeholder="Quiz Name" value="<?php if($quiz_id){ echo $quiz_detail['quiz_name'];}?>"/>
 </div>
 <div class="form-group">
-    <input class="form-control description" id="description" placeholder="Description" value="<?php if($quiz_id){ echo $quiz_detail['description'];}?>"/>
+    <input class="form-control description" id="description" required placeholder="Description" value="<?php if($quiz_id){ echo $quiz_detail['description'];}?>"/>
 </div>
 <div class="form-group">
-    <?php foreach ($all_grades as $grade_key => $grade_value) { ?>
 
-    <?php if($quiz_id&&$quiz_detail['lid']){ echo "selected"; }?>
-    <?php } ?>
     <select class="form-control grade" id="grade">
         <?php foreach ($all_grades as $grade_key => $grade_value) { ?>
-            <option <?php if($quiz_id&&$quiz_detail['lid'] == $grade_value){ echo "selected"; }?> value="<?php echo $grade_value['lid'] ?>"><?php echo $grade_value['level_name'] ?></option>
+            <option value="<?php echo $grade_value['lid'] ?>" <?php if($quiz_detail['lid'] == $grade_value['lid']){ echo "selected"; }?>><?php echo $grade_value['level_name'] ?></option>
         <?php } ?>
     </select>
 </div>
@@ -33,7 +31,7 @@ if (array_key_exists("quid",$post)) {
     <select class="form-control subject" id="subject">
         <?php foreach ($all_subjects as $subject_key => $subject_value) { ?>
 
-            <option <?php if($quiz_id&&$quiz_detail['cid'] == $subject_value){ echo "selected"; }?>
+            <option <?php if($quiz_id&&$quiz_detail['cid'] == $subject_value['cid']){ echo "selected"; }?>
                 value="<?php echo $subject_value['cid'] ?>"><?php echo $subject_value['category_name'] ?></option>
         <?php } ?>
     </select>
@@ -120,6 +118,8 @@ if (array_key_exists("quid",$post)) {
         }
 
         $("#quiz_name").focusout(function () {
+
+
             if (!quid) {
                 if ($("#quiz_name").val() != "") {
                     quid = create_new_quiz();
@@ -133,14 +133,17 @@ if (array_key_exists("quid",$post)) {
                 update_quiz();
             }
 
+
+
         });
 
         $("#description").focusout(function () {
+
             if (!quid) {
                 if ($("#quiz_name").val() != "") {
                     quid = create_new_quiz();
                     $("#quid").val(quid);
-                    $("#qui z_id").val(quid);
+                    $("#quiz_id").val(quid);
                 } else {
                     //add error here
                 }
@@ -153,9 +156,11 @@ if (array_key_exists("quid",$post)) {
         });
 
         $("#grade").change(function () {
+
             if (!quid) {
                 if ($("#quiz_name").val() != "") {
                     quid = create_new_quiz();
+
                 } else {
                     //add error here
                 }

@@ -12,13 +12,29 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.js"></script>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
 
 <?php $all_teachers = $this->user_model->where('su', 2); ?>
-<?php $workspace_current_data = $this->workspace_model->where("id",$quid); ?>
+<?php $workspace_current_data = $this->workspace_model->where("id", $quid); ?>
 <?php $workspace_current_data = $workspace_current_data[0]; ?>
 <?php $quiz_current_data = $this->quiz_model->get_quiz($workspace_current_data['content_id']); ?>
-<?php print_r($quiz_current_data); ?>
+
+<?php if ($quiz_current_data['start_date'] != 0): $start_date = date('m/d/Y', $quiz_current_data['start_date']);
+else: $start_date = ""; endif; ?>
+<?php if ($quiz_current_data['end_date'] != 0): $end_date = date('m/d/Y', $quiz_current_data['end_date']);
+else: $end_date = ""; endif; ?>
+<?php if ($quiz_current_data['pass_percentage'] != 0): $pass_percentage = $quiz_current_data['pass_percentage'];
+else: $pass_percentage = ""; endif; ?>
+<?php if ($quiz_current_data['duration'] != 0): $duration = $quiz_current_data['pass_percentage'];
+else: $duration = ""; endif; ?>
+<?php if ($quiz_current_data['correct_score'] != 0): $correct_score = $quiz_current_data['correct_score'];
+else: $correct_score = ""; endif; ?>
+<?php if ($quiz_current_data['view_answer'] != 0): $view_answer = $quiz_current_data['view_answer'];
+else: $view_answer = ""; endif; ?>
+
 <form action="<?php echo site_url('workspace/teacher_assign_quiz') ?>" method="GET">
     <div class="col-lg-4 col-lg-offset-0 col-md-4">
         Select Section
@@ -31,15 +47,17 @@
 
     </div>
     <div class="col-lg-4 col-lg-offset-0 col-md-4">
-<!--        --><?php //if($quiz_current_data['start_date']!=0): $start_date = date('m/d/Y', $quiz_current_data['start_date']);; else: $start_date=""; endif; ?>
+
 
         <div class="form-group">
             <h6>Date Start</h6>
-            <input id="date_start" class="form-control" name="date_start" value="" placeholder="mm/dd/yyyy"/>
+            <input id="date_start" required class="form-control" name="date_start" value="<?php echo $start_date ?>"
+                   placeholder="mm/dd/yyyy"/>
         </div>
         <div class="form-group">
             <h6>Date End</h6>
-            <input id="date_end" class="form-control" name="date_end" placeholder="mm/dd/yyyy"/>
+            <input id="date_end" required class="form-control" name="date_end" value="<?php echo $end_date ?>"
+                   placeholder="mm/dd/yyyy"/>
         </div>
         <div class="form-group">
             <label>Percentage to Pass</label>
@@ -60,25 +78,22 @@
         </div>
         <div class="form-group">
             Duration (In Minutes)
-            <input type="number" class="form-control duration" id="duration" name="duration" placeholder="Duration"
-                   value=""/>
+            <input type="number" required class="form-control duration" id="duration" value="<?php echo $duration ?>"
+                   name="duration" placeholder="Duration"/>
         </div>
         <div class="form-group">
             Points per Question
-            <input type="number" class="form-control correct_score" name="correct_score" id="correct_score"
-                   placeholder="Points" value=""/>
+            <input type="number" required class="form-control correct_score" name="correct_score" id="correct_score"
+                   placeholder="Points" value="<?php echo $correct_score ?>"/>
         </div>
 
 
         <div class="form-group">
             <label>Allow to View Answers After Quiz</label>
-            <select class="form-control" id="view_answer" name="view_answer">
-                <!--                --><?php //if(!empty($quiz_detail['view_answer'])): ?>
-                <!--                    <option value="--><?php //echo $quiz_detail['view_answer']; ?><!--">-->
-                <?php //echo $quiz_detail['view_answer'] ? 'Yes' : 'No'; ?><!--(current)</option>-->
-                <!--                --><?php //endif; ?>
-                <option value="0">Yes</option>
-                <option value="1">No</option>
+            <select class="form-control" id="view_answer" name="view_answer" required>
+
+                <option value="0" <?php if ($view_answer == 0): echo "selected"; endif; ?>>Yes</option>
+                <option value="1" <?php if ($view_answer == 1): echo "selected"; endif; ?>>No</option>
             </select>
         </div>
 
@@ -94,7 +109,7 @@
 </form>
 
 
-<?php $quid = $this->workspace_model->where("id",$quid); ?>
+<?php $quid = $this->workspace_model->where("id", $quid); ?>
 <?php $quid = $quid[0]['content_id']; ?>
 <?php $quiz_data = $this->quiz_model->get_quiz($quid); ?>
 
@@ -190,12 +205,13 @@
                 <?php endfor;?>
             });
 
-        $("#submit").click(function () {
+        $("#submit").click(function (e) {
             var checked = $('#data').jstree("get_checked", null, true);
             var checked_teacher = $('#teacher').jstree("get_checked", null, true);
             var section_checked = [];
             var grade_checked = [];
             var teacher_checked = [];
+
             $.each(checked, function (key, value) {
                 if (!value.indexOf("section_")) {
 
@@ -213,6 +229,23 @@
                 teacher_checked.push(value);
 
             });
+
+            if (section_checked.length == 0) {
+                $.alert({
+                    title: 'Notice:',
+                    content: 'Please select a section.',
+                });
+                return false;
+            }
+            else if(teacher_checked.length == 0)
+            {
+                $.alert({
+                    title: 'Notice:',
+                    content: 'Please select a teacher for monitoring.',
+                });
+                return false;
+            }
+
             $("#section_checked").val(section_checked);
             $("#grade_checked").val(grade_checked);
             $("#teacher_checked").val(teacher_checked);
