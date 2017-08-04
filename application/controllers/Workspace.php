@@ -162,6 +162,43 @@ class Workspace extends CI_Controller
 
     }
 
+    public function assign_quiz()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        echo "<pre>";
+
+        $posts = $this->input->get();
+
+        $quiz_data = $this->quiz_model->get_quiz($posts['quid']);
+
+
+        $update_quiz = array(
+            "quid"=>$quiz_data['quid'],
+            "start_date"=>strtotime($posts['date_start']),
+            "end_date"=>strtotime($posts['date_end']),
+            "pass_percentage"=>$posts['pass_percentage'],
+            "duration"=>$posts['duration'],
+            "correct_score"=>$posts['correct_score'],
+            "view_answer"=>$posts['view_answer'],
+            "gids"=>$posts['sections'][0],
+            "teacher_ids"=>$posts['teachers'][0],
+            "assigned"=>1,
+            "assigned_by"=>$logged_in['uid'],
+        );
+        print_r($update_quiz);
+        $this->assign_model->update_quiz($update_quiz);
+        redirect("assign");
+    }
+
     public function teacher_assign_quiz()
     {
         // redirect if not loggedin

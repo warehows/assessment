@@ -1,6 +1,9 @@
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.js"></script>
 <style>
     a {
         text-decoration: none;
@@ -17,12 +20,12 @@
                         <button class="btn btn-primary" id="new_quiz">Create Quiz</button>
                     </a>
                 </form>
-                <form action="<?php echo site_url()?>/assign/actions" method="POST">
+                <form action="<?php echo site_url()?>/assign/actions" method="POST" id="quiz_form">
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
                     <button class="btn btn-primary" id="share" name="submit" value="share">Share to Lesson Bank</button>
                     <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
-                    <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
+                    <button class="btn btn-primary" id="delete" name="submit" value="admin_delete">Delete</button>
                     <button class="btn btn-primary" id="assign" name="submit" value="assign">Assign</button>
 
                     <table id="lesson_lists" class="table table-bordered table-hover" >
@@ -59,12 +62,22 @@
     $("#share").hide();
     $("#delete").hide();
     $("#assign").hide();
+    $("form").submit(function(e){
+        var txt;
+        var r = confirm("Do you want to perform this action?");
+        if (r == true) {
+            return true;
+        } else {
+            e.preventDefault();
+        }
+
+    });
     $(".selected_lesson_class").change(function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {
             $("#edit").show();
             $("#share").show();
-            $("#view").show();
+            $("#view").hide();
             $("#delete").show();
             $("#assign").show();
         } else if (selected_count == 0) {

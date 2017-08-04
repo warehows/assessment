@@ -12,11 +12,29 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.js"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
+<?php print_r($quid = $quid['selected_quiz'][0])?>
 <?php $all_teachers = $this->user_model->where('su', 2); ?>
 
-<form action="<?php echo site_url('workspace/assign_quiz_only') ?>" method="GET">
+<?php $quiz_current_data = $this->quiz_model->get_quiz($quid); ?>
+
+<?php if ($quiz_current_data['start_date'] != 0): $start_date = date('m/d/Y', $quiz_current_data['start_date']);
+else: $start_date = ""; endif; ?>
+<?php if ($quiz_current_data['end_date'] != 0): $end_date = date('m/d/Y', $quiz_current_data['end_date']);
+else: $end_date = ""; endif; ?>
+<?php if ($quiz_current_data['pass_percentage'] != 0): $pass_percentage = $quiz_current_data['pass_percentage'];
+else: $pass_percentage = ""; endif; ?>
+<?php if ($quiz_current_data['duration'] != 0): $duration = $quiz_current_data['duration'];
+else: $duration = ""; endif; ?>
+<?php if ($quiz_current_data['correct_score'] != 0): $correct_score = $quiz_current_data['correct_score'];
+else: $correct_score = ""; endif; ?>
+<?php if ($quiz_current_data['view_answer'] != 0): $view_answer = $quiz_current_data['view_answer'];
+else: $view_answer = ""; endif; ?>
+
+<form action="<?php echo site_url('workspace/assign_quiz') ?>" method="GET">
     <div class="col-lg-4 col-lg-offset-0 col-md-4">
         Select Section
         <div id="data"></div>
@@ -28,14 +46,17 @@
 
     </div>
     <div class="col-lg-4 col-lg-offset-0 col-md-4">
-        <?php echo "quid:" . $quid ?>
+
+
         <div class="form-group">
             <h6>Date Start</h6>
-            <input id="date_start" class="form-control" name="date_start" placeholder="mm/dd/yyyy"/>
+            <input id="date_start" required class="form-control" name="date_start" value="<?php echo $start_date ?>"
+                   placeholder="mm/dd/yyyy"/>
         </div>
         <div class="form-group">
             <h6>Date End</h6>
-            <input id="date_end" class="form-control" name="date_end" placeholder="mm/dd/yyyy"/>
+            <input id="date_end" required class="form-control" name="date_end" value="<?php echo $end_date ?>"
+                   placeholder="mm/dd/yyyy"/>
         </div>
         <div class="form-group">
             <label>Percentage to Pass</label>
@@ -45,36 +66,33 @@
                 <!--                    <option value="--><?php //echo $quiz_detail['pass_percentage']; ?><!--">-->
                 <?php //echo $quiz_detail['pass_percentage']; ?><!--(current)</option>-->
                 <!--                --><?php //endif ?>
-                <option value="50">50%</option>
-                <option value="60">60%</option>
-                <option value="70">70%</option>
-                <option value="80">80%</option>
-                <option value="90">90%</option>
-                <option value="100">100%</option>
+                <option value="50" <?php if($pass_percentage == 50){echo "selected"; }?>>50%</option>
+                <option value="60" <?php if($pass_percentage == 60){echo "selected"; }?>>60%</option>
+                <option value="70" <?php if($pass_percentage == 70){echo "selected"; }?>>70%</option>
+                <option value="80" <?php if($pass_percentage == 80){echo "selected"; }?>>80%</option>
+                <option value="90" <?php if($pass_percentage == 90){echo "selected"; }?>>90%</option>
+                <option value="100" <?php if($pass_percentage == 100){echo "selected"; }?>>100%</option>
 
             </select>
         </div>
         <div class="form-group">
             Duration (In Minutes)
-            <input type="number" class="form-control duration" id="duration" name="duration" placeholder="Duration"
-                   value=""/>
+            <input type="number" required class="form-control duration" id="duration" value="<?php echo $duration ?>"
+                   name="duration" placeholder="Duration"/>
         </div>
         <div class="form-group">
             Points per Question
-            <input type="number" class="form-control correct_score" name="correct_score" id="correct_score"
-                   placeholder="Points" value=""/>
+            <input type="number" required class="form-control correct_score" name="correct_score" id="correct_score"
+                   placeholder="Points" value="<?php echo $correct_score ?>"/>
         </div>
 
 
         <div class="form-group">
             <label>Allow to View Answers After Quiz</label>
-            <select class="form-control" id="view_answer" name="view_answer">
-                <!--                --><?php //if(!empty($quiz_detail['view_answer'])): ?>
-                <!--                    <option value="--><?php //echo $quiz_detail['view_answer']; ?><!--">-->
-                <?php //echo $quiz_detail['view_answer'] ? 'Yes' : 'No'; ?><!--(current)</option>-->
-                <!--                --><?php //endif; ?>
-                <option value="0">Yes</option>
-                <option value="1">No</option>
+            <select class="form-control" id="view_answer" name="view_answer" required>
+
+                <option value="0" <?php if ($view_answer == 0): echo "selected"; endif; ?>>Yes</option>
+                <option value="1" <?php if ($view_answer == 1): echo "selected"; endif; ?>>No</option>
             </select>
         </div>
 
@@ -91,12 +109,11 @@
 
 
 <?php $quiz_data = $this->quiz_model->get_quiz($quid); ?>
+
 <?php $quiz_gids = explode(",", $quiz_data['gids']); ?>
 <?php $quiz_teacher_ids = explode(",", $quiz_data['teacher_ids']); ?>
 <?php $quiz_teacher_ids_count = count($quiz_teacher_ids); ?>
-<?php print_r($quiz_teacher_ids_count); ?>
-<?php //print_r($quiz_gids); ?>
-<?php //exit; ?>
+
 <script>
 
     $(function () {
@@ -119,7 +136,7 @@
 
         var teacher = [
             <?php foreach($all_teachers as $key =>$value){
-                        echo '{"id": "teacher_'.$value['uid'].'","icon": "jstree-file", "text": "'.$value['first_name'].'"},';
+                        echo '{"id": "'.$value['uid'].'","icon": "jstree-file", "text": "'.$value['first_name'].'"},';
                     }
                     ?>
         ];
@@ -133,7 +150,7 @@
 
         }).on("ready.jstree", function (e, data) {
             <?php foreach($quiz_teacher_ids as $quiz_teacher_ids_key => $quiz_teacher_ids_value):?>
-            $("#teacher_<?php echo $quiz_teacher_ids_value?>_anchor").click();
+            $("#<?php echo $quiz_teacher_ids_value?>_anchor").click();
             <?php endforeach; ?>
         });
         ;
@@ -185,12 +202,13 @@
                 <?php endfor;?>
             });
 
-        $("#submit").click(function () {
+        $("#submit").click(function (e) {
             var checked = $('#data').jstree("get_checked", null, true);
             var checked_teacher = $('#teacher').jstree("get_checked", null, true);
             var section_checked = [];
             var grade_checked = [];
             var teacher_checked = [];
+
             $.each(checked, function (key, value) {
                 if (!value.indexOf("section_")) {
 
@@ -208,6 +226,23 @@
                 teacher_checked.push(value);
 
             });
+
+            if (section_checked.length == 0) {
+                $.alert({
+                    title: 'Notice:',
+                    content: 'Please select a section.',
+                });
+                return false;
+            }
+            else if(teacher_checked.length == 0)
+            {
+                $.alert({
+                    title: 'Notice:',
+                    content: 'Please select a teacher for monitoring.',
+                });
+                return false;
+            }
+
             $("#section_checked").val(section_checked);
             $("#grade_checked").val(grade_checked);
             $("#teacher_checked").val(teacher_checked);

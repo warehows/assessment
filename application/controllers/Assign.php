@@ -138,6 +138,8 @@ class Assign extends CI_Controller
             $quid = $this->input->post();
 
             $data["posts"] = $this->input->post();
+            $data["quid"] = $quid;
+
 
             if ($logged_in['su'] == 1) {
                 if ($logged_in['su'] == 1) {
@@ -176,10 +178,21 @@ class Assign extends CI_Controller
             $new_data["posts"] = $this->input->post();
             $new_data['quid'] = $quid;
             $new_data['logged_in'] = $logged_in;
-
             $this->delete_quiz($new_data);
 
             redirect(site_url('workspace'));
+
+        } elseif ($post["submit"] == "admin_delete") {
+            $data["data"] = $data;
+            $quid = $this->input->post();
+            $quid = $quid['selected_quiz'][0];
+            $new_data["posts"] = $this->input->post();
+            $new_data['quid'] = $quid;
+            $new_data['logged_in'] = $logged_in;
+
+            $this->delete_quiz_admin($new_data);
+
+            redirect(site_url('assign'));
 
         } elseif ($post["submit"] == "teacher_assign") {
             $data["data"] = $data;
@@ -209,6 +222,29 @@ class Assign extends CI_Controller
 
         }
         $this->load->view('new_material/footer', $data);
+
+    }
+
+    public function delete_quiz_admin($data)
+    {
+
+
+        echo "<pre>";
+        $selected_quiz = $data['posts']['selected_quiz'];
+
+
+
+        foreach ($selected_quiz as $selected_quiz_key => $selected_quiz_value) {
+            $quiz_data = $this->quiz_model->get_quiz($selected_quiz_value);
+            $quiz_to_delete = array(
+                "quid" => $quiz_data['quid'],
+            );
+
+            $this->assign_model->delete_quiz($quiz_to_delete);
+
+        }
+
+
 
     }
 
