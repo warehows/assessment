@@ -372,7 +372,7 @@ class Assign extends CI_Controller
 
 
         $quid = $this->assign_model->insert_quiz($data);
-        if($logged_in['uid']=='2'){
+        if($logged_in['su']=='2'){
             $new_quiz_data = $this->quiz_model->get_quiz($quid);
 
             $insert_to_workspace = array(
@@ -455,9 +455,18 @@ class Assign extends CI_Controller
         );
 
         $quid = $this->assign_model->update_quiz($data);
+
+        if($logged_in['su']=='2'){
+            $new_quiz_data = $this->quiz_model->get_quiz($quid);
+
+            $update_to_workspace = array(
+                "id"=>$post['workspace_id'],
+                "content_name"=>$new_quiz_data['quiz_name'],
+            );
+            $this->workspace_model->update_workspace($update_to_workspace);
+        }
         if($quid){
-//            echo $quid;
-            print_r($data);
+            print_r($update_to_workspace);
         }else{
             echo "Error";
         }

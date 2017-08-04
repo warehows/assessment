@@ -1,14 +1,23 @@
 <?php $post = $this->input->get() ?>
 <?php
 if (array_key_exists("quid",$post)) {
-    $quiz_id = $post['quid'];
-    $quiz_detail = $this->quiz_model->get_quiz($quiz_id);
+    if($logged_in['su']==1){
+        $quiz_id = $post['quid'];
+        $quiz_detail = $this->quiz_model->get_quiz($quiz_id);
+    }elseif($logged_in['su']){
+        $quiz_id = $post['quid'];
+        $workspace_id = $post['quid'];
+
+        $workspace_information = $this->workspace_model->where("id",$quiz_id);
+        $quiz_id = $workspace_information[0]['content_id'];
+        $quiz_detail = $this->quiz_model->get_quiz($quiz_id);
+    }
+
 
 } else {
     $quiz_id = false;
 }
 ?>
-<?php //print_r($quiz_detail);?>
 <h3>Quiz Info</h3>
 <div class="form-group">
     <input type="hidden" id="quiz_id" name="quiz_id" value="<?php if($quiz_id){ echo $quiz_id; }?>" />
@@ -23,7 +32,7 @@ if (array_key_exists("quid",$post)) {
 
     <select class="form-control grade" id="grade">
         <?php foreach ($all_grades as $grade_key => $grade_value) { ?>
-            <option value="<?php echo $grade_value['lid'] ?>" <?php if($quiz_detail['lid'] == $grade_value['lid']){ echo "selected"; }?>><?php echo $grade_value['level_name'] ?></option>
+            <option value="<?php echo $grade_value['lid'] ?>" <?php if($quiz_id&&$quiz_detail['lid'] == $grade_value['lid']){ echo "selected"; }?>><?php echo $grade_value['level_name'] ?></option>
         <?php } ?>
     </select>
 </div>
@@ -45,7 +54,7 @@ if (array_key_exists("quid",$post)) {
 
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         <?php if($quiz_id){ ?>
         var quid = <?php echo $quiz_id?>;
@@ -60,6 +69,7 @@ if (array_key_exists("quid",$post)) {
             var cid = $("#subject").val();
             var description = $("#description").val();
             var uid = <?php echo $logged_in['uid']?>;
+
             var returned_value;
 
             $.ajax({
@@ -91,6 +101,12 @@ if (array_key_exists("quid",$post)) {
             var cid = $("#subject").val();
             var description = $("#description").val();
             var uid = <?php echo $logged_in['uid']?>;
+
+            <?php if($logged_in['su']==2): ?>
+                var workspace_id = <?php echo $workspace_id?>;
+            <?php endif; ?>
+
+
             var returned_value;
             $.ajax({
                 url: "<?php echo site_url('assign/update_quiz');?>",
@@ -102,6 +118,9 @@ if (array_key_exists("quid",$post)) {
                     lid: lid,
                     quid: quid,
                     description: description,
+                    <?php if($logged_in['su']==2): ?>
+                        workspace_id:workspace_id,
+                    <?php endif; ?>
                 }
             }).done(function (value) {
                 console.log(value);
