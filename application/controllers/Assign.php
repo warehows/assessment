@@ -369,6 +369,85 @@ class Assign extends CI_Controller
         $this->load->view('new_material/footer', $data);
     }
 
+    public function insert_quiz_teacher()
+    {
+        $post = $this->input->post();
+
+        $filter_data = array(
+            'quiz_name',
+            'cid',
+            'uid',
+            'description',
+            'start_date',
+            'end_date',
+            'duration',
+            'maximum_attempts',
+            'pass_percentage',
+            'correct_score',
+            'incorrect_score',
+            'ip_address',
+            'view_answer',
+            'camera_req',
+            'with_login',
+            'gids',
+            'question_selection',
+            'lid',
+        );
+        foreach ($filter_data as $key => $value) {
+            if (array_key_exists($value, $post)) {
+                $data[$value] = $post[$value];
+            } else {
+
+                if ($value == "gids") {
+                    $data[$value] = array();
+                } else {
+                    $data[$value] = "";
+                }
+            }
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        $data = array(
+            'quiz_name' => $data['quiz_name'],
+            'cid' => $data['cid'],
+            'uid' => $data['uid'],
+            'description' => $data['description'],
+            'start_date' => strtotime($data['start_date']),
+            'end_date' => strtotime($data['end_date']),
+            'duration' => $data['duration'],
+            'maximum_attempts' => $data['maximum_attempts'],
+            'pass_percentage' => $data['pass_percentage'],
+            'correct_score' => $data['correct_score'],
+            'incorrect_score' => $data['incorrect_score'],
+            'ip_address' => $data['ip_address'],
+            'view_answer' => $data['view_answer'],
+            'camera_req' => $data['camera_req'],
+            'with_login' => $data['with_login'],
+            'gids' => implode(',', $data['gids']),
+            'question_selection' => $data['question_selection'],
+            'lid' => $data['lid'],
+            'author' => $logged_in['uid'],
+        );
+
+
+        $quid = $this->assign_model->insert_quiz($data);
+        if ($logged_in['su'] == '2') {
+            $new_quiz_data = $this->quiz_model->get_quiz($quid);
+
+            $insert_to_workspace = array(
+                "user_id" => $logged_in['uid'],
+                "content_id" => $quid,
+                "content_type" => "quiz",
+                "content_name" => $new_quiz_data['quiz_name'],
+            );
+            $workspace_id = $this->workspace_model->insert_workspace($insert_to_workspace);
+        }
+        if ($quid) {
+            echo trim($quid).",".$workspace_id;
+        } else {
+            echo "Error";
+        }
+    }
+
     public function insert_quiz()
     {
         $post = $this->input->post();
@@ -524,7 +603,7 @@ class Assign extends CI_Controller
             $this->workspace_model->update_workspace($update_to_workspace);
         }
         if ($quid) {
-            print_r($update_to_workspace);
+            print_r($quid);
         } else {
             echo "Error";
         }

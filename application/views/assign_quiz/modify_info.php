@@ -1,14 +1,14 @@
 <?php $post = $this->input->get() ?>
 <?php
-if (array_key_exists("quid",$post)) {
-    if($logged_in['su']==1){
+if (array_key_exists("quid", $post)) {
+    if ($logged_in['su'] == 1) {
         $quiz_id = $post['quid'];
         $quiz_detail = $this->quiz_model->get_quiz($quiz_id);
-    }elseif($logged_in['su']){
+    } elseif ($logged_in['su']==2) {
         $quiz_id = $post['quid'];
         $workspace_id = $post['quid'];
 
-        $workspace_information = $this->workspace_model->where("id",$quiz_id);
+        $workspace_information = $this->workspace_model->where("id", $quiz_id);
         $quiz_id = $workspace_information[0]['content_id'];
         $quiz_detail = $this->quiz_model->get_quiz($quiz_id);
     }
@@ -20,19 +20,31 @@ if (array_key_exists("quid",$post)) {
 ?>
 <h3>Quiz Info</h3>
 <div class="form-group">
-    <input type="hidden" id="quiz_id" name="quiz_id" value="<?php if($quiz_id){ echo $quiz_id; }?>" />
-    <input type="hidden" id="quid" name="quid" value="<?php if($quiz_id){ echo $quiz_id; }?>" />
+    <input type="hidden" id="quiz_id" name="quiz_id" value="<?php if ($quiz_id) {
+        echo $quiz_id;
+    } ?>"/>
+    <input type="hidden" id="quid" name="quid" value="<?php if ($quiz_id) {
+        echo $quiz_id;
+    } ?>"/>
 
-    <input class="form-control quiz_name" id="quiz_name" required placeholder="Quiz Name" value="<?php if($quiz_id){ echo $quiz_detail['quiz_name'];}?>"/>
+    <input class="form-control quiz_name" id="quiz_name" required placeholder="Quiz Name" value="<?php if ($quiz_id) {
+        echo $quiz_detail['quiz_name'];
+    } ?>"/>
 </div>
 <div class="form-group">
-    <input class="form-control description" id="description" required placeholder="Description" value="<?php if($quiz_id){ echo $quiz_detail['description'];}?>"/>
+    <input class="form-control description" id="description" required placeholder="Description"
+           value="<?php if ($quiz_id) {
+               echo $quiz_detail['description'];
+           } ?>"/>
 </div>
 <div class="form-group">
 
     <select class="form-control grade" id="grade">
         <?php foreach ($all_grades as $grade_key => $grade_value) { ?>
-            <option value="<?php echo $grade_value['lid'] ?>" <?php if($quiz_id&&$quiz_detail['lid'] == $grade_value['lid']){ echo "selected"; }?>><?php echo $grade_value['level_name'] ?></option>
+            <option
+                value="<?php echo $grade_value['lid'] ?>" <?php if ($quiz_id && $quiz_detail['lid'] == $grade_value['lid']) {
+                echo "selected";
+            } ?>><?php echo $grade_value['level_name'] ?></option>
         <?php } ?>
     </select>
 </div>
@@ -40,7 +52,9 @@ if (array_key_exists("quid",$post)) {
     <select class="form-control subject" id="subject">
         <?php foreach ($all_subjects as $subject_key => $subject_value) { ?>
 
-            <option <?php if($quiz_id&&$quiz_detail['cid'] == $subject_value['cid']){ echo "selected"; }?>
+            <option <?php if ($quiz_id && $quiz_detail['cid'] == $subject_value['cid']) {
+                echo "selected";
+            } ?>
                 value="<?php echo $subject_value['cid'] ?>"><?php echo $subject_value['category_name'] ?></option>
         <?php } ?>
     </select>
@@ -54,7 +68,7 @@ if (array_key_exists("quid",$post)) {
 
 <script>
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         <?php if($quiz_id){ ?>
         var quid = <?php echo $quiz_id?>;
@@ -63,37 +77,38 @@ if (array_key_exists("quid",$post)) {
         <?php } ?>
 
 
-        function create_new_quiz() {
-            var quiz_name = $("#quiz_name").val();
-            var lid = $("#grade").val();
-            var cid = $("#subject").val();
-            var description = $("#description").val();
-            var uid = <?php echo $logged_in['uid']?>;
+            function create_new_quiz() {
+                var quiz_name = $("#quiz_name").val();
+                var lid = $("#grade").val();
+                var cid = $("#subject").val();
+                var description = $("#description").val();
+                var uid = <?php echo $logged_in['uid']?>;
 
-            var returned_value;
+                var returned_value;
 
-            $.ajax({
-                url: "<?php echo site_url('assign/insert_quiz');?>",
-                type: "POST",
-                async: false,
-                data: {
-                    quiz_name: quiz_name,
-                    cid: cid,
-                    uid: uid,
-                    lid: lid,
-                    description: description,
-                }
-            }).done(function (value) {
-                if (value != "Error") {
-                    returned_value = value;
-                } else {
-                    returned_value = false;
-                }
+                $.ajax({
+                    url: "<?php echo site_url('assign/insert_quiz');?>",
+                    type: "POST",
+                    async: false,
+                    data: {
+                        quiz_name: quiz_name,
+                        cid: cid,
+                        uid: uid,
+                        lid: lid,
+                        description: description,
+                    }
+                }).done(function (value) {
+                    if (value != "Error") {
+                        returned_value = value;
+                    } else {
+                        returned_value = false;
+                    }
 
-            });
+                });
 
-            return $.trim(returned_value);;
-        }
+                return $.trim(returned_value);
+            }
+
 
         function update_quiz() {
             var quiz_name = $("#quiz_name").val();
@@ -101,10 +116,11 @@ if (array_key_exists("quid",$post)) {
             var cid = $("#subject").val();
             var description = $("#description").val();
             var uid = <?php echo $logged_in['uid']?>;
-
-            <?php if($logged_in['su']==2): ?>
-                var workspace_id = <?php echo $workspace_id?>;
-            <?php endif; ?>
+            <?php if (array_key_exists("quid",$post)) { ?>
+                <?php if($logged_in['su']==2): ?>
+                    var workspace_id = <?php echo $workspace_id?>;
+                <?php endif; ?>
+            <?php } ?>
 
 
             var returned_value;
@@ -118,9 +134,11 @@ if (array_key_exists("quid",$post)) {
                     lid: lid,
                     quid: quid,
                     description: description,
+                    <?php if (array_key_exists("quid",$post)) { ?>
                     <?php if($logged_in['su']==2): ?>
-                        workspace_id:workspace_id,
+                    workspace_id: workspace_id,
                     <?php endif; ?>
+                    <?php } ?>
                 }
             }).done(function (value) {
                 console.log(value);
@@ -151,7 +169,6 @@ if (array_key_exists("quid",$post)) {
             } else {
                 update_quiz();
             }
-
 
 
         });
