@@ -2,8 +2,6 @@
 <?php $posts['quid'] = $quid; ?>
 <?php $posts['logged_in'] = $logged_in; ?>
 
-
-
 <?php if ($logged_in['su'] == 1) { ?>
     <?php $posts['duplicated'] = 0 ?>
 <?php } ?>

@@ -65,6 +65,7 @@ class Lessonbank extends CI_Controller
         $logged_in = $this->session->userdata('logged_in');
 
         $selected_quizzes =  $data['selected_quiz'];
+        echo "<pre>";
 
         foreach($selected_quizzes as $selected_quizzes_key => $selected_quizzes_value){
             $quiz_data = $this->quiz_model->get_quiz($selected_quizzes_value);
@@ -92,8 +93,8 @@ class Lessonbank extends CI_Controller
                 'lid' => $quiz_data['lid'],
                 'author' => $uid,
             );
-
             $added_quiz_id = $this->assign_model->insert_quiz($quiz_data_to_insert);
+
 
             $workspace_data_to_insert = array(
                 "user_id"=>$uid,
@@ -103,8 +104,9 @@ class Lessonbank extends CI_Controller
 
             );
             $this->workspace_model->insert_workspace($workspace_data_to_insert);
-            redirect(site_url("workspace"));
+//            print_r($quiz_data_to_insert);
         }
+        redirect(site_url("workspace"));
 
 
     }

@@ -28,7 +28,7 @@ else: $start_date = ""; endif; ?>
 else: $end_date = ""; endif; ?>
 <?php if ($quiz_current_data['pass_percentage'] != 0): $pass_percentage = $quiz_current_data['pass_percentage'];
 else: $pass_percentage = ""; endif; ?>
-<?php if ($quiz_current_data['duration'] != 0): $duration = $quiz_current_data['pass_percentage'];
+<?php if ($quiz_current_data['duration'] != 0): $duration = $quiz_current_data['duration'];
 else: $duration = ""; endif; ?>
 <?php if ($quiz_current_data['correct_score'] != 0): $correct_score = $quiz_current_data['correct_score'];
 else: $correct_score = ""; endif; ?>

@@ -53,9 +53,21 @@ class Assign extends CI_Controller
         $data['category'] = $this->category_model->get_all();
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
-        $data['all_quiz'] = $this->assign_model->where("author",$logged_in['uid']);
+        $data['all_quiz'] = $this->assign_model->where("author", $logged_in['uid']);
 
-        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+        if ($logged_in['su'] == 1) {
+            if ($logged_in['su'] == 1) {
+                $this->load->view('new_material/header', $data);
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
+        } elseif ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+        } else {
+            $this->load->view('new_material/student_header', $data);
+        }
         $this->load->view('assign_quiz/index_new', $data);
         $this->load->view('new_material/footer', $data);
 
@@ -104,7 +116,7 @@ class Assign extends CI_Controller
                 );
                 $this->change_share($data);
             }
-            redirect(site_url()."/assign");
+            redirect(site_url() . "/assign");
         } elseif ($post["submit"] == "edit") {
 
         }
@@ -117,22 +129,33 @@ class Assign extends CI_Controller
                 $this->change_share($data);
             }
 
-        }elseif ($post["submit"] == "edit") {
+        } elseif ($post["submit"] == "edit") {
             $quid = $this->input->post();
             $quid = $quid['selected_quiz'][0];
-            redirect(site_url('assign/edit')."?next_page=assign_quiz%2Fmodify_info&quid=".$quid);
-        }
-        elseif ($post["submit"] == "assign") {
+            redirect(site_url('assign/edit') . "?next_page=assign_quiz%2Fmodify_info&quid=" . $quid);
+        } elseif ($post["submit"] == "assign") {
             $data["data"] = $data;
             $quid = $this->input->post();
-            $quid = $quid['selected_quiz'][0];
+
             $data["posts"] = $this->input->post();
 
-            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+            if ($logged_in['su'] == 1) {
+                if ($logged_in['su'] == 1) {
+                    $this->load->view('new_material/header', $data);
+                } elseif ($logged_in['su'] == 2) {
+                    $this->load->view('new_material/teacher_header', $data);
+                } else {
+                    $this->load->view('new_material/student_header', $data);
+                }
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
             $this->load->view('assign_quiz/assign', $data);
             $this->load->view('new_material/footer', $data);
 
-        }elseif ($post["submit"] == "duplicate") {
+        } elseif ($post["submit"] == "duplicate") {
             $data["data"] = $data;
             $quid = $this->input->post();
             $quid = $quid['selected_quiz'][0];
@@ -146,7 +169,7 @@ class Assign extends CI_Controller
             redirect(site_url('workspace'));
 
 
-        }elseif ($post["submit"] == "delete") {
+        } elseif ($post["submit"] == "delete") {
             $data["data"] = $data;
             $quid = $this->input->post();
             $quid = $quid['selected_quiz'][0];
@@ -158,7 +181,7 @@ class Assign extends CI_Controller
 
             redirect(site_url('workspace'));
 
-        }elseif ($post["submit"] == "teacher_assign") {
+        } elseif ($post["submit"] == "teacher_assign") {
             $data["data"] = $data;
             $quid = $this->input->post();
             $quid = $quid['selected_quiz'][0];
@@ -166,30 +189,42 @@ class Assign extends CI_Controller
             $data['quid'] = $quid;
             $data['logged_in'] = $logged_in;
 
-            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+            if ($logged_in['su'] == 1) {
+                if ($logged_in['su'] == 1) {
+                    $this->load->view('new_material/header', $data);
+                } elseif ($logged_in['su'] == 2) {
+                    $this->load->view('new_material/teacher_header', $data);
+                } else {
+                    $this->load->view('new_material/student_header', $data);
+                }
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
             $this->load->view('assign_quiz/assign', $data);
             $this->load->view('new_material/footer', $data);
 
-        }
-        else {
+        } else {
 
         }
         $this->load->view('new_material/footer', $data);
 
     }
 
-    public function delete_quiz($data){
+    public function delete_quiz($data)
+    {
         echo "<pre>";
         $selected_quiz = $data['posts']['selected_quiz'];
 
-        foreach($selected_quiz as $selected_quiz_key=>$selected_quiz_value){
-            $workspace_data = $this->workspace_model->where("id",$selected_quiz_value);
+        foreach ($selected_quiz as $selected_quiz_key => $selected_quiz_value) {
+            $workspace_data = $this->workspace_model->where("id", $selected_quiz_value);
             $quiz_data = $this->quiz_model->get_quiz($workspace_data[0]['content_id']);
             $quiz_to_delete = array(
-                "quid"=>$quiz_data['quid'],
+                "quid" => $quiz_data['quid'],
             );
             $workspace_to_delete = array(
-                "id"=>$selected_quiz_value,
+                "id" => $selected_quiz_value,
             );
             $this->workspace_model->delete_workspace($workspace_to_delete);
             $this->assign_model->delete_quiz($quiz_to_delete);
@@ -197,42 +232,42 @@ class Assign extends CI_Controller
         }
 
 
-
     }
 
-    public function duplicate_quiz($data){
+    public function duplicate_quiz($data)
+    {
         $selected_quiz = $data['posts']['selected_quiz'];
 
-        foreach($selected_quiz as $selected_quiz_key=>$selected_quiz_value){
+        foreach ($selected_quiz as $selected_quiz_key => $selected_quiz_value) {
 
-            $workspace_data = $this->workspace_model->where("id",$selected_quiz_value);
+            $workspace_data = $this->workspace_model->where("id", $selected_quiz_value);
 
 
             $quiz_data = $this->quiz_model->get_quiz($workspace_data[0]['content_id']);
             $quiz_to_insert = array(
-                "quiz_name"=>$quiz_data['quiz_name']."-duplicated",
-                "description"=>$quiz_data['description'],
-                "qids"=>$quiz_data['qids'],
-                "noq"=>$quiz_data['noq'],
-                "maximum_attempts"=>10000,
-                "pass_percentage"=>0,
-                "camera_req"=>0,
-                "question_selection"=>$quiz_data['question_selection'],
-                "duration"=>0,
-                "cid"=>$quiz_data['cid'],
-                "uid"=>$data['logged_in']['uid'],
-                "shared"=>0,
-                "lid"=>$quiz_data['lid'],
-                "author"=>$data['logged_in']['uid'],
+                "quiz_name" => $quiz_data['quiz_name'] . "-duplicated",
+                "description" => $quiz_data['description'],
+                "qids" => $quiz_data['qids'],
+                "noq" => $quiz_data['noq'],
+                "maximum_attempts" => 10000,
+                "pass_percentage" => 0,
+                "camera_req" => 0,
+                "question_selection" => $quiz_data['question_selection'],
+                "duration" => 0,
+                "cid" => $quiz_data['cid'],
+                "uid" => $data['logged_in']['uid'],
+                "shared" => 0,
+                "lid" => $quiz_data['lid'],
+                "author" => $data['logged_in']['uid'],
             );
             $new_quid = $this->assign_model->insert_quiz($quiz_to_insert);
             $new_quiz_data = $this->quiz_model->get_quiz($new_quid);
 
             $insert_to_workspace = array(
-                "user_id"=>$data['logged_in']['uid'],
-                "content_id"=>$new_quid,
-                "content_type"=>"quiz",
-                "content_name"=>$quiz_data['quiz_name']."-duplicated",
+                "user_id" => $data['logged_in']['uid'],
+                "content_id" => $new_quid,
+                "content_type" => "quiz",
+                "content_name" => $quiz_data['quiz_name'] . "-duplicated",
             );
             $this->workspace_model->insert_workspace($insert_to_workspace);
 
@@ -240,7 +275,6 @@ class Assign extends CI_Controller
 
 
     }
-
 
 
     public function create_question()
@@ -277,7 +311,19 @@ class Assign extends CI_Controller
 
         $logged_in = $this->session->userdata('logged_in');
         if ($logged_in['su'] == 1) {
-            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+            if ($logged_in['su'] == 1) {
+                if ($logged_in['su'] == 1) {
+                    $this->load->view('new_material/header', $data);
+                } elseif ($logged_in['su'] == 2) {
+                    $this->load->view('new_material/teacher_header', $data);
+                } else {
+                    $this->load->view('new_material/student_header', $data);
+                }
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
         } elseif ($logged_in['su'] == 2) {
             $this->load->view('new_material/teacher_header', $data);
         } elseif ($logged_in['su'] == 0) {
@@ -297,7 +343,19 @@ class Assign extends CI_Controller
 
         $logged_in = $this->session->userdata('logged_in');
         if ($logged_in['su'] == 1) {
-            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+            if ($logged_in['su'] == 1) {
+                if ($logged_in['su'] == 1) {
+                    $this->load->view('new_material/header', $data);
+                } elseif ($logged_in['su'] == 2) {
+                    $this->load->view('new_material/teacher_header', $data);
+                } else {
+                    $this->load->view('new_material/student_header', $data);
+                }
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
         } elseif ($logged_in['su'] == 2) {
             $this->load->view('new_material/teacher_header', $data);
         } elseif ($logged_in['su'] == 0) {
@@ -335,14 +393,14 @@ class Assign extends CI_Controller
             'question_selection',
             'lid',
         );
-        foreach($filter_data as $key => $value){
-            if(array_key_exists($value,$post)){
+        foreach ($filter_data as $key => $value) {
+            if (array_key_exists($value, $post)) {
                 $data[$value] = $post[$value];
-            }else{
+            } else {
 
-                if($value == "gids"){
+                if ($value == "gids") {
                     $data[$value] = array();
-                }else{
+                } else {
                     $data[$value] = "";
                 }
             }
@@ -372,20 +430,20 @@ class Assign extends CI_Controller
 
 
         $quid = $this->assign_model->insert_quiz($data);
-        if($logged_in['su']=='2'){
+        if ($logged_in['su'] == '2') {
             $new_quiz_data = $this->quiz_model->get_quiz($quid);
 
             $insert_to_workspace = array(
-                "user_id"=>$logged_in['uid'],
-                "content_id"=>$quid,
-                "content_type"=>"quiz",
-                "content_name"=>$new_quiz_data['quiz_name'],
+                "user_id" => $logged_in['uid'],
+                "content_id" => $quid,
+                "content_type" => "quiz",
+                "content_name" => $new_quiz_data['quiz_name'],
             );
             $this->workspace_model->insert_workspace($insert_to_workspace);
         }
-        if($quid){
+        if ($quid) {
             echo trim($quid);
-        }else{
+        } else {
             echo "Error";
         }
     }
@@ -418,14 +476,14 @@ class Assign extends CI_Controller
             'assigned_by',
             'assigned',
         );
-        foreach($filter_data as $key => $value){
-            if(array_key_exists($value,$post)){
+        foreach ($filter_data as $key => $value) {
+            if (array_key_exists($value, $post)) {
                 $data[$value] = $post[$value];
-            }else{
+            } else {
 
-                if($value == "gids"){
+                if ($value == "gids") {
                     $data[$value] = array();
-                }else{
+                } else {
                     $data[$value] = "";
                 }
             }
@@ -456,18 +514,18 @@ class Assign extends CI_Controller
 
         $quid = $this->assign_model->update_quiz($data);
 
-        if($logged_in['su']=='2'){
+        if ($logged_in['su'] == '2') {
             $new_quiz_data = $this->quiz_model->get_quiz($quid);
 
             $update_to_workspace = array(
-                "id"=>$post['workspace_id'],
-                "content_name"=>$new_quiz_data['quiz_name'],
+                "id" => $post['workspace_id'],
+                "content_name" => $new_quiz_data['quiz_name'],
             );
             $this->workspace_model->update_workspace($update_to_workspace);
         }
-        if($quid){
+        if ($quid) {
             print_r($update_to_workspace);
-        }else{
+        } else {
             echo "Error";
         }
 
