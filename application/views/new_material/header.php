@@ -21,22 +21,23 @@
 
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top navigation-clean">
+<nav class="navbar navbar-inverse navbar-fixed-top navigation-clean" style="background-color: #ff4e3b!important;">
     <div class="container">
-        <div class="navbar-header"><a href="<?php echo site_url('dashboard');?>"> <img style="height: 45px!important;" class="navbar-brand image_logo" src="<?php echo base_url('css/new_material/img/main_logo.png'); ?>" alt="School Logo" ></a>
+        <div class="navbar-header"><img style="height: 45px!important;" class="navbar-brand image_logo" src="<?php echo base_url('css/new_material/img/brainee.png'); ?>" alt="School Logo" >
             <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
         </div>
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav navbar-right">
+                <li role="presentation"><a href="<?php echo site_url('dashboard');?>">Home</a></li>
                 <li role="presentation"><a href="<?php echo site_url('lessonbank');?>">Lesson Bank</a></li>
                 <li role="presentation"><a href="<?php echo site_url('lessons');?>">My Lesson</a></li>
 
                 <li role="presentation"><a href="<?php echo site_url('assign');?>">My Quiz</a></li>
-                <li role="presentation"><a href="<?php echo site_url('calendar');?>">C Planner</a></li>
+                <li role="presentation"><a href="<?php echo site_url('calendar');?>">My Task</a></li>
                 <li role="presentation"><a href="<?php echo site_url('result');?>">Report</a></li>
 
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
+                <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu" style="background-color: #ff4e3b!important;">
                         <li role="presentation"><a href="<?php echo site_url('user');?>">List</a></li>
                         <li role="presentation"><a href="<?php echo site_url('user/new_user');?>">New User</a></li>
                         <li role="presentation"><a href="<?php echo site_url('qbank/category_list');?>">Subject</a></li>
@@ -44,7 +45,12 @@
                         <li role="presentation"><a href="<?php echo site_url('user/group_list');?>">Group</a></li>
                     </ul>
                 </li>
-                <li role="presentation"><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Account<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu" style="background-color: #ff4e3b!important;">
+                        <li role="presentation"><a href="<?php echo site_url('user/edit_user');?>">Change Password</a></li>
+                        <li role="presentation"><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

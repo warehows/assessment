@@ -352,7 +352,7 @@ class Lessons extends CI_Controller
             redirect('login');
         }
 
-        $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/assessment/upload/lessons/";
+        $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
         $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
         $folder = $output_dir . $folder_to_create;
         if (!file_exists($folder)) {

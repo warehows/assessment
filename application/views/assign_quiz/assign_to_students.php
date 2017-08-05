@@ -27,6 +27,8 @@ else: $start_date = ""; endif; ?>
 else: $end_date = ""; endif; ?>
 <?php if ($quiz_current_data['pass_percentage'] != 0): $pass_percentage = $quiz_current_data['pass_percentage'];
 else: $pass_percentage = ""; endif; ?>
+<?php if ($quiz_current_data['maximum_attempts'] != 0): $maximum_attempts = $quiz_current_data['maximum_attempts'];
+else: $maximum_attempts = ""; endif; ?>
 <?php if ($quiz_current_data['duration'] != 0): $duration = $quiz_current_data['duration'];
 else: $duration = ""; endif; ?>
 <?php if ($quiz_current_data['correct_score'] != 0): $correct_score = $quiz_current_data['correct_score'];
@@ -84,6 +86,12 @@ else: $view_answer = ""; endif; ?>
             Points per Question
             <input type="number" required class="form-control correct_score" name="correct_score" id="correct_score"
                    placeholder="Points" value="<?php echo $correct_score ?>"/>
+        </div>
+
+        <div class="form-group">
+            Maximum Attempts
+            <input type="number" required class="form-control maximum_attempts" name="maximum_attempts" id="maximum_attempts"
+                   placeholder="Attempts" value="<?php echo $maximum_attempts ?>"/>
         </div>
 
 
@@ -236,11 +244,11 @@ else: $view_answer = ""; endif; ?>
             }
             else if(teacher_checked.length == 0)
             {
-                $.alert({
-                    title: 'Notice:',
-                    content: 'Please select a teacher for monitoring.',
-                });
-                return false;
+//                $.alert({
+//                    title: 'Notice:',
+//                    content: 'Please select a teacher for monitoring.',
+//                });
+//                return false;
             }
 
             $("#section_checked").val(section_checked);

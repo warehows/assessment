@@ -188,13 +188,14 @@ class Workspace extends CI_Controller
             "pass_percentage"=>$posts['pass_percentage'],
             "duration"=>$posts['duration'],
             "correct_score"=>$posts['correct_score'],
+            "maximum_attempts"=>$posts['maximum_attempts'],
             "view_answer"=>$posts['view_answer'],
             "gids"=>$posts['sections'][0],
             "teacher_ids"=>$posts['teachers'][0],
             "assigned"=>1,
             "assigned_by"=>$logged_in['uid'],
         );
-        print_r($update_quiz);
+
         $this->assign_model->update_quiz($update_quiz);
         redirect("assign");
     }

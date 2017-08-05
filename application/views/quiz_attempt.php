@@ -391,10 +391,10 @@ foreach($questions as $qk => $question){
 
 	
 <table>
-<tr><td style="font-size:12px;"><div class="qbtn" style="background:#449d44;">&nbsp;</div> <?php echo $this->lang->line('Answered');?> Answered</td></tr>
-<tr><td style="font-size:12px;"><div class="qbtn" style="background:#c9302c;">&nbsp;</div> <?php echo $this->lang->line('UnAnswered');?> UnAnswered</td></tr>
-<tr><td style="font-size:12px;"><div class="qbtn" style="background:#ec971f;">&nbsp;</div> <?php echo $this->lang->line('Review-Later');?> Review-Later</td></tr>
-<tr><td style="font-size:12px;"><div class="qbtn" style="background:#212121;">&nbsp;</div> <?php echo $this->lang->line('Not-visited');?> Not-visited</td></tr>
+<tr><td style="font-size:12px;"><div class="qbtn" style="background:#449d44;">&nbsp;</div> <?php echo $this->lang->line('Answered');?> </td></tr>
+<!--<tr><td style="font-size:12px;"><div class="qbtn" style="background:#c9302c;">&nbsp;</div> --><?php //echo $this->lang->line('UnAnswered');?><!-- UnAnswered</td></tr>-->
+<tr><td style="font-size:12px;"><div class="qbtn" style="background:#ec971f;">&nbsp;</div> <?php echo $this->lang->line('Review-Later');?></td></tr>
+<tr><td style="font-size:12px;"><div class="qbtn" style="background:#212121;">&nbsp;</div> Not Answered</td></tr>
 </table>
 
 
