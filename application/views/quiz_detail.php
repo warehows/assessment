@@ -82,7 +82,7 @@ if($quiz['camera_req']==1 && $this->config->item('webcam')==true){
 <?php
 }else{
 ?>
-	<button class="btn btn-success" type="submit"><?php echo $this->lang->line('start_quiz');?></button>
+	<button class="btn" type="submit"><?php echo $this->lang->line('start_quiz');?></button>
 
  <?php
 }

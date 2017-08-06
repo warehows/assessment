@@ -14,7 +14,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
 
 
             <div class="row">
-                <form method="post" action="<?php echo site_url('qbank/new_question_1/' . $nop."?back_url=".$sent_data['back_url']); ?>">
+                <form method="post" action="<?php echo site_url('qbank/new_question_4/' . $nop."?back_url=".$sent_data['back_url']); ?>">
 
                     <div class="col-md-8">
                         <br>

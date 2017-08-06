@@ -82,6 +82,15 @@ class Assign extends CI_Controller
 
     }
 
+    function where()
+    {
+
+        $posts = $this->input->post();
+        $where = $posts[0];
+        $value = $posts[1];
+
+    }
+
     public function actions()
     {
         // redirect if not logged in

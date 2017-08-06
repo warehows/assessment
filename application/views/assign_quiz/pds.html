@@ -1,200 +1,218 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-<head>
-    <style>
-        body {
-            font-family: ;
-        }
-        .border_thick_top {
-            border-top: 2px solid black;
-        }
+<link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
 
-        .border_thick_left {
-            border-left: 2px solid black;
-        }
+<?php $this->load->helper('url'); ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>js/jstree/dist/themes/default/style.min.css"/>
 
-        .border_left {
-            border-left: 1px solid black;
-        }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 
-        .border_thick_bottom {
-            border-bottom: 2px solid black;
-        }
 
-        .border_bottom {
-            border-bottom: 1px solid black;
-        }
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-        .border_thick_right {
-            border-right: 2px solid black;
-        }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
 
-        .border_right {
-            border-right: 1px solid black;
-        }
+<?php $all_teachers = $this->user_model->where('su', 2); ?>
 
-        .border_bottom {
-            border-right: 1px solid black;
-        }
+<form action="<?php echo site_url('workspace/assign_quiz_only') ?>" method="GET">
+    <div class="col-lg-4 col-lg-offset-0 col-md-4">
+        Select Section
+        <div id="data"></div>
+    </div>
+    <div class="col-lg-4 col-lg-offset-0 col-md-4">
+        <!--        --><?php //print_r($all_teachers);?>
+        Select Teacher for monitoring
+        <div id="teacher"></div>
 
-        .text_align_center {
-            text-align: center;
-        }
+    </div>
+    <div class="col-lg-4 col-lg-offset-0 col-md-4">
 
-        .padding_left_very_small {
-            padding-left: 5px;
-        }
+        <div class="form-group">
+            <h6>Date Start</h6>
+            <input id="date_start" class="form-control" name="date_start" placeholder="mm/dd/yyyy"/>
+        </div>
+        <div class="form-group">
+            <h6>Date End</h6>
+            <input id="date_end" class="form-control" name="date_end" placeholder="mm/dd/yyyy"/>
+        </div>
+        <div class="form-group">
+            <label>Percentage to Pass</label>
+            <select class="form-control pass_percentage" id="pass_percentage" name="pass_percentage"
+                    placeholder="Percentage">
+                <!--                --><?php //if ($quiz_id): ?>
+                <!--                    <option value="--><?php //echo $quiz_detail['pass_percentage']; ?><!--">-->
+                <?php //echo $quiz_detail['pass_percentage']; ?><!--(current)</option>-->
+                <!--                --><?php //endif ?>
+                <option value="50">50%</option>
+                <option value="60">60%</option>
+                <option value="70">70%</option>
+                <option value="80">80%</option>
+                <option value="90">90%</option>
+                <option value="100">100%</option>
 
-        .title {
-            font-size: 22px;
-            font-weight: bold;
-        }
+            </select>
+        </div>
+        <div class="form-group">
+            Duration (In Minutes)
+            <input type="number" class="form-control duration" id="duration" name="duration" placeholder="Duration"
+                   value=""/>
+        </div>
+        <div class="form-group">
+            Points per Question
+            <input type="number" class="form-control correct_score" name="correct_score" id="correct_score"
+                   placeholder="Points" value=""/>
+        </div>
 
-        .surname .one {
-            width: 2%;
-            text-align: right;
 
-        }
+        <div class="form-group">
+            <label>Allow to View Answers After Quiz</label>
+            <select class="form-control" id="view_answer" name="view_answer">
+                <!--                --><?php //if(!empty($quiz_detail['view_answer'])): ?>
+                <!--                    <option value="--><?php //echo $quiz_detail['view_answer']; ?><!--">-->
+                <?php //echo $quiz_detail['view_answer'] ? 'Yes' : 'No'; ?><!--(current)</option>-->
+                <!--                --><?php //endif; ?>
+                <option value="0">Yes</option>
+                <option value="1">No</option>
+            </select>
+        </div>
 
-        .surname .two {
-            border-right: 1px solid black;
-            padding-left: 3px;
-            width: 13%;
 
-        }
+        <input type="hidden" id="quid" name="quid" value="<?php echo $quid ?>"/>
+        <input type="hidden" id="section_checked" name="sections[]"/>
+        <input type="hidden" id="grade_checked" name="grades[]"/>
+        <input type="hidden" id="teacher_checked" name="teachers[]"/>
 
-        .surname .three {
-            padding-left: 3px;
-            width: 75%;
+        <input type="submit" class="btn btn-primary" id="submit">
 
-        }
+    </div>
+</form>
 
-        .table {
-            border-right: 2px solid black;
-            border-left: 2px solid black;
+<!---->
+<?php //$quiz_data = $this->quiz_model->get_quiz($quid); ?>
+<?php //$quiz_gids = explode(",", $quiz_data['gids']); ?>
+<?php //$quiz_teacher_ids = explode(",", $quiz_data['teacher_ids']); ?>
+<?php //$quiz_teacher_ids_count = count($quiz_teacher_ids); ?>
+<?php //print_r($quiz_teacher_ids_count); ?>
+<?php //print_r($quiz_gids); ?>
+<?php //exit; ?>
+<script>
+
+    $(function () {
+        $("#date_start").datepicker();
+        $("#date_end").datepicker();
+    });
+    $(document).ready(function () {
+        var grade = [
+        <?php foreach($all_levels as $key =>$value){
+            echo '{"id": "grade_'.$value['lid'].'", "text": "'.$value['level_name'].'","children":[';
+            foreach($all_sections as $section_key => $section_value){
+                if($section_value['lid'] == $value['lid']){
+                    echo "{'id' : 'section_".$section_value['gid']."', 'text' : '".$section_value['group_name']."' },";
+                }
+            }
+            echo ']},';
         }
-        .cs_id_no .two{
-            font-size: 8px;
-            background-color: #939393;
-            padding-left: 5px;
-            border-top: 1px solid black;
-            border-right: 1px solid black;
-            border-left: 1px solid black;
+        ?>
+        ];
+
+        var teacher = [
+        <?php foreach($all_teachers as $key =>$value){
+            echo '{"id": "teacher_'.$value['uid'].'","icon": "jstree-file", "text": "'.$value['first_name'].'"},';
         }
-        .cs_id_no .three{
-            font-size: 8px;
-            padding-left: 5px;
-            border-top: 1px solid black;
-        }
-        .one{
-            font-size: 8px;
-        }
-        .two{
-            font-size: 8px;
-        }
-        .three{
-            font-size: 8px;
-        }
-        .section_title{
-            border-top:1px solid black;
-            border-bottom:1px solid black;
-            border-left:2px solid black;
-            border-right:2px solid black;
-        }
-        .section_title_td{
-            background-color: #939393;
-            font-weight: bold;
-            font-style: italic;
-            padding-left: 5px;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="cs_form_no border_thick_top border_thick_left border_thick_right" style="width: 100%;">
-    <tbody>
-    <tr>
-        <td class="padding_left_very_small"><b><i>CS Form No. 212</i></b></td>
-    </tr>
-    </tbody>
-</table>
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="table" style="width: 100%;">
-    <tbody>
-    <tr>
-        <td class="padding_left_very_small"><b>Revised 2017</b></td>
-    </tr>
-    </tbody>
-</table>
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="table" style="width: 100%;">
-    <tbody>
-    <tr>
-        <td class="title text_align_center">PERSONAL DATA SHEET</td>
-    </tr>
-    </tbody>
-</table>
-<table border="0" cellpadding="0" cellspacing="0" class="table" style="width: 100%;">
-    <tbody>
-    <tr>
-        <td class=""><i><b>WARNING: Any misinterpretation made in the Personal Data Sheet and the Work Experience Sheet shall cause the filing of administrative/criminal case/s against the person&nbsp;</b></i></td>
-    </tr>
-    </tbody>
-</table>
-<table align="center" border="0" cellpadding="0" cellspacing="0" class="table" style="width: 100%;">
-    <tbody>
-    <tr>
-        <td class=""><i><b>READ THE ATTACHED GUIDE TO FILLING OUT THE PERSONAL DATA SHEET (PDS) BEFORE ACCOMPLISHING THE PDS FORM.</b></i></td>
-    </tr>
-    </tbody>
-</table>
-<table border="0" cellpadding="0" cellspacing="0" class="table cs_id_no border_bottom" style="width: 100%; margin">
-    <tbody>
-    <tr>
-        <td class="one">Print legibly. Tick appropriate boxes ( ) and use separate sheet if necessary. Indicate N/A if not applicable. &nbsp;<b>DO NOT ABBREVIATE.</b></td>
-        <td class="two">1. CS ID No.</td>
-        <td class="three">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(Do not fill up. For CSC use only)</td>
-    </tr>
-    </tbody>
-</table>
-<table border="0" cellpadding="0" cellspacing="0" class="table section_title" style="width: 100%;">
-    <tbody>
-    <tr>
-        <td class="section_title_td">I. PERSONAL INFORMATION</td>
-    </tr>
-    </tbody>
-</table>
-<table border="0" cellpadding="0" cellspacing="0" class="table surname" style="width: 100%;">
-    <tbody>
-    <tr>
-        <td class="one">2.</td>
-        <td class="two">SURNAME</td>
-        <td class="three">@@surname</td>
-    </tr>
-    </tbody>
-</table>
-<table border="0" cellpadding="0" cellspacing="0" class="table" style="width: 100%;">
-    <tbody>
-    <tr>
-        <td></td>
-        <td>FIRST NAME</td>
-        <td>@@first_name</td>
-        <td>
-            <p>NAME EXTENSION(JR,SR)</p>
-            <p>@@name_extension</p>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<table border="0" cellpadding="0" cellspacing="0" class="table" style="width: 100%;">
-    <tbody>
-    <tr>
-        <td></td>
-        <td>MIDDLE NAME</td>
-        <td>@@middle_name</td>
-    </tr>
-    </tbody>
-</table>
-<p></p>
-<p></p>
-</body>
-</html>
+        ?>
+        ];
+
+        $('#teacher').jstree({
+            'core': {
+                "check_callback": true,
+                'data': teacher,
+            },
+            "plugins": ["checkbox"]
+
+        }).on("ready.jstree", function (e, data) {
+            <?php foreach($quiz_teacher_ids as $quiz_teacher_ids_key => $quiz_teacher_ids_value):?>
+            $("#teacher_<?php echo $quiz_teacher_ids_value?>_anchor").click();
+            <?php endforeach; ?>
+        });
+        ;
+
+        $('#data').jstree({
+            'core': {
+                "check_callback": true,
+                'data': grade,
+
+            },
+            "plugins": ["checkbox"]
+
+        })
+                .on('create_node.jstree', function (e, data) {
+
+                })
+                .on("ready.jstree", function (e, data) {
+                    <?php $number_of_folders = 6; ?>
+                    <?php for($x=1;$x<=$number_of_folders;$x++):?>
+                    var grade_<?php echo $x;?>_parent_status = false;
+                    <?php endfor;?>
+
+                    <?php for($x=1;$x<=$number_of_folders;$x++):?>
+                    var grade_<?php echo $x;?>_aria_status = false;
+                    <?php endfor;?>
+                    $("#grade_1").find("i").eq(0).click();
+                    $("#grade_2").find("i").eq(0).click();
+                    $("#grade_3").find("i").eq(0).click();
+                    $("#grade_4").find("i").eq(0).click();
+                    $("#grade_5").find("i").eq(0).click();
+                    $("#grade_6").find("i").eq(0).click();
+
+                    <?php foreach($quiz_gids as $quiz_gids_key => $quiz_gids_value):?>
+                    $("#section_<?php echo $quiz_gids_value?>_anchor").click();
+                    <?php endforeach; ?>
+
+
+                    <?php for($x=1;$x<=$number_of_folders;$x++):?>
+                    setTimeout(
+                            function () {
+                                //true and false
+                                grade_<?php echo $x?>_aria_status = $("#grade_<?php echo $x?>").attr("aria-selected");
+                                grade_<?php echo $x?>_parent_status = $("#grade_<?php echo $x?>").find("a").eq(0).find("i").eq(0).hasClass("jstree-undetermined");
+                                if (grade_<?php echo $x?>_aria_status == "false" && !grade_<?php echo $x?>_parent_status) {
+                                    $("#grade_<?php echo $x?>").find("i").eq(0).click();
+                                }
+                            }, 100
+                    );
+                    <?php endfor;?>
+                });
+
+        $("#submit").click(function () {
+            var checked = $('#data').jstree("get_checked", null, true);
+            var checked_teacher = $('#teacher').jstree("get_checked", null, true);
+            var section_checked = [];
+            var grade_checked = [];
+            var teacher_checked = [];
+            $.each(checked, function (key, value) {
+                if (!value.indexOf("section_")) {
+
+                    value = value.replace("section_", "");
+
+                    section_checked.push(value);
+                } else {
+                    value = value.replace("grade_", "");
+                    grade_checked.push(value);
+                }
+            });
+            $.each(checked_teacher, function (key, value) {
+
+
+                teacher_checked.push(value);
+
+            });
+            $("#section_checked").val(section_checked);
+            $("#grade_checked").val(grade_checked);
+            $("#teacher_checked").val(teacher_checked);
+
+        });
+
+    });
+</script>
