@@ -6,6 +6,15 @@ $data = array("lesson_id" => $lesson_id);
 <?php $lesson_information = $this->lessons_model->lesson_by_id($lesson_id); ?>
 <?php $root_link = base_url('upload/lessons/fileview'); ?>
 <?php $base_url = base_url(); ?>
+
+<?php
+    function echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url){?>
+        <li style="cursor:pointer" class="content"
+            value="<?php echo $root_link . "?filename=" . urlencode($lesson_contents_value['content_name']); ?>&filelocation=<?php echo urlencode($folder_location) ?>&base_url=<?php echo $base_url ?>"><?php echo urlencode($lesson_contents_value['content_name']); ?></li>
+<?php
+    }
+?>
+
 <div class="container col-lg-12 col-md-12">
     <div class="left-container" id="right_container"
          style="margin-left: 0px; background-color: rgb(242, 207, 165); height: auto; width: 230px; float: left; padding-top: 0px;">
@@ -25,8 +34,7 @@ $data = array("lesson_id" => $lesson_id);
                         <li style="cursor:pointer" class="content" type="quiz"
                             value="<?php echo $lesson_contents_value['content_name']; ?>"><?php echo $lesson_contents_value['content_name']; ?></li>
                     <?php } else { ?>
-                        <li style="cursor:pointer" class="content" type="file"
-                            value="<?php echo $root_link . $folder_location . $lesson_contents_value['content_name']; ?>"><?php echo $lesson_contents_value['content_name']; ?></li>
+                        <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
                     <?php } ?>
 
 
@@ -40,8 +48,7 @@ $data = array("lesson_id" => $lesson_id);
             <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
                 <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
                 <?php if ($lesson_contents_value['folder_name'] == "Explore") { ?>
-                    <li style="cursor:pointer" class="content"
-                        value="<?php echo $root_link . "?filename=" . urlencode($lesson_contents_value['content_name']); ?>&filelocation=<?php echo urlencode($folder_location) ?>&base_url=<?php echo $base_url ?>"><?php echo urlencode($lesson_contents_value['content_name']); ?></li>
+                    <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
                 <?php } ?>
 
             <?php } ?>
@@ -52,8 +59,7 @@ $data = array("lesson_id" => $lesson_id);
             <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
                 <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
                 <?php if ($lesson_contents_value['folder_name'] == "Explain") { ?>
-                    <li style="cursor:pointer" class="content"
-                        value="<?php echo $root_link . "?filename=" . urlencode($lesson_contents_value['content_name']); ?>&filelocation=<?php echo urlencode($folder_location) ?>&base_url=<?php echo $base_url ?>"><?php echo urlencode($lesson_contents_value['content_name']); ?></li>
+                    <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
                 <?php } ?>
 
             <?php } ?>
@@ -64,8 +70,7 @@ $data = array("lesson_id" => $lesson_id);
             <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
                 <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
                 <?php if ($lesson_contents_value['folder_name'] == "Extend") { ?>
-                    <li style="cursor:pointer" class="content"
-                        value="<?php echo $root_link . "?filename=" . urlencode($lesson_contents_value['content_name']); ?>&filelocation=<?php echo urlencode($folder_location) ?>&base_url=<?php echo $base_url ?>"><?php echo urlencode($lesson_contents_value['content_name']); ?></li>
+                    <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
                 <?php } ?>
 
             <?php } ?>
@@ -76,8 +81,7 @@ $data = array("lesson_id" => $lesson_id);
             <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
                 <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
                 <?php if ($lesson_contents_value['folder_name'] == "Evaluate") { ?>
-                    <li style="cursor:pointer" class="content"
-                        value="<?php echo $root_link . "?filename=" . urlencode($lesson_contents_value['content_name']); ?>&filelocation=<?php echo urlencode($folder_location) ?>&base_url=<?php echo $base_url ?>"><?php echo urlencode($lesson_contents_value['content_name']); ?></li>
+                    <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
                 <?php } ?>
 
             <?php } ?>
@@ -89,8 +93,7 @@ $data = array("lesson_id" => $lesson_id);
             <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
                 <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
                 <?php if ($lesson_contents_value['folder_name'] == "Other Resources") { ?>
-                    <li style="cursor:pointer" class="content"
-                        value="<?php echo $root_link . "?filename=" . urlencode($lesson_contents_value['content_name']); ?>&filelocation=<?php echo urlencode($folder_location) ?>&base_url=<?php echo $base_url ?>"><?php echo urlencode($lesson_contents_value['content_name']); ?></li>
+                    <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
                 <?php } ?>
             <?php } ?>
         </ul>
