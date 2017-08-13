@@ -99,7 +99,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                                 <a href="<?php echo $sent_data['back_url'] ?>">
                                 <button class="btn btn-default"
                                         type="submit"><?php echo $this->lang->line('submit'); ?></button>
-
+                                </a>
                             </div>
                         </div>
 
