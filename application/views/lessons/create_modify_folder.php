@@ -8,9 +8,9 @@
     }
 </style>
 
-<link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
+<link href="<?php echo base_url().$css_directory."hayageek_file_upload.css" ?>" rel="stylesheet">
+<script src="<?php echo base_url().$css_directory."jquery.min.js" ?>"></script>
+<script src="<?php echo base_url().$css_directory."jquery.uploadfile.min.js" ?>"></script>
 
 <?php $this->load->helper('url'); ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>js/jstree/dist/themes/default/style.min.css"/>
