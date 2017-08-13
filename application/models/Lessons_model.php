@@ -208,7 +208,7 @@ Class Lessons_model extends CI_Model
                 );
                 $this->save_files_to_database($lesson_data);
 
-                $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/assessment/upload/lessons/";
+                $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
                 $folder_to_create = $new_lesson_id . "_" . $lesson_content_value['folder_name'];
                 $folder = $output_dir . $folder_to_create;
                 if (!file_exists($folder)) {
@@ -283,13 +283,13 @@ Class Lessons_model extends CI_Model
                 );
                 $this->save_files_to_database($lesson_data);
 
-                $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/assessment/upload/lessons/";
+                $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
                 $folder_to_create = $new_lesson_id . "_" . $lesson_content_value['folder_name'];
                 $folder = $output_dir . $folder_to_create;
                 if (!file_exists($folder)) {
                     mkdir($folder, 0777, true);
                 }
-                $document_root= $_SERVER['DOCUMENT_ROOT']."/assessment";
+                $document_root= $_SERVER['DOCUMENT_ROOT']."/brainee";
                 $file = $document_root."/upload/lessons/".$value."_".$lesson_content_value['folder_name']."/".$lesson_content_value['content_name'];
                 $newfile = $document_root."/upload/lessons/".$new_lesson_id."_".$lesson_content_value['folder_name']."/".$lesson_content_value['content_name'];
                 copy($file, $newfile);

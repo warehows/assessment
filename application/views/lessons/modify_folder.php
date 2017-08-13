@@ -292,7 +292,7 @@
                     create: function () {
                         //jquery
                         var current_url = $(location).attr('href');
-                        window.location.replace("<?php echo site_url()?>/assign?redirect="+current_url);
+                        window.open('<?php echo site_url()?>/assign/create?next_page=assign_quiz%2Fmodify_info',"_blank");
                     },
                     cancel: function () {
                         $.alert('Canceled!');
