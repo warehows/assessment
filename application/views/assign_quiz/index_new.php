@@ -33,17 +33,19 @@
                         <tr>
                             <th></th>
                             <th>Quiz Name</th>
+                            <th>Semester</th>
 
                         </tr>
                         </thead>
                         <tbody>
-
+                        <?php $semesterData = array(1 => 'First Semester',2 => 'Second Semester',3 => 'Third Semester',4 => 'Fourth Semester'); ?>
                         <?php foreach ($all_quiz as $key => $value) { ?>
                             <tr>
                                 <td><input type="checkbox" class="selected_lesson_class" name="selected_quiz[]" value="<?php echo $value['quid']?>"/></td>
                                 <td><?php echo $value['quiz_name'] ?></td>
-<!--                                <td>--><?php //print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?><!--</td>-->
-<!--                                <td>--><?php //echo $value['level_id'] ?><!--</td>-->
+                                <td><?php if(isset($semesterData[$value['semester']])){echo $semesterData[$value['semester']];}?></td>
+                                <!--                                <td>--><?php //print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?><!--</td>-->
+                                <!--                                <td>--><?php //echo $value['level_id'] ?><!--</td>-->
                             </tr>
                         <?php } ?>
 

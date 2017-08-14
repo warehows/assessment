@@ -37,12 +37,25 @@ if (array_key_exists("quid", $post)) {
                echo $quiz_detail['description'];
            } ?>"/>
 </div>
+<?php
+$semesterData = array(1 => 'First Semester',2 => 'Second Semester',3 => 'Third Semester',4 => 'Fourth Semester');
+$currentSem = isset($quiz_detail['semester']) ? $quiz_detail['semester'] : '';
+?>
+<div class="form-group">
+    <label for="inputEmail" class="sr-only">Semester</label>
+    <select id="semester" name="semester" class="form-control">
+        <?php foreach ($semesterData as $key => $value): ?>
+            <option <?php echo ($currentSem == $key) ? 'selected' : '';?> value="<?php echo $key; ?>"><?php echo $value; ?></option>
+        <?php endforeach; ?>
+
+    </select>
+</div>
 <div class="form-group">
 
     <select class="form-control grade" id="grade">
         <?php foreach ($all_grades as $grade_key => $grade_value) { ?>
             <option
-                value="<?php echo $grade_value['lid'] ?>" <?php if ($quiz_id && $quiz_detail['lid'] == $grade_value['lid']) {
+                    value="<?php echo $grade_value['lid'] ?>" <?php if ($quiz_id && $quiz_detail['lid'] == $grade_value['lid']) {
                 echo "selected";
             } ?>><?php echo $grade_value['level_name'] ?></option>
         <?php } ?>
@@ -55,7 +68,7 @@ if (array_key_exists("quid", $post)) {
             <option <?php if ($quiz_id && $quiz_detail['cid'] == $subject_value['cid']) {
                 echo "selected";
             } ?>
-                value="<?php echo $subject_value['cid'] ?>"><?php echo $subject_value['category_name'] ?></option>
+                    value="<?php echo $subject_value['cid'] ?>"><?php echo $subject_value['category_name'] ?></option>
         <?php } ?>
     </select>
 </div>
@@ -77,37 +90,40 @@ if (array_key_exists("quid", $post)) {
         <?php } ?>
 
 
-            function create_new_quiz() {
-                var quiz_name = $("#quiz_name").val();
-                var lid = $("#grade").val();
-                var cid = $("#subject").val();
-                var description = $("#description").val();
-                var uid = <?php echo $logged_in['uid']?>;
+        function create_new_quiz() {
+            var quiz_name = $("#quiz_name").val();
+            var lid = $("#grade").val();
+            var cid = $("#subject").val();
+            var description = $("#description").val();
+            var semester = $("#semester").val();
+            var uid = <?php echo $logged_in['uid']?>;
+            alert(semester);
 
-                var returned_value;
+            var returned_value;
 
-                $.ajax({
-                    url: "<?php echo site_url('assign/insert_quiz');?>",
-                    type: "POST",
-                    async: false,
-                    data: {
-                        quiz_name: quiz_name,
-                        cid: cid,
-                        uid: uid,
-                        lid: lid,
-                        description: description,
-                    }
-                }).done(function (value) {
-                    if (value != "Error") {
-                        returned_value = value;
-                    } else {
-                        returned_value = false;
-                    }
+            $.ajax({
+                url: "<?php echo site_url('assign/insert_quiz');?>",
+                type: "POST",
+                async: false,
+                data: {
+                    quiz_name: quiz_name,
+                    cid: cid,
+                    uid: uid,
+                    lid: lid,
+                    description: description,
+                    semester: semester,
+                }
+            }).done(function (value) {
+                if (value != "Error") {
+                    returned_value = value;
+                } else {
+                    returned_value = false;
+                }
 
-                });
+            });
 
-                return $.trim(returned_value);
-            }
+            return $.trim(returned_value);
+        }
 
 
         function update_quiz() {
@@ -115,11 +131,12 @@ if (array_key_exists("quid", $post)) {
             var lid = $("#grade").val();
             var cid = $("#subject").val();
             var description = $("#description").val();
+            var semester = $("#semester").val();
             var uid = <?php echo $logged_in['uid']?>;
             <?php if (array_key_exists("quid",$post)) { ?>
-                <?php if($logged_in['su']==2): ?>
-                    var workspace_id = <?php echo $workspace_id?>;
-                <?php endif; ?>
+            <?php if($logged_in['su']==2): ?>
+            var workspace_id = <?php echo $workspace_id?>;
+            <?php endif; ?>
             <?php } ?>
 
 
@@ -134,6 +151,7 @@ if (array_key_exists("quid", $post)) {
                     lid: lid,
                     quid: quid,
                     description: description,
+                    semester: semester,
                     <?php if (array_key_exists("quid",$post)) { ?>
                     <?php if($logged_in['su']==2): ?>
                     workspace_id: workspace_id,
@@ -173,6 +191,23 @@ if (array_key_exists("quid", $post)) {
 
         });
 
+        $("#semester").focusout(function () {
+
+            if (!quid) {
+                if ($("#quiz_name").val() != "") {
+                    quid = create_new_quiz();
+                    $("#quid").val(quid);
+                    $("#quiz_id").val(quid);
+                } else {
+                    //add error here
+                }
+
+            } else {
+                update_quiz();
+            }
+
+
+        });
         $("#description").focusout(function () {
 
             if (!quid) {
