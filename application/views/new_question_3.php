@@ -21,7 +21,6 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                         <div class="login-panel panel panel-default">
                             <div class="panel-body">
 
-
                                 <?php
                                 if ($this->session->flashdata('message')) {
                                     echo $this->session->flashdata('message');
@@ -99,7 +98,6 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                                     <?php
                                 }
                                 ?>
-
 
                                 <input id="magic_quiz_id" name="quiz_id" type="hidden" value="">
                                 <button class="btn btn-default"
