@@ -3,12 +3,12 @@
 
     <h3><?php echo $title; ?></h3>
     <?php $logged_in = $this->session->userdata('logged_in'); ?>
-    <?php if ($logged_in['uid'] == 1){ ?>
+    <?php if ($logged_in['uid'] == 1) { ?>
         <a href="<?php echo site_url('assign'); ?>"
            class="btn btn-info">Done
         </a>
 
-    <?php }else{ ?>
+    <?php } else { ?>
         <a href="<?php echo site_url('workspace'); ?>"
            class="btn btn-info">Done
         </a>
@@ -156,11 +156,16 @@
                                 <?php
                                 if (in_array($val['qid'], explode(',', $quiz['qids']))) {
                                     echo $this->lang->line('added');
+
                                 } else {
                                     echo $this->lang->line('add');
                                 }
                                 ?>
                             </a>
+                            <button class="btn btn-danger remove" id="remove-<?php echo $val['qid']; ?>"
+                                    quid="<?php echo $quid; ?>" qid="<?php echo $val['qid']; ?>">
+                                Remove
+                            </button>
 
 
                         </td>
@@ -195,6 +200,34 @@
 </div>
 
 <script>
+    $(document).ready(function () {
+        $(".remove").hide();
+        <?php foreach ($result as $key => $val) { ?>
+            <?php if (in_array($val['qid'], explode(',', $quiz['qids']))) {?>
+                $("#remove-<?php echo $val['qid'] ?>").show();
+            <?php } else { ?>
+                $("#remove-<?php echo $val['qid'] ?>").hide();
+            <?php } ?>
+        <?php } ?>
+        $(".remove").click(function(){
+            var qid = $(this).attr("qid");
+            var quid = $(this).attr("quid");
+            var did = '#q' + qid;
+            var site_url = "<?php echo site_url('quiz')?>";
+            $.ajax({
+                type: "POST",
+                data: {quid:quid},
+                url: site_url + '/remove_qid/' + quid + '/' + qid,
+                success: function (data) {
+                    $("#q"+qid).text("add");
+                    $("#remove-"+qid).hide();
+                },
+                error: function (xhr, status, strErr) {
+                    //alert(status);
+                }
+            });
+        });
+    });
     function addquestion(quid, qid) {
         var base_url = "<?php echo base_url()?>";
         var did = '#q' + qid;
@@ -205,7 +238,7 @@
             url: base_url + "index.php/quiz/add_qid/" + quid + '/' + qid,
             success: function (data) {
                 $(did).html(document.getElementById('added').value);
-
+                $("#remove-"+qid).show();
             },
             error: function (xhr, status, strErr) {
                 //alert(status);
