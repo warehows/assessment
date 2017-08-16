@@ -103,4 +103,27 @@
             $("#delete").show();
         }
     });
+   /* $(document).ready(function() {
+        // Setup - add a text input to each footer cell
+        $('#lesson_lists thead th').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text" placeholder=" '+title+'" />' );
+        } );
+
+        // DataTable
+        var table = $('#lesson_lists').DataTable();
+
+        // Apply the search
+        table.columns().every( function () {
+            var that = this;
+
+            $( 'input', this.footer() ).on( 'keyup change', function () {
+                if ( that.search() !== this.value ) {
+                    that
+                        .search( this.value )
+                        .draw();
+                }
+            } );
+        } );
+    } );*/
 </script>
