@@ -74,7 +74,7 @@
         }
 
     });
-    $(".selected_lesson_class").change(function () {
+    $(document).on('click', ".selected_lesson_class", function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {
             $("#edit").show();
@@ -103,6 +103,7 @@
             $("#delete").show();
         }
     });
+
    /* $(document).ready(function() {
         // Setup - add a text input to each footer cell
         $('#lesson_lists thead th').each( function () {
