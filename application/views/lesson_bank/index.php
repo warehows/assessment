@@ -93,7 +93,7 @@
         $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
         $("#view").click();
     });
-    $(".selected_lesson_class").change(function () {
+    $(document).on('click', ".selected_lesson_class", function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {
             $("#edit").show();
