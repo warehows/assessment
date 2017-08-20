@@ -21,7 +21,7 @@
         width: calc(100% + 30px); /* Adjust as needed */
     }
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="<?php echo $input['base_url']; ?>js/jquery.min.js"></script>
 <?php
 
 
@@ -33,28 +33,21 @@ $file_extension = $exploded_filename[1];
 $filelocation = $input['filelocation'];
 
 $base_url = $input['base_url'] . "upload/lessons/";
-if (
-    $file_extension == "png" ||
-    $file_extension == "jpg"
-) {
+if ($file_extension == "png" || $file_extension == "jpg") {
 
     echo '<img id="image_view" src="' . $base_url . $filelocation . $input['filename'] . '"/>';
-} elseif (
-    $file_extension == "mp4"
-) {
-    ?>
+}elseif($file_extension == "mp4"){?>
     <video width="100%" height="97%" controls>
         <source src="<?php echo $base_url . $filelocation . $input['filename'] ?>" type="video/mp4">
         <source src="movie.ogg" type="video/ogg">
         Your browser does not support the video tag.
     </video>
+<?php } elseif ($file_extension == "pdf") { ?>
 
-
-<?php } elseif (
-$file_extension == "pdf"
-) { ?>
     <object data="<?php echo $base_url . $filelocation . $input['filename']?>" disabled=""></object>
-<?php } ?>
+<?php }elseif($file_extension == "odp"){ ?>
+    <iframe src = "<?php echo $input['base_url']?>ViewerJS/#../upload/lessons/<?php echo $filelocation.$input['filename']; ?>" width='100%' height='100%' allowfullscreen webkitallowfullscreen></iframe>
+<?php }; ?>
 
 <script>
 
