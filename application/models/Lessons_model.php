@@ -212,9 +212,9 @@ Class Lessons_model extends CI_Model
                 $folder_to_create = $new_lesson_id . "_" . $lesson_content_value['folder_name'];
                 $folder = $output_dir . $folder_to_create;
                 if (!file_exists($folder)) {
-                    $oldmask = umask(0);
-                    mkdir($folder, 0777, true);
-                    umask($oldmask);
+                    $old = umask(0);
+                    mkdir($folder,0777);
+                    umask($old);
                 }
                 $document_root= $_SERVER['DOCUMENT_ROOT']."/assessment";
                 $file = $document_root."/upload/lessons/".$value."_".$lesson_content_value['folder_name']."/".$lesson_content_value['content_name'];
@@ -287,7 +287,9 @@ Class Lessons_model extends CI_Model
                 $folder_to_create = $new_lesson_id . "_" . $lesson_content_value['folder_name'];
                 $folder = $output_dir . $folder_to_create;
                 if (!file_exists($folder)) {
-                    mkdir($folder, 0777, true);
+                    $old = umask(0);
+                    mkdir($folder,0777);
+                    umask($old);
                 }
                 $document_root= $_SERVER['DOCUMENT_ROOT']."/brainee";
                 $file = $document_root."/upload/lessons/".$value."_".$lesson_content_value['folder_name']."/".$lesson_content_value['content_name'];

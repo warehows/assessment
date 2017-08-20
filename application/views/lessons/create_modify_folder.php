@@ -79,7 +79,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-lg-offset-9 col-md-3 col-md-offset-9 item social">
-                    <p class="copyright">Powered by Click Innovation © 2017</p>
+                    <p class="copyright">Powered by Click Innovation ï¿½ 2017</p>
                 </div>
             </div>
         </div>
@@ -149,7 +149,7 @@
             showDownload: false,
             dragdropWidth: '100%',
             fileName: "myfile",
-            allowedTypes: "jpg,png,gif,pptx,ppt,mp4,pdf,docx,doc",
+            allowedTypes: "jpg,png,gif,pptx,ppt,mp4,pdf,docx,doc,odp",
             uploadStr: "Upload Files",
             sequential: true,
             sequentialCount: 1,
