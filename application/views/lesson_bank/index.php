@@ -143,7 +143,7 @@
     $("#delete").hide();
     $("#assign").hide();
 
-    $(document).on('click', ".selected_lesson_class", function () {
+    $(".selected_quiz_class").change(function () {
         selected_count = $(document).find('.selected_quiz_class:checked').length;
         if (selected_count == 1) {
             $("#edit").show();

@@ -38,6 +38,7 @@ class Assign extends CI_Controller
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_grades'] = $this->level_model->all();
         $data['logged_in'] = $logged_in;
+        $data['subject_model'] = $this->subjects_model;
 
         $this->data = $data;
 

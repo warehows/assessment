@@ -27,12 +27,13 @@
                     <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
                     <button class="btn btn-primary" id="delete" name="submit" value="admin_delete">Delete</button>
                     <button class="btn btn-primary" id="assign" name="submit" value="assign">Assign</button>
-
+                    <?php $subject_model = $this->subjects_model?>
                     <table id="lesson_lists" class="table table-bordered table-hover" >
                         <thead>
                         <tr>
                             <th></th>
                             <th>Quiz Name</th>
+                            <th>Subject</th>
                             <th>Semester</th>
 
                         </tr>
@@ -43,6 +44,7 @@
                             <tr>
                                 <td><input type="checkbox" class="selected_lesson_class" name="selected_quiz[]" value="<?php echo $value['quid']?>"/></td>
                                 <td><?php echo $value['quiz_name'] ?></td>
+                                <td><?php echo $subject_model->where('cid',$value['cid'])[0]['category_name'] ?></td>
                                 <td><?php if(isset($semesterData[$value['semester']])){echo $semesterData[$value['semester']];}?></td>
                                 <!--                                <td>--><?php //print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?><!--</td>-->
                                 <!--                                <td>--><?php //echo $value['level_id'] ?><!--</td>-->
