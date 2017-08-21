@@ -143,7 +143,7 @@
     $("#delete").hide();
     $("#assign").hide();
 
-    $(".selected_quiz_class").change(function () {
+    $(document).on('click', ".selected_lesson_class", function () {
         selected_count = $(document).find('.selected_quiz_class:checked').length;
         if (selected_count == 1) {
             $("#edit").show();
@@ -177,27 +177,27 @@
         }
     });
 
-    $(document).ready(function() {
-        // Setup - add a text input to each footer cell
-        $('#lesson_lists thead th').each( function () {
-            var title = $(this).text();
-            $(this).html( '<input type="text" placeholder=" '+title+'" />' );
-        } );
-
-        // DataTable
-        var table = $('#lesson_lists').DataTable();
-
-        // Apply the search
-        table.columns().every( function () {
-            var that = this;
-
-            $( 'input', this.footer() ).on( 'keyup change', function () {
-                if ( that.search() !== this.value ) {
-                    that
-                        .search( this.value )
-                        .draw();
-                }
-            } );
-        } );
-    } );
+//    $(document).ready(function() {
+//        // Setup - add a text input to each footer cell
+//        $('#lesson_lists thead th').each( function () {
+//            var title = $(this).text();
+//            $(this).html( '<input type="text" placeholder=" '+title+'" />' );
+//        } );
+//
+//        // DataTable
+//        var table = $('#lesson_lists').DataTable();
+//
+//        // Apply the search
+//        table.columns().every( function () {
+//            var that = this;
+//
+//            $( 'input', this.footer() ).on( 'keyup change', function () {
+//                if ( that.search() !== this.value ) {
+//                    that
+//                        .search( this.value )
+//                        .draw();
+//                }
+//            } );
+//        } );
+//    } );
 </script>
