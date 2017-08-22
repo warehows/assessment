@@ -387,7 +387,7 @@ class Qbank extends CI_Controller {
     }
 
 
-    public function edit_question_2($qid)
+    public function edit_question_2($qid,$quid)
     {
 
         $logged_in=$this->session->userdata('logged_in');
@@ -400,7 +400,7 @@ class Qbank extends CI_Controller {
             }else{
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('error_to_update_data')." </div>");
             }
-            redirect('qbank/edit_question_2/'.$qid);
+            redirect('qbank/edit_question_2/'.$qid."/".$quid);
         }
 
 
@@ -412,16 +412,17 @@ class Qbank extends CI_Controller {
         $data['category_list']=$this->qbank_model->category_list();
         // fetching level list
         $data['level_list']=$this->qbank_model->level_list();
+        $data['quid'] = $quid;
         /*		 $this->load->view('header',$data);
                 $this->load->view('edit_question_2',$data);
                 $this->load->view('material_part/footer_material',$data);*/
 
         if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('edit_question_2',$data);
-        $this->load->view('material_part/footer_material',$data);
+        $this->load->view('new_material/footer',$data);
     }
 
-    public function edit_question_2_bool($qid)
+    public function edit_question_2_bool($qid,$quid)
     {
 
         $logged_in=$this->session->userdata('logged_in');
@@ -434,7 +435,7 @@ class Qbank extends CI_Controller {
             }else{
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('error_to_update_data')." </div>");
             }
-            redirect('qbank/edit_question_2_bool/'.$qid);
+            redirect('qbank/edit_question_2_bool/'.$qid."/".$quid);
         }
 
 
@@ -446,17 +447,18 @@ class Qbank extends CI_Controller {
         $data['category_list']=$this->qbank_model->category_list();
         // fetching level list
         $data['level_list']=$this->qbank_model->level_list();
+        $data['quid'] = $quid;
         /*		 $this->load->view('header',$data);
                 $this->load->view('edit_question_2',$data);
                 $this->load->view('material_part/footer_material',$data);*/
 
         if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('edit_question_2_bool',$data);
-        $this->load->view('material_part/footer_material',$data);
+        $this->load->view('new_material/footer',$data);
     }
 
 
-    public function edit_question_3($qid)
+    public function edit_question_3($qid,$quid)
     {
 
         $logged_in=$this->session->userdata('logged_in');
@@ -469,7 +471,7 @@ class Qbank extends CI_Controller {
             }else{
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('error_to_update_data')." </div>");
             }
-            redirect('qbank/edit_question_3/'.$qid);
+            redirect('qbank/edit_question_3/'.$qid."/".$quid);
         }
 
 
@@ -481,17 +483,18 @@ class Qbank extends CI_Controller {
         $data['category_list']=$this->qbank_model->category_list();
         // fetching level list
         $data['level_list']=$this->qbank_model->level_list();
+        $data['quid'] = $quid;
         /*		 $this->load->view('header',$data);
                 $this->load->view('edit_question_3',$data);
                 $this->load->view('material_part/footer_material',$data);*/
 
         if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('edit_question_3',$data);
-        $this->load->view('material_part/footer_material',$data);
+        $this->load->view('new_material/footer',$data);
     }
 
 
-    public function edit_question_4($qid)
+    public function edit_question_4($qid,$quid)
     {
 
         $logged_in=$this->session->userdata('logged_in');
@@ -504,7 +507,7 @@ class Qbank extends CI_Controller {
             }else{
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('error_to_update_data')." </div>");
             }
-            redirect('qbank/edit_question_4/'.$qid);
+            redirect('qbank/edit_question_4/'.$qid."/".$quid);
         }
 
 
@@ -516,17 +519,18 @@ class Qbank extends CI_Controller {
         $data['category_list']=$this->qbank_model->category_list();
         // fetching level list
         $data['level_list']=$this->qbank_model->level_list();
+        $data['quid'] = $quid;
         /*		 $this->load->view('header',$data);
                 $this->load->view('edit_question_4',$data);
                 $this->load->view('material_part/footer_material',$data);*/
 
         if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('edit_question_4',$data);
-        $this->load->view('material_part/footer_material',$data);
+        $this->load->view('new_material/footer',$data);
     }
 
 
-    public function edit_question_5($qid)
+    public function edit_question_5($qid,$quid)
     {
 
         $logged_in=$this->session->userdata('logged_in');
@@ -539,7 +543,7 @@ class Qbank extends CI_Controller {
             }else{
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('error_to_update_data')." </div>");
             }
-            redirect('qbank/edit_question_5/'.$qid);
+            redirect('qbank/edit_question_5/'.$qid."/".$quid);
         }
 
 
@@ -551,13 +555,14 @@ class Qbank extends CI_Controller {
         $data['category_list']=$this->qbank_model->category_list();
         // fetching level list
         $data['level_list']=$this->qbank_model->level_list();
+        $data['quid'] = $quid;
         /*		 $this->load->view('header',$data);
                 $this->load->view('edit_question_5',$data);
                 $this->load->view('material_part/footer_material',$data);*/
 
         if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('edit_question_5',$data);
-        $this->load->view('material_part/footer_material',$data);
+        $this->load->view('new_material/footer',$data);
     }
 
 
