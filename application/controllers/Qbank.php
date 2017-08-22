@@ -51,7 +51,7 @@ class Qbank extends CI_Controller {
         $this->load->view('material_part/footer_material',$data);
     }
 
-    public function remove_question($qid){
+    public function remove_question($qid,$quid){
 
         $logged_in=$this->session->userdata('logged_in');
         if($logged_in['su']<'1'){
@@ -64,7 +64,8 @@ class Qbank extends CI_Controller {
             $this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('error_to_remove')." </div>");
 
         }
-        redirect('qbank');
+
+        redirect(site_url("quiz/add_question/")."/".$quid);
 
 
     }
@@ -346,8 +347,9 @@ class Qbank extends CI_Controller {
 
 
 
-    public function edit_question_1($qid)
+    public function edit_question_1($qid,$quid)
     {
+
 
         $logged_in=$this->session->userdata('logged_in');
         if($logged_in['su']<'1'){
@@ -359,7 +361,7 @@ class Qbank extends CI_Controller {
             }else{
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('error_to_update_data')." </div>");
             }
-            redirect('qbank/edit_question_1/'.$qid);
+            redirect('qbank/edit_question_1/'.$qid."/".$quid);
         }
 
 
@@ -371,13 +373,17 @@ class Qbank extends CI_Controller {
         $data['category_list']=$this->qbank_model->category_list();
         // fetching level list
         $data['level_list']=$this->qbank_model->level_list();
+        $data['quid'] = $quid;
         /*		 $this->load->view('header',$data);
                 $this->load->view('edit_question_1',$data);
                 $this->load->view('material_part/footer_material',$data);*/
 
-        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+        if ($logged_in['su']== 1){
+            if ($logged_in['su']== 1){
+                $this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('edit_question_1',$data);
-        $this->load->view('material_part/footer_material',$data);
+        $this->load->view('new_material/footer',$data);
+
     }
 
 

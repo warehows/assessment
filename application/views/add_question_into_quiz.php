@@ -93,7 +93,8 @@
                     <th><?php echo $this->lang->line('category_name'); ?>
                         / <?php echo $this->lang->line('level_name'); ?></th>
                     <th><?php echo $this->lang->line('percent_corrected'); ?></th>
-                    <th><?php echo $this->lang->line('action'); ?> </th>
+                    <th>Add Question</th>
+                    <th>Question Action</th>
                 </tr>
                 <?php
                 if (count($result) == 0) {
@@ -107,6 +108,28 @@
                 }
                 foreach ($result as $key => $val) {
                     ?>
+                    <?php
+                    $qn=1;
+                    if($val['question_type']==$this->lang->line('multiple_choice_single_answer')){
+                        $qn=1;
+                    }
+                    if($val['question_type']==$this->lang->line('multiple_choice_multiple_answer')){
+                        $qn=2;
+                    }
+                    if($val['question_type']==$this->lang->line('match_the_column')){
+                        $qn=3;
+                    }
+                    if($val['question_type']==$this->lang->line('short_answer')){
+                        $qn=4;
+                    }
+                    if($val['question_type']==$this->lang->line('long_answer')){
+                        $qn=5;
+                    }
+                    if($val['question_type']=='True or False'){
+                        $qn=8;
+                    }
+
+                    ?>
                     <tr>
                         <td>
                             <a href="javascript:show_question_stat('<?php echo $val['qid']; ?>');">+</a> <?php echo $val['qid']; ?>
@@ -114,23 +137,21 @@
                         <td><?php echo substr(strip_tags($val['question']), 0, 50); ?>
 
                             <span style="display:none;" id="stat-<?php echo $val['qid']; ?>">
- <table class="table table-bordered">
-     <tr>
-         <td><?php echo $this->lang->line('no_times_corrected'); ?></td>
-         <td><?php echo $val['no_time_corrected']; ?></td>
-     </tr>
-     <tr>
-         <td><?php echo $this->lang->line('no_times_incorrected'); ?></td>
-         <td><?php echo $val['no_time_incorrected']; ?></td>
-     </tr>
-     <tr>
-         <td><?php echo $this->lang->line('no_times_unattempted'); ?></td>
-         <td><?php echo $val['no_time_unattempted']; ?></td>
-     </tr>
- </table>
- </span>
-
-
+                                 <table class="table table-bordered">
+                                     <tr>
+                                         <td><?php echo $this->lang->line('no_times_corrected'); ?></td>
+                                         <td><?php echo $val['no_time_corrected']; ?></td>
+                                     </tr>
+                                     <tr>
+                                         <td><?php echo $this->lang->line('no_times_incorrected'); ?></td>
+                                         <td><?php echo $val['no_time_incorrected']; ?></td>
+                                     </tr>
+                                     <tr>
+                                         <td><?php echo $this->lang->line('no_times_unattempted'); ?></td>
+                                         <td><?php echo $val['no_time_unattempted']; ?></td>
+                                     </tr>
+                                 </table>
+                            </span>
                         </td>
                         <td><?php echo $val['question_type']; ?></td>
                         <td><?php echo $val['category_name']; ?> / <span
@@ -163,11 +184,19 @@
                                 ?>
                             </a>
                             <button class="btn btn-danger remove" id="remove-<?php echo $val['qid']; ?>"
-                                    quid="<?php echo $quid; ?>" qid="<?php echo $val['qid']; ?>">
+                                             quid="<?php echo $quid; ?>" qid="<?php echo $val['qid']; ?>">
                                 Remove
                             </button>
 
 
+                        </td>
+                        <td>
+                            <?php if($qn==8): ?>
+                                <a href="<?php echo site_url('qbank/edit_question_2_bool/'.$val['qid']."/".$quid);?>"><img src="<?php echo base_url('images/edit.png');?>"></a>
+                            <?php else: ?>
+                                <a href="<?php echo site_url('qbank/edit_question_'.$qn.'/'.$val['qid']."/".$quid);?>"><img src="<?php echo base_url('images/edit.png');?>"></a>
+                            <?php endif; ?>
+                            <a href="<?php echo site_url("qbank/remove_question")."/".$val['qid']."/".$quid ?>" class=".delete_question" ><img src="<?php echo base_url('images/cross.png');?>"></a>
                         </td>
                     </tr>
 
@@ -200,27 +229,44 @@
 </div>
 
 <script>
+
+    //script for edit question
+    $(document).ready(function(){
+        var question_id;
+        $(".edit_question").click(function(){
+            question_id = $(this).attr("question_id");
+
+        });
+
+
+    });
+
+
+    //end of script for edit question
+
+
     $(document).ready(function () {
         $(".remove").hide();
         <?php foreach ($result as $key => $val) { ?>
-            <?php if (in_array($val['qid'], explode(',', $quiz['qids']))) {?>
-                $("#remove-<?php echo $val['qid'] ?>").show();
-            <?php } else { ?>
-                $("#remove-<?php echo $val['qid'] ?>").hide();
-            <?php } ?>
+        <?php if (in_array($val['qid'], explode(',', $quiz['qids']))) {?>
+        $("#remove-<?php echo $val['qid'] ?>").show();
+        <?php } else { ?>
+        $("#remove-<?php echo $val['qid'] ?>").hide();
         <?php } ?>
-        $(".remove").click(function(){
+        <?php } ?>
+        $(".remove").click(function () {
             var qid = $(this).attr("qid");
             var quid = $(this).attr("quid");
             var did = '#q' + qid;
             var site_url = "<?php echo site_url('quiz')?>";
             $.ajax({
                 type: "POST",
-                data: {quid:quid},
+                data: {quid: quid},
                 url: site_url + '/remove_qid/' + quid + '/' + qid,
                 success: function (data) {
-                    $("#q"+qid).text("add");
-                    $("#remove-"+qid).hide();
+                    $("#q" + qid).text("add");
+                    $("#q" + qid).show();
+                    $("#remove-" + qid).hide();
                 },
                 error: function (xhr, status, strErr) {
                     //alert(status);
@@ -238,7 +284,8 @@
             url: base_url + "index.php/quiz/add_qid/" + quid + '/' + qid,
             success: function (data) {
                 $(did).html(document.getElementById('added').value);
-                $("#remove-"+qid).show();
+                $("#q" + qid).hide();
+                $("#remove-" + qid).show();
             },
             error: function (xhr, status, strErr) {
                 //alert(status);
@@ -246,4 +293,5 @@
         });
 
     }
+
 </script>
