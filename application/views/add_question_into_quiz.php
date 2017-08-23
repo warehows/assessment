@@ -1,3 +1,4 @@
+<link href="<?php echo base_url("css/new_material/cdn/jquery-confirm.min.css") ?>" rel="stylesheet">
 <div class="container">
 
 
@@ -173,12 +174,14 @@
                         <td>
 
                             <a href="javascript:addquestion('<?php echo $quid; ?>','<?php echo $val['qid']; ?>');"
-                               class="btn btn-primary" id='q<?php echo $val['qid']; ?>'>
+                               class="btn btn-primary abutton" id='q<?php echo $val['qid']; ?>'>
                                 <?php
                                 if (in_array($val['qid'], explode(',', $quiz['qids']))) {
+
                                     echo $this->lang->line('added');
 
                                 } else {
+
                                     echo $this->lang->line('add');
                                 }
                                 ?>
@@ -192,11 +195,17 @@
                         </td>
                         <td>
                             <?php if($qn==8): ?>
-                                <a href="<?php echo site_url('qbank/edit_question_2_bool/'.$val['qid']."/".$quid);?>"><img src="<?php echo base_url('images/edit.png');?>"></a>
+
+                                <img class="edit_button" custom_link="<?php echo site_url('qbank/edit_question_2_bool/'.$val['qid']."/".$quid);?>" src="<?php echo base_url('images/edit.png');?>">
+
                             <?php else: ?>
-                                <a href="<?php echo site_url('qbank/edit_question_'.$qn.'/'.$val['qid']."/".$quid);?>"><img src="<?php echo base_url('images/edit.png');?>"></a>
+
+                                <img class="edit_button" custom_link="<?php echo site_url('qbank/edit_question_'.$qn.'/'.$val['qid']."/".$quid);?>" src="<?php echo base_url('images/edit.png');?>">
+
                             <?php endif; ?>
-                            <a href="<?php echo site_url("qbank/remove_question")."/".$val['qid']."/".$quid ?>" class=".delete_question" ><img src="<?php echo base_url('images/cross.png');?>"></a>
+<!--                            <a href="--><?php //echo site_url("qbank/remove_question")."/".$val['qid']."/".$quid ?><!--" class=".delete_question" >-->
+                                <img class="remove_button" custom_link="<?php echo site_url('qbank/edit_question_'.$qn.'/'.$val['qid']."/".$quid);?>" src="<?php echo base_url('images/cross.png');?>">
+<!--                            </a>-->
                         </td>
                     </tr>
 
@@ -227,11 +236,56 @@
 
 
 </div>
-
+<script src="<?php echo base_url("css/new_material/cdn/confirm.js") ?>"></script>
 <script>
 
     //script for edit question
     $(document).ready(function(){
+        //prompt edit confirmation
+        $(".edit_button").click(function(){
+            var custom_link = $(this).attr("custom_link");
+            $.confirm({
+                title: 'Edit question',
+                content: 'Do you want to edit this question?',
+                buttons: {
+                    cancel: function () {
+
+                    },
+                    edit: {
+                        text: 'Edit',
+                        btnClass: 'btn-warning',
+                        keys: ['enter', 'shift'],
+                        action: function () {
+                            window.location.replace(custom_link);
+                        }
+                    }
+                }
+            });
+
+        });
+        //end of prompt edit confirmation
+        //prompt remove confirmation
+        $(".remove_button").click(function(){
+            var custom_link = $(this).attr("custom_link");
+            $.confirm({
+                title: 'Remove question',
+                content: 'Do you want to delete this question?',
+                buttons: {
+                    cancel: function () {
+
+                    },
+                    remove: {
+                        text: 'Edit',
+                        btnClass: 'btn-danger',
+                        keys: ['enter', 'shift'],
+                        action: function () {
+                            window.location.replace(custom_link);
+                        }
+                    }
+                }
+            });
+        });
+        //end of prompt remove confirmation
         var question_id;
         $(".edit_question").click(function(){
             question_id = $(this).attr("question_id");
@@ -240,9 +294,24 @@
 
 
     });
-
-
     //end of script for edit question
+
+    //hide added on page initialization
+    $(document).ready(function () {
+        var abuttons = $(".abutton");
+        $.each(abuttons,function(key,value){
+            var current_text = $(this).text();
+            current_text = current_text.replace(/ /g,'');
+            current_text = current_text.replace(/\n/,'');
+            if(current_text=="Added"){
+                $(this).hide();
+            }
+
+        });
+    });
+
+    //end of hide added on page initialization
+
 
 
     $(document).ready(function () {
