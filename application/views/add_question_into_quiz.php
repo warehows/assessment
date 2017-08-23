@@ -204,7 +204,7 @@
 
                             <?php endif; ?>
 <!--                            <a href="--><?php //echo site_url("qbank/remove_question")."/".$val['qid']."/".$quid ?><!--" class=".delete_question" >-->
-                                <img class="remove_button" custom_link="<?php echo site_url('qbank/edit_question_'.$qn.'/'.$val['qid']."/".$quid);?>" src="<?php echo base_url('images/cross.png');?>">
+                                <img class="remove_button" custom_link="<?php echo site_url("qbank/remove_question")."/".$val['qid']."/".$quid ?>" src="<?php echo base_url('images/cross.png');?>">
 <!--                            </a>-->
                         </td>
                     </tr>
@@ -275,7 +275,7 @@
 
                     },
                     remove: {
-                        text: 'Edit',
+                        text: 'Remove',
                         btnClass: 'btn-danger',
                         keys: ['enter', 'shift'],
                         action: function () {
