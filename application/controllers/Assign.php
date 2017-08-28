@@ -118,6 +118,7 @@ class Assign extends CI_Controller
 
         $selected = $post['selected_quiz'];
 
+
         if ($post["submit"] == "share") {
             foreach ($selected as $key => $value) {
                 $data = array(
@@ -168,17 +169,26 @@ class Assign extends CI_Controller
             $this->load->view('new_material/footer', $data);
 
         } elseif ($post["submit"] == "duplicate") {
-            $data["data"] = $data;
+
+
+
             $quid = $this->input->post();
             $quid = $quid['selected_quiz'][0];
             $new_data["posts"] = $this->input->post();
             $new_data['quid'] = $quid;
             $new_data['logged_in'] = $logged_in;
 
+            $data["data"] = $data;
+
+
             $this->duplicate_quiz($new_data);
 
+            if($new_data['logged_in']['su']==2){
+                redirect(site_url('workspace'));
+            }else{
+                redirect(site_url('assign'));
+            }
 
-            redirect(site_url('workspace'));
 
 
         } elseif ($post["submit"] == "delete") {
@@ -282,40 +292,52 @@ class Assign extends CI_Controller
 
     public function duplicate_quiz($data)
     {
+
         $selected_quiz = $data['posts']['selected_quiz'];
 
         foreach ($selected_quiz as $selected_quiz_key => $selected_quiz_value) {
 
-            $workspace_data = $this->workspace_model->where("id", $selected_quiz_value);
+            if($data['logged_in']['su']==2){
+                $workspace_data = $this->workspace_model->where("id", $selected_quiz_value);
+                $quiz_data = $this->quiz_model->get_quiz($workspace_data[0]['content_id']);
+            }else{
+                $quiz_data = $this->quiz_model->get_quiz($selected_quiz[0]);
+            }
 
 
-            $quiz_data = $this->quiz_model->get_quiz($workspace_data[0]['content_id']);
             $quiz_to_insert = array(
                 "quiz_name" => $quiz_data['quiz_name'] . "-duplicated",
                 "description" => $quiz_data['description'],
                 "qids" => $quiz_data['qids'],
                 "noq" => $quiz_data['noq'],
-                "maximum_attempts" => 10000,
-                "pass_percentage" => 0,
+                "maximum_attempts" => $quiz_data['maximum_attempts'],
+                "pass_percentage" => $quiz_data['pass_percentage'],
                 "camera_req" => 0,
                 "question_selection" => $quiz_data['question_selection'],
-                "duration" => 0,
+                "duration" => $quiz_data['duration'],
                 "cid" => $quiz_data['cid'],
                 "uid" => $data['logged_in']['uid'],
                 "shared" => 0,
                 "lid" => $quiz_data['lid'],
                 "author" => $data['logged_in']['uid'],
             );
+
+//            echo "<pre>";
+//            print_r($quiz_to_insert);
+//            exit;
+
             $new_quid = $this->assign_model->insert_quiz($quiz_to_insert);
             $new_quiz_data = $this->quiz_model->get_quiz($new_quid);
 
-            $insert_to_workspace = array(
-                "user_id" => $data['logged_in']['uid'],
-                "content_id" => $new_quid,
-                "content_type" => "quiz",
-                "content_name" => $quiz_data['quiz_name'] . "-duplicated",
-            );
-            $this->workspace_model->insert_workspace($insert_to_workspace);
+            if($data['logged_in']['su']==2) {
+                $insert_to_workspace = array(
+                    "user_id" => $data['logged_in']['uid'],
+                    "content_id" => $new_quid,
+                    "content_type" => "quiz",
+                    "content_name" => $quiz_data['quiz_name'] . "-duplicated",
+                );
+                $this->workspace_model->insert_workspace($insert_to_workspace);
+            }
 
         }
 

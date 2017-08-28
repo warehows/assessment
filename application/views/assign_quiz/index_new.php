@@ -27,6 +27,7 @@
                     <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
                     <button class="btn btn-primary" id="delete" name="submit" value="admin_delete">Delete</button>
                     <button class="btn btn-primary" id="assign" name="submit" value="assign">Assign</button>
+                    <button class="btn btn-primary" id="duplicate" name="submit" value="duplicate">Duplicate</button>
                     <?php $subject_model = $this->subjects_model?>
                     <table id="lesson_lists" class="table table-bordered table-hover" >
                         <thead>
@@ -66,6 +67,7 @@
     $("#share").hide();
     $("#delete").hide();
     $("#assign").hide();
+    $("#duplicate").hide();
     $("form").submit(function(e){
         var txt;
         var r = confirm("Do you want to perform this action?");
@@ -84,12 +86,14 @@
             $("#view").hide();
             $("#delete").show();
             $("#assign").show();
+            $("#duplicate").show();
         } else if (selected_count == 0) {
             $("#edit").hide();
             $("#delete").hide();
             $("#assign").hide();
             $("#share").hide();
             $("#view").hide();
+            $("#duplicate").hide();
         }
         else if (selected_count >= 1) {
             $("#edit").hide();
@@ -97,12 +101,14 @@
             $("#share").show();
             $("#assign").hide();
             $("#view").hide();
+            $("#duplicate").hide();
         } else {
             $("#edit").hide();
             $("#view").hide();
             $("#share").hide();
             $("#assign").show();
             $("#delete").show();
+            $("#duplicate").show();
         }
     });
 
