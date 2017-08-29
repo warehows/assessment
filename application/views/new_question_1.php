@@ -112,7 +112,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                                                value="<?php echo $i - 1; ?>" <?php if ($i == 1) {
                                             echo 'checked';
                                         } ?> > Select Correct Option
-                                        <textarea name="option[]" class="form-control"></textarea>
+                                        <textarea name="option[]" class="form-control option"></textarea>
                                     </div>
                                     <?php
                                 }
@@ -122,8 +122,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                                 <a href="<?php echo $sent_data['back_url'] ?>">
                                     <button class="btn btn-default" type="button">Go Back To Quiz</button>
                                 </a>
-                                <button class="btn btn-default"
-                                        type="submit"><?php echo $this->lang->line('submit'); ?></button>
+                                <button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit'); ?></button>
 
                             </div>
                         </div>
@@ -145,13 +144,13 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
     $(document).ready(function () {
         var after_id;
 
-
-        $(".add_option_main").click(function () {
+        $("form").on("click",".add_option_main",function () {
 
             var option_div = $(".option_div");
             var option_array = "";
             $.each(option_div,function(key,value){
                 var current_id = $(this).attr("id");
+                var current_id = current_id.replace("option_div_","");
                 var question_count = key+1;
                 option_array += '<option value="'+current_id+'">Question '+question_count+'</option>';
             });
@@ -162,7 +161,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                 '<form action="" class="formName">' +
                 '<div class="form-group">' +
                 '<label>After:</label>' +
-                '<select class="name form-control" required >' +
+                '<select class="question_after_id form-control" required >' +
                 option_array +
                 '</select>' +
                 '</div>' +
@@ -172,12 +171,15 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                         text: 'Submit',
                         btnClass: 'btn-blue',
                         action: function () {
-                            var name = this.$content.find('.name').val();
-                            if(!name){
-                                $.alert('provide a valid name');
-                                return false;
-                            }
-                            $.alert('Your name is ' + name);
+                            var jcontent = this.$content;
+                            var question_after_id = jcontent.find('.question_after_id').val();
+//                            if(!name){
+//                                $.alert('provide a valid name');
+//                                return false;
+//                            }
+
+
+                            $.alert(question_after_id);
                         }
                     },
                     cancel: function () {
@@ -195,8 +197,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                 }
             });
         });
-
-        $(".remove_option").click(function () {
+        $("form").on("click",".remove_option",function () {
             $.confirm({
                 title: 'Remove Option',
                 content: 'Do you want to delete this option?',
