@@ -65,7 +65,6 @@ class Workspace extends CI_Controller
             redirect('login');
         }
 
-
         $logged_in = $this->session->userdata('logged_in');
         $data['title'] = "Workspace";
         $data['all_users'] = $this->user_model->get_all();
@@ -83,6 +82,7 @@ class Workspace extends CI_Controller
         $date_end = $posts['date_end'];
         $sections = explode(",", $sections);
         $grades = explode(",", $grades);
+
 
 
         //for admin only
@@ -116,9 +116,7 @@ class Workspace extends CI_Controller
                 'date_end' => $date_end,
             );
 
-            $this->workspace_model->insert($data);
-
-
+            $teacher_workspace_model = $this->workspace_model->insert($data);
         }
         $current_lesson = $this->lessons_model->lesson_by_id($lesson_id);
         $current_lesson = $current_lesson[0];
@@ -155,11 +153,10 @@ class Workspace extends CI_Controller
             }
 
         }
-        $sDate = urlencode($date_start);
-        $eDate = urlencode($date_end);
-        redirect(site_url('calendar/mass_create') . "?date_start=".$sDate."&date_end=".$eDate."&sections[]=1%2C2%2C3%2C4%2C5%2C6%2C7%2C14%2C15%2C16%2C17%2C18&grades[]=1%2C3&uid=2&workspace_id[]=1%2C2%2C3%2C4&lesson_id=".$lesson_id);
 
+        $posts["teacher_workspace_model"] = $workspace_id;
 
+        $this->load->view('calendar/calendar_redirect', $posts);
     }
 
     public function assign_quiz()

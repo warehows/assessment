@@ -50,6 +50,7 @@ Class Workspace_model extends CI_Model
     {
         $this->db->insert('lesson_assigned', $data);
         $quid = $this->db->insert_id();
+        return $quid;
     }
 
     function insert_workspace($data)

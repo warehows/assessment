@@ -99,44 +99,76 @@ Class Calendar_model extends CI_Model
 
         $this->db->where('user_id',$logged_in['uid'])
             ->where('content_id', $data['lesson']);
-        $query = $this->db->get('workspace');
-        if (is_array($data['section'])) {
-            foreach ($data['section'] as $row) {
-                foreach (explode( ",", $row ) as $sectionID) {
-                    print $sectionID."<br>";
-                    $this->db->where('id',$data['lesson']);
-                    $sec = $this->db->get('lessons');
-                    $newSchedule = array(
-                        'lesson_id' => $data['lesson'],
-                        'gid' => $sectionID,
-                        'cid' => $sec->row('subject_id'),
-                        'date_from' => $dateFrom->format('Y-m-d'),
-                        'date_to' => $dateTo->format('Y-m-d'),
-                        'uid' => $logged_in['uid'],
-                        'workspace_id' => $query->row('id')
-                    );
 
-                    $this->db->insert('calendar', $newSchedule);
-                }
+        $query = $this->db->get('workspace');
+        print_r("<pre>");
+        print_r($data);
+
+        if($logged_in['su']==1){
+            foreach (explode( ",", $data["section"] ) as $sectionID) {
+                $this->db->where('id',$data['lesson']);
+
+                $sec = $this->db->get('lessons');
+
+                $newSchedule = array(
+                    'lesson_id' => $data['lesson'],
+                    'gid' => $sectionID,
+                    'cid' => $sec->row('subject_id'),
+                    'lid'=>$this->group_model->load("savsoft_group","gid",$sectionID)['lid'],
+                    'date_from' => $dateFrom->format('Y-m-d'),
+                    'date_to' => $dateTo->format('Y-m-d'),
+                    'uid' => $data['teacher_id'],
+                    'workspace_id' => $data['teacher_workspace_id'],
+                );
+
+                $this->db->insert('calendar', $newSchedule);
             }
-            return true;
-        } else {
-            $newSchedule = array(
-                'lesson_id' => $data['lesson'],
-                'cid' => $data['subject'],
-                'gid' => $data['section'],
-                'lid' => $data['grade'],
-                'date_from' => $dateFrom->format('Y-m-d'),
-                'date_to' => $dateTo->format('Y-m-d'),
-                'uid' => $logged_in['uid'],
-                'workspace_id' => $query->row('id')
-            );
-            if ($this->db->insert('calendar', $newSchedule)) {
+
+//            exit;
+
+        }else{
+            if (is_array($data['section'])) {
+
+                foreach ($data['section'] as $row) {
+                    foreach (explode( ",", $row ) as $sectionID) {
+                        print $sectionID."<br>";
+                        $this->db->where('id',$data['lesson']);
+                        $sec = $this->db->get('lessons');
+                        $newSchedule = array(
+                            'lesson_id' => $data['lesson'],
+                            'gid' => $sectionID,
+                            'cid' => $sec->row('subject_id'),
+                            'date_from' => $dateFrom->format('Y-m-d'),
+                            'date_to' => $dateTo->format('Y-m-d'),
+                            'uid' => $logged_in['uid'],
+                            'workspace_id' => $query->row('id')
+                        );
+
+                        $this->db->insert('calendar', $newSchedule);
+                    }
+                }
                 return true;
             } else {
-                return false;
+                $newSchedule = array(
+                    'lesson_id' => $data['lesson'],
+                    'cid' => $data['subject'],
+                    'gid' => $data['section'],
+                    'lid' => $data['grade'],
+                    'date_from' => $dateFrom->format('Y-m-d'),
+                    'date_to' => $dateTo->format('Y-m-d'),
+                    'uid' => $logged_in['uid'],
+                    'workspace_id' => $query->row('id')
+                );
+                if ($this->db->insert('calendar', $newSchedule)) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
+
         }
+
+
 
 
     }

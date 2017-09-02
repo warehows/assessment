@@ -57,8 +57,9 @@ class Calendar extends CI_Controller
         $data['lesson'] = $this->calendar_model->get_lessons();
         $data['section'] = $this->class_model->getCollection('savsoft_group');
 
+
         if ($logged_in["su"] == 2) {
-            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);}else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
             $this->load->view('calendar/calendar_create', $data);
             $this->load->view('new_material/footer', $data);
         }

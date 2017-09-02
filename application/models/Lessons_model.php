@@ -271,6 +271,7 @@ Class Lessons_model extends CI_Model
                 'content_name' => $loop_data[0]['lesson_name']."-copy",
             );
             $this->db->insert('workspace', $workspace_data);
+            $return_workspace_value = $this->db->insert_id();
 
             foreach($lesson_contents as $lesson_content_key=>$lesson_content_value){
                 $lesson_data = array(
@@ -298,7 +299,7 @@ Class Lessons_model extends CI_Model
 
             }
         }
-        return "success";
+        return $return_workspace_value;
     }
 
     function delete_folder($data)
