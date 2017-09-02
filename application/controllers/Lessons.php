@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Lessons extends CI_Controller
 {
     public $css_directory = "css/new_material/cdn/";
+    public $dev_site = "true";
     function __construct()
     {
         parent::__construct();
@@ -354,7 +355,13 @@ class Lessons extends CI_Controller
             redirect('login');
         }
 
-        $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
+
+        if($this->dev_site=="true"){
+            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/develop/brainee/upload/lessons/";
+        }else{
+            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
+        }
+
         $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
         $folder = $output_dir . $folder_to_create;
         if (!file_exists($folder)) {
@@ -408,7 +415,12 @@ class Lessons extends CI_Controller
             $this->session->unset_userdata('logged_in');
             redirect('login');
         }
-        $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/assessment/upload/lessons/";
+        if($this->dev_site=="true"){
+            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/develop/brainee/upload/lessons/";
+        }else{
+            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
+        }
+
 
         $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
         $folder = $output_dir . $folder_to_create . "/";
@@ -433,7 +445,11 @@ class Lessons extends CI_Controller
             $this->session->unset_userdata('logged_in');
             redirect('login');
         }
-        $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/assessment/upload/lessons/";
+        if($this->dev_site=="true"){
+            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/develop/brainee/upload/lessons/";
+        }else{
+            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
+        }
 
         $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
         $folder = $output_dir . $folder_to_create . "/";
