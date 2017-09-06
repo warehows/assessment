@@ -1,5 +1,6 @@
 <link href="<?php echo base_url("css/new_material/cdn/jquery-confirm.min.css") ?>" rel="stylesheet">
-
+<?php $option_values = @$_REQUEST['option']?>
+<?php $question = @$_REQUEST['question']?>
 <?php $sent_data = $_GET; ?>
 <?php
 $current_lesson_id = $sent_data['back_url'];
@@ -16,8 +17,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
 
 
             <div class="row">
-                <form method="post"
-                      action="<?php echo site_url('qbank/new_question_1/' . $nop . "?back_url=" . $sent_data['back_url']); ?>">
+                <form method="post" action="<?php echo site_url('qbank/new_question_1/' . $nop . "?back_url=" . $sent_data['back_url']); ?>">
 
                     <div class="col-md-8">
                         <br>
@@ -36,6 +36,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                                 <div class="form-group">
 
                                     <?php echo $this->lang->line('multiple_choice_single_answer'); ?>
+
                                 </div>
 
 
@@ -83,7 +84,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
 
                                 <div class="form-group">
                                     <label for="inputEmail"><?php echo $this->lang->line('question'); ?></label>
-                                    <textarea name="question" class="form-control"></textarea>
+                                    <textarea name="question" class="form-control"><?php echo $question?></textarea>
 
 
                                 </div>
@@ -106,13 +107,13 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                                         <label
                                             for="inputEmail"><?php echo $this->lang->line('options'); ?> <?php echo $i; ?>
                                             )</label>
-                                        <button type="button" class="btn-danger remove_option">Remove Option</button>
+                                        <button type="button" class="btn-danger remove_option" button_id="<?php echo $i?>">Remove Option</button>
                                         <br>
                                         <input type="radio" name="score"
                                                value="<?php echo $i - 1; ?>" <?php if ($i == 1) {
                                             echo 'checked';
                                         } ?> > Select Correct Option
-                                        <textarea name="option[]" class="form-control option"></textarea>
+                                        <textarea name="option[]" class="form-control option"><?php print_r($option_values[$i-1]) ?></textarea>
                                     </div>
                                     <?php
                                 }
@@ -123,6 +124,8 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                                     <button class="btn btn-default" type="button">Go Back To Quiz</button>
                                 </a>
                                 <button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit'); ?></button>
+                                <input type="hidden" id="for_option" name="for_option" value="" />
+                                <input type="hidden" id="option_action" name="option_action" value=""/>
 
                             </div>
                         </div>
@@ -143,6 +146,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
     });
     $(document).ready(function () {
         var after_id;
+        var total_questions = $("#total_questions").val();
 
         $("form").on("click",".add_option_main",function () {
 
@@ -177,9 +181,10 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
 //                                $.alert('provide a valid name');
 //                                return false;
 //                            }
-
-
-                            $.alert(question_after_id);
+                            $("#for_option").val(question_after_id);
+                            $("#option_action").val("add_option");
+                            $("form").submit();
+//                            $.alert(question_after_id);
                         }
                     },
                     cancel: function () {
@@ -197,7 +202,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                 }
             });
         });
-        $("form").on("click",".remove_option",function () {
+        $("form").on("click",".remove_option",function (event) {
             $.confirm({
                 title: 'Remove Option',
                 content: 'Do you want to delete this option?',
@@ -210,7 +215,11 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                         btnClass: 'btn-red',
                         keys: ['enter', 'shift'],
                         action: function () {
+                            var question_id = $(event.target).attr("button_id");
 
+                            $("#for_option").val(question_id);
+                            $("#option_action").val("delete_option");
+                            $("form").submit();
                         }
                     }
                 }

@@ -144,14 +144,74 @@ class Qbank extends CI_Controller {
         $this->load->view('material_part/footer_material',$data);
     }
 
+    public function check_if_for_option($function_value){
+        $post = $_REQUEST;
+        $post["function_value"] = $function_value;
+        if(@$post['for_option']){
+            $parameters = http_build_query($post) . "\n";
+            redirect(site_url('qbank/option_renderer')."?".$parameters);
+        }
+
+    }
+
+    public function option_renderer(){
+        $post = $_REQUEST;
+        $function_value = $post["function_value"];
+        if($post['for_option']){
+            $total_options = count($post['option']);
+            $option_value = $post['for_option'];
+            $option = $post['option'];
+            $site_url = site_url();
+            $question = $post['question'];
+
+            if($post["option_action"]=="add_option"){
+                array_splice($option,$option_value,0,'');
+                $total_option = $total_options+1;
+                $question_back_url = $site_url."/qbank/".$function_value."/".$total_option;
+                $data = array(
+                    "back_url"=>$post['back_url'],
+                    "option_value"=>$option_value,
+                    "option"=>$option,
+                    "question"=>$question,
+                    "question_back_url"=>$question_back_url,
+                );
+
+            }else{
+
+//                array_splice($option,$option_value,0,'');
+                $total_option = $total_options-1;
+
+                $question_back_url = $site_url."/qbank/".$function_value."/".$total_option;
+                unset($option[$option_value-1]);
+
+                $data = array(
+                    "back_url"=>$post['back_url'],
+                    "option_value"=>$option_value,
+                    "option"=>$option,
+                    "question"=>$question,
+                    "question_back_url"=>$question_back_url,
+                );
+
+            }
+
+            $this->load->view('questions/add_option',$data);
+
+        }
+
+    }
+
     public function new_question_1($nop='4')
     {
 
         $logged_in=$this->session->userdata('logged_in');
+
         if($logged_in['su']<'1'){
             exit($this->lang->line('permission_denied'));
         }
+        $function_value = __FUNCTION__ ;
+        $this->check_if_for_option($function_value);
         if($this->input->post('question')){
+
             $back_url = $this->input->get('back_url');
             if($this->qbank_model->insert_question_1()){
                 $this->session->set_flashdata('message', "<div class='alert alert-success'>".$this->lang->line('data_added_successfully')." </div>");
