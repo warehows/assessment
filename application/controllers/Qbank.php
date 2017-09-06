@@ -151,7 +151,6 @@ class Qbank extends CI_Controller {
             $parameters = http_build_query($post) . "\n";
             redirect(site_url('qbank/option_renderer')."?".$parameters);
         }
-
     }
 
     public function option_renderer(){
@@ -164,37 +163,72 @@ class Qbank extends CI_Controller {
             $site_url = site_url();
             $question = $post['question'];
 
-            if($post["option_action"]=="add_option"){
-                array_splice($option,$option_value,0,'');
-                $total_option = $total_options+1;
-                $question_back_url = $site_url."/qbank/".$function_value."/".$total_option;
-                $data = array(
-                    "back_url"=>$post['back_url'],
-                    "option_value"=>$option_value,
-                    "option"=>$option,
-                    "question"=>$question,
-                    "question_back_url"=>$question_back_url,
-                );
 
-            }else{
+
+            if(@$post['question_type']=="question_3"){
+                if($post["option_action"]=="add_option"){
+                    array_splice($option,$option_value,0,'');
+                    $total_option = $total_options+1;
+                    $question_back_url = $site_url."/qbank/".$function_value."/".$total_option;
+                    $data = array(
+                        "back_url"=>$post['back_url'],
+                        "option_value"=>$option_value,
+                        "option"=>$option,
+                        "question"=>$question,
+                        "question_back_url"=>$question_back_url,
+                    );
+
+                }else{
 
 //                array_splice($option,$option_value,0,'');
-                $total_option = $total_options-1;
+                    $total_option = $total_options-1;
 
-                $question_back_url = $site_url."/qbank/".$function_value."/".$total_option;
-                unset($option[$option_value-1]);
+                    $question_back_url = $site_url."/qbank/".$function_value."/".$total_option;
+                    unset($option[$option_value-1]);
 
-                $data = array(
-                    "back_url"=>$post['back_url'],
-                    "option_value"=>$option_value,
-                    "option"=>$option,
-                    "question"=>$question,
-                    "question_back_url"=>$question_back_url,
-                );
+                    $data = array(
+                        "back_url"=>$post['back_url'],
+                        "option_value"=>$option_value,
+                        "option"=>$option,
+                        "question"=>$question,
+                        "question_back_url"=>$question_back_url,
+                    );
 
+                }
+                $this->load->view('questions/add_option_3',$data);
+            }else{
+                if($post["option_action"]=="add_option"){
+                    array_splice($option,$option_value,0,'');
+                    $total_option = $total_options+1;
+                    $question_back_url = $site_url."/qbank/".$function_value."/".$total_option;
+                    $data = array(
+                        "back_url"=>$post['back_url'],
+                        "option_value"=>$option_value,
+                        "option"=>$option,
+                        "question"=>$question,
+                        "question_back_url"=>$question_back_url,
+                    );
+
+                }else{
+
+//                array_splice($option,$option_value,0,'');
+                    $total_option = $total_options-1;
+
+                    $question_back_url = $site_url."/qbank/".$function_value."/".$total_option;
+                    unset($option[$option_value-1]);
+
+                    $data = array(
+                        "back_url"=>$post['back_url'],
+                        "option_value"=>$option_value,
+                        "option"=>$option,
+                        "question"=>$question,
+                        "question_back_url"=>$question_back_url,
+                    );
+
+                }
+                $this->load->view('questions/add_option',$data);
             }
 
-            $this->load->view('questions/add_option',$data);
 
         }
 
@@ -244,6 +278,8 @@ class Qbank extends CI_Controller {
         if($logged_in['su']<'1'){
             exit($this->lang->line('permission_denied'));
         }
+        $function_value = __FUNCTION__ ;
+        $this->check_if_for_option($function_value);
         if($this->input->post('question')){
             $back_url = $this->input->get('back_url');
             if($this->qbank_model->insert_question_2()){
@@ -310,6 +346,8 @@ class Qbank extends CI_Controller {
         if($logged_in['su']<'1'){
             exit($this->lang->line('permission_denied'));
         }
+        $function_value = __FUNCTION__ ;
+        $this->check_if_for_option($function_value);
         if($this->input->post('question')){
             $back_url = $this->input->get('back_url');
             if($this->qbank_model->insert_question_3()){

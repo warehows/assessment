@@ -7,5 +7,5 @@
 </form>
 <script src="<?php echo base_url('css/material/js/jquery-1.12.4.js')?>"></script>
 <script>
-    $("form").submit();
+//    $("form").submit();
 </script>

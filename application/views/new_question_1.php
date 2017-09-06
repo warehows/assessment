@@ -216,10 +216,16 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
                         keys: ['enter', 'shift'],
                         action: function () {
                             var question_id = $(event.target).attr("button_id");
+                            var question_id_count = $(document).find(".remove_option").length;
 
-                            $("#for_option").val(question_id);
-                            $("#option_action").val("delete_option");
-                            $("form").submit();
+                            if(question_id_count<=1){
+                                $.alert("Cannot remove last question.");
+                            }
+                            else{
+                                $("#for_option").val(question_id);
+                                $("#option_action").val("delete_option");
+                                $("form").submit();
+                            }
                         }
                     }
                 }
