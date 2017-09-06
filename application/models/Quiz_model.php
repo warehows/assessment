@@ -674,34 +674,57 @@ Class Quiz_model extends CI_Model
         $email = $logged_in['email'];
         $rid = $this->session->userdata('rid');
         $query = $this->db->query("select * from savsoft_result join savsoft_quiz on savsoft_result.quid=savsoft_quiz.quid where savsoft_result.rid='$rid' ");
+
         $quiz = $query->row_array();
         $score_ind = explode(',', $quiz['score_individual']);
         $r_qids = explode(',', $quiz['r_qids']);
         $qids_perf = array();
         $marks = 0;
+        $correct_score_new=0;
         $correct_score = $quiz['correct_score'];
         $incorrect_score = $quiz['incorrect_score'];
         $total_time = array_sum(explode(',', $quiz['individual_time']));
         $manual_valuation = 0;
         foreach ($score_ind as $mk => $score) {
             $qids_perf[$r_qids[$mk]] = $score;
+            $qBankQuery = $this->db->query("select * from savsoft_qbank where savsoft_qbank.qid='$r_qids[$mk]' ");
+            $question = $qBankQuery->row_array();
+            $scorePerQuestion = $question['per_question_score'];
 
+            //correct_score
             if ($score == 1) {
-
-                $marks += $correct_score;
-
+                //if there is value for score per question apply it
+                //else it will base it's score on the quiz setting correct_score
+                if($scorePerQuestion){
+                    $marks += $scorePerQuestion;
+                }else {
+                    $marks += $correct_score;
+                }
             }
-            if ($score == 2) {
 
-                $marks += $incorrect_score;
+            //incorrect_score
+            if ($score == 2) {
+                //if there is value for score per question apply it
+                //else it will base it's score on the quiz setting incorrect_score
+                if($scorePerQuestion && $incorrect_score) {
+                    $marks -= $scorePerQuestion;
+                }else{
+                    $marks -= $incorrect_score;
+                }
             }
             if ($score == 3) {
 
                 $manual_valuation = 1;
             }
+            $correct_score_new += $scorePerQuestion;
 
         }
-        $percentage_obtained = ($marks / ($quiz['noq'] * $correct_score)) * 100;
+//        echo 'marks:'.$marks.'<br>';
+//        echo 'noq:'.$quiz['noq'].'<br>';
+//        echo 'correct possible score:'.$correct_score_new.'<br>';
+//        echo '100';
+//        die();
+        $percentage_obtained = ($marks / $correct_score_new) * 100;
         if ($percentage_obtained >= $quiz['pass_percentage']) {
             $qr = $this->lang->line('pass');
         } else {

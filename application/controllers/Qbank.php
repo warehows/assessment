@@ -88,7 +88,12 @@ class Qbank extends CI_Controller {
         if($logged_in['su']<'1'){
             exit($this->lang->line('permission_denied'));
         }
-
+        $quizScoreDefault = $this->input->post('per_question_score');
+        if($quizScoreDefault > 0) {
+            $questionScore = $this->input->post('per_question_score');
+        }else{
+            $questionScore = 0;
+        }
         if($this->input->post('question_type')){
             if($this->input->post('question_type')=='1'){
                 $nop=$this->input->post('nop');
@@ -96,7 +101,7 @@ class Qbank extends CI_Controller {
                 if(!is_numeric($this->input->post('nop'))){
                     $nop=4;
                 }
-                redirect('qbank/new_question_1/'.$nop."?back_url=".$back_url);
+                redirect('qbank/new_question_1/'.$nop."?per_question_score=".$questionScore."&back_url=".$back_url);
             }
             if($this->input->post('question_type')=='2'){
                 $nop=$this->input->post('nop');
@@ -104,7 +109,7 @@ class Qbank extends CI_Controller {
                 if(!is_numeric($this->input->post('nop'))){
                     $nop=4;
                 }
-                redirect('qbank/new_question_2/'.$nop."?back_url=".$back_url);
+                redirect('qbank/new_question_2/'.$nop."?per_question_score=".$questionScore."&back_url=".$back_url);
             }
             if($this->input->post('question_type')=='3'){
                 $nop=$this->input->post('nop');
@@ -112,7 +117,7 @@ class Qbank extends CI_Controller {
                 if(!is_numeric($this->input->post('nop'))){
                     $nop=4;
                 }
-                redirect('qbank/new_question_3/'.$nop."?back_url=".$back_url);
+                redirect('qbank/new_question_3/'.$nop."?per_question_score=".$questionScore."&back_url=".$back_url);
             }
             if($this->input->post('question_type')=='4'){
                 $nop=$this->input->post('nop');
@@ -120,7 +125,7 @@ class Qbank extends CI_Controller {
                 if(!is_numeric($this->input->post('nop'))){
                     $nop=4;
                 }
-                redirect('qbank/new_question_4/'.$nop."?back_url=".$back_url);
+                redirect('qbank/new_question_4/'.$nop."?per_question_score=".$questionScore."&back_url=".$back_url);
             }
             if($this->input->post('question_type')=='5'){
                 $nop=$this->input->post('nop');
@@ -128,12 +133,12 @@ class Qbank extends CI_Controller {
                 if(!is_numeric($this->input->post('nop'))){
                     $nop=4;
                 }
-                redirect('qbank/new_question_5/'.$nop."?back_url=".$back_url);
+                redirect('qbank/new_question_5/'.$nop."?per_question_score=".$questionScore."&back_url=".$back_url);
             }
             if($this->input->post('question_type')=='8'){
                 $nop=2;
                 $back_url=$this->input->post('back_url');
-                redirect('qbank/new_question_2_bool/'."?back_url=".$back_url);
+                redirect('qbank/new_question_2_bool/'.$nop."?per_question_score=".$questionScore."&back_url=".$back_url);
             }
 
         }

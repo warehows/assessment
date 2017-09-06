@@ -15,6 +15,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
 
             <div class="row">
                 <form method="post" action="<?php echo site_url('qbank/new_question_4/' . $nop."?back_url=".$sent_data['back_url']); ?>">
+                    <input type="hidden" name="per_question_score" value="<?php echo $this->input->get('per_question_score'); ?>">
 
                     <div class="col-md-8">
                         <br>

@@ -42,13 +42,17 @@
 
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="inputEmail">Question specific score</label>
+<!--                            <p style="font-size: x-small">Use Quiz Score Value</p>-->
+<!--                            <input type="checkbox" name="use_quiz_score_value" class="use_quiz_score">-->
+                            <input type="text" name="per_question_score" class="form-control per_question_score" placeholder="Leave blank to use default quiz score settings.">
+                        </div>
 
                         <div class="form-group" id="nop">
                             <label for="inputEmail"><?php echo $this->lang->line('nop'); ?></label>
                             <input type="text" name="nop" class="form-control" value="4">
                         </div>
-
-
 
 
                         <a href="<?php echo $sent_data['back_url'] ?>">
@@ -66,3 +70,18 @@
 
 
 </div>
+<!--<script>-->
+<!--    // A $( document ).ready() block.-->
+<!--    $( document ).ready(function() {-->
+<!--        $( ".use_quiz_score" ).click(function() {-->
+<!--            if ($('.use_quiz_score').is(':checked')) {-->
+<!--                $('.per_question_score').removeAttr('required');;-->
+<!--                $('.per_question_score').hide();-->
+<!--            }else{-->
+<!--                $('.per_question_score').show();-->
+<!--                $('.per_question_score').prop('required',true);-->
+<!--            }-->
+<!--        });-->
+<!---->
+<!--    });-->
+<!--</script>-->

@@ -5,6 +5,7 @@ $current_lesson_id = str_replace(site_url('quiz/add_question') . "/", "", $curre
 $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
 
 ?>
+
 <div class="wrapper">
     <div class="row">
         <div class="col-lg-12 col-lg-offset-2 col-md-12col-sm-12">
@@ -13,7 +14,7 @@ $lesson_information = $this->quiz_model->get_quiz($current_lesson_id);
 
             <div class="row">
                 <form method="post" action="<?php echo site_url('qbank/new_question_2_bool/' . $nop."?back_url=".$sent_data['back_url']); ?>">
-
+                    <input type="hidden" name="per_question_score" value="<?php echo $this->input->get('per_question_score'); ?>">
                     <div class="col-md-8">
                         <br>
 

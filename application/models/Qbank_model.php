@@ -102,6 +102,7 @@ Class Qbank_model extends CI_Model
             'description' => $this->input->post('description'),
             'question_type' => $this->lang->line('multiple_choice_single_answer'),
             'cid' => $this->input->post('cid'),
+            'per_question_score' => $this->input->post('per_question_score'),
             'uid' => $uid,
             'lid' => $this->input->post('lid')
         );
@@ -168,6 +169,7 @@ Class Qbank_model extends CI_Model
             'description' => $this->input->post('description'),
             'question_type' => $this->lang->line('multiple_choice_multiple_answer'),
             'cid' => $this->input->post('cid'),
+            'per_question_score' => $this->input->post('per_question_score'),
             'uid' => $uid,
             'lid' => $this->input->post('lid')
         );
@@ -206,6 +208,7 @@ Class Qbank_model extends CI_Model
             'description' => $this->input->post('description'),
             'question_type' => 'True or False',
             'cid' => $this->input->post('cid'),
+            'per_question_score' => $this->input->post('per_question_score'),
             'uid' => $uid,
             'lid' => $this->input->post('lid')
         );
@@ -246,6 +249,7 @@ Class Qbank_model extends CI_Model
             'description' => $this->input->post('description'),
             'question_type' => $this->lang->line('match_the_column'),
             'cid' => $this->input->post('cid'),
+            'per_question_score' => $this->input->post('per_question_score'),
             'uid' => $uid,
             'lid' => $this->input->post('lid')
         );
@@ -284,6 +288,7 @@ Class Qbank_model extends CI_Model
             'question_type' => $this->lang->line('short_answer'),
             'cid' => $this->input->post('cid'),
             'uid' => $uid,
+            'per_question_score' => $this->input->post('per_question_score'),
             'lid' => $this->input->post('lid')
         );
         $this->db->insert('savsoft_qbank', $userdata);
@@ -319,6 +324,7 @@ Class Qbank_model extends CI_Model
             'question_type' => $this->lang->line('long_answer'),
             'uid' => $uid,
             'cid' => $this->input->post('cid'),
+            'per_question_score' => $this->input->post('per_question_score'),
             'lid' => $this->input->post('lid')
         );
         $this->db->insert('savsoft_qbank', $userdata);
