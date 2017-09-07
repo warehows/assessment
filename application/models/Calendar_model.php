@@ -101,8 +101,7 @@ Class Calendar_model extends CI_Model
             ->where('content_id', $data['lesson']);
 
         $query = $this->db->get('workspace');
-        print_r("<pre>");
-        print_r($data);
+
 
         if($logged_in['su']==1){
             foreach (explode( ",", $data["section"] ) as $sectionID) {

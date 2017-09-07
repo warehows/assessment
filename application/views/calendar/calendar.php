@@ -159,19 +159,21 @@
 <script>
     $(document).ready(function() {
 
-        var d = new Date()
+        var d = new Date();
         var curr_day = d.getDate().toString().length == 1 ? "0"+d.getDate(): d.getDate();
         var curr_month = d.getMonth().toString().length == 1 ? "0"+d.getMonth(): d.getMonth();
-        var curr_year = d.getFullYear()
+        var curr_month_default = d.getMonth().toString().length == 1 ? "0"+(parseInt(d.getMonth())+1): d.getMonth();
+        var curr_year = d.getFullYear();
 
         var today = curr_year+"-"+curr_month+"-"+curr_day;
+        var default_date = curr_year+"-"+curr_month_default+"-"+curr_day;
 
         $('#calendar').fullCalendar({
             events: 'calendar/getEvents',
             editable: true,
             eventLimit: true,
             displayEventTime: false,
-            defaultDate: '2017-07-17',
+            defaultDate: default_date,
             eventResize: function(event, delta, revertFunc) {
                 var df = new Date(event.start.format());
                 var df_year = df.getFullYear();
@@ -209,7 +211,7 @@
                 var dt_day = dt.getDate() - 1;
                 var dateTo = dt_year+"-"+dt_month+"-"+dt_day;
 
-                var calendar_id = event.id
+                var calendar_id = event.id;
 
                 if (!confirm("Are you sure you want to change event schedule?")) {
                     revertFunc();
@@ -221,6 +223,7 @@
                 }
             },
             eventRender: function(event, element, view) {
+
                 if (view.name == 'listDay') {
                     element.find(".fc-list-item-time").append("<span class='closeon pull-right tiptool'><span>X</span title='delete' class='tiptooltext'><span>Delete</span></span>");
                 } else {
