@@ -110,7 +110,7 @@ Class Calendar_model extends CI_Model
                 $sec = $this->db->get('lessons');
 
                 $newSchedule = array(
-                    'lesson_id' => $data['lesson'],
+                    'lesson_id' => $data['new_lesson_id'],
                     'gid' => $sectionID,
                     'cid' => $sec->row('subject_id'),
                     'lid'=>$this->group_model->load("savsoft_group","gid",$sectionID)['lid'],
@@ -119,11 +119,11 @@ Class Calendar_model extends CI_Model
                     'uid' => $data['teacher_id'],
                     'workspace_id' => $data['teacher_workspace_id'],
                 );
-
+//                print_r("<pre>");
+//                print_r($data);
+//                exit;
                 $this->db->insert('calendar', $newSchedule);
             }
-
-//            exit;
 
         }else{
             if (is_array($data['section'])) {

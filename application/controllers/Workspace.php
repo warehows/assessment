@@ -155,6 +155,7 @@ class Workspace extends CI_Controller
         }
 
         $posts["teacher_workspace_model"] = $workspace_id;
+        $posts["new_lesson_id"] = $this->lessons_model->get_latest_lesson_id_imported_to_workspace;
 
         $this->load->view('calendar/calendar_redirect', $posts);
     }

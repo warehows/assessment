@@ -234,7 +234,7 @@ Class Lessons_model extends CI_Model
 
         return $data->result_array();
     }
-
+    public $get_latest_lesson_id_imported_to_workspace;
     function import_to_workspace($data)
     {
         if (!$this->session->userdata('logged_in')) {
@@ -270,7 +270,9 @@ Class Lessons_model extends CI_Model
                 'content_type' => "lesson",
                 'content_name' => $loop_data[0]['lesson_name']."-copy",
             );
+
             $this->db->insert('workspace', $workspace_data);
+            $this->get_latest_lesson_id_imported_to_workspace = $new_lesson_id;
             $return_workspace_value = $this->db->insert_id();
 
             foreach($lesson_contents as $lesson_content_key=>$lesson_content_value){
