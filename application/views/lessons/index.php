@@ -76,7 +76,8 @@
     $("#import").hide();
     $("#delete").hide();
     $("#assign").hide();
-    $(".lesson_row").click(function(){
+
+    $(document).on('click', ".lesson_row", function () {
         $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
         $("#view").click();
     });

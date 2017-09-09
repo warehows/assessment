@@ -78,7 +78,7 @@ class Lessonbank extends CI_Controller
                 'start_date' => strtotime($quiz_data['start_date']),
                 'end_date' => strtotime($quiz_data['end_date']),
                 'duration' => $quiz_data['duration'],
-                'maximum_attempts' => 10000,
+                'maximum_attempts' => $quiz_data['maximum_attempts'],
                 'pass_percentage' => $quiz_data['pass_percentage'],
                 'correct_score' => $quiz_data['correct_score'],
                 'incorrect_score' => 0,
@@ -93,6 +93,7 @@ class Lessonbank extends CI_Controller
                 'lid' => $quiz_data['lid'],
                 'author' => $uid,
             );
+
             $added_quiz_id = $this->assign_model->insert_quiz($quiz_data_to_insert);
 
 
