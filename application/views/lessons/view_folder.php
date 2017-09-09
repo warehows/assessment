@@ -1,4 +1,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+    .gi-5x {
+        font-size: 2em;
+    }
+</style>
 <?php
 $data = array("lesson_id" => $lesson_id);
 ?>
@@ -25,7 +30,7 @@ $data = array("lesson_id" => $lesson_id);
         </div>
 
         <label class="tree-js folder" id="engage"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px">Engage</label>
+               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-hand-up gi-5x"></i>                        Engage</label>
         <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
             <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
                 <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
@@ -43,7 +48,7 @@ $data = array("lesson_id" => $lesson_id);
             <?php } ?>
         </ul>
         <label class="tree-js folder" id="explore"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px">Explore</label>
+               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-search gi-5x"></i>                        Explore</label>
         <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
             <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
                 <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
@@ -54,7 +59,7 @@ $data = array("lesson_id" => $lesson_id);
             <?php } ?>
         </ul>
         <label class="tree-js folder" id="explain"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px">Explain</label>
+               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-comment gi-5x"></i>                        Explain</label>
         <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
             <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
                 <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
@@ -65,7 +70,7 @@ $data = array("lesson_id" => $lesson_id);
             <?php } ?>
         </ul>
         <label class="tree-js folder" id="extend"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px">Extend</label>
+               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-chevron-right gi-5x"></i>                        Extend</label>
         <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
             <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
                 <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
@@ -76,7 +81,7 @@ $data = array("lesson_id" => $lesson_id);
             <?php } ?>
         </ul>
         <label class="tree-js folder" id="evaluate"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px">Evaluate</label>
+               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-phone gi-5x"></i>                        Evaluate</label>
         <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
             <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
                 <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
@@ -87,7 +92,7 @@ $data = array("lesson_id" => $lesson_id);
             <?php } ?>
         </ul>
         <label class="tree-js folder" id="other_resources"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px">Other
+               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-duplicate gi-5x"></i>                        Other
             Resources</label>
         <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
             <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>

@@ -1,7 +1,7 @@
 <?php
-$sq_base_url='http://warehows.net/develop/assessment/';
+$sq_base_url='http://192.168.2.17/brainee/';
 $sq_hostname='localhost';
-$sq_dbname='assessment_dev';
-$sq_dbusername='jmonteros';
-$sq_dbpassword='!!pa55word';
+$sq_dbname='brainee';
+$sq_dbusername='root';
+$sq_dbpassword='!!p@ssw0rd';
 ?>

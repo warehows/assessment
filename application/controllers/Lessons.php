@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Lessons extends CI_Controller
 {
     public $css_directory = "css/new_material/cdn/";
-    public $dev_site = "false";
+    public $dev_site = "true";
     function __construct()
     {
         parent::__construct();

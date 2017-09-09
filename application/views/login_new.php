@@ -7,7 +7,7 @@
 .register-photo .image-holder {
   display:table-cell;
   width:auto;
-  background-image: url("http://[::1]/brainee2/css/new_material/img/brainee_home2.jpg");
+  background-image: url("http://[::1]/brainee/css/new_material/img/brainee_home2.jpg");
   background-size:cover;
 }
 
