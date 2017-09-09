@@ -58,8 +58,14 @@
                                 </table>
                                 <ul class="list-inline pull-right">
                                     <li>
-                                        <a href="<?php echo site_url('lessons/')?>?notif=yes"><button class="btn btn-primary btn-info-full next-step" id="Done"
+                                        <?php $logged_in = $this->session->userdata('logged_in'); ?>
+                                        <?php if($logged_in['su']==1): ?>
+                                            <a href="<?php echo site_url('lessons/')?>?notif=yes"><button class="btn btn-primary btn-info-full next-step" id="Done"
                                                                                                             type="button">Done</button></a>
+                                        <?php else: ?>
+                                            <a href="<?php echo site_url('workspace/')?>?notif=yes"><button class="btn btn-primary btn-info-full next-step" id="Done"
+                                                                                                          type="button">Done</button></a>
+                                        <?php endif; ?>
                                     </li>
                                 </ul>
                             </div>
