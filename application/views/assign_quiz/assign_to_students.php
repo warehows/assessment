@@ -16,7 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
-<?php print_r($quid = $quid['selected_quiz'][0])?>
+<?php $quid = $quid['selected_quiz'][0]?>
 <?php $all_teachers = $this->user_model->where('su', 2); ?>
 
 <?php $quiz_current_data = $this->quiz_model->get_quiz($quid); ?>
@@ -120,6 +120,7 @@ else: $view_answer = ""; endif; ?>
 
 <?php $quiz_gids = explode(",", $quiz_data['gids']); ?>
 <?php $quiz_teacher_ids = explode(",", $quiz_data['teacher_ids']); ?>
+
 <?php $quiz_teacher_ids_count = count($quiz_teacher_ids); ?>
 
 <script>

@@ -53,7 +53,6 @@
                             <input type="text" name="nop" class="form-control" value="4">
                         </div>
 
-
                         <a href="<?php echo $sent_data['back_url'] ?>">
                             <button class="btn btn-default" type="button">Go Back To Quiz</button>
                         </a>

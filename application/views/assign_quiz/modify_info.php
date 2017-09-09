@@ -97,7 +97,7 @@ $currentSem = isset($quiz_detail['semester']) ? $quiz_detail['semester'] : '';
             var description = $("#description").val();
             var semester = $("#semester").val();
             var uid = <?php echo $logged_in['uid']?>;
-            alert(semester);
+
 
             var returned_value;
 

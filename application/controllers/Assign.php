@@ -165,6 +165,7 @@ class Assign extends CI_Controller
             } else {
                 $this->load->view('new_material/student_header', $data);
             }
+
             $this->load->view('assign_quiz/assign', $data);
             $this->load->view('new_material/footer', $data);
 
@@ -235,6 +236,7 @@ class Assign extends CI_Controller
             } else {
                 $this->load->view('new_material/student_header', $data);
             }
+
             $this->load->view('assign_quiz/assign', $data);
             $this->load->view('new_material/footer', $data);
 

@@ -114,6 +114,7 @@ else: $view_answer = ""; endif; ?>
 <?php $quiz_data = $this->quiz_model->get_quiz($quid); ?>
 
 <?php $quiz_gids = explode(",", $quiz_data['gids']); ?>
+
 <?php $quiz_teacher_ids = explode(",", $quiz_data['teacher_ids']); ?>
 <?php $quiz_teacher_ids_count = count($quiz_teacher_ids); ?>
 

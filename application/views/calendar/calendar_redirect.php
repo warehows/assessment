@@ -2,7 +2,7 @@
 <?php $data = $_GET ?>
 <?php //print_r("<pre>") ?>
 <?php //print_r($data) ?>
-<form action="<?php echo site_url()."/calendar/save"?>" method="post">
+<form action="<?php echo site_url()."/calendar/save"?>" method="post" style="display: none">
     <p>date from</p><input type="text" name="dateFrom" value="<?php print_r($data["date_start"]) ?>">
     <p>date to</p><input type="text" name="dateTo" value="<?php print_r($data["date_end"]) ?>">
     <p>date section</p><input type="text" name="section" value="<?php print_r($data["sections"][0]) ?>">

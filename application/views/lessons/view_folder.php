@@ -135,6 +135,7 @@ $data = array("lesson_id" => $lesson_id);
                     '</iframe>');
             } else {
 //                var file_value = ;
+
                 var where = "quiz_name";
                 var value = $(this).attr("value");
                 $.ajax({

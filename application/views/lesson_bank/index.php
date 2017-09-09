@@ -49,7 +49,7 @@
                     </table>
                 </form>
                 <form action="<?php echo site_url() ?>/assign/actions" method="POST" id="quiz_form">
-                    <button class="btn btn-primary" id="quiz_view" name="submit" value="view">View</button>
+<!--                    <button class="btn btn-primary" id="quiz_view" name="submit" value="view">View</button>-->
                     <button class="btn btn-primary" id="quiz_remove" name="submit" value="remove">Unshare</button>
                     <table id="quiz_lists" class="table table-bordered table-hover">
                         <thead>
