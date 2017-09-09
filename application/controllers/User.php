@@ -82,6 +82,7 @@ class User extends CI_Controller
             redirect('user/new_user/');
         } else {
             if ($this->user_model->insert_user()) {
+
                 $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_added_successfully') . " </div>");
             } else {
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
@@ -155,6 +156,8 @@ class User extends CI_Controller
             $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . validation_errors() . " </div>");
             redirect('user/edit_user/' . $uid);
         } else {
+
+
             if ($this->user_model->update_user($uid)) {
                 $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_updated_successfully') . " </div>");
             } else {

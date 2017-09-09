@@ -301,6 +301,8 @@ Class User_model extends CI_Model
         if($this->input->post('password')!=""){
             $userdata['password']=md5($this->input->post('password'));
         }
+        print_r($this->input->post());
+        exit;
         $this->db->where('uid',$uid);
         if($this->db->update('savsoft_users',$userdata)){
 

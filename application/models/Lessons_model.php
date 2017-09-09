@@ -103,9 +103,24 @@ Class Lessons_model extends CI_Model
 
     function save_lesson_with_folder($data)
     {
+        $logged_in = $this->session->userdata('logged_in');
 
-        $this->db->insert('lessons', $data);
-        $quid = $this->db->insert_id();
+        if($logged_in['su']==1){
+            $this->db->insert('lessons', $data);
+            $quid = $this->db->insert_id();
+        }else if($logged_in['su']==2){
+            $this->db->insert('lessons', $data);
+            $quid = $this->db->insert_id();
+            $insert_to_workspace = array(
+                "user_id"=>$logged_in['uid'],
+                "content_id"=>$quid,
+                "content_type"=>"lesson",
+                "content_name"=>$this->lesson_by_id($quid)[0]['lesson_name'],
+            );
+            $this->workspace_model->insert_workspace($insert_to_workspace);
+        }
+
+
 
         return $quid;
     }
