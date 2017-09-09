@@ -210,7 +210,7 @@ class Workspace extends CI_Controller
             $this->session->unset_userdata('logged_in');
             redirect('login');
         }
-        echo "<pre>";
+
 
         $posts = $this->input->get();
 
@@ -231,10 +231,11 @@ class Workspace extends CI_Controller
             "view_answer"=>$posts['view_answer'],
             "gids"=>$sections,
             "teacher_ids"=>$teachers,
+            "maximum_attempts"=>$posts['maximum_attempts'],
             "assigned"=>1,
             "assigned_by"=>$logged_in['uid'],
         );
-        print_r($update_quiz);
+
         $this->assign_model->update_quiz($update_quiz);
         redirect("workspace");
     }

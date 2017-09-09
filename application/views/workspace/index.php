@@ -139,8 +139,8 @@
     });
     //quiz
     $(".quiz_row").click(function(){
-        $(this).siblings(".quiz_input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
-        $("#view").click();
+//        $(this).siblings(".quiz_input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
+//        $("#view").click();
     });
     //quiz
     $(".selected_lesson_class").change(function () {

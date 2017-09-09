@@ -30,6 +30,8 @@ else: $end_date = ""; endif; ?>
 else: $pass_percentage = ""; endif; ?>
 <?php if ($quiz_current_data['duration'] != 0): $duration = $quiz_current_data['duration'];
 else: $duration = ""; endif; ?>
+<?php if ($quiz_current_data['maximum_attempts'] != 0): $maximum_attempts = $quiz_current_data['maximum_attempts'];
+else: $maximum_attempts = ""; endif; ?>
 <?php if ($quiz_current_data['correct_score'] != 0): $correct_score = $quiz_current_data['correct_score'];
 else: $correct_score = ""; endif; ?>
 <?php if ($quiz_current_data['view_answer'] != 0): $view_answer = $quiz_current_data['view_answer'];
@@ -81,6 +83,13 @@ else: $view_answer = ""; endif; ?>
             <input type="number" required class="form-control duration" id="duration" value="<?php echo $duration ?>"
                    name="duration" placeholder="Duration"/>
         </div>
+
+        <div class="form-group">
+            Maximum Attempts
+            <input type="number" required class="form-control maximum_attempts" name="maximum_attempts" id="maximum_attempts"
+                   placeholder="Maximum Attempts" value="<?php echo $maximum_attempts ?>"/>
+        </div>
+
         <div class="form-group">
             Points per Question
             <input type="number" required class="form-control correct_score" name="correct_score" id="correct_score"
