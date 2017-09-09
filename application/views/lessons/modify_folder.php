@@ -186,7 +186,7 @@
                     {"id": "3", "text": "Explain"},
                     {"id": "4", "text": "Extend"},
                     {"id": "5", "text": "Evaluate"},
-                    {"id": "6", "text": "Other Resources"},
+                    {"id": "6", "text": "Lesson Plan"},
                 ]
             },
 
@@ -213,7 +213,7 @@
                 } else if (data.selected[0] == 5) {
                     folder_name = "Evaluate";
                 } else if (data.selected[0] == 6) {
-                    folder_name = "Other Resources";
+                    folder_name = "Lesson Plan";
                 }
                 uploadObj.reset();
                 $("#folder_content_container").show();

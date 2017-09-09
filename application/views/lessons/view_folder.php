@@ -92,8 +92,7 @@ $data = array("lesson_id" => $lesson_id);
             <?php } ?>
         </ul>
         <label class="tree-js folder" id="other_resources"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-duplicate gi-5x"></i>                        Other
-            Resources</label>
+               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-duplicate gi-5x"></i>Lesson Plan</label>
         <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
             <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
                 <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
