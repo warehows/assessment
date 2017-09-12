@@ -164,7 +164,7 @@ class Lessons extends CI_Controller
             $imported = $this->lessons_model->duplicate($data);
 
             if ($logged_in['su'] == 2) {
-                redirect(site_url() . "/lessonbank");
+                redirect(site_url() . "/workspace");
             }
             if ($logged_in['su'] == 1) {
                 redirect(site_url() . "/lessons");
@@ -198,13 +198,15 @@ class Lessons extends CI_Controller
             $data['lesson_id'] = $post['selected_lesson'][0];
             foreach ($post['selected_lesson'] as $key => $value) {
                 $current_lesson = $this->lessons_model->lesson_by_id($value);
-                if($current_lesson[0]['duplicated'] == "1"){
+
+//                if($current_lesson[0]['duplicated'] == "1"){
                     $this->workspace_model->delete_by_content($value);
-                }
+//                }
+
                 $this->lessons_model->delete_by_id($value);
                 $this->lessons_model->delete_where("lesson_id", $value);
             }
-//            print_r($current_lesson);
+
             if ($logged_in['su'] == 2) {
                 redirect(site_url() . "/workspace");
             }
