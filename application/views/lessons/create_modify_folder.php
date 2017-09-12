@@ -173,7 +173,7 @@
                 lesson_folder_id = data;
                 lesson_folder_id = lesson_folder_id.replace('"', "");
                 lesson_folder_id = lesson_folder_id.replace('"', "");
-
+                console.log(data);
                 $.ajax({
                     url: "<?php echo site_url('lessons/save_files_to_database');?>",
                     type: "POST",

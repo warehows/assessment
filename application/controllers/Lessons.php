@@ -393,7 +393,7 @@ class Lessons extends CI_Controller
         }
         $data = array("lesson_id" => $_POST['lesson_id'], "folder_name" => $_POST['folder_name'], "author" => $_POST['author']);
         $data = $this->lessons_model->get_current_folder($data);
-        print_r(json_encode($data[0]['id']));
+        print_r(json_encode($data));
 
 
     }
