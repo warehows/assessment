@@ -1,6 +1,6 @@
 <style>
     #image_view {
-        height: 97%;
+        height: 100%;
         width: 100%;
     }
 
@@ -21,7 +21,9 @@
         width: calc(100% + 30px); /* Adjust as needed */
     }
 </style>
-<script src="<?php echo $input['base_url']; ?>js/jquery.min.js"></script>
+
+
+
 <?php
 
 
@@ -48,7 +50,7 @@ if ($file_extension == "png" || $file_extension == "jpg") {
 <?php }elseif($file_extension == "odp"){ ?>
     <iframe src = "<?php echo $input['base_url']?>ViewerJS/#../upload/lessons/<?php echo $filelocation.$input['filename']; ?>" width='100%' height='100%' allowfullscreen webkitallowfullscreen></iframe>
 <?php }; ?>
-
+<script src="<?php echo $input['base_url']; ?>js/jquery.min.js"></script>
 <script>
 
     $(document).ready(function() {

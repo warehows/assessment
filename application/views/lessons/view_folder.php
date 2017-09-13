@@ -1,139 +1,134 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<style>
-    .gi-5x {
-        font-size: 2em;
-    }
-</style>
+<?php $request = $_REQUEST ?>
+<?php $new_data['lesson_id'] = $request['lesson_id'] ?>
+<?php $new_data['author'] = $request['author'] ?>
 <?php
-$data = array("lesson_id" => $lesson_id);
-?>
-<?php $lesson_contents = $this->lessons_model->all_lesson_contents_by_id($data); ?>
-<?php $lesson_information = $this->lessons_model->lesson_by_id($lesson_id); ?>
+//$data = array("lesson_id" => $lesson_id);
+//?>
+<?php $lesson_contents = $this->lessons_model->all_lesson_contents_by_id($new_data); ?>
+<?php $lesson_information = $this->lessons_model->lesson_by_id($new_data['lesson_id']); ?>
 <?php $root_link = base_url('upload/lessons/fileview'); ?>
 <?php $base_url = base_url(); ?>
+<?php $folders = array(
+    array("engage", "star"),
+    array("explain", "heart"),
+    array("extend", "user"),
+    array("evaluate", "alert"),
+    array("lesson plan", "search"),
+) ?>
 
 <?php
-    function echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url){?>
-        <li style="cursor:pointer" class="content"
-            value="<?php echo $root_link . "?filename=" . urlencode($lesson_contents_value['content_name']); ?>&filelocation=<?php echo urlencode($folder_location) ?>&base_url=<?php echo $base_url ?>"><?php echo urlencode($lesson_contents_value['content_name']); ?></li>
-<?php
-    }
+function echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url){?>
+    <li style="cursor:pointer" type="file" class="content"
+        value="<?php echo $root_link . "?filename=" . urlencode($lesson_contents_value['content_name']); ?>&filelocation=<?php echo urlencode($folder_location) ?>&base_url=<?php echo $base_url ?>"><?php echo urlencode($lesson_contents_value['content_name']); ?></li>
+    <?php
+}
 ?>
 
-<div class="container col-lg-12 col-md-12">
-    <div class="left-container" id="right_container"
-         style="margin-left: 0px; background-color: rgb(242, 207, 165); height: auto; width: 230px; float: left; padding-top: 0px;">
+<link href="<?php echo base_url('css/new_material/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet">
+<link href="<?php echo base_url('css/new_material/tabs.css') ?>" rel="stylesheet">
+<link href="<?php echo base_url('css/new_material/view_folder.css') ?>" rel="stylesheet">
 
-        <div class="header"
-             style="font-weight: bold; font-size: 14px; color: #ffffff; padding: 30px 10px;margin: 0 0px; background-color: #fe0000; background-repeat: repeat-x;">
-            <div class="title" id="lesson_title"><?php echo $lesson_information[0]["lesson_name"] ?></div>
-        </div>
-
-        <label class="tree-js folder" id="engage"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-hand-up gi-5x"></i>                        Engage</label>
-        <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
-            <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
-                <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
-                <?php if ($lesson_contents_value['folder_name'] == "Engage") { ?>
-                    <?php if ($lesson_contents_value['content_type'] == "quiz") { ?>
-                        <li style="cursor:pointer" class="content" type="quiz"
-                            value="<?php echo $lesson_contents_value['content_name']; ?>"><?php echo $lesson_contents_value['content_name']; ?></li>
-                    <?php } else { ?>
-                        <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
-                    <?php } ?>
+<meta name="viewport" content="width=device-width"/>
 
 
-                <?php } ?>
+<div class="viewer_container col-lg-12 col-sm-12">
+    <div class="well">
+        <div class="tab-content">
+            <?php foreach ($folders as $folders_key => $folders_value): ?>
+                <div class="tab-pane fade in" id="tab<?php echo $folders_key ?>">
+                    <div class="row">
+                        <div class="content_container col-lg-2 col-md-2 col-sm-12 col-xs-12 hidden-sm hidden-xs">
+                            <ul content_id="<?php echo $folders_key ?>">
+                                <div class="ul_title">Contents</div>
+                                <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value): ?>
+                                    <?php $folder_location = $new_data['lesson_id'] . "_" . $lesson_contents_value['folder_name'] . "/" ?>
+                                    <?php if (strtolower($lesson_contents_value['folder_name'])==$folders_value[0]): ?>
+                                        <?php if ($lesson_contents_value['content_type'] == "quiz") { ?>
+                                            <li style="cursor:pointer" class="content" type="quiz"
+                                                value="<?php echo $lesson_contents_value['content_name']; ?>"><?php echo $lesson_contents_value['content_name']; ?></li>
+                                        <?php } else { ?>
+                                            <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
+                                        <?php } ?>
 
-            <?php } ?>
-        </ul>
-        <label class="tree-js folder" id="explore"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-search gi-5x"></i>                        Explore</label>
-        <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
-            <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
-                <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
-                <?php if ($lesson_contents_value['folder_name'] == "Explore") { ?>
-                    <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
-                <?php } ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <div class="file_container col-lg-2 col-md-2 col-sm-12 col-xs-12 hidden-sm hidden-xs">
+                            <div id="iframe_container_<?php echo $folders_key ?>"
+                                 class="iframe_container col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-            <?php } ?>
-        </ul>
-        <label class="tree-js folder" id="explain"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-comment gi-5x"></i>                        Explain</label>
-        <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
-            <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
-                <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
-                <?php if ($lesson_contents_value['folder_name'] == "Explain") { ?>
-                    <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
-                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
 
-            <?php } ?>
-        </ul>
-        <label class="tree-js folder" id="extend"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-chevron-right gi-5x"></i>                        Extend</label>
-        <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
-            <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
-                <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
-                <?php if ($lesson_contents_value['folder_name'] == "Extend") { ?>
-                    <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
-                <?php } ?>
-
-            <?php } ?>
-        </ul>
-        <label class="tree-js folder" id="evaluate"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-phone gi-5x"></i>                        Evaluate</label>
-        <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
-            <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
-                <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
-                <?php if ($lesson_contents_value['folder_name'] == "Evaluate") { ?>
-                    <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
-                <?php } ?>
-
-            <?php } ?>
-        </ul>
-        <label class="tree-js folder" id="other_resources"
-               style="width: 230px; height:50px; font-size: 12px;font-weight: bold;line-height: 18px; color: #ffffff; background-color: #663332; padding: 14px 26px"><i class="glyphicon glyphicon-duplicate gi-5x"></i>Lesson Plan</label>
-        <ul style="height: auto;padding: 0px 9px; margin: 0px 40px; list-style: none;">
-            <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value) { ?>
-                <?php $folder_location = $lesson_id . "_" . $lesson_contents_value['folder_name'] . "/" ?>
-                <?php if ($lesson_contents_value['folder_name'] == "Other Resources") { ?>
-                    <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>
-                <?php } ?>
-            <?php } ?>
-        </ul>
-
-
-    </div>
-    <div class="right-container" style="margin-left: 252px; height: 700px">
-        <div class="well"
-             style="padding: 0; background-color: #eeeeee; min-height: 20px; margin-bottom: 20px; height: 690px">
-            <div class="right-container-head"
-                 style="color: #ffffff; font-size: 14px; padding: 30px 10px; background-color: #da251e;">
-
-            </div>
-            <div id="current_iframe_container" class="right-container-body">
-                <!--            <iframe id="current_iframe" width="100%" height="800px"-->
-                <!--                    src="http://localhost/assessment/upload/lessons/11_Other%20Resources/20161229_063048.mp4"-->
-                <!--                    frameborder="0" allowfullscreen="">-->
-                <!--            </iframe>-->
-            </div>
         </div>
     </div>
+
+    <div class="card-info col-lg-12 col-md-12 col-sm-12 col-xs-12"><span class="card-title">Lesson Title</span></div>
+
+
+    <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+        <?php foreach ($folders as $folders_key => $folders_value): ?>
+
+            <div class="btn-group" role="group">
+                <button type="button" id="folder_button_<?php echo $folders_key ?>"
+                        class="button_for_folders btn btn-default" href="#tab<?php echo $folders_key ?>"
+                        data-toggle="tab">
+                    <span class="glyphicon glyphicon-<?php echo $folders_value[1] ?>" aria-hidden="true"></span>
+
+                    <div class=""><?php echo $folders_value[0] ?></div>
+                </button>
+            </div>
+        <?php endforeach; ?>
+
+    </div>
+
+
 </div>
 
+<div class="toggle_button col-sm-12 col-xs-12 hidden-lg hidden-md visible-sm-block visible-xs-block">
+    <button class="toggle_navigation btn btn-primary form-control">TOGGLE NAVIGATION</button>
+</div>
+
+<script src="<?php echo base_url('js/jquery.js') ?>"></script>
+<script src="<?php echo base_url('js/jquery.min.js') ?>"></script>
+<script src="<?php echo base_url('css/new_material/bootstrap/js/bootstrap.min.js') ?>"></script>
 
 <script>
     $(document).ready(function () {
+        $(".btn-pref .btn").click(function () {
+            $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+            // $(".tab").addClass("active"); // instead of this do the below
+            $(this).removeClass("btn-default").addClass("btn-primary");
+        });
+        $(".tab-pane").eq(0).addClass("active");
+        $(".button_for_folders").eq(0).removeClass("btn-default");
+        $(".button_for_folders").eq(0).addClass("btn-primary");
+        $(".toggle_button").click(function () {
+
+            $(".content_container").toggleClass("hidden-sm visible-sm-block");
+            $(".content_container").toggleClass("hidden-xs visible-xs-block");
+            $(".content_container").addClass("visible-lg-block");
+            $(".content_container").addClass("visible-md-block");
+
+        });
+
         $(".content").click(function () {
 
 
             var url = $(this).attr("value");
             var file_type = $(this).attr("type");
+            var content_id = $(this).parent().attr("content_id");
+
 
             if (file_type != "quiz") {
-                $("#current_iframe").remove();
-                $("#current_iframe_container").append('' +
-                    '<iframe id="current_iframe" style="height: 580px; width: 100%;"' +
+                $("#current_iframe_"+content_id).remove();
+                $("#iframe_container_"+content_id).append('' +
+                    '<iframe id="current_iframe_'+content_id+'" style="height: 580px; width: 100%;"' +
                     'src="' + url + '"' +
                     'frameborder="0" allowfullscreen=""> ' +
                     '</iframe>');
@@ -157,6 +152,13 @@ $data = array("lesson_id" => $lesson_id);
             }
 
         });
+
+
     });
+
+
 </script>
+
+
+
 

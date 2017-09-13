@@ -1,0 +1,62 @@
+ul{
+    background-color: darkred;
+    color:white;
+    line-height: 40px;
+    padding: 0px;
+}
+ul li {
+    list-style: none;
+    padding:10px;
+    border-bottom: 1px solid white;
+}
+
+ul li:hover {
+    cursor: pointer;
+    color:black;
+    background-color: white;
+    -webkit-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
+
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.toggle_button{
+    position: fixed;
+    bottom: 0px;
+    padding: 0px;
+}
+.btn-pref{
+    position: fixed;
+    top: 36px;
+}
+.card-info{
+    text-align: center;
+    position: fixed;
+    top: 0px;
+    font-size: 20px;
+    background-color: white;
+}
+.well{
+    position: relative;
+    top: 84px;
+}
+.viewer_container{
+    padding: 0px;
+}
+.iframe_container{
+    position: fixed;
+    padding: 0px;
+}
+.content_container{
+    padding-right: 0px;
+}
+.ul_title{
+    text-align: center;
+    font-size: 30px;
+    padding: 5px;
+    border-bottom: 2px solid white;
+}

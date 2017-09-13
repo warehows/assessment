@@ -185,7 +185,10 @@ class Lessons extends CI_Controller
             $data['lesson_id'] = $post['selected_lesson'][0];
             $author = $this->lessons_model->lesson_by_id($data['lesson_id']);
             $data['author'] = $author[0]['author'];
-            $this->load->view('lessons/view', $data);
+            $data_to_pass['lesson_id'] = $post['selected_lesson'][0];
+            $data_to_pass['author'] =$author[0]['author'];
+
+            redirect(site_url('lessons/view_lesson_folder')."?".http_build_query($data_to_pass));
         } elseif ($post["submit"] == "remove") {
             $data['lesson_id'] = $post['selected_lesson'][0];
             foreach ($post['selected_lesson'] as $key => $value) {
@@ -230,8 +233,9 @@ class Lessons extends CI_Controller
         $this->load->view('new_material/footer', $data);
 
     }
-
-
+    public function view_lesson_folder(){
+        $this->load->view('lessons/view_folder');
+    }
     public function update_lesson_info()
     {
         $data = $this->input->post();
