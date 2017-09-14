@@ -1,6 +1,6 @@
 <style>
     #image_view {
-        height: 100%;
+        height: 95%;
         width: 100%;
     }
 

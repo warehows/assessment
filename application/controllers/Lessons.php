@@ -297,7 +297,7 @@ class Lessons extends CI_Controller
         $data['duplicated'] = $this->input->get('duplicated');
         $data['css_directory'] = $this->css_directory;
         if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
-        $this->load->view('lessons/create_modify_folder.php', $data);
+        $this->load->view('lessons/create_modify_folder', $data);
         $this->load->view('new_material/footer', $data);
     }
 

@@ -27,7 +27,7 @@
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
                     <button class="btn btn-primary" id="edit" name="submit" value="edit">Edit</button>
-<!--                    <button class="btn btn-primary" id="assign" name="submit" value="teacher_assign">Assign</button>-->
+                    <button class="btn btn-primary" id="assign" name="submit" value="teacher_assign">Assign</button>
                     <button class="btn btn-primary" id="duplicate" name="submit" value="duplicate">Duplicate</button>
                     <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
                     <table id="lesson_lists" class="table table-bordered table-hover" >

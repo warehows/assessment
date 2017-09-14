@@ -3,6 +3,7 @@ ul{
     color:white;
     line-height: 40px;
     padding: 0px;
+
 }
 ul li {
     list-style: none;
@@ -59,4 +60,15 @@ html {
     font-size: 30px;
     padding: 5px;
     border-bottom: 2px solid white;
+}
+.hello{
+    height:91%;
+    width: 83%;
+}
+.back{
+    font-size: 13px;
+    vertical-align: middle;
+    top: 7px;
+    cursor: pointer;
+    height: 100%;
 }

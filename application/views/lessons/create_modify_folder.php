@@ -17,8 +17,8 @@
 <script src="<?php echo base_url(); ?>js/jstree/dist/jstree.min.js"></script>
 <script src="<?php echo base_url(); ?>js/jstree/dist/jstree.js"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.js"></script>
+<link rel="stylesheet" href="<?php echo base_url('css/confirm.css'); ?>">
+<script src="<?php echo base_url('js/confirm.js'); ?>"></script>
 
 <div class="wrapper">
     <div class="row">
@@ -44,12 +44,24 @@
                     </div>
                     <div id="step2" class="tab-pane active" role="tabpanel">
                         <form>
-                            <div class="col-lg-6 col-lg-offset-0 col-md-6">
+                            <div class="col-lg-2 col-lg-offset-0 col-md-2">
                                 <div id="data"></div>
+                                <?php $logged_in = $this->session->userdata('logged_in'); ?>
+                                <?php if($logged_in['su']==1): ?>
+                                    <a href="<?php echo site_url('lessons/')?>?notif=yes"><button class="btn btn-primary btn-info-full next-step" id="Done"
+                                                                                                  type="button">Done</button></a>
+                                <?php else: ?>
+                                    <a href="<?php echo site_url('workspace/')?>?notif=yes"><button class="btn btn-primary btn-info-full next-step" id="Done"
+                                                                                                    type="button">Done</button></a>
+                                <?php endif; ?>
+                            </div>
+                            <div class="col-lg-4 col-lg-offset-0 col-md-4">
+
                                 <div id="folder_content_container" class="folder_content_container">
-                                    <div id="fileuploader" class="mdl-cell--12-col-desktop">Upload Files</div>
                                     <input type="button" id="start_upload" value="Start Uploading">
                                     <input type="button" id="add_quiz" value="Add Quiz">
+                                    <div id="fileuploader" class="mdl-cell--12-col-desktop">Upload Files</div>
+
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
@@ -58,14 +70,7 @@
                                 </table>
                                 <ul class="list-inline pull-right">
                                     <li>
-                                        <?php $logged_in = $this->session->userdata('logged_in'); ?>
-                                        <?php if($logged_in['su']==1): ?>
-                                            <a href="<?php echo site_url('lessons/')?>?notif=yes"><button class="btn btn-primary btn-info-full next-step" id="Done"
-                                                                                                            type="button">Done</button></a>
-                                        <?php else: ?>
-                                            <a href="<?php echo site_url('workspace/')?>?notif=yes"><button class="btn btn-primary btn-info-full next-step" id="Done"
-                                                                                                          type="button">Done</button></a>
-                                        <?php endif; ?>
+
                                     </li>
                                 </ul>
                             </div>
