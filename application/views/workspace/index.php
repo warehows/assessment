@@ -34,18 +34,30 @@
                         <thead>
                         <tr>
                             <th width="3px"></th>
-                            <th>Content Name</th>
-                            <th>Content Type</th>
+                            <th>Lesson Name</th>
+                            <th>Subject</th>
+                            <th>Grade Level</th>
+                            <th>Assigned To</th>
+                            <th>Assigned Date</th>
+                            <th>Expiry Date</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach ($all_lessons as $key => $value) { ?>
-
+                            <?php $current_lesson = $lessons_model->lesson_by_id($value['content_id'])?>
+                            <?php $current_lesson = $current_lesson[0]?>
+                            <?php $current_grade = $quiz_model->load("savsoft_level","lid",$current_lesson['level_id'])?>
+                            <?php $current_subject = $quiz_model->load("savsoft_category","cid",$current_lesson['subject_id'])?>
+                            <?php $current_user = $quiz_model->load("savsoft_users","uid",$value['user_id'])?>
                             <tr style="cursor:pointer" >
                                 <input type="hidden" name="workspace_id" value="<?php echo $value['id']; ?>" />
                                 <td class="input_row"><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['content_id']?>"/></td>
                                 <td class="lesson_row"><?php echo $value['content_name'] ?></td>
-                                <td class="lesson_row"><?php echo $value['content_type'] ?></td>
+                                <td class="lesson_row"><?php echo $current_subject['category_name'] ?></td>
+                                <td class="lesson_row"><?php echo $current_grade['level_name'] ?></td>
+                                <td class="lesson_row"><?php echo $current_user['first_name']." ".$current_user['last_name'] ?></td>
+                                <td class="lesson_row"></td>
+                                <td class="lesson_row"></td>
                             </tr>
                         <?php } ?>
 

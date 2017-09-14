@@ -13,8 +13,10 @@
     <link href="<?php echo base_url('css/new_material/css/Navigation-Clean1.css'); ?>" rel="stylesheet">
     <link href="<?php echo base_url('css/new_material/css/MUSA_form-wizard.css'); ?>" rel="stylesheet">
     <link href="<?php echo base_url('css/new_material/css/styles.css'); ?>" rel="stylesheet">
+    <link href="<?php echo base_url('css/Navigation-Clean1.css'); ?>" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-
+    <script src="<?php echo base_url('js/basic.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('js/jquery.js'); ?>"></script>
 </head>
 
 <body>
@@ -32,6 +34,7 @@
                 <li role="presentation"><a href="<?php echo site_url('quiz');?>"><?php echo $this->lang->line('quiz');?> <?php echo $this->lang->line('list');?></a></li>
                 <li role="presentation"><a href="<?php echo site_url('lessons');?>">Lessons</a></li>
                 <li role="presentation"><a href="<?php echo site_url('result');?>">Report</a></li>
+                <li role="presentation"><a href="<?php echo site_url('user/edit_user');?>">Account</a></li>
                 <li role="presentation"><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
             </ul>
 

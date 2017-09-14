@@ -52,7 +52,7 @@ class Result extends CI_Controller {
 
 
 		$this->load->view('result_list',$data);
-		$this->load->view('material_part/footer_material',$data);
+		$this->load->view('new_material/footer',$data);
 	}
 
 

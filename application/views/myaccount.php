@@ -22,7 +22,9 @@
 		?>
 
 				<div class="form-group">
-				<?php echo 'Group'; ?>: <?php echo $result['group_name'];?>
+                    <?php if($logged_in['su']==0):?>
+				    <?php echo 'Group'; ?>: <?php echo $result['group_name'];?>
+                    <?php endif;?>
 				</div>
 
 

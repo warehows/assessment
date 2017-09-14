@@ -131,6 +131,7 @@ class User extends CI_Controller
         $data['payment_history'] = $this->payment_model->get_payment_history($uid);
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
+        $data['logged_in'] = $logged_in;
         if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         if ($logged_in['su']== 1) {
             $this->load->view('edit_user', $data);
@@ -138,7 +139,7 @@ class User extends CI_Controller
             $this->load->view('myaccount', $data);
 
         }
-        $this->load->view('material_part/footer_material', $data);
+        $this->load->view('new_material/footer', $data);
     }
 
     public function update_user($uid)

@@ -45,7 +45,7 @@ function echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_u
                                     <?php $folder_location = $new_data['lesson_id'] . "_" . $lesson_contents_value['folder_name'] . "/" ?>
                                     <?php if (strtolower($lesson_contents_value['folder_name'])==$folders_value[0]): ?>
                                         <?php if ($lesson_contents_value['content_type'] == "quiz") { ?>
-                                            <li style="cursor:pointer" class="content" type="quiz"
+                                            <li style="cursor:pointer" class="contentx" type="quiz"
                                                 value="<?php echo $lesson_contents_value['content_name']; ?>"><?php echo $lesson_contents_value['content_name']; ?></li>
                                         <?php } else { ?>
                                             <?php echo_file_li($root_link,$lesson_contents_value,$folder_location,$base_url); ?>

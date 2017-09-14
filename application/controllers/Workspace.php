@@ -40,6 +40,8 @@ class Workspace extends CI_Controller
         $data['all_levels'] = $this->level_model->all();
         $data['all_lessons'] = $this->workspace_model->where_where("user_id", $logged_in['uid'],"content_type","lesson");
         $data['all_quizzes'] = $this->workspace_model->where_where("user_id", $logged_in['uid'],"content_type","quiz");
+        $data['lessons_model'] = $this->lessons_model;
+        $data['quiz_model'] = $this->quiz_model;
         $data['logged_in'] = $logged_in;
 //        $data['all_quizzes'] = $this->assign_model->where("", $logged_in['uid']);
 

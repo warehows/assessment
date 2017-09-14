@@ -275,14 +275,21 @@ Class User_model extends CI_Model
     function update_user($uid)
     {
         $logged_in = $this->session->userdata('logged_in');
-
+        $current_user = $this->get_user($uid);
         if ($this->input->post('changePassword') && $logged_in['su'] != 1) {
-            if ($logged_in['password'] == md5($this->input->post('oldpassword'))) {
-//                return false;
-                print_r($this->input->post());
-                exit;
+            if ($current_user['password'] == md5($this->input->post('oldpassword'))) {
+                $userdata = array(
+                    'password' => md5($this->input->post('password')),
+                );
+                $this->db->where('uid', $uid);
+                $this->db->update('savsoft_users', $userdata);
+
+                return true;
+            }else{
+                return false;
             }
         }
+
         $userdata = array(
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),

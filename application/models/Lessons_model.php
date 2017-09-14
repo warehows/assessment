@@ -3,6 +3,12 @@
 Class Lessons_model extends CI_Model
 {
     //custom
+
+    function get_model()
+    {
+       return $this;
+
+    }
     function all_lessons()
     {
         $query = $this->db->get('lessons');

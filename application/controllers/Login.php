@@ -42,13 +42,6 @@ class Login extends CI_Controller {
 
 	}
 
-
-
-
-
-
-
-
 	public function registration()
 	{
 		$data['title']=$this->lang->line('register_new_account');

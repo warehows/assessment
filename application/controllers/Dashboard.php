@@ -34,8 +34,20 @@ class Dashboard extends CI_Controller
         $data['num_qbank'] = $this->qbank_model->num_qbank();
         $data['num_quiz'] = $this->quiz_model->num_quiz();
         if ($logged_in['su'] == 1) {
-
-            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+            $this->load->view('new_material/header', $data);
+//            if ($logged_in['su'] == 1) {
+//                if ($logged_in['su'] == 1) {
+//                    $this->load->view('new_material/header', $data);
+//                } elseif ($logged_in['su'] == 2) {
+//                    $this->load->view('new_material/teacher_header', $data);
+//                } else {
+//                    $this->load->view('new_material/student_header', $data);
+//                }
+//            } elseif ($logged_in['su'] == 2) {
+//                $this->load->view('new_material/teacher_header', $data);
+//            } else {
+//                $this->load->view('new_material/student_header', $data);
+//            }
             $this->load->view('newest_dashboard', $data);
             $this->load->view('material_part/footer_material', $data);
         } elseif ($logged_in['su'] == 2) {
@@ -63,7 +75,7 @@ class Dashboard extends CI_Controller
 
 
         $this->load->view('new_material/student_header', $data);
-        $this->load->view('dashboard_student', $data);
+        $this->load->view('newest_dashboard', $data);
         $this->load->view('material_part/footer_material', $data);
 
     }
