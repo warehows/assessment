@@ -12,6 +12,7 @@
 <?php $base_url = base_url(); ?>
 <?php $folders = array(
     array("engage", "star"),
+    array("explore", "heart"),
     array("explain", "heart"),
     array("extend", "user"),
     array("evaluate", "alert"),
