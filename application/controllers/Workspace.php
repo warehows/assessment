@@ -55,6 +55,56 @@ class Workspace extends CI_Controller
         $this->load->view('new_material/footer', $data);
     }
 
+    public function teacher_assign_lesson(){
+        $requests = $_REQUEST;
+        $logged_in = $this->session->userdata('logged_in');
+        $date_start = $requests['date_start'];
+        $date_end = $requests['date_end'];
+        $sections = explode(",",$requests['sections'][0]);
+        $workspace_id = $requests['workspace_id'];
+        $lesson_id = $requests['lesson_id'];
+        $grades = explode(",",$requests['grades'][0]);
+        $lesson_assigned_ids = array();
+
+        if($this->lessons_model->check_if_assigned($lesson_id)){
+            $clear_data = array(
+                "field"=>"lesson_id",
+                "value"=>$lesson_id,
+            );
+            $this->workspace_model->delete_lesson_assigned_by_field($clear_data);
+        }
+        foreach ($sections as $key => $value) {
+
+            $data = array(
+                'lesson_id' => $lesson_id,
+                'workspace_id' => $workspace_id,
+                'uid' => $logged_in['uid'],
+                'gid' => $requests['sections'][0],
+                'date_start' => $date_start,
+                'date_end' => $date_end,
+            );
+
+            if($teacher_workspace_model = $this->workspace_model->insert($data)){
+                array_push($lesson_assigned_ids,$teacher_workspace_model);
+            }else{
+                print_r("Error in lesson assigned database");
+                exit;
+            }
+
+        }
+        $lesson_assigned_ids_insert = implode(",",$lesson_assigned_ids);
+        $lesson_update_data = array(
+            "id"=>$lesson_id,
+            "assigned"=>1,
+            "assigned_date_start"=>date($date_start),
+            "assigned_date_end"=>$date_end,
+            "lesson_assigned_ids"=>$lesson_assigned_ids_insert,
+        );
+        $lesson_update = $this->lessons_model->update($lesson_update_data);
+        redirect(site_url('workspace'));
+
+    }
+
     public function mass_assignation()
     {
         // redirect if not loggedin

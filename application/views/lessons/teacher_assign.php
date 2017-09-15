@@ -1,19 +1,17 @@
-<link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
-
+<link href="<?php echo base_url('css/new_material/cdn/hayageek_file_upload.css'); ?>" rel="stylesheet">
+<script src="<?php echo base_url('css/new_material/cdn/jquery.uploadfile.min.js'); ?>"></script>
 <?php $this->load->helper('url'); ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>js/jstree/dist/themes/default/style.min.css"/>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script src="<?php echo base_url('js/confirm.js'); ?>"></script>
+<script src="<?php echo base_url('js/jstree.js'); ?>"></script>
 
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="<?php echo base_url('js/jquery_ui.js'); ?>"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
-<form action="<?php echo site_url('workspace/mass_assignation') ?>" method="GET">
+<link rel="stylesheet" href="<?php echo base_url('css/confirm.css'); ?>">
+<form action="<?php echo site_url('workspace/teacher_assign_lesson') ?>" method="GET">
     <div class="col-lg-6 col-lg-offset-0 col-md-6">
         <div id="data"></div>
 
@@ -31,8 +29,8 @@
         <input type="hidden" id="section_checked" name="sections[]"/>
         <input type="hidden" id="grade_checked" name="grades[]"/>
 
-        <input type="hidden" id="workspace_id" name="workspace_id" value="<?php echo $workspace_id ?>"/>
-        <input type="hidden" id="lesson_id" name="lesson_id" value="<?php echo $lesson_id ?>"/>
+        <input type="hidden" id="workspace_id" name="workspace_id" required value="<?php echo $workspace_id ?>"/>
+        <input type="hidden" id="lesson_id" name="lesson_id" required value="<?php echo $lesson_id ?>"/>
         <input type="submit" class="btn btn-primary" id="submit">
 
     </div>

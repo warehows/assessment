@@ -2,6 +2,7 @@
 <?php $request = $_REQUEST ?>
 <?php $new_data['lesson_id'] = $request['lesson_id'] ?>
 <?php $new_data['author'] = $request['author'] ?>
+<?php $logged_in = $this->session->userdata('logged_in') ?>
 <?php
 //$data = array("lesson_id" => $lesson_id);
 //?>
@@ -70,7 +71,7 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
         </div>
     </div>
 
-    <div class="card-info col-lg-12 col-md-12 col-sm-12 col-xs-12"><a href="<?php echo site_url('workspace') ?>"><span
+    <div class="card-info col-lg-12 col-md-12 col-sm-12 col-xs-12"><a href="<?php if($logged_in['su']==2){echo site_url('workspace');}else{echo site_url('lessons');} ?>"><span
                 class="back col-sm-1 col-xs-1"><i class="glyphicon glyphicon-arrow-left"></i></span></a><span
             class="card-title col-sm-offset-0 col-xs-offset-0"><?php echo $lesson_information[0]['lesson_name'] ?></span></div>
 

@@ -56,8 +56,10 @@
                                 <td class="lesson_row"><?php echo $current_subject['category_name'] ?></td>
                                 <td class="lesson_row"><?php echo $current_grade['level_name'] ?></td>
                                 <td class="lesson_row"><?php echo $current_user['first_name']." ".$current_user['last_name'] ?></td>
-                                <td class="lesson_row"></td>
-                                <td class="lesson_row"></td>
+                                <?php if($current_lesson['assigned_date_start']){$current_date_start = date("F d, Y",strtotime($current_lesson['assigned_date_start']));}else{$current_date_start="";}?>
+                                <td class="lesson_row"><?php echo $current_date_start ?></td>
+                                <?php if($current_lesson['assigned_date_end']){$current_date_end = date("F d, Y",strtotime($current_lesson['assigned_date_end']));}else{$current_date_end="";}?>
+                                <td class="lesson_row"><?php echo $current_date_end ?></td>
                             </tr>
                         <?php } ?>
 

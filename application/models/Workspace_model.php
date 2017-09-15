@@ -19,6 +19,10 @@ Class Workspace_model extends CI_Model
         $this->db->where('content_id', $id)->where('content_type','lesson');
         $this->db->delete('workspace');
     }
+    function delete_lesson_assigned_by_field($data){
+        $this->db->where($data['field'], $data['value']);
+        $this->db->delete('lesson_assigned');
+    }
 
     function select_by_gid($id)
     {

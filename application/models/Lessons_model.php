@@ -43,6 +43,20 @@ Class Lessons_model extends CI_Model
         return $query->result_array();
     }
 
+    function check_if_assigned($data)
+    {
+        $this->db->where('id', $data);
+        $query = $this->db->get('lessons');
+        $query = $query->result_array()[0];
+
+        if($query['assigned']==1){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
     function delete_by_id($data)
     {
         $this->db->where('id', $data);
@@ -371,6 +385,11 @@ Class Lessons_model extends CI_Model
         $this->db->where('id', $data['lesson_folder_id']);
         $query = $this->db->delete('lesson_contents');
         return $data['lesson_folder_id'];
+    }
+    function update($data){
+        $this->db->where("id", $data['id']);
+        $return_value = $this->db->update("lessons", $data);
+        return $return_value;
     }
 
     function change_share($data)
