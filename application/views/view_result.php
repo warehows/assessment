@@ -249,7 +249,10 @@ $cia_tim_cate=cia_tim_cate($correct_incorrect_unattempted,explode(",",$result['i
 <div class="col-lg-12" style="margin-top:20px;">
 	<div class="col-lg-2" style="text-align:center;">
 		<p><?php echo $this->lang->line('score_obtained');?></p>
-		<p style="color:#e39500;" ><?php echo $result['score_obtained'];?></p>
+		<p style="color:#e39500;" >
+            <?php echo $result['score_obtained'];?>/ <?php echo array_sum(explode(',',$result['score_individual'])); ?>
+
+        </p>
 	</div>
 	<div class="col-lg-2"  style="text-align:center;">
 		<p><?php echo $this->lang->line('time_spent');?></p>
@@ -267,8 +270,10 @@ $cia_tim_cate=cia_tim_cate($correct_incorrect_unattempted,explode(",",$result['i
 
 	</div>
  <div class="col-lg-2"  style="text-align:center;">
-		<p><?php echo $this->lang->line('percentile_obtained');?></p>
-		<p style="color:#e39500;" ><?php echo substr(((($percentile[1]+1)/$percentile[0])*100),0,5);   ?>%</p>
+<!--		<p>--><?php //echo $this->lang->line('percentile_obtained');?><!--</p>-->
+		<p>Passing Rate</p>
+<!--		<p style="color:#e39500;" >--><?php //echo substr(((($percentile[1]+1)/$percentile[0])*100),0,5);   ?><!--%</p>-->
+		<p style="color:#e39500;" ><?php echo $result['pass_percentage']; ?>%</p>
 
 	</div>
  
@@ -283,14 +288,14 @@ $cia_tim_cate=cia_tim_cate($correct_incorrect_unattempted,explode(",",$result['i
 </div>
 <div class="col-lg-12" style="margin-top:20px;">
 <center>
-<?php 
-if($result['view_answer']=='1' || $logged_in['su']>'0'){
-	
-?>
+<?php //
+//if($result['view_answer']=='1' || $logged_in['su']>'0'){
+//
+//?>
 <a href="#answers_i" class="btn btn-info" style="margin-top:10px;"><?php echo $this->lang->line('answer_sheet');?></a>
-<?php 
-}
-?>
+<?php //
+//}
+//?>
 
 <a href="javascript:print();" class="btn btn-success printbtn" style="margin-top:10px;"><?php echo $this->lang->line('print');?></a>
 
@@ -376,60 +381,60 @@ if($result['camera_req']=='1'){
 		</div>
 </div>
 <br>
- 
-	<div class="col-md-12">
-		 <h3><?php echo $this->lang->line('categorywise');?></h3>
-					<table class="table table-bordered">
-					 <thead> <tr><th style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('category_name');?></th>
-					 <th  style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('score_obtained');?></th>
-					 <th  style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('time_spent');?></th>
-					  <th  style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('correct');?></th>
-					 <th  style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('incorrect');?></th>
-					 <th  style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('notattempted');?></th> 
-					</tr></thead>
-					<tbody>
-					  <?php 
-					  $c=0;
-					  $correct=0;
-					 $incorrect=0;
-					 $notattempted=0;
-					  foreach(explode(',',$result['categories']) as $vk => $category){ 
-					  
-					 
-					 
-						?>
 
-						<tr><td>
-						<?php echo $category; ?>
-						</td>
-                            <?php $fuckThisShit = isset($cia_cat[0][$vk]) ? $cia_cat[0][$vk] : 0; ?>
-						<td><?php echo $fuckThisShit*$result['correct_score'];?></td>
-						<td><?php echo secintomin($fuckThisShit);?> Min.</td>
-						<td><?php if(isset($cia_cat[0][$vk])){ echo $cia_cat[0][$vk]; $correct+=$cia_cat[0][$vk]; }else{ echo '0'; } ?></td>
-						<td><?php   if(isset($cia_cat[1][$vk])){ echo $cia_cat[1][$vk]; $incorrect+=$cia_cat[1][$vk]; }else{ echo '0';  } ?></td>
-						<td><?php   if(isset($cia_cat[2][$vk])){ echo $cia_cat[2][$vk]; $notattempted+=$cia_cat[2][$vk]; }else{ echo '0';  } ?></td>
-						 
-						</tr>
-					 <?php 
-					  }
-					  ?>
-					 </tbody>
-						 <thead> 
-						 <tr>
-						 <th style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('total');?></th>
-						 <th  style="background:#337ab7;color:#ffffff;"><?php echo $result['score_obtained'];?>
-						 </th>
-						 <th style="background:#337ab7;color:#ffffff;"><?php echo secintomin($result['total_time']);?> Min. <?php echo $this->lang->line('approx');?></th>
-						<th style="background:#337ab7;color:#ffffff;"><?php echo $correct;?></th>
-						<th style="background:#337ab7;color:#ffffff;"><?php echo $incorrect;?></th>
-						<th style="background:#337ab7;color:#ffffff;"><?php echo $notattempted;?></th> 
-						 </tr>
-						 </thead>
-					
-						</table>
-						
-		
-	</div>
+<!--	<div class="col-md-12">-->
+<!--		 <h3>--><?php //echo $this->lang->line('categorywise');?><!--</h3>-->
+<!--					<table class="table table-bordered">-->
+<!--					 <thead> <tr><th style="background:#337ab7;color:#ffffff;">--><?php //echo $this->lang->line('category_name');?><!--</th>-->
+<!--					 <th  style="background:#337ab7;color:#ffffff;">--><?php //echo $this->lang->line('score_obtained');?><!--</th>-->
+<!--					 <th  style="background:#337ab7;color:#ffffff;">--><?php //echo $this->lang->line('time_spent');?><!--</th>-->
+<!--					  <th  style="background:#337ab7;color:#ffffff;">--><?php //echo $this->lang->line('correct');?><!--</th>-->
+<!--					 <th  style="background:#337ab7;color:#ffffff;">--><?php //echo $this->lang->line('incorrect');?><!--</th>-->
+<!--					 <th  style="background:#337ab7;color:#ffffff;">--><?php //echo $this->lang->line('notattempted');?><!--</th>-->
+<!--					</tr></thead>-->
+<!--					<tbody>-->
+<!--					  --><?php
+//					  $c=0;
+//					  $correct=0;
+//					 $incorrect=0;
+//					 $notattempted=0;
+//					  foreach(explode(',',$result['categories']) as $vk => $category){
+//
+//
+//
+//						?>
+<!---->
+<!--						<tr><td>-->
+<!--						--><?php //echo $category; ?>
+<!--						</td>-->
+<!--                            --><?php //$fuckThisShit = isset($cia_cat[0][$vk]) ? $cia_cat[0][$vk] : 0; ?>
+<!--						<td>--><?php //echo $fuckThisShit*$result['correct_score'];?><!--</td>-->
+<!--						<td>--><?php //echo secintomin($fuckThisShit);?><!-- Min.</td>-->
+<!--						<td>--><?php //if(isset($cia_cat[0][$vk])){ echo $cia_cat[0][$vk]; $correct+=$cia_cat[0][$vk]; }else{ echo '0'; } ?><!--</td>-->
+<!--						<td>--><?php //  if(isset($cia_cat[1][$vk])){ echo $cia_cat[1][$vk]; $incorrect+=$cia_cat[1][$vk]; }else{ echo '0';  } ?><!--</td>-->
+<!--						<td>--><?php //  if(isset($cia_cat[2][$vk])){ echo $cia_cat[2][$vk]; $notattempted+=$cia_cat[2][$vk]; }else{ echo '0';  } ?><!--</td>-->
+<!---->
+<!--						</tr>-->
+<!--					 --><?php
+//					  }
+//					  ?>
+<!--					 </tbody>-->
+<!--						 <thead>-->
+<!--						 <tr>-->
+<!--						 <th style="background:#337ab7;color:#ffffff;">--><?php //echo $this->lang->line('total');?><!--</th>-->
+<!--						 <th  style="background:#337ab7;color:#ffffff;">--><?php //echo $result['score_obtained'];?>
+<!--						 </th>-->
+<!--						 <th style="background:#337ab7;color:#ffffff;">--><?php //echo secintomin($result['total_time']);?><!-- Min. --><?php //echo $this->lang->line('approx');?><!--</th>-->
+<!--						<th style="background:#337ab7;color:#ffffff;">--><?php //echo $correct;?><!--</th>-->
+<!--						<th style="background:#337ab7;color:#ffffff;">--><?php //echo $incorrect;?><!--</th>-->
+<!--						<th style="background:#337ab7;color:#ffffff;">--><?php //echo $notattempted;?><!--</th>-->
+<!--						 </tr>-->
+<!--						 </thead>-->
+<!---->
+<!--						</table>-->
+<!---->
+<!---->
+<!--	</div>-->
 	
 
  
@@ -494,10 +499,10 @@ if($this->config->item('google_chart') == true ){
 </div>
 <?php
 $ind_score=explode(',',$result['score_individual']); 
-// view answer
-if($result['view_answer']=='1' || $logged_in['su']>'0'){
-	
-?>
+//// view answer
+//if($result['view_answer']=='1' || $logged_in['su']>'0'){
+//
+//?>
 
 <div class="login-panel panel panel-default">
 		<div class="panel-body"> 
@@ -776,10 +781,10 @@ foreach($questions as $qk => $question){
 ?>
 </div>
 </div>
-<?php 
-}
-// view answer ends
-?>
+<?php //
+//}
+//// view answer ends
+//?>
 
 
 

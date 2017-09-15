@@ -139,13 +139,17 @@ class Result extends CI_Controller {
 		$data['result']=$this->result_model->get_result($rid);
 		$data['attempt']=$this->result_model->no_attempt($data['result']['quid'],$data['result']['uid']);
 		$data['title']=$this->lang->line('result_id').' '.$data['result']['rid'];
-		if($data['result']['view_answer']=='1' || $logged_in['su']>'0'){
+//		if($data['result']['view_answer']=='1' || $logged_in['su']>'0'){
 			$this->load->model("quiz_model");
 			$data['saved_answers']=$this->quiz_model->saved_answers($rid);
 			$data['questions']=$this->quiz_model->get_questions($data['result']['r_qids']);
 			$data['options']=$this->quiz_model->get_options($data['result']['r_qids']);
+        $data['total_score'] = 0;
+			foreach ($data['questions'] as $question){
+                $data['total_score'] += (int)$question['per_question_score'];
+            }
 
-		}
+//		}
 		// top 10 results of selected quiz
 		$last_ten_result = $this->result_model->last_ten_result($data['result']['quid']);
 		$value=array();
