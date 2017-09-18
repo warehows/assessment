@@ -128,7 +128,7 @@
 
                             <td>
                                 <a href="<?php echo site_url('quiz/quiz_detail/' . $val['quid']); ?>"
-                                   class="<?php echo $no_of_attempts >= $val['maximum_attempts'] ? 'disabled' : ''; ?> btn btn-success"><?php echo $no_of_attempts >= $val['maximum_attempts'] ? 'Finished' : ''; ?> </a>
+                                   class="<?php echo $no_of_attempts >= $val['maximum_attempts'] ? 'disabled' : ''; ?> btn btn-success"><?php echo $no_of_attempts >= $val['maximum_attempts'] ? 'Finished' : 'Attempt'; ?> </a>
 
                                 <?php
                                 if ($logged_in['su'] > '0') {
