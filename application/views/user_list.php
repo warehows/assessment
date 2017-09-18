@@ -1,4 +1,3 @@
-
 <div class="wrapper">
 
 
@@ -62,7 +61,8 @@
                         <td><?php echo $val['last_name']; ?></td>
                         <td>Student</td>
                         <td>Active</td>
-                        <td><a href="<?php echo site_url('user/edit_user/'.$val['uid']);?>"><img src="<?php echo base_url('images/edit.png');?>"></a></td>
+                        <td><a href="<?php echo site_url('user/edit_user/' . $val['uid']); ?>"><img
+                                    src="<?php echo base_url('images/edit.png'); ?>"></a></td>
 
                     </tr>
 

@@ -120,8 +120,7 @@ class User extends CI_Controller
 
         $logged_in = $this->session->userdata('logged_in');
 
-            $uid = $logged_in['uid'];
-
+//        $uid = $logged_in['uid'];
 
         $data['uid'] = $uid;
         $data['title'] = $this->lang->line('edit') . ' ' . $this->lang->line('user');
@@ -137,7 +136,6 @@ class User extends CI_Controller
             $this->load->view('edit_user', $data);
         } else {
             $this->load->view('myaccount', $data);
-
         }
         $this->load->view('new_material/footer', $data);
     }

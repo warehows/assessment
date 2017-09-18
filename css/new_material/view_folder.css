@@ -9,6 +9,7 @@ ul li {
     list-style: none;
     padding:10px;
     border-bottom: 1px solid white;
+    overflow-wrap: break-word;
 }
 
 ul li:hover {
