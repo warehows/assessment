@@ -32,7 +32,7 @@
                             <label for="inputPassword"
                                    class="sr-only"><?php echo $this->lang->line('password'); ?></label>
                             <input type="password" id="inputPassword" name="password" value="" class="form-control"
-                                   placeholder="<?php echo $this->lang->line('password'); ?>" required>
+                                   placeholder="<?php echo $this->lang->line('password'); ?>">
                         </div>
                         <div class="form-group">
                             <label for="inputPassword"
