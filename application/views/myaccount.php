@@ -55,7 +55,7 @@
             </div>
             <div class="form-group" id="passwordFields" style="display:none">
                 <label for="inputPassword" class="sr-only"><?php echo $this->lang->line('password');?></label>
-                <input type="password" id="confirmOldPassaword" name="oldpassword" class="form-control" placeholder="Confirm Old Password"   >
+                <input type="password" id="confirmOldPassword" name="oldpassword" class="form-control" placeholder="Confirm Old Password"   >
                 <input type="password" id="inputPassword" name="password"   value=""  class="form-control" placeholder="<?php echo $this->lang->line('password');?>"   >
             </div>
 

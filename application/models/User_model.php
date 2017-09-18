@@ -330,9 +330,7 @@ Class User_model extends CI_Model
                 if($new_data['password']!=$current_edited){
                     $this->db->where('uid', $uid);
                     $this->db->update('savsoft_users', $new_data);
-
                 }
-
 
                 return true;
             }else{
