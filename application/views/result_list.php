@@ -105,7 +105,7 @@
             ?>
             <table class="table table-bordered">
                 <tr>
-                    <th><?php echo $this->lang->line('result_id'); ?></th>
+                    <!--<th><?//php echo $this->lang->line('result_id'); ?></th>-->
                     <th><?php echo $this->lang->line('first_name'); ?><?php echo $this->lang->line('last_name'); ?></th>
                     <th><?php echo $this->lang->line('quiz_name'); ?></th>
                     <th><?php echo $this->lang->line('status'); ?>
@@ -142,7 +142,7 @@
                 foreach ($result as $key => $val) {
                     ?>
                     <tr>
-                        <td><?php echo $val['rid']; ?></td>
+                        <!--<td><?//php echo $val['rid']; ?></td>-->
                         <td><?php echo $val['first_name']; ?><?php echo $val['last_name']; ?></td>
                         <td><?php echo $val['quiz_name']; ?></td>
                         <td><?php echo $val['result_status']; ?></td>

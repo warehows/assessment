@@ -61,7 +61,7 @@
 
             <table class="table table-bordered">
                 <tr>
-                    <th>#</th>
+                    <!--<th>#</th>-->
                     <th><?php echo 'Title'; ?></th>
                     <th><?php echo 'Subject'; ?></th>
                     <th><?php echo 'Assigned By'; ?></th>
@@ -105,7 +105,7 @@
 
                     <?php if ($days_left > 0): ?>
                     <tr>
-                        <td><?php echo $val['quid']; ?></td>
+                        <!--<td><?//php echo $val['quid']; ?></td>-->
                         <td><?php echo substr(strip_tags($val['quiz_name']), 0, 50); ?></td>
                         <td><?php echo !empty($val['cid']) ? $quiz_model->get_category($val['cid'])['category_name'] : 'N/A' ?></td>
                         <td><?php echo $name['first'] . ' ' . $name['last']; ?></td>
