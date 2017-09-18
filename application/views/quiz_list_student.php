@@ -103,7 +103,7 @@
                     $no_of_attempts = count($result_model->get_student_result($logged_in['uid'], $val['quid']));
                     ?>
 
-
+                    <?php if ($days_left > 0): ?>
                     <tr>
                         <td><?php echo $val['quid']; ?></td>
                         <td><?php echo substr(strip_tags($val['quiz_name']), 0, 50); ?></td>
@@ -123,24 +123,9 @@
                         <td><?php echo $end_date; ?>
                             <?php echo $days_left > 0 ? ' (' . $days_left . ' days left)' : 'Expired'; ?></td>
                         <td><?php echo $no_of_attempts . '/' . $val['maximum_attempts']; ?></td>
-                        <?php if ($days_left <= 0): ?>
-                            <td>
-                                <a href="<?php echo site_url('quiz/quiz_detail/' . $val['quid']); ?>"
-                                   class="disabled btn btn-success"><?php echo $this->lang->line('attempt'); ?> </a>
 
-                                <?php
-                                if ($logged_in['su'] > '0') {
-                                    ?>
 
-                                    <a href="<?php echo site_url('quiz/edit_quiz/' . $val['quid']); ?>"><img
-                                            src="<?php echo base_url('images/edit.png'); ?>"></a>
-                                    <a href="javascript:remove_entry('quiz/remove_quiz/<?php echo $val['quid']; ?>');"><img
-                                            src="<?php echo base_url('images/cross.png'); ?>"></a>
-                                    <?php
-                                }
-                                ?>
-                            </td>
-                        <?php else: ?>
+
                             <td>
                                 <a href="<?php echo site_url('quiz/quiz_detail/' . $val['quid']); ?>"
                                    class="<?php echo $no_of_attempts >= $val['maximum_attempts'] ? 'disabled' : ''; ?> btn btn-success"><?php echo $this->lang->line('attempt'); ?> </a>
