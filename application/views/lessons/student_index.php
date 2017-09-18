@@ -12,7 +12,7 @@
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">
-                <?php print_r($lessons_array); ?>
+
                 <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
