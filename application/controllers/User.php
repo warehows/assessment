@@ -183,7 +183,7 @@ class User extends CI_Controller
         $data['title'] = $this->lang->line('group_list');
         if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('group_list', $data);
-        $this->load->view('material_part/footer_material', $data);
+        $this->load->view('new_material/footer', $data);
 
 
     }
