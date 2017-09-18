@@ -317,12 +317,19 @@ Class User_model extends CI_Model
             $current_user = $this->get_user($uid);
             if ($logged_in['password'] == md5($this->input->post('admin_password'))) {
                 $current_edited = $current_user['password'];
-                $userdata = array(
+                $new_data = array(
                     'password' => md5($this->input->post('password')),
+                    'su' => $this->input->post('su'),
+                    'email' => $this->input->post('email'),
+                    'first_name' => $this->input->post('first_name'),
+                    'last_name' => $this->input->post('last_name'),
+                    'contact_no' => $this->input->post('contact_no'),
+                    'gid' => $this->input->post('gid'),
                 );
-                if($userdata['password']!=$current_edited){
+
+                if($new_data['password']!=$current_edited){
                     $this->db->where('uid', $uid);
-                    $this->db->update('savsoft_users', $userdata);
+                    $this->db->update('savsoft_users', $new_data);
 
                 }
 
