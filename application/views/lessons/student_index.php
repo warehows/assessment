@@ -12,7 +12,7 @@
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">
-                <?php print_r($lessons_array); ?>
+
                 <form action="<?php echo site_url()?>/lessons/index_actions" method="POST">
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
@@ -20,7 +20,7 @@
                     <table id="lesson_lists" class="table table-bordered table-hover" >
                         <thead>
                         <tr>
-                            <th></th>
+                            <th style="display: none"></th>
                             <th>Lesson Name</th>
                             <th>Subject</th>
                             <th>Grade</th>
@@ -33,11 +33,11 @@
                             <?php $value = $this->lessons_model->lesson_by_id($lesson_value); ?>
                             <?php $value = $value[0]; ?>
 
-                            <tr>
-                                <td><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['id']?>"/></td>
-                                <td><?php echo $value['lesson_name'] ?></td>
-                                <td><?php print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?></td>
-                                <td><?php echo $value['level_id'] ?></td>
+                            <tr style="cursor:pointer">
+                                <td style="display: none" class="input_row"><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['id']?>"/></td>
+                                <td class="lesson_row"><?php echo $value['lesson_name'] ?></td>
+                                <td class="lesson_row"><?php print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?></td>
+                                <td class="lesson_row"><?php echo $value['level_id'] ?></td>
                             </tr>
                         <?php } ?>
 
@@ -57,6 +57,10 @@
     $("#import").hide();
     $("#delete").hide();
     $("#assign").hide();
+    $(".lesson_row").click(function(){
+        $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
+        $("#view").click();
+    });
     $(".selected_lesson_class").change(function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {

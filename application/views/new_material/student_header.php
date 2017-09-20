@@ -28,13 +28,14 @@
                 <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></a>
         </div>
         <div class="collapse navbar-collapse" id="navcol-1">
-
+            <?php $logged_in = $this->session->userdata('logged_in')?>
             <ul class="nav navbar-nav navbar-right">
                 <li role="presentation"><a href="<?php echo site_url('dashboard');?>">Home</a></li>
                 <li role="presentation"><a href="<?php echo site_url('quiz');?>"><?php echo $this->lang->line('quiz');?> <?php echo $this->lang->line('list');?></a></li>
                 <li role="presentation"><a href="<?php echo site_url('lessons');?>">Lessons</a></li>
-                <li role="presentation"><a href="<?php echo site_url('result/student_result');?>">Report</a></li>
-                <li role="presentation"><a href="<?php echo site_url('user/edit_user');?>">Account</a></li>
+                <li role="presentation"><a href="<?php echo site_url('result');?>">Report</a></li>
+
+                <li role="presentation"><a href="<?php echo site_url('user/edit_user/'.$logged_in['uid']);?>">Account</a></li>
                 <li role="presentation"><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
             </ul>
 

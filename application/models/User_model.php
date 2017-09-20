@@ -290,11 +290,13 @@ Class User_model extends CI_Model
             }
         }
 
+
         $userdata = array(
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
             'contact_no' => $this->input->post('contact_no')
         );
+
         if ($logged_in['su'] > 0) {
             $userdata['email'] = $this->input->post('email');
             $userdata['gid'] = $this->input->post('gid');
@@ -311,10 +313,40 @@ Class User_model extends CI_Model
             }
 
         }
+        if ($logged_in['su'] == 1) {
+            $current_user = $this->get_user($uid);
+            if ($logged_in['password'] == md5($this->input->post('admin_password'))) {
+                $current_edited = $current_user['password'];
+                $new_data = array(
+                    'password' => md5($this->input->post('password')),
+                    'su' => $this->input->post('su'),
+                    'email' => $this->input->post('email'),
+                    'first_name' => $this->input->post('first_name'),
+                    'last_name' => $this->input->post('last_name'),
+                    'contact_no' => $this->input->post('contact_no'),
+                    'gid' => $this->input->post('gid'),
+                );
+
+                if($new_data['password']!=$current_edited){
+                    $this->db->where('uid', $uid);
+                    $this->db->update('savsoft_users', $new_data);
+                }
+
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+
+
 
         if ($this->input->post('password') != "") {
             $userdata['password'] = md5($this->input->post('password'));
+        }else{
+            $userdata['password'] = "";
         }
+
 
 
         $this->db->where('uid', $uid);

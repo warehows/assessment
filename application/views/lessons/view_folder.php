@@ -10,6 +10,7 @@
 <?php $lesson_information = $this->lessons_model->lesson_by_id($new_data['lesson_id']); ?>
 <?php $root_link = base_url('upload/lessons/fileview'); ?>
 <?php $base_url = base_url(); ?>
+<?php if($logged_in['su']!=0): ?>
 <?php $folders = array(
     array("engage", "star"),
     array("explore", "heart"),
@@ -18,6 +19,16 @@
     array("evaluate", "alert"),
     array("lesson plan", "search"),
 ) ?>
+    <?php else: ?>
+    <?php $folders = array(
+        array("engage", "star"),
+        array("explore", "heart"),
+        array("explain", "heart"),
+        array("extend", "user"),
+        array("evaluate", "alert"),
+
+    ) ?>
+<?php endif; ?>
 
 <?php
 function echo_file_li($root_link, $lesson_contents_value, $folder_location, $base_url)

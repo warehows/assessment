@@ -33,9 +33,10 @@
                         class="icon-bar"></span><span class="icon-bar"></span></button>
 
         </div>
+
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav navbar-right">
-
+                <?php $logged_in = $this->session->userdata('logged_in')?>
                 <li role="presentation"><a href="<?php echo site_url('lessonbank'); ?>">Lesson Bank</a></li>
                 <li role="presentation"><a href="<?php echo site_url('workspace'); ?>">My Lesson</a></li>
                 <li role="presentation"><a href="<?php echo site_url('calendar/'); ?>">My Task</a></li>
@@ -44,7 +45,7 @@
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Account<span
                             class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu" style="background-color: #ff4e3b!important;">
-                        <li role="presentation"><a href="<?php echo site_url('user/edit_user'); ?>">Change Password</a>
+                        <li role="presentation"><a href="<?php echo site_url('user/edit_user/'.$logged_in["uid"]); ?>">Change Password</a>
                         </li>
                         <li role="presentation"><a href="<?php echo site_url('user/logout'); ?>">Logout</a></li>
                     </ul>

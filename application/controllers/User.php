@@ -120,8 +120,7 @@ class User extends CI_Controller
 
         $logged_in = $this->session->userdata('logged_in');
 
-            $uid = $logged_in['uid'];
-
+//        $uid = $logged_in['uid'];
 
         $data['uid'] = $uid;
         $data['title'] = $this->lang->line('edit') . ' ' . $this->lang->line('user');
@@ -137,7 +136,6 @@ class User extends CI_Controller
             $this->load->view('edit_user', $data);
         } else {
             $this->load->view('myaccount', $data);
-
         }
         $this->load->view('new_material/footer', $data);
     }
@@ -185,7 +183,7 @@ class User extends CI_Controller
         $data['title'] = $this->lang->line('group_list');
         if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
         $this->load->view('group_list', $data);
-        $this->load->view('material_part/footer_material', $data);
+        $this->load->view('new_material/footer', $data);
 
 
     }

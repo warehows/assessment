@@ -108,6 +108,7 @@
                     <?php
                 }
                 foreach ($result as $key => $val) {
+                    if($val['uid'] != $logged_in['uid']){continue;}
                     ?>
                     <?php
                     $qn=1;
