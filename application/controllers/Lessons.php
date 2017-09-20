@@ -44,25 +44,22 @@ class Lessons extends CI_Controller
         $data['all_lessons'] = $this->lessons_model->all_lessons_non_duplicated();
         $gid = $logged_in['gid'];
 
-
         $data['lesson_assigned'] = $this->workspace_model->select_by_gid($gid);
         foreach($data['lesson_assigned'] as $key=>$value){
             $data['lessons_array'][] = $value['lesson_id'];
-
         }
-
 
         $data['logged_in'] = $logged_in;
 
         if ($logged_in["su"] == 1) {
             if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
-            $this->load->view('lessons/index.php', $data);
+            $this->load->view('lessons/index', $data);
         } else if ($logged_in["su"] == 2) {
             $this->load->view('new_material/teacher_header', $data);
-            $this->load->view('lessons/teacher_index.php', $data);
+            $this->load->view('lessons/teacher_index', $data);
         }else if ($logged_in["su"] == 0) {
             $this->load->view('new_material/student_header', $data);
-            $this->load->view('lessons/student_index.php', $data);
+            $this->load->view('lessons/student_index', $data);
         }
 
         $this->load->view('new_material/footer', $data);
@@ -422,23 +419,25 @@ class Lessons extends CI_Controller
             $this->session->unset_userdata('logged_in');
             redirect('login');
         }
-        if($this->dev_site=="true"){
-            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/develop/brainee/upload/lessons/";
-        }else{
-            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
-        }
-
-
-        $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
-        $folder = $output_dir . $folder_to_create . "/";
-
-        $filename = $_POST['filename'];
-
-        $data = array("id" => $_POST['lesson_contents_id']);
+        print_r($_REQUEST);
+        exit;
+//        if($this->dev_site=="true"){
+//            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/develop/brainee/upload/lessons/";
+//        }else{
+//            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
+//        }
 //
-        $data = $this->lessons_model->delete_file_by_id($data);
-        unlink($folder . $filename);
-        print_r($folder . $filename);
+//
+//        $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
+//        $folder = $output_dir . $folder_to_create . "/";
+//
+//        $filename = $_POST['filename'];
+//
+//        $data = array("id" => $_POST['lesson_contents_id']);
+////
+//        $data = $this->lessons_model->delete_file_by_id($data);
+//        unlink($folder . $filename);
+//        print_r($folder . $filename);
 
     }
 
@@ -674,6 +673,7 @@ class Lessons extends CI_Controller
                 "lesson_id" => $data['lesson_id'],
                 "author" => "",
                 "folder_name" => $data['folder_name'],
+                "content_id" => $lesson['quid'],
                 "content_type" => $data['content_type'],
                 "content_name" => $lesson_name,
             );

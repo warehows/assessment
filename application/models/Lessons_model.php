@@ -176,6 +176,7 @@ Class Lessons_model extends CI_Model
             ->where('lesson_id', $data['lesson_id'])
             ->where('author', $data['author'])
             ->where('folder_name', $data['folder_name'])
+            ->where('content_id', $data['content_id'])
             ->where('content_name', $data['content_name'])
             ->where('content_type', $data['content_type']);
 
@@ -184,12 +185,30 @@ Class Lessons_model extends CI_Model
         $count_row = $query->num_rows();
 
         if ($count_row > 0) {
-//            return "Data already exists";
+            return false;
         } else {
-            $this->db->insert('lesson_contents', $data);
-            $id = $this->db->insert_id($data);
+            if($data['content_type']=="quiz"){
+                $this->db
+                    ->where('lesson_id', $data['lesson_id'])
+                    ->where('content_id', $data['content_id'])
+                ;
+                $query2 = $this->db->get('lesson_contents');
+                $count_row2 = $query2->num_rows();
+                if ($count_row2 > 0) {
+                    return false;
+                } else {
+                    $this->db->insert('lesson_contents', $data);
+                    $id = $this->db->insert_id($data);
+                    return $data;
+                }
+            }else{
+                $this->db->insert('lesson_contents', $data);
+                $id = $this->db->insert_id($data);
+                return $data;
+            }
+
         }
-        return $data;
+
 
 
     }
@@ -319,6 +338,7 @@ Class Lessons_model extends CI_Model
 
         foreach ($data['lesson_ids'] as $key => $value) {
             $loop_data = $this->lesson_by_id($value);
+
             $lesson_id = array("lesson_id" => $value);
             $lesson_contents = $this->all_lesson_contents_by_id($lesson_id);
 
@@ -326,7 +346,7 @@ Class Lessons_model extends CI_Model
                 'lesson_name' => $loop_data[0]['lesson_name'] . "-copy",
                 'subject_id' => $loop_data[0]['subject_id'],
                 'level_id' => $loop_data[0]['level_id'],
-                'author' => $logged_in['uid'],
+                'author' => $data['user_id'],
                 'duplicated' => 1,
             );
 
@@ -348,25 +368,27 @@ Class Lessons_model extends CI_Model
                 $lesson_data = array(
                     'lesson_id' => $new_lesson_id,
                     'content_name' => $lesson_content_value['content_name'],
-                    'author' => 1,
+                    'author' => $user_id,
                     'content_type' => $lesson_content_value['content_type'],
                     'folder_name' => $lesson_content_value['folder_name'],
                     'duplicated' => 1,
                 );
                 $this->save_files_to_database($lesson_data);
-
-                $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
-                $folder_to_create = $new_lesson_id . "_" . $lesson_content_value['folder_name'];
-                $folder = $output_dir . $folder_to_create;
-                if (!file_exists($folder)) {
-                    $old = umask(0);
-                    mkdir($folder, 0777);
-                    umask($old);
+                if($lesson_content_value['content_type']=="file"){
+                    $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
+                    $folder_to_create = $new_lesson_id . "_" . $lesson_content_value['folder_name'];
+                    $folder = $output_dir . $folder_to_create;
+                    if (!file_exists($folder)) {
+                        $old = umask(0);
+                        mkdir($folder, 0777);
+                        umask($old);
+                    }
+                    $document_root = $_SERVER['DOCUMENT_ROOT'] . "/brainee";
+                    $file = $document_root . "/upload/lessons/" . $value . "_" . $lesson_content_value['folder_name'] . "/" . $lesson_content_value['content_name'];
+                    $newfile = $document_root . "/upload/lessons/" . $new_lesson_id . "_" . $lesson_content_value['folder_name'] . "/" . $lesson_content_value['content_name'];
+                    copy($file, $newfile);
                 }
-                $document_root = $_SERVER['DOCUMENT_ROOT'] . "/brainee";
-                $file = $document_root . "/upload/lessons/" . $value . "_" . $lesson_content_value['folder_name'] . "/" . $lesson_content_value['content_name'];
-                $newfile = $document_root . "/upload/lessons/" . $new_lesson_id . "_" . $lesson_content_value['folder_name'] . "/" . $lesson_content_value['content_name'];
-                copy($file, $newfile);
+
 
             }
         }

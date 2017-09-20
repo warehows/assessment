@@ -24,7 +24,7 @@
                         <button class="btn btn-primary" id="new_lesson">New Lesson</button>
                     </a>
                 </form>
-                <form action="<?php echo site_url()?>/lessons/index_actions" method="POST" id="form_submit">
+                <form action="<?php echo site_url() ?>/lessons/index_actions" method="POST" id="form_submit">
 
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
                     <button class="btn btn-primary" id="share" name="submit" value="share">Share to Lesson Bank</button>
@@ -32,32 +32,51 @@
                     <button class="btn btn-primary" id="delete" name="submit" value="delete">Delete</button>
                     <button class="btn btn-primary" id="assign" name="submit" value="assign">Assign</button>
 
-                    <table id="lesson_lists" class="table table-bordered table-hover" >
+                    <table id="lesson_lists" class="table table-bordered table-hover">
                         <thead>
                         <tr>
                             <th width="3px"></th>
                             <th>Lesson Name</th>
                             <th>Subject</th>
-                            <th>Grade</th>
+                            <th>Grade Level</th>
+                            <th>Assigned To</th>
+                            <th>Assigned Date</th>
+                            <th>Expiry Date</th>
 
                         </tr>
                         </thead>
-                       <!-- <tfoot>
-                            <th width="3px"></th>
-                            <th>Lesson Name</th>
-                            <th>Subject</th>
-                            <th>Grade</th>
-                        </tfoot>-->
+                        <!-- <tfoot>
+                             <th width="3px"></th>
+                             <th>Lesson Name</th>
+                             <th>Subject</th>
+                             <th>Grade</th>
+                         </tfoot>-->
                         <tbody>
 
                         <?php foreach ($all_lessons as $key => $value) { ?>
-                            <tr style="cursor:pointer" >
-                                <input type="hidden" name="workspace_id" value="0" />
-                                <td class="input_row"><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['id']?>"/></td>
+
+                            <?php $current_lesson = $this->lessons_model->lesson_by_id($value['id'])?>
+                            <?php $current_lesson = $current_lesson[0]?>
+                            <?php $current_grade = $this->quiz_model->load("savsoft_level","lid",$current_lesson['level_id'])?>
+                            <?php $current_subject = $this->quiz_model->load("savsoft_category","cid",$current_lesson['subject_id'])?>
+                            <?php $current_user = $this->quiz_model->load("savsoft_users","uid",$value['author'])?>
+<!--                            --><?php //print_r($current_lesson)?>
+                            <?php if($current_user['uid'] == $logged_in['uid']): ?>
+                            <tr style="cursor:pointer">
+                                <input type="hidden" name="workspace_id" value="0"/>
+                                <td class="input_row"><input type="checkbox" class="selected_lesson_class"
+                                                             name="selected_lesson[]"
+                                                             value="<?php echo $value['id'] ?>"/></td>
                                 <td class="lesson_row"><?php echo $value['lesson_name'] ?></td>
-                                <td class="lesson_row"><?php print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?></td>
-                                <td class="lesson_row"><?php echo $value['level_id'] ?></td>
+                                <td class="lesson_row"><?php print_r($subject_model->where('cid', $value['subject_id'])[0]['category_name']); ?></td>
+                                <td class="lesson_row"><?php echo $current_grade['level_name'] ?></td>
+                                <td class="lesson_row"><?php echo $current_user['first_name']." ".$current_user['last_name'] ?></td>
+                                <?php if($current_lesson['assigned_date_start']){$current_date_start = date("F d, Y",strtotime($current_lesson['assigned_date_start']));}else{$current_date_start="";}?>
+                                <td class="lesson_row"><?php echo $current_date_start ?></td>
+                                <?php if($current_lesson['assigned_date_end']){$current_date_end = date("F d, Y",strtotime($current_lesson['assigned_date_end']));}else{$current_date_end="";}?>
+                                <td class="lesson_row"><?php echo $current_date_end ?></td>
                             </tr>
+                                <?php endif; ?>
                         <?php } ?>
 
                         </tbody>
@@ -78,7 +97,7 @@
     $("#assign").hide();
 
     $(document).on('click', ".lesson_row", function () {
-        $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
+        $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked', true);
         $("#view").click();
     });
     $(document).on('click', ".selected_lesson_class", function () {

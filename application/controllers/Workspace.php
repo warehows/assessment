@@ -87,7 +87,7 @@ class Workspace extends CI_Controller
             if($teacher_workspace_model = $this->workspace_model->insert($data)){
                 array_push($lesson_assigned_ids,$teacher_workspace_model);
             }else{
-                print_r("Error in lesson assigned database");
+                print_r("Error in lesson_assigned database");
                 exit;
             }
 
@@ -107,6 +107,7 @@ class Workspace extends CI_Controller
 
     public function mass_assignation()
     {
+        ini_set('max_execution_time', 1000);
         // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
@@ -118,31 +119,29 @@ class Workspace extends CI_Controller
         }
 
         $logged_in = $this->session->userdata('logged_in');
+        $requests = $_REQUEST;
+
         $data['title'] = "Workspace";
         $data['all_users'] = $this->user_model->get_all();
         $data['all_subjects'] = $this->subjects_model->all();
         $data['all_levels'] = $this->level_model->all();
         $data['all_lessons'] = $this->workspace_model->where("user_id", $logged_in['uid']);
 
+        $post['date_start'] = $requests['date_start'];
+        $post['date_end'] = $requests['date_end'];
+        $sections = $requests['sections'][0];
+        $teachers = $requests['teachers'][0];
+        $post['sections'] = explode(",",$sections);
+        $post['teachers'] = explode(",",$teachers);
+        $post['lesson_id'] = $requests['lesson_id'];
+        echo "<pre>";
 
-        $posts = $this->input->get();
-        $sections = $posts['sections'][0];
-        $grades = $posts['grades'][0];
-        $uid = $posts['uid'];
-        $lesson_id = $posts['lesson_id'];
-        $date_start = $posts['date_start'];
-        $date_end = $posts['date_end'];
-        $sections = explode(",", $sections);
-        $grades = explode(",", $grades);
-
-
-
-        //for admin only
-        if ($posts['workspace_id'] == 0) {
+        foreach($post['teachers'] as $teacher_key => $teacher_value){
+            $current_user = $this->user_model->get_user($teacher_value);
 
             $import_to_workspace = array(
-                "lesson_ids" => array($lesson_id),
-                "user_id" => $uid,
+                "lesson_ids" => array($post['lesson_id']),
+                "user_id" => $teacher_value,
                 "content_type" => "lesson",
                 "all_users" => $this->user_model->get_all(),
                 "all_subjects" => $this->subjects_model->all(),
@@ -151,29 +150,37 @@ class Workspace extends CI_Controller
             );
 
             $workspace_id = $this->lessons_model->import_to_workspace($import_to_workspace);
-
-        }else{
-            $workspace_id = $posts['workspace_id'];
-        }
-        //for admin only end
-
-        foreach ($sections as $key => $value) {
-
-            $data = array(
-                'lesson_id' => $lesson_id,
-                'workspace_id' => $workspace_id,
-                'uid' => $uid,
-                'gid' => $value,
-                'date_start' => $date_start,
-                'date_end' => $date_end,
+            $current_workspace = $this->workspace_model->where("id",$workspace_id);
+            $current_lesson = $this->lessons_model->where("id",$current_workspace[0]['content_id']);
+            $lessons_data = array(
+                "id"=>$current_workspace[0]['content_id'],
+                "assigned_date_start"=>$post['date_start'],
+                "assigned_date_end"=>$post['date_end'],
+                "assigned"=>1,
+                "lesson_assigned_ids"=>$requests['sections'][0],
             );
+            $this->lessons_model->update($lessons_data);
 
-            $teacher_workspace_model = $this->workspace_model->insert($data);
+            $lesson_id_for_content['lesson_id'] = $current_workspace[0]['content_id'];
+            $current_lesson_contents = $this->lessons_model->all_lesson_contents_by_id($lesson_id_for_content);
+            foreach ($current_lesson_contents as $current_lesson_contents_key => $current_lesson_contents_value) {
+                if ($current_lesson_contents_value['content_type'] == "quiz") {
+                    print_r($current_lesson_contents);
+                    $quiz_data_to_copy = array(
+                        "id" => $current_lesson_contents_value['content_id'],
+
+                    );
+                }
+            }
+
+            print_r($current_lesson_contents);
         }
-        $current_lesson = $this->lessons_model->lesson_by_id($lesson_id);
-        $current_lesson = $current_lesson[0];
-        $lesson_id_for_content['lesson_id'] = $lesson_id;
-        $current_lesson_contents = $this->lessons_model->all_lesson_contents_by_id($lesson_id_for_content);
+
+
+
+
+
+        exit;
 
         foreach ($current_lesson_contents as $current_lesson_contents_key => $current_lesson_contents_value) {
             if ($current_lesson_contents_value['content_type'] == "quiz") {

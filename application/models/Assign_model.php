@@ -38,6 +38,15 @@ Class Assign_model extends CI_Model
         return true;
     }
 
+    /* copy_quiz()
+     * id = quiz_id
+     *
+     *
+    */
+    public function copy_quiz($data)
+    {
+        
+    }
 }
 
 ?>

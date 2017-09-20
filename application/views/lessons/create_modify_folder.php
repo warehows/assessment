@@ -178,7 +178,7 @@
                 lesson_folder_id = data;
                 lesson_folder_id = lesson_folder_id.replace('"', "");
                 lesson_folder_id = lesson_folder_id.replace('"', "");
-                console.log(data);
+
                 $.ajax({
                     url: "<?php echo site_url('lessons/save_files_to_database');?>",
                     type: "POST",
@@ -360,6 +360,10 @@
                                 content_type: "quiz"
                             },
                         }).done(function (values) {
+
+                            if(!values){
+                                $.alert("The quiz or quizzes has already been added to this lesson");
+                            }
                             update_file_table(folder_name,lesson_id);
                         });
                     },

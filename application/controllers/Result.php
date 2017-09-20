@@ -12,13 +12,27 @@ class Result extends CI_Controller {
 		// redirect if not loggedin
 
 	}
-
+	public function check_login(){
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		$logged_in=$this->session->userdata('logged_in');
+		if($logged_in['base_url'] != base_url()){
+			$this->session->unset_userdata('logged_in');
+			redirect('login');
+		}
+	}
+	public function student_result(){
+		$this->check_login();
+		$this->load->view('new_material/student_header');
+		$this->load->view('results/index');
+		$this->load->view('new_material/footer');
+	}
 	public function index($limit='0',$status='0')
 	{
 
 		if(!$this->session->userdata('logged_in')){
 			redirect('login');
-
 		}
 		$logged_in=$this->session->userdata('logged_in');
 		if($logged_in['base_url'] != base_url()){

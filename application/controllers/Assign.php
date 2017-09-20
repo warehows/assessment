@@ -342,8 +342,6 @@ class Assign extends CI_Controller
             }
 
         }
-
-
     }
 
 

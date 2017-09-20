@@ -14,34 +14,41 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
 <form action="<?php echo site_url('workspace/mass_assignation') ?>" method="GET">
-    <div class="col-lg-6 col-lg-offset-0 col-md-6">
+    <?php $all_teachers = $this->user_model->where("su",2); ?>
+<!--    <pre>-->
+<!--    --><?php //print_r($all_teachers[3])?>
+    <div class="col-lg-4 col-lg-offset-0 col-md-4">
         <div id="data"></div>
 
     </div>
-    <div class="col-lg-6 col-lg-offset-0 col-md-6">
-        <div class="form-group">
-            <h6>Date Start</h6>
-            <input id="date_start" class="form-control" name="date_start" placeholder="mm/dd/yyyy"/>
-        </div>
-        <div class="form-group">
-            <h6>Date End</h6>
-            <input id="date_end" class="form-control" name="date_end" placeholder="mm/dd/yyyy"/>
-        </div>
+    <div class="col-lg-4 col-lg-offset-0 col-md-4">
+        <div id="teachers"></div>
         <?php if ($workspace_id == 0) { ?>
-            <?php $all_teachers = $this->user_model->where("su",2); ?>
+
             <div class="form-group">
                 <h6>Select Teacher</h6>
-                <select class="form-control" name="uid" id="uid">
-                    <?php foreach($all_teachers as $all_teachers_key=>$all_teachers_value){?>
-                        <option value="<?php echo $all_teachers_value['uid']?>"><?php echo $all_teachers_value['first_name']?> <?php echo $all_teachers_value['last_name']?></option>
-                    <?php } ?>
-                </select>
+
+<!--                --><?php //foreach($all_teachers as $all_teachers_key=>$all_teachers_value){?>
+<!--                    <input class="form-control" name="uid[]" type="checkbox" value="--><?php //echo $all_teachers_value['uid']?><!--" />-->
+<!--                --><?php //} ?>
             </div>
         <?php }else{ ?>
             <input type="hidden" id="uid" name="uid" value="<?php echo $logged_in['uid'] ?>"/>
         <?php } ?>
+    </div>
+    <div class="col-lg-4 col-lg-offset-0 col-md-4">
+        <div class="form-group">
+            <h6>Date Start</h6>
+            <input id="date_start" class="form-control" name="date_start" required placeholder="mm/dd/yyyy"/>
+        </div>
+        <div class="form-group">
+            <h6>Date End</h6>
+            <input id="date_end" class="form-control" name="date_end" required placeholder="mm/dd/yyyy"/>
+        </div>
+
         <input type="hidden" id="section_checked" name="sections[]"/>
         <input type="hidden" id="grade_checked" name="grades[]"/>
+        <input type="hidden" id="teacher_checked" name="teachers[]"/>
 
         <input type="hidden" id="workspace_id" name="workspace_id" value="<?php echo $workspace_id ?>"/>
         <input type="hidden" id="lesson_id" name="lesson_id" value="<?php echo $lesson_id ?>"/>
@@ -69,6 +76,14 @@
             }
             ?>
         ];
+        var teachers = [
+            <?php foreach($all_teachers as $key =>$value){
+                echo '{"id": "teacher_'.$value['uid'].'", "text": "'.$value['first_name'].' '.$value['last_name'].'","children":[';
+
+                echo ']},';
+            }
+            ?>
+        ];
 
         $('#data').jstree({
             'core': {
@@ -85,9 +100,26 @@
             .on("select_node.jstree", function (e, data) {
 
             });
+        $('#teachers').jstree({
+            'core': {
+                "check_callback": true,
+                'data': teachers,
+
+            },
+            "plugins": ["checkbox"]
+
+        })
+            .on('create_node.jstree', function (e, data) {
+
+            })
+            .on("select_node.jstree", function (e, data) {
+
+            });
 
         $("#submit").click(function () {
             var checked = $('#data').jstree("get_checked", null, true);
+            var teachers_checked = $('#teachers').jstree("get_checked", null, true);
+            var current_checked_teacher = [];
             var section_checked = [];
             var grade_checked = [];
             $.each(checked, function (key, value) {
@@ -101,8 +133,17 @@
                     grade_checked.push(value);
                 }
             });
+            $.each(teachers_checked, function (key, value) {
+                if (!value.indexOf("teacher_")) {
+
+                    value = value.replace("teacher_", "");
+
+                    current_checked_teacher.push(value);
+                }
+            });
             $("#section_checked").val(section_checked);
             $("#grade_checked").val(grade_checked);
+            $("#teacher_checked").val(current_checked_teacher);
 
         });
 

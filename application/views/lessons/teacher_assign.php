@@ -19,11 +19,11 @@
     <div class="col-lg-6 col-lg-offset-0 col-md-6">
         <div class="form-group">
             <h6>Date Start</h6>
-            <input id="date_start" class="form-control" name="date_start" placeholder="mm/dd/yyyy"/>
+            <input id="date_start" class="form-control" name="date_start" required placeholder="mm/dd/yyyy"/>
         </div>
         <div class="form-group">
             <h6>Date End</h6>
-            <input id="date_end" class="form-control" name="date_end" placeholder="mm/dd/yyyy"/>
+            <input id="date_end" class="form-control" name="date_end" required placeholder="mm/dd/yyyy"/>
         </div>
 
         <input type="hidden" id="section_checked" name="sections[]"/>
@@ -71,8 +71,12 @@
             .on("select_node.jstree", function (e, data) {
 
             });
+        $("form").submit(function () {
+            $(this).attr("disabled","");
+        });
 
         $("#submit").click(function () {
+
             var checked = $('#data').jstree("get_checked", null, true);
             var section_checked = [];
             var grade_checked = [];
