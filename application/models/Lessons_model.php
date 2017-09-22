@@ -172,6 +172,7 @@ Class Lessons_model extends CI_Model
 
     function save_files_to_database($data)
     {
+
         $this->db
             ->where('lesson_id', $data['lesson_id'])
             ->where('author', $data['author'])

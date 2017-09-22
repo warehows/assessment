@@ -8,9 +8,9 @@
     }
 </style>
 
-<link href="<?php echo base_url().$css_directory."hayageek_file_upload.css" ?>" rel="stylesheet">
-<script src="<?php echo base_url().$css_directory."jquery.min.js" ?>"></script>
-<script src="<?php echo base_url().$css_directory."jquery.uploadfile.min.js" ?>"></script>
+<link href="<?php echo base_url() . $css_directory . "hayageek_file_upload.css" ?>" rel="stylesheet">
+<script src="<?php echo base_url() . $css_directory . "jquery.min.js" ?>"></script>
+<script src="<?php echo base_url() . $css_directory . "jquery.uploadfile.min.js" ?>"></script>
 
 <?php $this->load->helper('url'); ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>js/jstree/dist/themes/default/style.min.css"/>
@@ -47,12 +47,18 @@
                             <div class="col-lg-2 col-lg-offset-0 col-md-2">
                                 <div id="data"></div>
                                 <?php $logged_in = $this->session->userdata('logged_in'); ?>
-                                <?php if($logged_in['su']==1): ?>
-                                    <a href="<?php echo site_url('lessons/')?>?notif=yes"><button class="btn btn-primary btn-info-full next-step" id="Done"
-                                                                                                  type="button">Done</button></a>
+                                <?php if ($logged_in['su'] == 1): ?>
+                                    <a href="<?php echo site_url('lessons/') ?>?notif=yes">
+                                        <button class="btn btn-primary btn-info-full next-step" id="Done"
+                                                type="button">Done
+                                        </button>
+                                    </a>
                                 <?php else: ?>
-                                    <a href="<?php echo site_url('workspace/')?>?notif=yes"><button class="btn btn-primary btn-info-full next-step" id="Done"
-                                                                                                    type="button">Done</button></a>
+                                    <a href="<?php echo site_url('workspace/') ?>?notif=yes">
+                                        <button class="btn btn-primary btn-info-full next-step" id="Done"
+                                                type="button">Done
+                                        </button>
+                                    </a>
                                 <?php endif; ?>
                             </div>
                             <div class="col-lg-4 col-lg-offset-0 col-md-4">
@@ -60,6 +66,7 @@
                                 <div id="folder_content_container" class="folder_content_container">
                                     <input type="button" id="start_upload" value="Start Uploading">
                                     <input type="button" id="add_quiz" value="Add Quiz">
+
                                     <div id="fileuploader" class="mdl-cell--12-col-desktop">Upload Files</div>
 
                                 </div>
@@ -127,21 +134,10 @@
                 $("#file_container").empty();
                 $.each(lesson_contents, function (key, value) {
                     if (value['content_type'] == "quiz") {
-                        console.log("quiz");
-                        append = "<tr><td>" + value['content_name'] + "</td><td>quiz</td><td><button id='" + value['id'] + "' name='" + value['content_name'] + "' class='delete_file_content_haha'>Delete</button></td></tr>";
+
+                        append = "<tr><td>" + value['content_name'] + "</td><td>quiz</td><td><button id='" + value['id'] + "' name='" + value['content_name'] + "' type='button' class='delete_file_content_haha'>Delete</button></td></tr>";
                         $("#file_container").append(append);
-//                        var quiz_id = value['content'];
-//                        $.ajax({
-//                                url: "<?php //echo site_url('lessons/get_quiz');?>//",
-//                            type: "POST",
-//                            data: {quid: quiz_id}
-//                        }).done(function (value) {
-//                            value = JSON.parse(value);
-//                            value['content'] = value.quiz_name;
-//
-//
-//
-//                        });
+
                     } else {
                         link = "<?php echo base_url('upload/lessons/')?>/" + lesson_id + "_" + folder_name + "/" + value['content_name'];
                         append = "<tr><td style='cursor:pointer'><a href='" + link + "' target='_blank'>" + value['content_name'] + "</a></td>" +
@@ -186,11 +182,13 @@
                         content: files,
                         content_type: "file",
                         lesson_id: lesson_id,
+                        content_id: "",
                         author: author,
                         folder_name: folder_name,
                         duplicated: duplicated
                     }
                 }).done(function (values) {
+
                     values = JSON.parse(values);
 
                     to_update_folder = values['folder_name'];
@@ -228,6 +226,8 @@
         });
 
         $(document).delegate(".delete_file_content_haha", "click", function (event) {
+
+
             var lesson_content_id_delete = $(event.currentTarget).attr('id');
             var filename = $(event.currentTarget).attr('name');
 
@@ -242,9 +242,9 @@
                     }
                 }
             ).done(function (values) {
+
                     update_file_table(folder_name, lesson_id);
                     uploadObj.reset();
-
                 });
         });
 
@@ -361,16 +361,16 @@
                             },
                         }).done(function (values) {
 
-                            if(!values){
+                            if (!values) {
                                 $.alert("The quiz or quizzes has already been added to this lesson");
                             }
-                            update_file_table(folder_name,lesson_id);
+                            update_file_table(folder_name, lesson_id);
                         });
                     },
                     create: function () {
                         //jquery
                         var current_url = $(location).attr('href');
-                        window.location.replace("<?php echo site_url()?>/assign?redirect="+current_url);
+                        window.open('<?php echo site_url("assign/create?next_page=assign_quiz%2Fmodify_info")?>');
                     },
                     cancel: function () {
                         $.alert('Canceled!');

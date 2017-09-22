@@ -150,6 +150,7 @@ class Workspace extends CI_Controller
             );
 
             $workspace_id = $this->lessons_model->import_to_workspace($import_to_workspace);
+            exit;
             $current_workspace = $this->workspace_model->where("id",$workspace_id);
             $current_lesson = $this->lessons_model->where("id",$current_workspace[0]['content_id']);
             $lessons_data = array(
@@ -162,25 +163,26 @@ class Workspace extends CI_Controller
             $this->lessons_model->update($lessons_data);
 
             $lesson_id_for_content['lesson_id'] = $current_workspace[0]['content_id'];
+            print_r($lesson_id_for_content);
             $current_lesson_contents = $this->lessons_model->all_lesson_contents_by_id($lesson_id_for_content);
             foreach ($current_lesson_contents as $current_lesson_contents_key => $current_lesson_contents_value) {
                 if ($current_lesson_contents_value['content_type'] == "quiz") {
-                    print_r($current_lesson_contents);
+
                     $quiz_data_to_copy = array(
-                        "id" => $current_lesson_contents_value['content_id'],
+//                        "id" => $current_lesson_contents_value['content_id'],
 
                     );
                 }
             }
 
-            print_r($current_lesson_contents);
+            print_r($current_lesson_contents_value);
         }
 
 
 
 
 
-        exit;
+
 
         foreach ($current_lesson_contents as $current_lesson_contents_key => $current_lesson_contents_value) {
             if ($current_lesson_contents_value['content_type'] == "quiz") {

@@ -419,25 +419,30 @@ class Lessons extends CI_Controller
             $this->session->unset_userdata('logged_in');
             redirect('login');
         }
-        print_r($_REQUEST);
-        exit;
-//        if($this->dev_site=="true"){
-//            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/develop/brainee/upload/lessons/";
-//        }else{
-//            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
-//        }
-//
-//
-//        $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
-//        $folder = $output_dir . $folder_to_create . "/";
-//
-//        $filename = $_POST['filename'];
-//
-//        $data = array("id" => $_POST['lesson_contents_id']);
-////
-//        $data = $this->lessons_model->delete_file_by_id($data);
-//        unlink($folder . $filename);
-//        print_r($folder . $filename);
+        $post = $_REQUEST;
+        if($this->dev_site=="true"){
+            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/develop/brainee/upload/lessons/";
+        }else{
+            $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
+        }
+        $this->db->where('id', $post['lesson_contents_id']);
+
+        $queryable = $this->db->get('lesson_contents');
+        $query_data = $queryable->result_array();
+        $query_data = $query_data[0];
+
+        if($query_data['content_type']=="quiz"){
+            $data = array("id" => $post['lesson_contents_id']);
+            $data = $this->lessons_model->delete_file_by_id($data);
+        }else{
+            $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
+            $folder = $output_dir . $folder_to_create . "/";
+            $filename = $_POST['filename'];
+            $data = array("id" => $_POST['lesson_contents_id']);
+            $data = $this->lessons_model->delete_file_by_id($data);
+            unlink($folder . $filename);
+            print_r($folder . $filename);
+        }
 
     }
 
@@ -522,13 +527,16 @@ class Lessons extends CI_Controller
             "lesson_id" => $data['lesson_id'],
             "author" => $data['author'],
             "content_type" => $data['content_type'],
+            "content_id" => "",
             "content_name" => $data['content'][0],
             "folder_name" => $data['folder_name'],
             "duplicated" => $data['duplicated'],
         );
 
 
+
         $data = $this->lessons_model->save_files_to_database($data);
+
 
         print_r(json_encode($data));
 
