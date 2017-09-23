@@ -90,6 +90,46 @@ Class Calendar_model extends CI_Model
         }
     }
 
+    function exist($data){
+        $this->db
+            ->where("workspace_id",$data["workspace_id"])
+            ->where("cid",$data["cid"])
+            ->where("gid",$data['gid'])
+            ->where("lid",$data['lid'])
+            ->where("lesson_id",$data['lesson_id'])
+            ->where("uid",$data['uid']);
+        $check_data = $this->db->get("calendar");
+        if($check_data->num_rows()){
+            return $check_data->result_array()[0]['id'];
+        }else{
+            return false;
+        }
+    }
+
+    function create($data){
+        $date_from = new DateTime($data['date_from']);
+        $date_to = new DateTime($data['date_to']);
+
+        $create = array(
+            "workspace_id"=>$data["workspace_id"],
+            "cid"=>$data["cid"],
+            "gid"=>$data['gid'],
+            "lid"=>$data['lid'],
+            "lesson_id"=>$data['lesson_id'],
+            "date_from"=>$date_from->format('Y-m-d'),
+            "date_to"=>$date_to->format('Y-m-d'),
+            "uid"=>$data['uid'],
+        );
+        if($exist_id = $this->exist($create)){
+            $this->db->where("id", $exist_id);
+            $this->db->update('calendar', $create);
+        }else{
+            $this->db->insert('calendar', $create);
+        }
+
+    }
+
+
     function create_schedule($data)
     {
 
@@ -166,9 +206,6 @@ Class Calendar_model extends CI_Model
             }
 
         }
-
-
-
 
     }
 

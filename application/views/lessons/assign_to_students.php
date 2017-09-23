@@ -1,18 +1,18 @@
-<link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
+<link href="<?php echo base_url('css/new_material/cdn/hayageek_file_upload.css')?>" rel="stylesheet">
+<script src="<?php echo base_url('css/new_material/cdn/jquery.min.js')?>"></script>
+<script src="<?php echo base_url('css/new_material/cdn/jquery.uploadfile.min.js')?>"></script>
 
 <?php $this->load->helper('url'); ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>js/jstree/dist/themes/default/style.min.css"/>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script src="<?php echo base_url('css/new_material/cdn/confirm.js')?>"></script>
+<script src="<?php echo base_url('js/jstree.js')?>"></script>
 
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="<?php echo base_url('js/jquery_ui.js')?>"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
+<link rel="stylesheet" href="<?php echo base_url('css/confirm.css')?>">
 <form action="<?php echo site_url('workspace/mass_assignation') ?>" method="GET">
     <?php $all_teachers = $this->user_model->where("su",2); ?>
 <!--    <pre>-->

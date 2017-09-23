@@ -361,7 +361,10 @@ Class Lessons_model extends CI_Model
                 'content_name' => $loop_data[0]['lesson_name'] . "-copy",
             );
 
+
+
             $this->db->insert('workspace', $workspace_data);
+
             $this->get_latest_lesson_id_imported_to_workspace = $new_lesson_id;
             $return_workspace_value = $this->db->insert_id();
 
@@ -369,12 +372,16 @@ Class Lessons_model extends CI_Model
                 $lesson_data = array(
                     'lesson_id' => $new_lesson_id,
                     'content_name' => $lesson_content_value['content_name'],
+                    'content_id' => $lesson_content_value['content_id'],
                     'author' => $user_id,
                     'content_type' => $lesson_content_value['content_type'],
                     'folder_name' => $lesson_content_value['folder_name'],
                     'duplicated' => 1,
                 );
+
+
                 $this->save_files_to_database($lesson_data);
+
                 if($lesson_content_value['content_type']=="file"){
                     $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
                     $folder_to_create = $new_lesson_id . "_" . $lesson_content_value['folder_name'];
@@ -389,9 +396,8 @@ Class Lessons_model extends CI_Model
                     $newfile = $document_root . "/upload/lessons/" . $new_lesson_id . "_" . $lesson_content_value['folder_name'] . "/" . $lesson_content_value['content_name'];
                     copy($file, $newfile);
                 }
-
-
             }
+
         }
         return $return_workspace_value;
     }
