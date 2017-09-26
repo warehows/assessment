@@ -119,6 +119,20 @@ Class User_model extends CI_Model
 
     }
 
+    function insert($data){
+        $data = array(
+            "password"=>md5($data["password"]),
+            "email"=>$data["email"],
+            "first_name"=>$data["first_name"],
+            "last_name"=>$data["last_name"],
+            "gid"=>$data["gid"],
+            "su"=>$data["su"],
+        );
+
+        $this->db->insert("savsoft_users",$data);
+
+    }
+
 
     function insert_user()
     {

@@ -22,6 +22,7 @@ Class Lessons_model extends CI_Model
         return $query->result_array();
     }
 
+
     function all_lessons_non_duplicated()
     {
         $this->db->where('duplicated', 0);
@@ -61,6 +62,19 @@ Class Lessons_model extends CI_Model
     {
         $this->db->where('id', $data);
         $this->db->delete('lessons');
+//        return $query->result_array();
+    }
+
+    function delete_lesson_contents_by_id($data)
+    {
+        $this->db->where('id', $data);
+        $this->db->delete('lesson_contents');
+//        return $query->result_array();
+    }
+    function delete_lesson_contents_by_lesson_id($data)
+    {
+        $this->db->where('lesson_id', $data);
+        $this->db->delete('lesson_contents');
 //        return $query->result_array();
     }
 
@@ -415,6 +429,7 @@ Class Lessons_model extends CI_Model
         $query = $this->db->delete('lesson_contents');
         return $data['lesson_folder_id'];
     }
+
     function update($data){
         $this->db->where("id", $data['id']);
         $return_value = $this->db->update("lessons", $data);
