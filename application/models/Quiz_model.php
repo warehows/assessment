@@ -716,7 +716,7 @@ Class Quiz_model extends CI_Model
 
                 $manual_valuation = 1;
             }
-            $correct_score_new += $scorePerQuestion;
+            $correct_score_new += $scorePerQuestion ? $scorePerQuestion : $correct_score ;
 
         }
 //        echo 'marks:'.$marks.'<br>';
