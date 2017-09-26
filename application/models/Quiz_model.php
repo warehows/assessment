@@ -703,7 +703,8 @@ Class Quiz_model extends CI_Model
             }
 
             //incorrect_score
-            if ($score == 2) {
+            if ($score == 2 && $question['question_type'] != 'Match the Column') {
+                die();
                 //if there is value for score per question apply it
                 //else it will base it's score on the quiz setting incorrect_score
                 if($scorePerQuestion && $incorrect_score) {
@@ -712,6 +713,31 @@ Class Quiz_model extends CI_Model
                     $marks -= $incorrect_score;
                 }
             }
+
+            //Matching type scoring customized
+            if ($score == 2 && $question['question_type'] === 'Match the Column') {
+                $qid = $question['qid'];
+                $rid = $quiz['rid'];
+                //qid && rid
+                $matchQuestionResult = $this->db->query("select * from savsoft_answers where savsoft_answers.rid='$rid' AND savsoft_answers.qid ='$qid'");
+
+                $matchingTypeResult = $matchQuestionResult->result_array();
+                $optionPoints = 0;
+                foreach($matchingTypeResult as $fuckYeah){
+                    $optionPoints += $fuckYeah['score_u'];
+                }
+
+                //if there is value for score per question apply it
+                //else it will base it's score on the quiz setting incorrect_score
+                if($scorePerQuestion && $incorrect_score) {
+                    $marks += $scorePerQuestion * $optionPoints;
+                }else{
+                    $marks += $correct_score * $optionPoints;
+                }
+
+
+            }
+
             if ($score == 3) {
 
                 $manual_valuation = 1;

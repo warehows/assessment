@@ -129,7 +129,7 @@ Class User_model extends CI_Model
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
             'contact_no' => $this->input->post('contact_no'),
-            'gid' => $this->input->post('gid'),
+            'gid' => $this->input->post('su') != '2' || $this->input->post('su') != '1' ?  $this->input->post('gid') : null,
 //		'subscription_expired'=>strtotime($this->input->post('subscription_expired')),
             'su' => $this->input->post('su')
         );

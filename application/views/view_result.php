@@ -250,7 +250,7 @@ $cia_tim_cate=cia_tim_cate($correct_incorrect_unattempted,explode(",",$result['i
 	<div class="col-lg-2" style="text-align:center;">
 		<p><?php echo $this->lang->line('score_obtained');?></p>
 		<p style="color:#e39500;" >
-            <?php echo $result['score_obtained'];?>/ <?php echo array_sum(explode(',',$result['score_individual'])); ?>
+            <?php echo $result['score_obtained'];?>/ <?php echo $total_score; ?>
 
         </p>
 	</div>
@@ -440,6 +440,7 @@ if($result['camera_req']=='1'){
  
 	 <div id="page_break"></div>
  <div class="col-md-12">
+	 <h3><?php echo 'Results';?></h3>
 <?php
  
  
