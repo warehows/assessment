@@ -21,16 +21,17 @@
         <div id="data"></div>
 
     </div>
+    <?php $current_lesson_data = $this->lessons_model->lesson_by_id($lesson_id)?>
     <div class="col-lg-4 col-lg-offset-0 col-md-4">
-        <div id="teachers"></div>
         <?php if ($workspace_id == 0) { ?>
 
             <div class="form-group">
                 <h6>Select Teacher</h6>
 
-<!--                --><?php //foreach($all_teachers as $all_teachers_key=>$all_teachers_value){?>
-<!--                    <input class="form-control" name="uid[]" type="checkbox" value="--><?php //echo $all_teachers_value['uid']?><!--" />-->
-<!--                --><?php //} ?>
+                <div id="teachers"></div>
+                <!--                --><?php //foreach($all_teachers as $all_teachers_key=>$all_teachers_value){?>
+                <!--                    <input class="form-control" name="uid[]" type="checkbox" value="--><?php //echo $all_teachers_value['uid']?><!--" />-->
+                <!--                --><?php //} ?>
             </div>
         <?php }else{ ?>
             <input type="hidden" id="uid" name="uid" value="<?php echo $logged_in['uid'] ?>"/>

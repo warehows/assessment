@@ -53,17 +53,20 @@
 
                     <?php
                 }
+//                print_r("<pre>");
                 foreach ($result as $key => $val) {
+                    $position = ($val['su'] == '2') ? "teacher" : "student";
                     ?>
+
+
                     <tr>
                         <td><?php echo $val['email']; ?></td>
                         <td><?php echo $val['first_name']; ?></td>
                         <td><?php echo $val['last_name']; ?></td>
-                        <td>Student</td>
+                        <td><?php echo $position ?></td>
                         <td>Active</td>
                         <td><a href="<?php echo site_url('user/edit_user/' . $val['uid']); ?>"><img
                                     src="<?php echo base_url('images/edit.png'); ?>"></a></td>
-
                     </tr>
 
                     <?php

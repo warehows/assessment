@@ -6,8 +6,10 @@
 
 
 </style>
-
-
+<?php
+$logged_in = $this->session->userdata('logged_in');
+?>
+<?php if($logged_in['su']==2): ?>
 <script>
 
     var Timer;
@@ -68,6 +70,7 @@
 
 
 </script>
+<?php endif; ?>
 
 
 <div class="container">

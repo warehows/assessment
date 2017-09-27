@@ -492,7 +492,10 @@ Class Quiz_model extends CI_Model
             $noq = array();
             $query = $this->db->query("select * from savsoft_qbank join savsoft_category on savsoft_category.cid=savsoft_qbank.cid where qid in ($wqids) ORDER BY FIELD(qid,$wqids)  ");
             $questions = $query->result_array();
+
             foreach ($questions as $qk => $question) {
+                print_r($questions);
+
                 if (!in_array($question['category_name'], $categories)) {
                     $categories[] = $question['category_name'];
                     $noq[$i] += 1;
@@ -501,6 +504,7 @@ Class Quiz_model extends CI_Model
                     $noq[$i] += 1;
                 }
             }
+
 
             $categories = array();
             $category_range = array();
@@ -547,7 +551,6 @@ Class Quiz_model extends CI_Model
             $zeros[] = 0;
         }
 
-
         $userdata = array(
             'quid' => $quid,
             'uid' => $uid,
@@ -564,8 +567,17 @@ Class Quiz_model extends CI_Model
             $photoname = $this->session->userdata('photoname');
             $userdata['photo'] = $photoname;
         }
-        $this->db->insert('savsoft_result', $userdata);
-        $rid = $this->db->insert_id();
+        $logged_in = $this->session->userdata('logged_in');
+
+        if($logged_in['su']==2){
+            $this->db->insert('savsoft_result', $userdata);
+            $rid = $this->db->insert_id();
+        }else{
+            $rid=1;
+        }
+
+
+
         return $rid;
     }
 
