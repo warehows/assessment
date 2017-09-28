@@ -61,7 +61,7 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
                                     <?php $folder_location = $new_data['lesson_id'] . "_" . $lesson_contents_value['folder_name'] . "/" ?>
                                     <?php if (strtolower($lesson_contents_value['folder_name']) == $folders_value[0]): ?>
                                         <?php if ($lesson_contents_value['content_type'] == "quiz") { ?>
-                                            <li style="cursor:pointer" class="content" type="quiz"
+                                            <li style="cursor:pointer" class="content" type="quiz" quiz_id="<?php echo $lesson_contents_value['content_id']; ?>"
                                                 value="<?php echo $lesson_contents_value['content_name']; ?>"><?php echo $lesson_contents_value['content_name']; ?></li>
                                         <?php } else { ?>
                                             <?php echo_file_li($root_link, $lesson_contents_value, $folder_location, $base_url); ?>
@@ -164,22 +164,15 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
                 $("#iframe_container_" + content_id).append(element_to_append);
                 checkPosition();
             } else {
-//                var file_value = ;
-
-                var where = "quiz_name";
-                var value = $(this).attr("value");
-                $.ajax({
-                    url: "<?php echo site_url('lessons/where');?>",
-                    type: "POST",
-                    data: {where: where, value: value}
-                }).done(function (values) {
-                    lesson_contents = JSON.parse(values);
-                    var append;
-                    var link;
-                    $("#file_container").empty();
-
-
-                });
+                var quiz_id = $(this).attr("quiz_id");
+                $("#current_iframe_" + content_id).remove();
+                var element_to_append = $('' +
+                    '<iframe id="current_iframe_' + content_id + '" class="the_iframe"' +
+                    'src="http://localhost/brainee/index.php/quiz/view_quiz_detail/'+quiz_id+'"' +
+                    'frameborder="0" allowfullscreen=""> ' +
+                    '</iframe>');
+                $("#iframe_container_" + content_id).append(element_to_append);
+                checkPosition();
             }
 
         });

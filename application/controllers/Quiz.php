@@ -31,8 +31,8 @@ class Quiz extends CI_Controller
 
         $logged_in = $this->session->userdata('logged_in');
 
-        $data['category_list']=$this->qbank_model->category_list();
-        $data['level_list']=$this->qbank_model->level_list();
+        $data['category_list'] = $this->qbank_model->category_list();
+        $data['level_list'] = $this->qbank_model->level_list();
         $data['quiz_model'] = $this->quiz_model;
         $data['list_view'] = $list_view;
         $data['limit'] = $limit;
@@ -62,13 +62,25 @@ class Quiz extends CI_Controller
         $data['title'] = $this->lang->line('quiz');
         $data['open_quiz'] = $this->quiz_model->open_quiz($limit);
 
-/*        $this->load->view('header', $data);
-        $this->load->view('open_quiz', $data);
-        $this->load->view('material_part/footer_material', $data);*/
+        /*        $this->load->view('header', $data);
+                $this->load->view('open_quiz', $data);
+                $this->load->view('material_part/footer_material', $data);*/
 
-        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
-        $this->load->view('open_quiz',$data);
-        $this->load->view('material_part/footer_material',$data);
+        if ($logged_in['su'] == 1) {
+            if ($logged_in['su'] == 1) {
+                $this->load->view('new_material/header', $data);
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
+        } elseif ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+        } else {
+            $this->load->view('new_material/student_header', $data);
+        }
+        $this->load->view('open_quiz', $data);
+        $this->load->view('material_part/footer_material', $data);
 
     }
 
@@ -94,13 +106,25 @@ class Quiz extends CI_Controller
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
         $data['quiz_model'] = $this->quiz_model;
- /*       $this->load->view('header', $data);
-        $this->load->view('new_quiz', $data);
-        $this->load->view('material_part/footer_material', $data);*/
+        /*       $this->load->view('header', $data);
+               $this->load->view('new_quiz', $data);
+               $this->load->view('material_part/footer_material', $data);*/
 
-        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
-        $this->load->view('new_quiz',$data);
-        $this->load->view('material_part/footer_material',$data);
+        if ($logged_in['su'] == 1) {
+            if ($logged_in['su'] == 1) {
+                $this->load->view('new_material/header', $data);
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
+        } elseif ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+        } else {
+            $this->load->view('new_material/student_header', $data);
+        }
+        $this->load->view('new_quiz', $data);
+        $this->load->view('material_part/footer_material', $data);
     }
 
 
@@ -136,13 +160,25 @@ class Quiz extends CI_Controller
             $data['category_list'] = $this->qbank_model->category_list();
             $data['level_list'] = $this->qbank_model->level_list();
         }
-/*        $this->load->view('header', $data);
-        $this->load->view('edit_quiz', $data);
-        $this->load->view('material_part/footer_material', $data);*/
+        /*        $this->load->view('header', $data);
+                $this->load->view('edit_quiz', $data);
+                $this->load->view('material_part/footer_material', $data);*/
 
-        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
-        $this->load->view('edit_quiz',$data);
-        $this->load->view('material_part/footer_material',$data);
+        if ($logged_in['su'] == 1) {
+            if ($logged_in['su'] == 1) {
+                $this->load->view('new_material/header', $data);
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
+        } elseif ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+        } else {
+            $this->load->view('new_material/student_header', $data);
+        }
+        $this->load->view('edit_quiz', $data);
+        $this->load->view('material_part/footer_material', $data);
     }
 
 
@@ -253,7 +289,19 @@ class Quiz extends CI_Controller
         $data['lid'] = $lid;
         $data['quid'] = $quid;
 
-        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+        if ($logged_in['su'] == 1) {
+            if ($logged_in['su'] == 1) {
+                $this->load->view('new_material/header', $data);
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
+        } elseif ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+        } else {
+            $this->load->view('new_material/student_header', $data);
+        }
         $this->load->view('add_question_into_quiz', $data);
         $this->load->view('new_material/footer', $data);
     }
@@ -412,21 +460,214 @@ class Quiz extends CI_Controller
         $data['title'] = $this->lang->line('attempt') . ' ' . $this->lang->line('quiz');
 
         $data['quiz'] = $this->quiz_model->get_quiz($quid);
-/*        $this->load->view('header', $data);
-        $this->load->view('quiz_detail', $data);
-        $this->load->view('material_part/footer_material', $data);*/
+        /*        $this->load->view('header', $data);
+                $this->load->view('quiz_detail', $data);
+                $this->load->view('material_part/footer_material', $data);*/
 
         $logged_in = $this->session->userdata('logged_in');
         if ($logged_in['su'] > 0) {
-            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
-        }else{
-            $this->load->view('new_material/student_header',$data);
+            if ($logged_in['su'] == 1) {
+                if ($logged_in['su'] == 1) {
+                    $this->load->view('new_material/header', $data);
+                } elseif ($logged_in['su'] == 2) {
+                    $this->load->view('new_material/teacher_header', $data);
+                } else {
+                    $this->load->view('new_material/student_header', $data);
+                }
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
+        } else {
+            $this->load->view('new_material/student_header', $data);
         }
 
-        $this->load->view('quiz_detail',$data);
-        $this->load->view('material_part/footer_material',$data);
+        $this->load->view('quiz_detail', $data);
+        $this->load->view('material_part/footer_material', $data);
 
     }
+
+    public function view_quiz_detail($quid)
+    {
+        // redirect if not loggedin
+
+
+        $logged_in = $this->session->userdata('logged_in');
+        $gid = $logged_in['gid'];
+        $data['title'] = $this->lang->line('attempt') . ' ' . $this->lang->line('quiz');
+
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        /*        $this->load->view('header', $data);
+                $this->load->view('quiz_detail', $data);
+                $this->load->view('material_part/footer_material', $data);*/
+
+        $logged_in = $this->session->userdata('logged_in');
+
+
+        $this->load->view('lessons/view_quiz_details', $data);
+        $this->load->view('material_part/footer_material', $data);
+
+    }
+
+    public function view_validate_quiz($quid)
+    {
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+
+        // if it is without login quiz.
+
+        if ($data['quiz']['with_login'] == 0 && !$this->session->userdata('logged_in')) {
+
+        } else {
+
+            $logged_in = $this->session->userdata('logged_in');
+
+            $gid = $logged_in['gid'];
+            $uid = $logged_in['uid'];
+
+            // if this quiz already opened by user then resume it
+            $open_result = $this->quiz_model->open_result($quid, $uid);
+            if($logged_in['su']==2) {
+                if ($open_result != '0') {
+                    $this->session->set_userdata('rid', $open_result);
+                    redirect('quiz/attempt/' . $open_result);
+                }
+            }
+
+            $data['quiz'] = $this->quiz_model->get_quiz($quid);
+            // validate assigned group
+            if($logged_in['su']==2){
+                if (!in_array($gid, explode(',', $data['quiz']['gids']))) {
+                    $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_assigned_to_your_group') . " </div>");
+                    redirect('quiz/quiz_detail/' . $quid);
+                }
+            }
+
+            // validate start end date/time
+            if ($data['quiz']['start_date'] > time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_available') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+            // validate start end date/time
+            if ($data['quiz']['end_date'] < time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+
+            // validate ip address
+            if ($data['quiz']['ip_address'] != '') {
+                $ip_address = explode(",", $data['quiz']['ip_address']);
+                $myip = $_SERVER['REMOTE_ADDR'];
+                if (!in_array($myip, $ip_address)) {
+                    $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('ip_declined') . " </div>");
+                    redirect('quiz/quiz_detail/' . $quid);
+                }
+            }
+            // validate maximum attempts
+            $maximum_attempt = $this->quiz_model->count_result($quid, $uid);
+
+            if($logged_in['su']==2) {
+                if ($data['quiz']['maximum_attempts'] <= $maximum_attempt) {
+                    $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('reached_maximum_attempt') . " </div>");
+                    redirect('quiz/quiz_detail/' . $quid);
+                }
+            }
+
+            // insert result row and get rid (result id)
+            $rid = $this->quiz_model->insert_result($quid, $uid);
+            
+
+            $this->session->set_userdata('rid', $rid);
+
+            redirect('quiz/view_attempt/' . $rid);
+        }
+
+    }
+
+    function view_attempt($rid)
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            if (!$this->session->userdata('logged_in_raw')) {
+                redirect('login');
+            }
+        }
+
+        if (!$this->session->userdata('logged_in')) {
+            $logged_in = $this->session->userdata('logged_in_raw');
+        } else {
+            $logged_in = $this->session->userdata('logged_in');
+        }
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+
+
+
+        $srid = $this->session->userdata('rid');
+
+        // if linked and session rid is not matched then something wrong.
+        if ($rid != $srid) {
+
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+            redirect('quiz/');
+
+        }
+
+        /*
+        if(!$this->session->userdata('logged_in')){
+            exit($this->lang->line('permission_denied'));
+        }
+        */
+
+        // get result and quiz info and validate time period
+        $data['quiz'] = $this->quiz_model->quiz_result($rid);
+        $data['saved_answers'] = $this->quiz_model->saved_answers($rid);
+
+
+        // end date/time
+
+        if($logged_in['su']==2){
+            if ($data['quiz']['end_date'] < time()) {
+                $this->quiz_model->submit_result($rid);
+                $this->session->unset_userdata('rid');
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+                redirect('quiz/quiz_detail/' . $data['quiz']['quid']);
+            }
+        }
+
+
+
+        // end date/time
+        if($logged_in['su']==2) {
+            if (($data['quiz']['start_time'] + ($data['quiz']['duration'] * 60)) < time()) {
+                $this->quiz_model->submit_result($rid);
+                $this->session->unset_userdata('rid');
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('time_over') . " </div>");
+                redirect('quiz/quiz_detail/' . $data['quiz']['quid']);
+            }
+        }
+
+        // remaining time in seconds
+        $data['seconds'] = ($data['quiz']['duration'] * 60) - (time() - $data['quiz']['start_time']);
+        // get questions
+        $data['questions'] = $this->quiz_model->get_questions($data['quiz']['r_qids']);
+        // get options
+        $data['options'] = $this->quiz_model->get_options($data['quiz']['r_qids']);
+        $data['title'] = $data['quiz']['quiz_name'];
+
+        $this->load->view('header', $data);
+        $this->load->view('lessons/view_quiz_attempt', $data);
+        $this->load->view('material_part/footer_material', $data);
+
+//        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+//        $this->load->view('quiz_attempt',$data);
+//        $this->load->view('material_part/footer_material',$data);
+
+    }
+
 
     public function validate_quiz($quid)
     {
@@ -764,18 +1005,19 @@ class Quiz extends CI_Controller
     public function assessment_insert_quiz()
     {
         $post = $this->input->post();
-        $data = array("quiz_name"=>$post["quiz_name"],"cid"=>$post['cid']);
+        $data = array("quiz_name" => $post["quiz_name"], "cid" => $post['cid']);
         $quid = $this->quiz_model->assessment_insert_quiz($data);
-        if($quid){
+        if ($quid) {
             echo $this->db->insert_id();
         }
 
 
     }
 
-    public function addQuestionsToQuiz(){
+    public function addQuestionsToQuiz()
+    {
         $post = $this->input->post();
-        parse_str($post['question_id'],$myArray);
+        parse_str($post['question_id'], $myArray);
         $question_ids = implode(',', $myArray);
         $quid = $post['quid'];
 
@@ -788,9 +1030,10 @@ class Quiz extends CI_Controller
         $this->db->update('savsoft_quiz', $userdata);
     }
 
-    public function addGroupToQuiz(){
+    public function addGroupToQuiz()
+    {
         $post = $this->input->post();
-        parse_str($post['gids'],$myArray);
+        parse_str($post['gids'], $myArray);
         $gids = implode(',', $myArray['gids']);
         $quid = $post['quid'];
 
@@ -801,10 +1044,11 @@ class Quiz extends CI_Controller
         $this->db->update('savsoft_quiz', $userdata);
     }
 
-    public function addSettingsToQuiz(){
+    public function addSettingsToQuiz()
+    {
         $post = $this->input->post();
 
-        parse_str($post['question_id'],$questionArray);
+        parse_str($post['question_id'], $questionArray);
 
         $quid = $post['quid'];
         $startTime = strtotime($post['start_date']);
@@ -825,8 +1069,6 @@ class Quiz extends CI_Controller
         $this->db->where('quid', $quid);
         $this->db->update('savsoft_quiz', $quizdata);
     }
-
-
 
 
 }
