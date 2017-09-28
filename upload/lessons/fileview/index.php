@@ -35,6 +35,8 @@ $file_extension = $exploded_filename[1];
 $filelocation = $input['filelocation'];
 
 $base_url = $input['base_url'] . "upload/lessons/";
+//http://localhost/brainee/web/viewer.html?file=http://localhost/brainee/upload/lessons/16_Engage/engage.pdf
+$pdfJSviewer =$input['base_url'] . "web/viewer.html?file=".$input['base_url']."upload/lessons/";
 if ($file_extension == "png" || $file_extension == "jpg") {
 
     echo '<img id="image_view" src="' . $base_url . $filelocation . $input['filename'] . '"/>';
@@ -46,7 +48,7 @@ if ($file_extension == "png" || $file_extension == "jpg") {
     </video>
 <?php } elseif ($file_extension == "pdf") { ?>
 
-    <object data="<?php echo $base_url . $filelocation . $input['filename']?>" disabled=""></object>
+    <object data="<?php echo $pdfJSviewer . $filelocation . $input['filename']?>" disabled=""></object>
 <?php }elseif($file_extension == "odp"){ ?>
     <iframe src = "<?php echo $input['base_url']?>ViewerJS/#../upload/lessons/<?php echo $filelocation.$input['filename']; ?>" width='100%' height='100%' allowfullscreen webkitallowfullscreen></iframe>
 <?php }; ?>
