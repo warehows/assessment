@@ -196,6 +196,15 @@ Class Quiz_model extends CI_Model
 
     }
 
+    function update($data)
+    {
+
+        $this->db->where('quid', $data["quid"]);
+        $this->db->update('savsoft_quiz', $data);
+        return $data["id"];
+
+    }
+
     function update_quiz($quid)
     {
 

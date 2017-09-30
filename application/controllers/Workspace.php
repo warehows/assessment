@@ -74,6 +74,8 @@ class Workspace extends CI_Controller
             );
             $this->workspace_model->delete_lesson_assigned_by_field($clear_data);
         }
+
+
         foreach ($sections as $key => $value) {
 
             $data = array(
@@ -86,6 +88,7 @@ class Workspace extends CI_Controller
             );
 
             if($teacher_workspace_model = $this->workspace_model->insert($data)){
+//                print_r($teacher_workspace_model);
                 array_push($lesson_assigned_ids,$teacher_workspace_model);
             }else{
                 print_r("Error in lesson_assigned database");
@@ -93,13 +96,40 @@ class Workspace extends CI_Controller
             }
 
         }
+        $all_lesson_contents_by_id = array("lesson_id"=>$lesson_id);
+
+        $current_lesson_contents = $this->lessons_model->all_lesson_contents_by_id($all_lesson_contents_by_id);
+
+
+
+        foreach ($current_lesson_contents as $current_lesson_contents_key => $current_lesson_contents_value) {
+
+            if ($current_lesson_contents_value['content_type'] == "quiz") {
+                $quiz_data_to_copy = $this->quiz_model->get_quiz($current_lesson_contents_value['content_id']);
+
+                $new_quiz_data = $this->quiz_model->get_quiz($current_lesson_contents_value['content_id']);
+//                $get_current_workspace = $this->workspace_model->where_where("content_id",$current_lesson_contents_value['content_id'],"user_id",$logged_in['uid']);
+                $update_quiz_data = array(
+                    "quid"=>$current_lesson_contents_value['content_id'],
+                    "start_date"=>strtotime($date_start),
+                    "end_date"=>strtotime($date_end),
+                    "gids"=>$requests['sections'][0],
+                );
+                $updated_quiz = $this->quiz_model->update($update_quiz_data);
+
+            }
+        }
+
+
+
         $lesson_assigned_ids_insert = implode(",",$lesson_assigned_ids);
+
         $lesson_update_data = array(
             "id"=>$lesson_id,
             "assigned"=>1,
             "assigned_date_start"=>date($date_start),
             "assigned_date_end"=>$date_end,
-            "lesson_assigned_ids"=>$lesson_assigned_ids_insert,
+            "lesson_assigned_ids"=>$requests['sections'][0],
         );
         $lesson_update = $this->lessons_model->update($lesson_update_data);
         redirect(site_url('workspace'));
@@ -169,6 +199,7 @@ class Workspace extends CI_Controller
 
 
             $current_lesson_contents = $this->lessons_model->all_lesson_contents_by_id($lesson_id_for_content);
+
             foreach ($current_lesson_contents as $current_lesson_contents_key => $current_lesson_contents_value) {
                 if ($current_lesson_contents_value['content_type'] == "quiz") {
                     $quiz_data_to_copy = $this->quiz_model->get_quiz($current_lesson_contents_value['content_id']);
@@ -214,18 +245,22 @@ class Workspace extends CI_Controller
 
                 }
             }
-            $data_for_calendar = array(
-                "workspace_id"=>$workspace_id,
-                "cid"=>$current_lesson['subject_id'],
-                "gid"=>$requests['sections'][0],
-                "lid"=>$current_lesson['level_id'],
-                "lesson_id"=>$current_lesson['level_id'],
-                "date_from"=>$post['date_start'],
-                "date_to"=>$post['date_end'],
-                "uid"=>$teacher_value,
-            );
 
-            $this->calendar_model->create($data_for_calendar);
+
+            foreach($post['sections'] as $gid_key=>$gid_value){
+                $data_for_calendar = array(
+                    "workspace_id"=>$workspace_id,
+                    "cid"=>$current_lesson['subject_id'],
+                    "gid"=>$gid_value,
+                    "lid"=>$current_lesson['level_id'],
+                    "lesson_id"=>$current_lesson['level_id'],
+                    "date_from"=>$post['date_start'],
+                    "date_to"=>$post['date_end'],
+                    "uid"=>$teacher_value,
+                );
+                $this->calendar_model->create($data_for_calendar);
+            }
+
         }
         redirect(site_url('calendar'));
     }

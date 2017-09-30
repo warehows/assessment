@@ -11,6 +11,11 @@
 <script src="<?php echo base_url('js/jquery_ui.js'); ?>"></script>
 
 <link rel="stylesheet" href="<?php echo base_url('css/confirm.css'); ?>">
+<?php $current_lesson_data = $this->lessons_model->lesson_by_id($lesson_id)[0]?>
+<?php //print_r($current_lesson_data)?>
+
+
+
 <form action="<?php echo site_url('workspace/teacher_assign_lesson') ?>" method="GET">
     <div class="col-lg-6 col-lg-offset-0 col-md-6">
         <div id="data"></div>
@@ -19,11 +24,11 @@
     <div class="col-lg-6 col-lg-offset-0 col-md-6">
         <div class="form-group">
             <h6>Date Start</h6>
-            <input id="date_start" class="form-control" name="date_start" required placeholder="mm/dd/yyyy"/>
+            <input id="date_start" class="form-control" name="date_start" value="<?php echo $current_lesson_data['assigned_date_start']?>" required placeholder="mm/dd/yyyy"/>
         </div>
         <div class="form-group">
             <h6>Date End</h6>
-            <input id="date_end" class="form-control" name="date_end" required placeholder="mm/dd/yyyy"/>
+            <input id="date_end" class="form-control" name="date_end" value="<?php echo $current_lesson_data['assigned_date_end']?>" required placeholder="mm/dd/yyyy"/>
         </div>
 
         <input type="hidden" id="section_checked" name="sections[]"/>
@@ -35,6 +40,7 @@
 
     </div>
 </form>
+<?php $sections = explode(",",$current_lesson_data["lesson_assigned_ids"]);?>
 
 <script>
 
@@ -62,10 +68,42 @@
                 'data': grade,
 
             },
-            "plugins": ["checkbox"]
+            "plugins": ["checkbox"],
 
         })
             .on('create_node.jstree', function (e, data) {
+
+            })
+            .on('ready.jstree', function (e, data) {
+                <?php for($x=1;$x<=6;$x++): ?>
+                    $("#grade_<?php echo $x?>").find("i").click();
+                <?php endfor; ?>
+                <?php foreach($sections as $keys=>$values){ ?>
+                    $("#section_<?php echo $values?>_anchor").click();
+                <?php } ?>
+
+                <?php for($x=1;$x<=6;$x++): ?>
+                    if($("#grade_<?php echo $x?>_anchor").hasClass("jstree-clicked")){
+
+
+
+                    }else{
+//                        alert($("#grade_1_anchor").find("i").eq(0).css("border","20px solid black"));
+
+                        setTimeout(function(){
+//                            console.log($("#grade_1_anchor").find("i").eq(0).attr("class"));
+                            console.log($("#grade_1_anchor").find("i").eq(0).hasClass("jstree-undetermined"));
+                            if(!$("#grade_1_anchor").find("i").eq(0).hasClass("jstree-undetermined")){
+
+                                $("#grade_<?php echo $x?>_anchor").siblings("i").eq(0).click();
+                            }else{
+                                $("#grade_<?php echo $x?>_anchor").siblings("i").eq(0).click();
+                            }
+                        }, 50);
+
+
+                    }
+                <?php endfor; ?>
 
             })
             .on("select_node.jstree", function (e, data) {
@@ -95,6 +133,7 @@
             $("#grade_checked").val(grade_checked);
 
         });
+
 
     });
 </script>

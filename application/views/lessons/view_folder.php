@@ -34,8 +34,10 @@
 function echo_file_li($root_link, $lesson_contents_value, $folder_location, $base_url)
 {
     ?>
-    <li style="cursor:pointer" type="file" class="content"
-        value="<?php echo $root_link . "?filename=" . urlencode($lesson_contents_value['content_name']); ?>&filelocation=<?php echo urlencode($folder_location) ?>&base_url=<?php echo $base_url ?>"><?php echo urlencode($lesson_contents_value['content_name']); ?></li>
+    <li style="cursor:pointer;overflow-wrap: break-word;" type="file" class="content"
+        value="<?php echo $root_link . "?filename=" . urlencode($lesson_contents_value['content_name']); ?>&filelocation=<?php echo urlencode($folder_location) ?>&base_url=<?php echo $base_url ?>">
+        <?php echo $lesson_contents_value['content_name']; ?>
+    </li>
     <?php
 }
 
@@ -59,10 +61,11 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
                                 <div class="ul_title">Contents</div>
                                 <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value): ?>
                                     <?php $folder_location = $new_data['lesson_id'] . "_" . $lesson_contents_value['folder_name'] . "/" ?>
+
                                     <?php if (strtolower($lesson_contents_value['folder_name']) == $folders_value[0]): ?>
                                         <?php if ($lesson_contents_value['content_type'] == "quiz") { ?>
                                             <li style="cursor:pointer" class="content" type="quiz" quiz_id="<?php echo $lesson_contents_value['content_id']; ?>"
-                                                value="<?php echo $lesson_contents_value['content_name']; ?>"><?php echo $lesson_contents_value['content_name']; ?></li>
+                                                value="<?php echo $lesson_contents_value['content_name']; ?>"><?php echo str_replace("+"," ",$lesson_contents_value['content_name']); ?></li>
                                         <?php } else { ?>
                                             <?php echo_file_li($root_link, $lesson_contents_value, $folder_location, $base_url); ?>
                                         <?php } ?>
