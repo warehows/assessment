@@ -13,7 +13,7 @@
 <script src="<?php echo base_url('js/jquery_ui.js')?>"></script>
 
 <link rel="stylesheet" href="<?php echo base_url('css/confirm.css')?>">
-<form action="<?php echo site_url('workspace/mass_assignation') ?>" method="GET">
+<form action="<?php echo site_url('workspace/mass_assignation') ?>" method="POST">
     <?php $all_teachers = $this->user_model->where("su",2); ?>
 <!--    <pre>-->
 <!--    --><?php //print_r($all_teachers[3])?>
@@ -29,9 +29,7 @@
                 <h6>Select Teacher</h6>
 
                 <div id="teachers"></div>
-                <!--                --><?php //foreach($all_teachers as $all_teachers_key=>$all_teachers_value){?>
-                <!--                    <input class="form-control" name="uid[]" type="checkbox" value="--><?php //echo $all_teachers_value['uid']?><!--" />-->
-                <!--                --><?php //} ?>
+
             </div>
         <?php }else{ ?>
             <input type="hidden" id="uid" name="uid" value="<?php echo $logged_in['uid'] ?>"/>
