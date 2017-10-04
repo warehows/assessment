@@ -673,7 +673,11 @@ class Quiz extends CI_Controller
     {
         $data['quiz'] = $this->quiz_model->get_quiz($quid);
         // if it is without login quiz.
+
+
         if ($data['quiz']['with_login'] == 0 && !$this->session->userdata('logged_in')) {
+            print_r("if");
+            exit;
             if ($this->session->userdata('logged_in_raw')) {
                 $logged_in = $this->session->userdata('logged_in_raw');
             } else {
@@ -696,7 +700,6 @@ class Quiz extends CI_Controller
                 $this->session->set_userdata('logged_in_raw', $user);
                 $logged_in = $user;
             }
-
 
             $gid = $logged_in['gid'];
             $uid = $logged_in['uid'];
@@ -732,6 +735,9 @@ class Quiz extends CI_Controller
 
 
         } else {
+
+
+
             // with login starts
             // redirect if not loggedin
             if (!$this->session->userdata('logged_in')) {
@@ -746,26 +752,29 @@ class Quiz extends CI_Controller
                 redirect('login');
             }
 
-
             $logged_in = $this->session->userdata('logged_in');
-
 
             $gid = $logged_in['gid'];
             $uid = $logged_in['uid'];
 
             // if this quiz already opened by user then resume it
+
             $open_result = $this->quiz_model->open_result($quid, $uid);
+
             if ($open_result != '0') {
                 $this->session->set_userdata('rid', $open_result);
                 redirect('quiz/attempt/' . $open_result);
             }
+
             $data['quiz'] = $this->quiz_model->get_quiz($quid);
             // validate assigned group
             if (!in_array($gid, explode(',', $data['quiz']['gids']))) {
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_assigned_to_your_group') . " </div>");
                 redirect('quiz/quiz_detail/' . $quid);
             }
+
             // validate start end date/time
+
             if ($data['quiz']['start_date'] > time()) {
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_available') . " </div>");
                 redirect('quiz/quiz_detail/' . $quid);
@@ -785,17 +794,23 @@ class Quiz extends CI_Controller
                     redirect('quiz/quiz_detail/' . $quid);
                 }
             }
+
             // validate maximum attempts
             $maximum_attempt = $this->quiz_model->count_result($quid, $uid);
+
             if ($data['quiz']['maximum_attempts'] <= $maximum_attempt) {
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('reached_maximum_attempt') . " </div>");
                 redirect('quiz/quiz_detail/' . $quid);
             }
 
             // insert result row and get rid (result id)
+
             $rid = $this->quiz_model->insert_result($quid, $uid);
 
+
+
             $this->session->set_userdata('rid', $rid);
+
             redirect('quiz/attempt/' . $rid);
         }
 
@@ -840,7 +855,6 @@ class Quiz extends CI_Controller
         $data['quiz'] = $this->quiz_model->quiz_result($rid);
         $data['saved_answers'] = $this->quiz_model->saved_answers($rid);
 
-
         // end date/time
         if ($data['quiz']['end_date'] < time()) {
             $this->quiz_model->submit_result($rid);
@@ -848,6 +862,7 @@ class Quiz extends CI_Controller
             $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
             redirect('quiz/quiz_detail/' . $data['quiz']['quid']);
         }
+
 
 
         // end date/time

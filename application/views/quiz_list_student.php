@@ -49,6 +49,7 @@
     }
     ?>
 
+
     <div class="row">
 
         <div class="col-md-12">
@@ -72,7 +73,9 @@
                     <th>Attempts</th>
                     <th><?php echo $this->lang->line('action'); ?> </th>
                 </tr>
+
                 <?php
+
                 if (count($result) == 0) {
                     ?>
                     <tr>
@@ -82,8 +85,10 @@
 
                     <?php
                 }
+
                 foreach ($result as $key => $val) {
                     ?>
+
                     <?php $name = array(); ?>
                     <?php $name['first'] = $quiz_model->assigned_by($val['with_login'])['first_name']; ?>
                     <?php $name['last'] = $quiz_model->assigned_by($val['with_login'])['last_name']; ?>
@@ -97,15 +102,18 @@
 
                         $end_date = date('Y-m-d H:i:s', $val['end_date']);
                         $expires = strtotime('+0 days', strtotime(date($end_date)));
-                        $date_diff = ($expires - strtotime($timestamp)) / 86400;
-                        $days_left = round($date_diff, 0);
+                        $date_diff = (strtotime(date($end_date))-strtotime($timestamp)) / 86400;
                     }
+
                     $no_of_attempts = count($result_model->get_student_result($logged_in['uid'], $val['quid']));
                     ?>
 
-                    <?php if ($days_left > 0): ?>
-                    <tr>
-                        <!--<td><?//php echo $val['quid']; ?></td>-->
+<!--                    --><?php //print_r($days_left)?>
+
+
+                    <?php if ($date_diff > 0): ?>
+                        <tr>
+                        <!--<td><? //php echo $val['quid']; ?></td>-->
                         <td><?php echo substr(strip_tags($val['quiz_name']), 0, 50); ?></td>
                         <td><?php echo !empty($val['cid']) ? $quiz_model->get_category($val['cid'])['category_name'] : 'N/A' ?></td>
                         <td><?php echo $name['first'] . ' ' . $name['last']; ?></td>
@@ -125,24 +133,23 @@
                         <td><?php echo $no_of_attempts . '/' . $val['maximum_attempts']; ?></td>
 
 
+                        <td>
+                            <a href="<?php echo site_url('quiz/quiz_detail/' . $val['quid']); ?>"
+                               class="<?php echo $no_of_attempts >= $val['maximum_attempts'] ? 'disabled' : ''; ?> btn btn-success"><?php echo $no_of_attempts >= $val['maximum_attempts'] ? 'Finished' : 'Attempt'; ?> </a>
 
-                            <td>
-                                <a href="<?php echo site_url('quiz/quiz_detail/' . $val['quid']); ?>"
-                                   class="<?php echo $no_of_attempts >= $val['maximum_attempts'] ? 'disabled' : ''; ?> btn btn-success"><?php echo $no_of_attempts >= $val['maximum_attempts'] ? 'Finished' : 'Attempt'; ?> </a>
-
-                                <?php
-                                if ($logged_in['su'] > '0') {
-                                    ?>
-
-                                    <a href="<?php echo site_url('quiz/edit_quiz/' . $val['quid']); ?>"><img
-                                            src="<?php echo base_url('images/edit.png'); ?>"></a>
-                                    <a href="javascript:remove_entry('quiz/remove_quiz/<?php echo $val['quid']; ?>');"><img
-                                            src="<?php echo base_url('images/cross.png'); ?>"></a>
-                                    <?php
-                                }
+                            <?php
+                            if ($logged_in['su'] > '0') {
                                 ?>
-                            </td>
-                        <?php endif; ?>
+
+                                <a href="<?php echo site_url('quiz/edit_quiz/' . $val['quid']); ?>"><img
+                                        src="<?php echo base_url('images/edit.png'); ?>"></a>
+                                <a href="javascript:remove_entry('quiz/remove_quiz/<?php echo $val['quid']; ?>');"><img
+                                        src="<?php echo base_url('images/cross.png'); ?>"></a>
+                                <?php
+                            }
+                            ?>
+                        </td>
+                    <?php endif; ?>
 
                     </tr>
 

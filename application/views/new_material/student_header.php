@@ -33,7 +33,7 @@
                 <li role="presentation"><a href="<?php echo site_url('dashboard');?>">Home</a></li>
                 <li role="presentation"><a href="<?php echo site_url('quiz');?>"><?php echo $this->lang->line('quiz');?> <?php echo $this->lang->line('list');?></a></li>
                 <li role="presentation"><a href="<?php echo site_url('lessons');?>">Lessons</a></li>
-                <li role="presentation"><a href="<?php echo site_url('result');?>">Report</a></li>
+                <li role="presentation"><a href="<?php echo site_url('result/student_index');?>">Report</a></li>
 
                 <li role="presentation"><a href="<?php echo site_url('user/edit_user/'.$logged_in['uid']);?>">Account</a></li>
                 <li role="presentation"><a href="<?php echo site_url('user/logout');?>">Logout</a></li>

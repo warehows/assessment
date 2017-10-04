@@ -661,6 +661,7 @@ class Lessons extends CI_Controller
     public function add_quizzes_to_lessons()
     {
         // redirect if not loggedin
+        // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
         }
@@ -674,44 +675,18 @@ class Lessons extends CI_Controller
         $data_selected_quizzes = $data['selected_quizzes'];
 //        print_r($data);
         foreach ($data_selected_quizzes as $key => $value) {
-            $quiz = $this->quiz_model->get_quiz($value);
-            $quiz_name = $quiz["quiz_name"];
-            $copied_quiz = array(
-                "quid"=>$quiz["quid"],
-                "quiz_name"=>$quiz["quiz_name"],
-                "description"=>$quiz["description"],
-                "start_date"=>$quiz["start_date"],
-                "end_date"=>$quiz["end_date"],
-                "gids"=>$quiz["gids"],
-                "qids"=>$quiz["qids"],
-                "noq"=>$quiz["noq"],
-                "correct_score"=>$quiz["correct_score"],
-                "incorrect_score"=>$quiz["incorrect_score"],
-                "duration"=>$quiz["duration"],
-                "maximum_attempts"=>$quiz["maximum_attempts"],
-                "pass_percentage"=>$quiz["pass_percentage"],
-                "view_answer"=>$quiz["view_answer"],
-                "question_selection"=>$quiz["question_selection"],
-                "cid"=>$quiz["cid"],
-                "uid"=>$quiz["uid"],
-                "shared"=>$quiz["shared"],
-                "lid"=>$quiz["lid"],
-                "author"=>$quiz["author"],
-                "assigned_by"=>$quiz["assigned_by"],
-                "assigned"=>$quiz["assigned"],
-                "teacher_ids"=>$quiz["teacher_ids"],
-                "semester"=>$quiz["semester"],
-            );
-
+            $lesson = $this->quiz_model->get_quiz($value);
+            $lesson_name = $lesson["quiz_name"];
+//            print_r($lesson_name);
             $data = array(
                 "lesson_id" => $data['lesson_id'],
                 "author" => "",
                 "folder_name" => $data['folder_name'],
-                "content_id" => $quiz['quid'],
+                "content_id" => $lesson['quid'],
                 "content_type" => $data['content_type'],
-                "content_name" => $quiz_name,
+                "content_name" => $lesson_name,
             );
-//            print_r($this->lessons_model->save_files_to_database($data));
+            print_r($this->lessons_model->save_files_to_database($data));
         }
 
     }

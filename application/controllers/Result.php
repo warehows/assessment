@@ -68,7 +68,46 @@ class Result extends CI_Controller {
 		$this->load->view('result_list',$data);
 		$this->load->view('new_material/footer',$data);
 	}
+	public function student_index($limit='0',$status='0')
+	{
 
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		$logged_in=$this->session->userdata('logged_in');
+		if($logged_in['base_url'] != base_url()){
+			$this->session->unset_userdata('logged_in');
+			redirect('login');
+		}
+
+
+		$data['limit']=$limit;
+		$data['status']=$status;
+		$data['title']=$this->lang->line('resultlist');
+		// fetching result list
+		$data['result']=$this->result_model->result_list($limit,$status);
+		// fetching quiz list
+		$data['quiz_list']=$this->result_model->quiz_list();
+		// group list
+		$this->load->model("user_model");
+		$data['group_list']=$this->user_model->group_list();
+
+		/*		$this->load->view('header',$data);
+                $this->load->view('result_list',$data);
+                $this->load->view('material_part/footer_material',$data);*/
+
+		if ($logged_in['su'] > 0) {
+			if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+
+		} else {
+			$this->load->view('new_material/student_header', $data);
+
+		}
+
+
+		$this->load->view('results/student_result',$data);
+		$this->load->view('new_material/footer',$data);
+	}
 
 
 

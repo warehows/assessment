@@ -44,6 +44,20 @@
             <h6>Date End</h6>
             <input id="date_end" class="form-control" name="date_end" required placeholder="mm/dd/yyyy"/>
         </div>
+        <h3>For Quizzes</h3>
+        <div class="form-group">
+
+            <div class="form-group">
+                <h6>Duration in (min)</h6>
+                <input id="duration" type="number" min="1" class="form-control" name="duration" required placeholder="Duration"/>
+            </div>
+            <div class="form-group">
+                <h6>Maximum Attempts</h6>
+                <input id="maximum_attempts" type="number" min="1" class="form-control" name="maximum_attempts" required placeholder="Maximum Attempts"/>
+            </div>
+
+        </div>
+
 
         <input type="hidden" id="section_checked" name="sections[]"/>
         <input type="hidden" id="grade_checked" name="grades[]"/>
@@ -121,6 +135,7 @@
             var current_checked_teacher = [];
             var section_checked = [];
             var grade_checked = [];
+
             $.each(checked, function (key, value) {
                 if (!value.indexOf("section_")) {
 

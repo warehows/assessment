@@ -161,6 +161,8 @@ class Workspace extends CI_Controller
 
         $post['date_start'] = $requests['date_start'];
         $post['date_end'] = $requests['date_end'];
+        $post['duration'] = $requests['duration'];
+        $post['maximum_attempts'] = $requests['maximum_attempts'];
         $sections = $requests['sections'][0];
         $teachers = $requests['teachers'][0];
         $post['sections'] = explode(",",$sections);
@@ -203,6 +205,11 @@ class Workspace extends CI_Controller
             foreach ($current_lesson_contents as $current_lesson_contents_key => $current_lesson_contents_value) {
                 if ($current_lesson_contents_value['content_type'] == "quiz") {
                     $quiz_data_to_copy = $this->quiz_model->get_quiz($current_lesson_contents_value['content_id']);
+                    if($quiz_data_to_copy['maximum_attempts']){
+                        $maximum_attempts = $quiz_data_to_copy['maximum_attempts'];
+                    }else{
+                        $maximum_attempts = 1;
+                    }
                     $copied_quiz = array(
                         "quiz_name"=>$quiz_data_to_copy['quiz_name'],
                         "description"=>$quiz_data_to_copy['description'],
@@ -213,11 +220,12 @@ class Workspace extends CI_Controller
                         "noq"=>$quiz_data_to_copy['noq'],
                         "correct_score"=>$quiz_data_to_copy['correct_score'],
                         "incorrect_score"=>$quiz_data_to_copy['incorrect_score'],
-                        "duration"=>$quiz_data_to_copy['duration'],
-                        "maximum_attempts"=>$quiz_data_to_copy['maximum_attempts'],
+                        "duration"=>$post['duration'],
+                        "maximum_attempts"=>$post['maximum_attempts'],
                         "pass_percentage"=>$quiz_data_to_copy['pass_percentage'],
                         "view_answer"=>$quiz_data_to_copy['view_answer'],
                         "question_selection"=>$quiz_data_to_copy['question_selection'],
+                        "camera_req"=>0,
                         "cid"=>$quiz_data_to_copy['cid'],
                         "uid"=>$teacher_value,
                         "lid"=>$quiz_data_to_copy['lid'],
@@ -231,7 +239,17 @@ class Workspace extends CI_Controller
 
                     $new_quid = $this->assign_model->insert_quiz($copied_quiz);
                     $new_quiz_data = $this->quiz_model->get_quiz($new_quid);
-
+                    $lesson_update = array(
+                        "id"=>$current_lesson_contents_value['id'],
+                        "lesson_id"=>$current_lesson_contents_value['lesson_id'],
+                        "author"=>$teacher_value,
+                        "content_id"=>$new_quid,
+                        "content_name"=>$new_quiz_data['quiz_name'],
+                        "content_type"=>"quiz",
+                        "folder_name"=>$current_lesson_contents_value['folder_name'],
+                        "duplicated"=>1,
+                    );
+                    $this->workspace_model->update_lesson_content($lesson_update);
                     if($logged_in['su']==1) {
                         $insert_to_workspace = array(
                             "user_id" => $teacher_value,

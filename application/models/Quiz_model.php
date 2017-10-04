@@ -482,7 +482,7 @@ Class Quiz_model extends CI_Model
 
     function insert_result($quid, $uid)
     {
-
+        echo "<pre>";
         // get quiz info
         $this->db->where('quid', $quid);
         $query = $this->db->get('savsoft_quiz');
@@ -498,19 +498,27 @@ Class Quiz_model extends CI_Model
 
             $i = 0;
             $wqids = implode(',', $qids);
-            $noq = array();
-            $query = $this->db->query("select * from savsoft_qbank join savsoft_category on savsoft_category.cid=savsoft_qbank.cid where qid in ($wqids) ORDER BY FIELD(qid,$wqids)  ");
+            if(!$wqids){
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>This quiz has no questions</div>");
+                redirect(site_url('quiz/quiz_detail/'.$quid));
+            }
+
+            $noq = array("");
+            $query = $this->db->query("select * from savsoft_qbank join savsoft_category on savsoft_category.cid=savsoft_qbank.cid where qid in ($wqids) ORDER BY FIELD(qid,$wqids)");
             $questions = $query->result_array();
 
+
             foreach ($questions as $qk => $question) {
-                print_r($questions);
 
                 if (!in_array($question['category_name'], $categories)) {
                     $categories[] = $question['category_name'];
+
                     $noq[$i] += 1;
+
                 } else {
-                    $i += 1;
-                    $noq[$i] += 1;
+                    $i = $i+1;
+
+                    $noq[$i] = 1;
                 }
             }
 
@@ -556,9 +564,11 @@ Class Quiz_model extends CI_Model
             }
         }
         $zeros = array();
+
         foreach ($qids as $qidval) {
             $zeros[] = 0;
         }
+
 
         $userdata = array(
             'quid' => $quid,
@@ -572,20 +582,20 @@ Class Quiz_model extends CI_Model
             'attempted_ip' => $_SERVER['REMOTE_ADDR']
         );
 
+
+
         if ($this->session->userdata('photoname')) {
             $photoname = $this->session->userdata('photoname');
             $userdata['photo'] = $photoname;
         }
         $logged_in = $this->session->userdata('logged_in');
-
         if($logged_in['su']==2){
             $this->db->insert('savsoft_result', $userdata);
             $rid = $this->db->insert_id();
-        }else{
-            $rid=1;
+        }elseif($logged_in['su']==0){
+            $this->db->insert('savsoft_result', $userdata);
+            $rid = $this->db->insert_id();
         }
-
-
 
         return $rid;
     }

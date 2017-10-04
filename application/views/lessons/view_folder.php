@@ -13,19 +13,19 @@
 <?php if($logged_in['su']!=0): ?>
 <?php $folders = array(
     array("engage", "star"),
-    array("explore", "heart"),
-    array("explain", "heart"),
-    array("extend", "user"),
-    array("evaluate", "alert"),
-    array("lesson plan", "search"),
+    array("explore", "zoom-in"),
+    array("explain", "book"),
+    array("extend", "blackboard"),
+    array("evaluate", "edit"),
+    array("lesson plan", "briefcase"),
 ) ?>
     <?php else: ?>
     <?php $folders = array(
         array("engage", "star"),
-        array("explore", "heart"),
-        array("explain", "heart"),
-        array("extend", "user"),
-        array("evaluate", "alert"),
+        array("explore", "zoom-in"),
+        array("explain", "book"),
+        array("extend", "blackboard"),
+        array("evaluate", "edit"),
 
     ) ?>
 <?php endif; ?>
@@ -87,7 +87,7 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
     </div>
 
     <div class="card-info col-lg-12 col-md-12 col-sm-12 col-xs-12"><a href="<?php if($logged_in['su']==2){echo site_url('workspace');}else{echo site_url('lessons');} ?>"><span
-                class="back col-sm-1 col-xs-1"><i class="glyphicon glyphicon-arrow-left"></i></span></a><span
+                class="back col-sm-1 col-xs-1"><i class="glyphicon glyphicon-arrow-left" style="font-size: 20px"></i></span></a><span
             class="card-title col-sm-offset-0 col-xs-offset-0"><?php echo $lesson_information[0]['lesson_name'] ?></span></div>
 
 

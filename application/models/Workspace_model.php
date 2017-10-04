@@ -77,6 +77,14 @@ Class Workspace_model extends CI_Model
         $quid = $this->db->insert_id();
     }
 
+    function update_lesson_content($data)
+    {
+        $this->db->where('id', $data['id']);
+        $this->db->update('lesson_contents', $data);
+        return $data['id'];
+
+    }
+
     function update_workspace($data)
     {
         $this->db->where('id', $data['id']);
