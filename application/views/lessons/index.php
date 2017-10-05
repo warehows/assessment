@@ -39,7 +39,7 @@
                             <th>Lesson Name</th>
                             <th>Subject</th>
                             <th>Grade Level</th>
-                            <th>Assigned To</th>
+<!--                            <th>Assigned To</th>-->
                             <th>Assigned Date</th>
                             <th>Expiry Date</th>
 
@@ -70,7 +70,7 @@
                                 <td class="lesson_row"><?php echo $value['lesson_name'] ?></td>
                                 <td class="lesson_row"><?php print_r($subject_model->where('cid', $value['subject_id'])[0]['category_name']); ?></td>
                                 <td class="lesson_row"><?php echo $current_grade['level_name'] ?></td>
-                                <td class="lesson_row"><?php echo $current_user['first_name']." ".$current_user['last_name'] ?></td>
+<!--                                <td class="lesson_row">--><?php //echo $current_user['first_name']." ".$current_user['last_name'] ?><!--</td>-->
                                 <?php if($current_lesson['assigned_date_start']){$current_date_start = date("F d, Y",strtotime($current_lesson['assigned_date_start']));}else{$current_date_start="";}?>
                                 <td class="lesson_row"><?php echo $current_date_start ?></td>
                                 <?php if($current_lesson['assigned_date_end']){$current_date_end = date("F d, Y",strtotime($current_lesson['assigned_date_end']));}else{$current_date_end="";}?>

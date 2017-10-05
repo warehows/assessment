@@ -676,8 +676,7 @@ class Quiz extends CI_Controller
 
 
         if ($data['quiz']['with_login'] == 0 && !$this->session->userdata('logged_in')) {
-            print_r("if");
-            exit;
+
             if ($this->session->userdata('logged_in_raw')) {
                 $logged_in = $this->session->userdata('logged_in_raw');
             } else {
@@ -819,6 +818,7 @@ class Quiz extends CI_Controller
 
     function attempt($rid)
     {
+
         // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
             if (!$this->session->userdata('logged_in_raw')) {
@@ -826,11 +826,15 @@ class Quiz extends CI_Controller
             }
         }
 
+
+
         if (!$this->session->userdata('logged_in')) {
             $logged_in = $this->session->userdata('logged_in_raw');
         } else {
             $logged_in = $this->session->userdata('logged_in');
         }
+
+
         if ($logged_in['base_url'] != base_url()) {
             $this->session->unset_userdata('logged_in');
             redirect('login');
@@ -838,6 +842,7 @@ class Quiz extends CI_Controller
 
 
         $srid = $this->session->userdata('rid');
+
         // if linked and session rid is not matched then something wrong.
         if ($rid != $srid) {
 
@@ -845,6 +850,7 @@ class Quiz extends CI_Controller
             redirect('quiz/');
 
         }
+
         /*
         if(!$this->session->userdata('logged_in')){
             exit($this->lang->line('permission_denied'));
@@ -862,6 +868,9 @@ class Quiz extends CI_Controller
             $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
             redirect('quiz/quiz_detail/' . $data['quiz']['quid']);
         }
+
+//        print_r($data['quiz']);
+
 
 
 
@@ -910,8 +919,7 @@ class Quiz extends CI_Controller
         }
 
 
-        echo "<pre>";
-        print_r($_POST);
+
         // insert user response and calculate scroe
         echo $this->quiz_model->insert_answer();
 

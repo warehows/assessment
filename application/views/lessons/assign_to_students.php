@@ -55,6 +55,14 @@
                 <h6>Maximum Attempts</h6>
                 <input id="maximum_attempts" type="number" min="1" class="form-control" name="maximum_attempts" required placeholder="Maximum Attempts"/>
             </div>
+            <div class="form-group">
+                <h6>Pass Percentage</h6>
+                <input id="pass_percentage" type="number" min="1" class="form-control" name="pass_percentage" required placeholder="Pass Percentage"/>
+            </div>
+            <div class="form-group">
+                <h6>Score per Question</h6>
+                <input id="correct_score" type="number" min="1" class="form-control" name="correct_score" required placeholder="Score per Question"/>
+            </div>
 
         </div>
 

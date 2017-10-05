@@ -218,11 +218,11 @@ class Workspace extends CI_Controller
                         "gids"=>$requests['sections'][0],
                         "qids"=>$quiz_data_to_copy['qids'],
                         "noq"=>$quiz_data_to_copy['noq'],
-                        "correct_score"=>$quiz_data_to_copy['correct_score'],
-                        "incorrect_score"=>$quiz_data_to_copy['incorrect_score'],
+                        "correct_score"=>$post['correct_score'],
+                        "incorrect_score"=>$post['correct_score'],
                         "duration"=>$post['duration'],
                         "maximum_attempts"=>$post['maximum_attempts'],
-                        "pass_percentage"=>$quiz_data_to_copy['pass_percentage'],
+                        "pass_percentage"=>$post['pass_percentage'],
                         "view_answer"=>$quiz_data_to_copy['view_answer'],
                         "question_selection"=>$quiz_data_to_copy['question_selection'],
                         "camera_req"=>0,
@@ -259,8 +259,6 @@ class Workspace extends CI_Controller
                         );
                         $this->workspace_model->insert_workspace($insert_to_workspace);
                     }
-
-
                 }
             }
 
