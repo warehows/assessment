@@ -703,9 +703,9 @@ Class Quiz_model extends CI_Model
             $logged_in = $this->session->userdata('logged_in');
         }
         $email = $logged_in['email'];
+
         $rid = $this->session->userdata('rid');
         $query = $this->db->query("select * from savsoft_result join savsoft_quiz on savsoft_result.quid=savsoft_quiz.quid where savsoft_result.rid='$rid' ");
-
         $quiz = $query->row_array();
         $score_ind = explode(',', $quiz['score_individual']);
         $r_qids = explode(',', $quiz['r_qids']);
@@ -716,7 +716,10 @@ Class Quiz_model extends CI_Model
         $incorrect_score = $quiz['incorrect_score'];
         $total_time = array_sum(explode(',', $quiz['individual_time']));
         $manual_valuation = 0;
+
+
         foreach ($score_ind as $mk => $score) {
+
             $qids_perf[$r_qids[$mk]] = $score;
             $qBankQuery = $this->db->query("select * from savsoft_qbank where savsoft_qbank.qid='$r_qids[$mk]' ");
             $question = $qBankQuery->row_array();
@@ -733,9 +736,11 @@ Class Quiz_model extends CI_Model
                 }
             }
 
+
+
             //incorrect_score
             if ($score == 2 && $question['question_type'] != 'Match the Column') {
-                die();
+//                die();
                 //if there is value for score per question apply it
                 //else it will base it's score on the quiz setting incorrect_score
                 if($scorePerQuestion && $incorrect_score) {
@@ -776,6 +781,7 @@ Class Quiz_model extends CI_Model
             $correct_score_new += $scorePerQuestion ? $scorePerQuestion : $correct_score ;
 
         }
+
 //        echo 'marks:'.$marks.'<br>';
 //        echo 'noq:'.$quiz['noq'].'<br>';
 //        echo 'correct possible score:'.$correct_score_new.'<br>';
@@ -795,6 +801,8 @@ Class Quiz_model extends CI_Model
             'percentage_obtained' => $percentage_obtained,
             'manual_valuation' => $manual_valuation
         );
+
+//        exit;
         if ($manual_valuation == 1) {
             $userdata['result_status'] = $this->lang->line('pending');
         } else {
@@ -878,6 +886,7 @@ Class Quiz_model extends CI_Model
     function insert_answer()
     {
         $rid = $_POST['rid'];
+        print_r($rid);
         $srid = $this->session->userdata('rid');
         if (!$this->session->userdata('logged_in')) {
             $logged_in = $this->session->userdata('logged_in_raw');

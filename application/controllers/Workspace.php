@@ -165,6 +165,8 @@ class Workspace extends CI_Controller
         $post['maximum_attempts'] = $requests['maximum_attempts'];
         $sections = $requests['sections'][0];
         $teachers = $requests['teachers'][0];
+        $post['correct_score'] = $requests['correct_score'];
+        $post['pass_percentage'] = $requests['pass_percentage'];
         $post['sections'] = explode(",",$sections);
         $post['teachers'] = explode(",",$teachers);
         $post['lesson_id'] = $requests['lesson_id'];
@@ -219,7 +221,7 @@ class Workspace extends CI_Controller
                         "qids"=>$quiz_data_to_copy['qids'],
                         "noq"=>$quiz_data_to_copy['noq'],
                         "correct_score"=>$post['correct_score'],
-                        "incorrect_score"=>$post['correct_score'],
+                        "incorrect_score"=>0,
                         "duration"=>$post['duration'],
                         "maximum_attempts"=>$post['maximum_attempts'],
                         "pass_percentage"=>$post['pass_percentage'],

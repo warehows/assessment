@@ -890,7 +890,7 @@ class Quiz extends CI_Controller
         $data['title'] = $data['quiz']['quiz_name'];
         $this->load->view('header', $data);
         $this->load->view('quiz_attempt', $data);
-        $this->load->view('material_part/footer_material', $data);
+        $this->load->view('new_material/footer', $data);
 
 //        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
 //        $this->load->view('quiz_attempt',$data);
@@ -920,7 +920,7 @@ class Quiz extends CI_Controller
 
 
 
-        // insert user response and calculate scroe
+        // insert user response and calculate score
         echo $this->quiz_model->insert_answer();
 
 
@@ -981,15 +981,23 @@ class Quiz extends CI_Controller
 
         $rid = $this->session->userdata('rid');
 
-        if ($this->quiz_model->submit_result()) {
 
+
+        if ($this->quiz_model->submit_result()) {
+            print_r("if");
             $this->session->set_flashdata('message', "<div class='alert alert-success'>" . str_replace("{result_url}", site_url('result/view_result/' . $rid), $this->lang->line('quiz_submit_successfully')) . " </div>");
 
 
         } else {
+            print_r("else");
             $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_submit') . " </div>");
 
         }
+
+
+//        exit;
+
+
         $this->session->unset_userdata('rid');
         if ($this->session->userdata('logged_in')) {
             redirect('quiz');
