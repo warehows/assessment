@@ -22,6 +22,13 @@ Class Lessons_model extends CI_Model
         return $query->result_array();
     }
 
+    function like($where, $data)
+    {
+        $this->db->like($where, $data);
+        $query = $this->db->get('lessons');
+        return $query->result_array();
+    }
+
 
     function all_lessons_non_duplicated()
     {

@@ -78,6 +78,7 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
                             <div id="iframe_container_<?php echo $folders_key ?>"
                                  class="iframe_container col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             </div>
+                            <?php print_r($this->session->userdata('view_mode'));?>
                         </div>
                     </div>
                 </div>
@@ -169,13 +170,23 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
             } else {
                 var quiz_id = $(this).attr("quiz_id");
                 $("#current_iframe_" + content_id).remove();
-                var element_to_append = $('' +
-                    '<iframe id="current_iframe_' + content_id + '" class="the_iframe"' +
-                    'src="http://localhost/brainee/index.php/quiz/view_quiz_detail/'+quiz_id+'"' +
-                    'frameborder="0" allowfullscreen=""> ' +
-                    '</iframe>');
-                $("#iframe_container_" + content_id).append(element_to_append);
+                <?php if($logged_in['su']==0){ ?>
+                    var element_to_append = $('' +
+                        '<iframe id="current_iframe_' + content_id + '" class="the_iframe"' +
+                        'src="http://localhost/brainee/index.php/quiz/get_quiz_detail/'+quiz_id+'"' +
+                        'frameborder="0" allowfullscreen=""> ' +
+                        '</iframe>');
+                    $("#iframe_container_" + content_id).append(element_to_append);
+                    checkPosition();
+                <?php }else{ ?>
+                    var element_to_append = $('' +
+                        '<iframe id="current_iframe_' + content_id + '" class="the_iframe"' +
+                        'src="http://localhost/brainee/index.php/quiz/get_quiz_detail/'+quiz_id+'"' +
+                        'frameborder="0" allowfullscreen=""> ' +
+                        '</iframe>');
+                    $("#iframe_container_" + content_id).append(element_to_append);
                 checkPosition();
+                <?php }?>
             }
 
         });

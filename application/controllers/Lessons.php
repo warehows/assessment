@@ -58,6 +58,7 @@ class Lessons extends CI_Controller
             $this->load->view('new_material/teacher_header', $data);
             $this->load->view('lessons/teacher_index', $data);
         }else if ($logged_in["su"] == 0) {
+
             $this->load->view('new_material/student_header', $data);
             $this->load->view('lessons/student_index', $data);
         }

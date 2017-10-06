@@ -488,6 +488,28 @@ class Quiz extends CI_Controller
 
     }
 
+    public function get_quiz_detail($quid)
+    {
+        // redirect if not loggedin
+
+
+        $logged_in = $this->session->userdata('logged_in');
+        $gid = $logged_in['gid'];
+        $data['title'] = $this->lang->line('attempt') . ' ' . $this->lang->line('quiz');
+
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        /*        $this->load->view('header', $data);
+                $this->load->view('quiz_detail', $data);
+                $this->load->view('material_part/footer_material', $data);*/
+
+        $logged_in = $this->session->userdata('logged_in');
+
+
+        $this->load->view('lessons/get_quiz_detail', $data);
+        $this->load->view('material_part/footer_material', $data);
+
+    }
+
     public function view_quiz_detail($quid)
     {
         // redirect if not loggedin
@@ -509,6 +531,7 @@ class Quiz extends CI_Controller
         $this->load->view('material_part/footer_material', $data);
 
     }
+
 
     public function view_validate_quiz($quid)
     {
@@ -670,6 +693,152 @@ class Quiz extends CI_Controller
 
 
     public function validate_quiz($quid)
+    {
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        // if it is without login quiz.
+
+
+        if ($data['quiz']['with_login'] == 0 && !$this->session->userdata('logged_in')) {
+
+            if ($this->session->userdata('logged_in_raw')) {
+                $logged_in = $this->session->userdata('logged_in_raw');
+            } else {
+
+                $userdata = array(
+                    'email' => time(),
+                    'password' => md5(rand(11111, 99999)),
+                    'first_name' => 'Guest User',
+                    'last_name' => time(),
+                    'contact_no' => '',
+                    'gid' => $this->config->item('default_gid'),
+                    'su' => '0'
+                );
+                $this->db->insert('savsoft_users', $userdata);
+                $uid = $this->db->insert_id();
+                $query = $this->db->query("select * from savsoft_users where uid='$uid' ");
+                $user = $query->row_array();
+                // creating login cookie
+                $user['base_url'] = base_url();
+                $this->session->set_userdata('logged_in_raw', $user);
+                $logged_in = $user;
+            }
+
+            $gid = $logged_in['gid'];
+            $uid = $logged_in['uid'];
+
+            // if this quiz already opened by user then resume it
+            $open_result = $this->quiz_model->open_result($quid, $uid);
+            if ($open_result != '0') {
+                $this->session->set_userdata('rid', $open_result);
+                redirect('quiz/attempt/' . $open_result);
+            }
+            $data['quiz'] = $this->quiz_model->get_quiz($quid);
+
+            // validate start end date/time
+            if ($data['quiz']['start_date'] > time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_available') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+            // validate start end date/time
+            if ($data['quiz']['end_date'] < time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+
+
+            // insert result row and get rid (result id)
+            $rid = $this->quiz_model->insert_result($quid, $uid);
+
+            $this->session->set_userdata('rid', $rid);
+            redirect('quiz/attempt/' . $rid);
+
+
+            // without login ends
+
+
+        } else {
+
+
+
+            // with login starts
+            // redirect if not loggedin
+            if (!$this->session->userdata('logged_in')) {
+                $this->session->set_flashdata('message', $this->lang->line('login_required2'));
+
+                redirect('login');
+
+            }
+            $logged_in = $this->session->userdata('logged_in');
+            if ($logged_in['base_url'] != base_url()) {
+                $this->session->unset_userdata('logged_in');
+                redirect('login');
+            }
+
+            $logged_in = $this->session->userdata('logged_in');
+
+            $gid = $logged_in['gid'];
+            $uid = $logged_in['uid'];
+
+            // if this quiz already opened by user then resume it
+
+            $open_result = $this->quiz_model->open_result($quid, $uid);
+
+            if ($open_result != '0') {
+                $this->session->set_userdata('rid', $open_result);
+                redirect('quiz/attempt/' . $open_result);
+            }
+
+            $data['quiz'] = $this->quiz_model->get_quiz($quid);
+            // validate assigned group
+            if (!in_array($gid, explode(',', $data['quiz']['gids']))) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_assigned_to_your_group') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+
+            // validate start end date/time
+
+            if ($data['quiz']['start_date'] > time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_available') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+            // validate start end date/time
+            if ($data['quiz']['end_date'] < time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+
+            // validate ip address
+            if ($data['quiz']['ip_address'] != '') {
+                $ip_address = explode(",", $data['quiz']['ip_address']);
+                $myip = $_SERVER['REMOTE_ADDR'];
+                if (!in_array($myip, $ip_address)) {
+                    $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('ip_declined') . " </div>");
+                    redirect('quiz/quiz_detail/' . $quid);
+                }
+            }
+
+            // validate maximum attempts
+            $maximum_attempt = $this->quiz_model->count_result($quid, $uid);
+
+            if ($data['quiz']['maximum_attempts'] <= $maximum_attempt) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('reached_maximum_attempt') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+
+            // insert result row and get rid (result id)
+
+            $rid = $this->quiz_model->insert_result($quid, $uid);
+
+
+
+            $this->session->set_userdata('rid', $rid);
+
+            redirect('quiz/attempt/' . $rid);
+        }
+
+    }
+
+    public function get_validate_quiz($quid)
     {
         $data['quiz'] = $this->quiz_model->get_quiz($quid);
         // if it is without login quiz.
@@ -980,16 +1149,17 @@ class Quiz extends CI_Controller
         }
 
         $rid = $this->session->userdata('rid');
+        if($this->session->userdata('view_mode')){
 
+        };
 
 
         if ($this->quiz_model->submit_result()) {
-            print_r("if");
+
             $this->session->set_flashdata('message', "<div class='alert alert-success'>" . str_replace("{result_url}", site_url('result/view_result/' . $rid), $this->lang->line('quiz_submit_successfully')) . " </div>");
 
 
         } else {
-            print_r("else");
             $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_submit') . " </div>");
 
         }

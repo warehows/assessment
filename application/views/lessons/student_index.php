@@ -7,8 +7,19 @@
         color: black;
     }
 </style>
+<?php $logged_in = $this->session->userdata('logged_in');?>
 
-<div class="wrapper">
+<?php print_r($logged_in); ?>
+<?php $lesson_for_students = $this->lessons_model->like("lesson_assigned_ids",",".$logged_in['gid'].","); ?>
+<?php
+if(!$lesson_for_students){
+    $lesson_for_students = $this->lessons_model->like("lesson_assigned_ids",$logged_in['gid'].",");
+}
+if(!$lesson_for_students){
+    $lesson_for_students = $this->lessons_model->like("lesson_assigned_ids",",".$logged_in['gid']);
+}
+?>
+<div class="wr  6apper">
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">
@@ -23,23 +34,27 @@
                             <th style="display: none"></th>
                             <th>Lesson Name</th>
                             <th>Subject</th>
-                            <th>Grade</th>
+                            <th>Date Assigned</th>
+                            <th>Expiration Date</th>
 
                         </tr>
                         </thead>
                         <tbody>
+<!--                        --><?php //print_r($lesson_for_students);?>
+                        <?php if($lesson_for_students):?>
+                            <?php foreach ($lesson_for_students as $lessons_key => $lessons_value) { ?>
+<!--                                --><?php //$value = $this->lessons_model->lesson_by_id($lessons_value); ?>
+<!--                                --><?php //$value = $value[0]; ?>
 
-                        <?php foreach ($lessons_array as $key => $lesson_value) { ?>
-                            <?php $value = $this->lessons_model->lesson_by_id($lesson_value); ?>
-                            <?php $value = $value[0]; ?>
-
-                            <tr style="cursor:pointer">
-                                <td style="display: none" class="input_row"><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $value['id']?>"/></td>
-                                <td class="lesson_row"><?php echo $value['lesson_name'] ?></td>
-                                <td class="lesson_row"><?php print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?></td>
-                                <td class="lesson_row"><?php echo $value['level_id'] ?></td>
-                            </tr>
-                        <?php } ?>
+                                <tr style="cursor:pointer">
+                                    <td style="display: none" class="input_row"><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]" value="<?php echo $lessons_value['id']?>"/></td>
+                                    <td class="lesson_row"><?php echo $lessons_value['lesson_name'] ?></td>
+                                    <td class="lesson_row"><?php print_r($subject_model->where('cid',$lessons_value['subject_id'])[0]['category_name']); ?></td>
+                                    <td class="lesson_row"><?php echo $lessons_value['assigned_date_start'] ?></td>
+                                    <td class="lesson_row"><?php echo $lessons_value['assigned_date_end'] ?></td>
+                                </tr>
+                            <?php } ?>
+                        <?php endif; ?>
 
                         </tbody>
                     </table>
