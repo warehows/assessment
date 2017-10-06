@@ -8,6 +8,7 @@ class Result extends CI_Controller {
 		parent::__construct();
 		$this->load->database();
 		$this->load->model("result_model");
+		$this->load->model("subjects_model");
 		$this->lang->load('basic', $this->config->item('language'));
 		// redirect if not loggedin
 
@@ -195,11 +196,18 @@ class Result extends CI_Controller {
 //		if($data['result']['view_answer']=='1' || $logged_in['su']>'0'){
 			$this->load->model("quiz_model");
 			$data['saved_answers']=$this->quiz_model->saved_answers($rid);
+			$data['current_quiz']=$this->quiz_model->get_quiz($data['result']['quid']);
+
 			$data['questions']=$this->quiz_model->get_questions($data['result']['r_qids']);
 			$data['options']=$this->quiz_model->get_options($data['result']['r_qids']);
-        $data['total_score'] = 0;
+        	$data['total_score'] = 0;
 			foreach ($data['questions'] as $question){
-                $data['total_score'] += (int)$question['per_question_score'];
+				if($question['per_question_score']!=0){
+					$data['total_score'] += (int)$question['per_question_score'];
+				}else{
+					$data['total_score'] += (int)$data['current_quiz']['correct_score'];
+				}
+
             }
 
 //		}
