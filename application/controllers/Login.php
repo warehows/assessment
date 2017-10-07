@@ -80,7 +80,7 @@ class Login extends CI_Controller {
 			// creating login cookie
 			$this->session->set_userdata('logged_in', $user);
 			// redirect to dashboard
-			if($user['su']>'0'){
+			if($user['su']>0){
 				redirect('dashboard');
             }else{
 //				redirect('quiz');

@@ -1,13 +1,16 @@
 <script src="<?php echo base_url('css/new_material/cdn/jquery.min.js') ?>"></script>
-<!--<link href="--><?php //echo base_url('css/new_material/cdn/datatables_responsive.css'); ?><!--">-->
-<!--<script src="--><?php //echo base_url('css/new_material/cdn/datatables_responsive.js') ?><!--"></script>-->
-<script src="//code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.0/js/dataTables.responsive.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+<!--<script src="--><?php //echo site_url('css/new_material/cdn/jquery1_12.js')?><!--"></script>-->
+<!--<script src="--><?php //echo site_url('css/new_material/cdn/datatables.min.js')?><!--"></script>-->
+<!--<script src="--><?php //echo site_url('css/new_material/cdn/datatables_responsive.js')?><!--"></script>-->
+
+<script src="<?php echo base_url('css/new_material/cdn/jquery1_12.js')?>"></script>
+<script src="<?php echo base_url('css/new_material/cdn/datatables.min.js')?>"></script>
+<script src="<?php echo base_url('css/new_material/cdn/datatables_responsive.min.js')?>"></script>
+
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('css/new_material/cdn/datatables.min.css')?>">
 <link rel="stylesheet" type="text/css"
-      href="https://cdn.datatables.net/responsive/2.2.0/css/responsive.dataTables.min.css">
+      href="<?php echo base_url('css/new_material/cdn/datatables_responsive.min.css')?>">
 <style>
     tfoot input {
         width: 100%;

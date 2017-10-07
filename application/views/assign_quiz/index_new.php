@@ -1,13 +1,24 @@
-<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-<link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
-<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.js"></script>
+<script src="<?php echo base_url('css/new_material/cdn/jquery1_12.js') ?>"></script>
+<script src="<?php echo base_url('css/new_material/cdn/datatables.min.js') ?>"></script>
+<script src="<?php echo base_url('css/new_material/cdn/datatables_responsive.min.js') ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('css/new_material/cdn/datatables.min.css')?>">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('css/new_material/cdn/datatables_responsive.min.css')?>">
 <style>
+    tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+
+    tfoot {
+        display: table-header-group;
+    }
+
     a {
-        text-decoration: none;
         color: black;
+    }
+    tr {
+        cursor: pointer;
     }
 </style>
 <div class="wrapper">
@@ -29,16 +40,25 @@
                     <button class="btn btn-primary" id="assign" name="submit" value="assign">Assign</button>
                     <button class="btn btn-primary" id="duplicate" name="submit" value="duplicate">Duplicate</button>
                     <?php $subject_model = $this->subjects_model?>
-                    <table id="lesson_lists" class="table table-bordered table-hover" >
+                    <table id="lesson_lists" class="display responsive nowrap" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th></th>
+                            <th width="3px"></th>
                             <th>Quiz Name</th>
                             <th>Subject</th>
                             <th>Semester</th>
 
                         </tr>
                         </thead>
+                        <tfoot>
+                        <tr>
+                            <th width="3px"></th>
+                            <th>Quiz Name</th>
+                            <th>Subject</th>
+                            <th>Semester</th>
+
+                        </tr>
+                        </tfoot>
                         <tbody>
                         <?php $semesterData = array(1 => 'First Semester',2 => 'Second Semester',3 => 'Third Semester',4 => 'Fourth Semester'); ?>
                         <?php foreach ($all_quiz as $key => $value) { ?>
@@ -61,7 +81,22 @@
 </div>
 
 <script>
-    $("#lesson_lists").DataTable();
+    $('#lesson_lists tfoot th').each(function () {
+        var title = $(this).text();
+        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var table = $('#lesson_lists').DataTable();
+    table.columns().every(function () {
+        var that = this;
+
+        $('input', this.footer()).on('keyup change', function () {
+            if (that.search() !== this.value) {
+                that
+                    .search(this.value)
+                    .draw();
+            }
+        });
+    });
     $("#edit").hide();
     $("#view").hide();
     $("#share").hide();
