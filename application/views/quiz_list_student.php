@@ -14,11 +14,10 @@
             <div class="col-lg-6">
                 <form method="post" action="<?php echo site_url('quiz/index/0/' . $list_view); ?>">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="search"
-                               placeholder="<?php echo $this->lang->line('search'); ?>...">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="submit"><?php echo $this->lang->line('search'); ?></button>
-      </span>
+                        <input type="text" class="form-control" name="search" placeholder="<?php echo $this->lang->line('search'); ?>...">
+                              <span class="input-group-btn">
+                                  <button class="btn btn-default" type="submit"><?php echo $this->lang->line('search'); ?></button>
+                              </span>
 
 
                     </div>
@@ -75,7 +74,7 @@
                 </tr>
 
                 <?php
-
+                //                print_r($result);
                 if (count($result) == 0) {
                     ?>
                     <tr>
@@ -88,7 +87,7 @@
 
                 foreach ($result as $key => $val) {
                     ?>
-
+<!--                    --><?php //print_r($val['quid']); ?>
                     <?php $name = array(); ?>
                     <?php $name['first'] = $quiz_model->assigned_by($val['with_login'])['first_name']; ?>
                     <?php $name['last'] = $quiz_model->assigned_by($val['with_login'])['last_name']; ?>
@@ -102,13 +101,20 @@
 
                         $end_date = date('Y-m-d H:i:s', $val['end_date']);
                         $expires = strtotime('+0 days', strtotime(date($end_date)));
-                        $date_diff = (strtotime(date($end_date))-strtotime($timestamp)) / 86400;
+                        $date_diff = (strtotime(date($end_date)) - strtotime($timestamp)) / 86400;
+                    }else{
+                        $start_date = date('Y-m-d H:i:s', $val['start_date']);
+
+                        $end_date = date('Y-m-d H:i:s', $val['end_date']);
+                        $expires = strtotime('+0 days', strtotime(date($end_date)));
+                        $date_diff = (strtotime(date($end_date)) - strtotime($timestamp)) / 86400;
+
                     }
 
                     $no_of_attempts = count($result_model->get_student_result($logged_in['uid'], $val['quid']));
                     ?>
 
-<!--                    --><?php //print_r($days_left)?>
+                    <!--                    --><?php //print_r($days_left)?>
 
 
                     <?php if ($date_diff > 0): ?>
