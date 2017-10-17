@@ -25,7 +25,7 @@
 <div class="wrapper">
     <div class="wrapper">
         <div class="row">
-            <div class="col-lg-12 col-md-12col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
 
                 <h2>My Lesson</h2>
                 <?php

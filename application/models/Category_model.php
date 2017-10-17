@@ -25,6 +25,15 @@ Class Category_model extends CI_Model
 
     }
 
+    function get($id)
+    {
+        $this->db->where('cid', $id);
+        $query = $this->db->get('savsoft_category');
+        return $query->row_array();
+
+
+    }
+
 }
 
 ?>
