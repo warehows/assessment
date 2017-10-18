@@ -67,6 +67,7 @@
                                 <td><?php echo $value['quiz_name'] ?></td>
                                 <td><?php echo $subject_model->where('cid',$value['cid'])[0]['category_name'] ?></td>
                                 <td><?php if(isset($semesterData[$value['semester']])){echo $semesterData[$value['semester']];}?></td>
+                                <td><a href="<?php echo base_url('index.php/quiz/preview/'.$value['quid'])?>" class="btn " id="view" name="submit" value="view">Preview</a></td>
                                 <!--                                <td>--><?php //print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?><!--</td>-->
                                 <!--                                <td>--><?php //echo $value['level_id'] ?><!--</td>-->
                             </tr>

@@ -1072,6 +1072,48 @@ class Quiz extends CI_Controller
 
     }
 
+    function preview($rid)
+    {
+
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            if (!$this->session->userdata('logged_in_raw')) {
+                redirect('login');
+            }
+        }
+
+
+
+        if (!$this->session->userdata('logged_in')) {
+            $logged_in = $this->session->userdata('logged_in_raw');
+        } else {
+            $logged_in = $this->session->userdata('logged_in');
+        }
+
+
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        // get result and quiz info and validate time period
+        $data['quiz'] = $this->quiz_model->quiz_result($rid);
+        $data['saved_answers'] = $this->quiz_model->saved_answers($rid);
+
+
+        // remaining time in seconds
+        $data['seconds'] = ($data['quiz']['duration'] * 60) - (time() - $data['quiz']['start_time']);
+        // get questions
+        $data['questions'] = $this->quiz_model->get_questions($data['quiz']['r_qids']);
+        // get options
+        $data['options'] = $this->quiz_model->get_options($data['quiz']['r_qids']);
+        $data['title'] = $data['quiz']['quiz_name'];
+        $this->load->view('header', $data);
+        $this->load->view('quiz_preview', $data);
+        $this->load->view('new_material/footer', $data);
+
+    }
+
 
     function save_answer()
     {
