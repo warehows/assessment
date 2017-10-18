@@ -42,6 +42,7 @@
                     <?php $subject_model = $this->subjects_model?>
                     <table id="lesson_lists" class="display responsive nowrap" cellspacing="0" width="100%">
                         <thead>
+
                         <tr>
                             <th width="3px"></th>
                             <th>Quiz Name</th>
