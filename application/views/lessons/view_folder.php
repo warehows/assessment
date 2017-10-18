@@ -56,7 +56,7 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
             <?php foreach ($folders as $folders_key => $folders_value): ?>
                 <div class="tab-pane fade in" id="tab<?php echo $folders_key ?>">
                     <div class="row" style="margin-right: 0px;">
-                        <div class="content_container col-lg-2 col-md-2 col-sm-12 col-xs-12 hidden-sm hidden-xs">
+                        <div class="content_wrapper col-lg-2 col-md-2 col-sm-12 col-xs-12 hidden-sm hidden-xs">
                             <ul content_id="<?php echo $folders_key ?>">
                                 <div class="ul_title">Contents</div>
                                 <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value): ?>
@@ -74,7 +74,7 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
                                 <?php endforeach; ?>
                             </ul>
                         </div>
-                        <div class="file_container col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <div class="file_container col-lg-2 col-md-2 col-sm-12 col-xs-12"><br><br><br>
                             <div id="iframe_container_<?php echo $folders_key ?>"
                                  class="iframe_container col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             </div>

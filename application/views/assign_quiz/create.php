@@ -13,13 +13,15 @@
                         <input type="hidden" id="previous_page" name="previous_page" value="">
 
 
+
                     <?php } ?>
 
 
                     <?php if ($next_page == "assign_quiz/redirect") { ?>
+
                         <?php $redirect = $this->input->get();
                         $quid = $redirect["quid"]; ?>
-                        <?php redirect(site_url('quiz/add_question/') . "/" . $quid) ?>
+                        <?php redirect(site_url('quiz/add_question/') . "/" . $quid."/0/".$_REQUEST['subject_id']."/".$_REQUEST['level_id']) ?>
 
                         <?php $this->load->view($next_page, $all_data) ?>
 

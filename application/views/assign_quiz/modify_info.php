@@ -4,7 +4,7 @@ if (array_key_exists("quid", $post)) {
     if ($logged_in['su'] == 1) {
         $quiz_id = $post['quid'];
         $quiz_detail = $this->quiz_model->get_quiz($quiz_id);
-    } elseif ($logged_in['su']==2) {
+    } elseif ($logged_in['su'] == 2) {
         $quiz_id = $post['quid'];
         $workspace_id = $post['quid'];
 
@@ -38,14 +38,15 @@ if (array_key_exists("quid", $post)) {
            } ?>"/>
 </div>
 <?php
-$semesterData = array(1 => 'First Semester',2 => 'Second Semester',3 => 'Third Semester',4 => 'Fourth Semester');
+$semesterData = array(1 => 'First Semester', 2 => 'Second Semester', 3 => 'Third Semester', 4 => 'Fourth Semester');
 $currentSem = isset($quiz_detail['semester']) ? $quiz_detail['semester'] : '';
 ?>
 <div class="form-group">
     <label for="inputEmail" class="sr-only">Semester</label>
     <select id="semester" name="semester" class="form-control">
         <?php foreach ($semesterData as $key => $value): ?>
-            <option <?php echo ($currentSem == $key) ? 'selected' : '';?> value="<?php echo $key; ?>"><?php echo $value; ?></option>
+            <option <?php echo ($currentSem == $key) ? 'selected' : ''; ?>
+                value="<?php echo $key; ?>"><?php echo $value; ?></option>
         <?php endforeach; ?>
 
     </select>
@@ -55,7 +56,7 @@ $currentSem = isset($quiz_detail['semester']) ? $quiz_detail['semester'] : '';
     <select class="form-control grade" id="grade">
         <?php foreach ($all_grades as $grade_key => $grade_value) { ?>
             <option
-                    value="<?php echo $grade_value['lid'] ?>" <?php if ($quiz_id && $quiz_detail['lid'] == $grade_value['lid']) {
+                value="<?php echo $grade_value['lid'] ?>" <?php if ($quiz_id && $quiz_detail['lid'] == $grade_value['lid']) {
                 echo "selected";
             } ?>><?php echo $grade_value['level_name'] ?></option>
         <?php } ?>
@@ -68,11 +69,12 @@ $currentSem = isset($quiz_detail['semester']) ? $quiz_detail['semester'] : '';
             <option <?php if ($quiz_id && $quiz_detail['cid'] == $subject_value['cid']) {
                 echo "selected";
             } ?>
-                    value="<?php echo $subject_value['cid'] ?>"><?php echo $subject_value['category_name'] ?></option>
+                value="<?php echo $subject_value['cid'] ?>"><?php echo $subject_value['category_name'] ?></option>
         <?php } ?>
     </select>
 </div>
-
+<input type="hidden" id="subject_id" name="subject_id" value="<?php echo $quiz_detail['cid']?>">
+<input type="hidden" id="level_id" name="level_id" value="<?php echo $quiz_detail['lid']?>">
 
 <div class="form-group">
     <button class="form-control" type="submit">Next</button>
