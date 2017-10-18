@@ -24,7 +24,7 @@ Class Qbank_model extends CI_Model
         }
         $this->db->join('savsoft_category', 'savsoft_category.cid=savsoft_qbank.cid');
         $this->db->join('savsoft_level', 'savsoft_level.lid=savsoft_qbank.lid');
-        $this->db->limit($this->config->item('number_of_rows'), $limit);
+//        $this->db->limit($this->config->item('number_of_rows'), $limit);
         $this->db->order_by('savsoft_qbank.qid', 'desc');
         $query = $this->db->get('savsoft_qbank');
         return $query->result_array();

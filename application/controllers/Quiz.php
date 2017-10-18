@@ -304,9 +304,7 @@ class Quiz extends CI_Controller
         } else {
             $this->load->view('new_material/student_header', $data);
         }
-//        print_r("<pre>");
-//        print_r($data['quiz']['question_selection']);
-//        exit;
+
         $this->load->view('questions/add_question_into_quiz', $data);
         $this->load->view('new_material/footer', $data);
     }
