@@ -1,5 +1,5 @@
 <link href="<?php echo base_url("css/new_material/cdn/jquery-confirm.min.css") ?>" rel="stylesheet">
-<div class="container">
+<div class="wrapper">
 
 
     <h3><?php echo $title; ?></h3>

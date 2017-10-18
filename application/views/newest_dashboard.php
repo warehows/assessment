@@ -9,18 +9,18 @@
                 <div class="col-lg-8 col-md-7" style="padding:20px;">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3><strong>VISION:</strong> </h3>
-                            <p class="text-justify">We are a center of excellence in youth leadership, in quality preparatory and primary education and development, and in community extension services producing highly functioning basic education graduates capable of responding to
-                                the changing needs of both local and global concerns. </p>
+                            <h3><strong>MISSION and VISION</strong> </h3>
+                            <p class="text-justify">We, the St. Therese Private School of Mandaluyong, envision a learning community committed to develop the young to become Confident, Compassionate, Collaborative and prayerful Christians who are prepared to meet the challenges of higher learning and of the present life. <br> <br>
+Inspired by the holy life of St. Therese of the Child Jesus, we provide quality education through a holistic formation that animates the young to cultivate utmost respect of individuality amids differences.</p>
                         </div>
                     </div>
-                    <div class="row">
+  <!--                  <div class="row">
                         <div class="col-md-12">
                             <h3><strong>MISSION:</strong> </h3>
                             <p class="text-justify">The Saint Therese Private School is committed to prepare its students to become readily functioning, efficient and effective basic education graduates who are responsible, committed, creative, dedicated critical thinkers, and good
                                 leaders equipped with ideas, intrinsic values, and dexterity in action, communication, and leadership. </p>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <div class="row">
@@ -34,7 +34,7 @@
                     </section>
                 </div>
             </div>
-            <div data-ride="carousel" class="carousel slide" id="carousel-1">
+            <!--<div data-ride="carousel" class="carousel slide" id="carousel-1">
                 <div role="listbox" class="carousel-inner">
                     <div class="item active"><img src="http://placeholdit.imgix.net/~text?txtsize=42&amp;txt=Carousel+Image&amp;w=1400&amp;h=600" alt="Slide Image" /></div>
                     <div class="item"><img src="http://placeholdit.imgix.net/~text?txtsize=42&amp;txt=Carousel+Image&amp;w=1400&amp;h=600" alt="Slide Image" /></div>
@@ -48,7 +48,7 @@
                     <li data-target="#carousel-1" data-slide-to="1"></li>
                     <li data-target="#carousel-1" data-slide-to="2"></li>
                 </ol>
-            </div>
+            </div>-->
         </div>
     </div>
 
