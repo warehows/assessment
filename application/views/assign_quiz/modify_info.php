@@ -18,6 +18,7 @@ if (array_key_exists("quid", $post)) {
     $quiz_id = false;
 }
 ?>
+
 <h3>Quiz Info</h3>
 <div class="form-group">
     <input type="hidden" id="quiz_id" name="quiz_id" value="<?php if ($quiz_id) {
@@ -73,9 +74,10 @@ $currentSem = isset($quiz_detail['semester']) ? $quiz_detail['semester'] : '';
         <?php } ?>
     </select>
 </div>
+<?php if ($quiz_id) { ?>
 <input type="hidden" id="subject_id" name="subject_id" value="<?php echo $quiz_detail['cid']?>">
 <input type="hidden" id="level_id" name="level_id" value="<?php echo $quiz_detail['lid']?>">
-
+<?php } ?>
 <div class="form-group">
     <button class="form-control" type="submit">Next</button>
 </div>
