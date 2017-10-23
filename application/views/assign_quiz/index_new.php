@@ -4,6 +4,10 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('css/new_material/cdn/datatables.min.css')?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('css/new_material/cdn/datatables_responsive.min.css')?>">
 <style>
+    .container{
+        margin-left: 80%;
+        margin-right: 80%;
+    }
     tfoot input {
         width: 100%;
         padding: 3px;
@@ -24,7 +28,7 @@
 <div class="wrapper">
     <div class="wrapper">
         <div class="row">
-            <div class="col-lg-12 col-md-12col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
                 <form action="<?php echo site_url() ?>/assign/create" method="GET">
                     <input type="hidden" value="assign_quiz/modify_info" name="next_page" />
                     <a href="" style="float:right;padding:5px;">
@@ -57,7 +61,6 @@
                             <th>Quiz Name</th>
                             <th>Subject</th>
                             <th>Semester</th>
-
                         </tr>
                         </tfoot>
                         <tbody>
@@ -65,10 +68,10 @@
                         <?php foreach ($all_quiz as $key => $value) { ?>
                             <tr>
                                 <td><input type="checkbox" class="selected_lesson_class" name="selected_quiz[]" value="<?php echo $value['quid']?>"/></td>
-                                <td><?php echo $value['quiz_name'] ?></td>
-                                <td><?php echo $subject_model->where('cid',$value['cid'])[0]['category_name'] ?></td>
-                                <td><?php if(isset($semesterData[$value['semester']])){echo $semesterData[$value['semester']];}?></td>
-                                <td><a href="<?php echo base_url('index.php/quiz/preview/'.$value['quid'])?>" class="btn " id="view" name="submit" value="view">Preview</a></td>
+                                <td class="preview_tr" data-href='<?php echo base_url('index.php/quiz/preview/'.$value['quid'])?>'><?php echo $value['quiz_name'] ?></td>
+                                <td class="preview_tr" data-href='<?php echo base_url('index.php/quiz/preview/'.$value['quid'])?>'><?php echo $subject_model->where('cid',$value['cid'])[0]['category_name'] ?></td>
+                                <td class="preview_tr" data-href='<?php echo base_url('index.php/quiz/preview/'.$value['quid'])?>'><?php if(isset($semesterData[$value['semester']])){echo $semesterData[$value['semester']];}?></td>
+<!--                                <td><a href="--><?php //echo base_url('index.php/quiz/preview/'.$value['quid'])?><!--" class="btn " id="view" name="submit" value="view">Preview</a></td>-->
                                 <!--                                <td>--><?php //print_r($subject_model->where('cid',$value['subject_id'])[0]['category_name']); ?><!--</td>-->
                                 <!--                                <td>--><?php //echo $value['level_id'] ?><!--</td>-->
                             </tr>
@@ -83,6 +86,11 @@
 </div>
 
 <script>
+
+    $(".preview_tr").click(function() {
+        window.location = $(this).data("href");
+    });
+
     $('#lesson_lists tfoot th').each(function () {
         var title = $(this).text();
         $(this).html('<input type="text" placeholder="Search ' + title + '" />');
@@ -114,6 +122,13 @@
             e.preventDefault();
         }
 
+    });
+    $(document).on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
     });
     $(document).on('click', ".selected_lesson_class", function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;

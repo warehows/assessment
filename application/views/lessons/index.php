@@ -139,7 +139,13 @@
     $("#import").hide();
     $("#delete").hide();
     $("#assign").hide();
-
+    $(document).on('keyup keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
     $(document).on('click', ".lesson_row", function () {
         $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked', true);
         $("#view").click();
