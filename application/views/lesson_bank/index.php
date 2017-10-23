@@ -24,7 +24,7 @@
                     <button class="btn btn-primary" id="view" name="submit" value="view">View</button>
                     <button class="btn btn-primary" id="remove" name="submit" value="remove">Unshare</button>
 
-                    <table id="lesson_lists" class="table table-bordered table-hover">
+                    <table id="lesson_lists" class="display responsive nowrap" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th></th>
@@ -89,10 +89,10 @@
     $("#remove").hide();
     $("#delete").hide();
     $("#assign").hide();
-    $(".lesson_row").click(function(){
-        $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
-        $("#view").click();
-    });
+//    $(".lesson_row").click(function(){
+//        $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
+//        $("#view").click();
+//    });
     $(document).on('click', ".selected_lesson_class", function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {
