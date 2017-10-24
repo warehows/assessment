@@ -26,6 +26,31 @@ Class User_model extends CI_Model
         return $query->result_array();
     }
 
+    function filtered_user($grade='0',$section='0'){
+
+
+        $this->db->from('savsoft_users a');
+
+
+        $this->db->join('savsoft_group b', 'b.gid=a.gid',"left");
+        $this->db->join('savsoft_level c', 'c.lid=b.lid',"left");
+        $this->db->where('a.su', "0");
+        if($section!='0'){
+            $this->db->where('a.gid', $section);
+        }
+        if($grade!='0'){
+            $this->db->where('b.gid', $grade);
+        }
+
+
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+
+
+    }
+
     function login($username, $password)
     {
 

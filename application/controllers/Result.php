@@ -9,6 +9,10 @@ class Result extends CI_Controller {
 		$this->load->database();
 		$this->load->model("result_model");
 		$this->load->model("subjects_model");
+		$this->load->model("group_model");
+		$this->load->model("grades_model");
+		$this->load->model("quiz_model");
+		$this->load->model("user_model");
 		$this->lang->load('basic', $this->config->item('language'));
 		// redirect if not loggedin
 
@@ -29,7 +33,7 @@ class Result extends CI_Controller {
 		$this->load->view('results/index');
 		$this->load->view('new_material/footer');
 	}
-	public function index($limit='0',$status='0')
+	public function index($limit='0',$status='0',$grade='0',$subject='0',$section='0')
 	{
 
 		if(!$this->session->userdata('logged_in')){
@@ -51,7 +55,9 @@ class Result extends CI_Controller {
 		$data['quiz_list']=$this->result_model->quiz_list();
 		// group list
 		$this->load->model("user_model");
-		$data['group_list']=$this->user_model->group_list();
+		$data['group_list']= $this->user_model->group_list();
+//		$data['users']= $this->user_model->filtered_user($grade,$section);
+		$data['quiz']= $this->quiz_model->filter_quiz($grade,$subject);
 
 		/*		$this->load->view('header',$data);
                 $this->load->view('result_list',$data);
@@ -65,8 +71,43 @@ class Result extends CI_Controller {
 
         }
 
+		if($logged_in['su'] == 1){
+			$this->load->view('results/admin_result',$data);
+		}else{
 
-		$this->load->view('result_list',$data);
+			$this->load->view('result_list',$data);
+		}
+
+		$this->load->view('new_material/footer',$data);
+	}
+
+	public function view_students($section='0',$grade='0'){
+		$data = array();
+		$request = $_REQUEST;
+		$sections = explode(",",$request['section']);
+		$users = array();
+		foreach($sections as $section_key=>$section_value){
+
+			$data['users']= $this->user_model->filtered_user($grade,$section_value);
+			array_merge($users,$data['users']);
+
+		}
+		print_r("<pre>");
+		print_r($users);
+		exit;
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		$logged_in=$this->session->userdata('logged_in');
+		if($logged_in['base_url'] != base_url()){
+			$this->session->unset_userdata('logged_in');
+			redirect('login');
+		}
+		if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+
+		$data['users']= $this->user_model->filtered_user($grade,$section);
+
+		$this->load->view('results/view_student',$data);
 		$this->load->view('new_material/footer',$data);
 	}
 	public function student_index($limit='0',$status='0')
@@ -169,6 +210,8 @@ class Result extends CI_Controller {
 		force_download($filename, $csvdata);
 
 	}
+
+
 
 
 	function view_result($rid){

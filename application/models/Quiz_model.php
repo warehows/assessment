@@ -153,6 +153,31 @@ Class Quiz_model extends CI_Model
         return $query->result_array();
     }
 
+    function filter_quiz($grade='0',$subject='0',$user='0'){
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su']<'1') {
+            $gid = $logged_in['gid'];
+            $where = "FIND_IN_SET('" . $gid . "', gids)";
+            $this->db->where($where);
+        }
+
+        $this->db->from('savsoft_quiz a');
+        $this->db->where('a.uid', $logged_in['uid']);
+        if($subject!='0'){
+            $this->db->where('a.cid', $subject);
+        }
+        if($grade!='0'){
+            $this->db->where('b.lid', $grade);
+        }
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+
+
+    }
+
 
     function num_quiz()
     {
