@@ -4,10 +4,6 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('css/new_material/cdn/datatables.min.css')?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('css/new_material/cdn/datatables_responsive.min.css')?>">
 <style>
-    .container{
-        margin-left: 80%;
-        margin-right: 80%;
-    }
     tfoot input {
         width: 100%;
         padding: 3px;
