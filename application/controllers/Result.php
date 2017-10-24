@@ -86,14 +86,15 @@ class Result extends CI_Controller {
 		$request = $_REQUEST;
 		$sections = explode(",",$request['section']);
 		$users = array();
+		print_r("<pre>");
 		foreach($sections as $section_key=>$section_value){
 
-			$data['users']= $this->user_model->filtered_user($grade,$section_value);
-			array_merge($users,$data['users']);
+			$data['users'] = $this->user_model->filtered_user($grade,$section_value);
+			array_push($users,$data['users']);
 
 		}
-		print_r("<pre>");
-		print_r($users);
+		print_r($data['users']);
+
 		exit;
 		if(!$this->session->userdata('logged_in')){
 			redirect('login');
