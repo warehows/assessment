@@ -48,7 +48,7 @@
                     <thead>
                     <tr>
                         <th>Quiz Name</th>
-                        <th>Quiz Name</th>
+                        <th>Assigned</th>
                         <th>Grade</th>
                         <th>Subject</th>
                         <th>Assign Date</th>
@@ -59,7 +59,7 @@
                     <tfoot>
                     <tr>
                         <th>Quiz Name</th>
-                        <th>Quiz Name</th>
+                        <th>Assigned</th>
                         <th>Grade</th>
                         <th>Subject</th>
                         <th>Assign Date</th>
@@ -75,10 +75,10 @@
                             <?php if($quiz_value['end_date']!=0):?>
                                 <?php $end_date = date('M d, Y', $quiz_value['end_date']) ?>
                             <?php endif; ?>
-                            <tr class="quiz_result_preview" data-value="<?php echo $quiz_value['gids']?>" data-href='<?php echo site_url('result/view_students/?section='.urlencode($quiz_value['gids'])."&grade=".$quiz_value['lid'])?>'>
+                            <tr class="quiz_result_preview" data-value="<?php echo $quiz_value['gids']?>" data-href='<?php echo site_url('result/view_students/?section='.urlencode($quiz_value['gids'])."&grade=".$quiz_value['lid']."&quiz_id=".$quiz_value['quid'])?>'>
 
                                 <td><?php print_r($quiz_value['quiz_name'])?></td>
-                                <td><?php print_r($quiz_value['gids'])?></td>
+                                <td><?php if($quiz_value['gids']){echo "Yes"; }else{ echo "No"; }?></td>
                                 <td><?php print_r($this->grades_model->where("lid",$quiz_value['lid'])[0]['level_name'])?></td>
                                 <td><?php print_r($this->subjects_model->where("cid",$quiz_value['cid'])[0]['category_name'])?></td>
                                 <td><?php print_r($start_date)?></td>

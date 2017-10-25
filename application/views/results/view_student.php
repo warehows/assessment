@@ -43,42 +43,55 @@
             <!--            </select>-->
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <h2>Results</h2>
-
+<!--                <pre>-->
+<!--                    --><?php //print_r($users); ?>
                 <table id="list" class="display responsive nowrap" cellspacing="0" width="100%">
                     <thead>
                     <tr>
-                        <th>Quiz Name</th>
+                        <th>Student ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Grade</th>
-                        <th>Subject</th>
-                        <th>Assign Date</th>
-                        <th>Expiration Date</th>
+                        <th>Section</th>
+                        <th>Score</th>
+                        <th>Total Score</th>
+                        <th>Percentage</th>
+                        <th>Attempted</th>
 
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
-                        <th>Quiz Name</th>
+                        <th>Student ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Grade</th>
-                        <th>Subject</th>
-                        <th>Assign Date</th>
-                        <th>Expiration Date</th>
+                        <th>Section</th>
+                        <th>Score</th>
+                        <th>Total Score</th>
+                        <th>Percentage</th>
+                        <th>Attempted</th>
                     </tr>
                     </tfoot>
 
                     <tbody>
                     <?php foreach($users as $user_key=>$user_value): ?>
-                        <?php if($quiz_value['start_date']!=0):?>
-                            <?php $start_date = date('M d, Y', $quiz_value['start_date']) ?>
-                        <?php endif; ?>
-                        <?php if($quiz_value['end_date']!=0):?>
-                            <?php $end_date = date('M d, Y', $quiz_value['end_date']) ?>
-                        <?php endif; ?>
+                        <?php if($user_value['score_obtained']){$total_score = ($user_value['score_obtained']/$user_value['percentage_obtained'])*100; } ?>
+                        <?php if($user_value['percentage_obtained']){$total_percentage = $user_value['percentage_obtained']; }else{ $total_percentage = 0; } ?>
+                        <?php if($user_value['maximum_attempts']){$attempted = "Yes"; }else{ $attempted = "No"; } ?>
+                        <?php if($user_value['score_obtained']!==null){$score_obtained = $user_value['score_obtained']; }else{ $score_obtained = " "; } ?>
+
                         <tr class="quiz_result_preview" data-href='<?php echo site_url('result/view_students/'.$quiz_value['quid'])?>'>
-                            <td><?php print_r($user_value['quiz_name'])?></td>
-                            <td><?php print_r($this->grades_model->where("lid",$quiz_value['lid'])[0]['level_name'])?></td>
-                            <td><?php print_r($this->subjects_model->where("cid",$quiz_value['cid'])[0]['category_name'])?></td>
-                            <td><?php print_r($start_date)?></td>
-                            <td><?php print_r($end_date)?></td>
+
+                                <td><?php print_r($user_value['email']); ?></td>
+                                <td><?php print_r($user_value['first_name']); ?></td>
+                                <td><?php print_r($user_value['last_name']); ?></td>
+                                <td><?php print_r($user_value['lid']); ?></td>
+                                <td><?php print_r($user_value['gid']); ?></td>
+                                <td><?php echo $score_obtained ?></td>
+                                <td><?php echo $total_score ?></td>
+                                <td><?php echo $total_percentage ?>%</td>
+                                <td><?php echo $attempted ?></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>

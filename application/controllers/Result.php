@@ -81,21 +81,25 @@ class Result extends CI_Controller {
 		$this->load->view('new_material/footer',$data);
 	}
 
-	public function view_students($section='0',$grade='0'){
+	public function view_students($section='0',$grade='0',$quiz_id='0'){
 		$data = array();
 		$request = $_REQUEST;
 		$sections = explode(",",$request['section']);
-		$users = array();
-		print_r("<pre>");
+		$grade = $request['grade'];
+		$quiz_id = $request['quiz_id'];
+		$user_filtered_stored = array();
+
 		foreach($sections as $section_key=>$section_value){
 
-			$data['users'] = $this->user_model->filtered_user($grade,$section_value);
-			array_push($users,$data['users']);
+			$user_filtered = $this->user_model->filtered_user($grade,$section_value);
+
+			$user_filtered_stored = array_merge($user_filtered_stored,$user_filtered);
+
 
 		}
-		print_r($data['users']);
 
-		exit;
+		$data['users'] = $user_filtered_stored;
+
 		if(!$this->session->userdata('logged_in')){
 			redirect('login');
 		}

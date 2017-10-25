@@ -30,19 +30,19 @@ Class User_model extends CI_Model
 
 
         $this->db->from('savsoft_users a');
-
-
         $this->db->join('savsoft_group b', 'b.gid=a.gid',"left");
         $this->db->join('savsoft_level c', 'c.lid=b.lid',"left");
+        $this->db->join('savsoft_result d', 'd.uid=a.uid',"left");
+        $this->db->join('savsoft_quiz e', 'e.quid=d.quid',"left");
+
         $this->db->where('a.su', "0");
+
         if($section!='0'){
             $this->db->where('a.gid', $section);
         }
         if($grade!='0'){
-            $this->db->where('b.gid', $grade);
+            $this->db->where('c.lid', $grade);
         }
-
-
 
         $query = $this->db->get();
 
