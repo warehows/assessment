@@ -52,7 +52,7 @@ class Workspace extends CI_Controller
             $this->load->view('new_material/teacher_header', $data);
         }
 
-        $this->load->view('workspace/index.php', $data);
+        $this->load->view('workspace/index', $data);
         $this->load->view('new_material/footer', $data);
     }
 

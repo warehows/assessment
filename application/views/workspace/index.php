@@ -105,14 +105,14 @@
                                     <input type="checkbox" class="selected_quiz_class" name="selected_quiz[]"
                                            value="<?php echo $quiz_value['id']?>"/>
                                 </td>
-                                <td class="quiz_row"><?php echo $quiz_value['content_name'] ?></td>
-                                <td class="quiz_row">quiz</td>
-                                <td class="quiz_row"><?php echo $get_current_quiz['start_date'] ?></td>
-                                <td class="quiz_row"><?php echo $get_current_quiz['end_date'] ?></td>
+                                <td class="quiz_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$quiz_value['content_id'])?>'><?php echo $quiz_value['content_name'] ?></td>
+                                <td class="quiz_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$quiz_value['content_id'])?>'>quiz</td>
+                                <td class="quiz_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$quiz_value['content_id'])?>'><?php echo $get_current_quiz['start_date'] ?></td>
+                                <td class="quiz_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$quiz_value['content_id'])?>'><?php echo $get_current_quiz['end_date'] ?></td>
                                 <?php $author = $this->user_model->get_user($get_current_quiz['author']) ?>
-                                <td class="quiz_row"><?php echo $author['first_name'] ?> <?php echo $author['last_name'] ?></td>
+                                <td class="quiz_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$quiz_value['content_id'])?>'><?php echo $author['first_name'] ?> <?php echo $author['last_name'] ?></td>
                                 <?php if($get_current_quiz['assigned']=="1"): $assigned="Yes"; else: $assigned="No"; endif; ?>
-                                <td class="quiz_row"><?php echo $assigned ?></td>
+                                <td class="quiz_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$quiz_value['content_id'])?>'><?php echo $assigned ?></td>
                             </tr>
                         <?php } ?>
 
@@ -152,12 +152,11 @@
         $("#view").click();
     });
     //quiz
-    $(".quiz_row").click(function(){
-//        $(this).siblings(".quiz_input_row").eq(0).find(".selected_lesson_class").prop('checked',true);
-//        $("#view").click();
+    $(document).on('click', ".quiz_row", function () {
+        window.location = $(this).data("href");
     });
     //quiz
-    $(".selected_lesson_class").change(function () {
+    $(document).on('click', ".selected_lesson_class", function () {
         selected_count = $(document).find('.selected_lesson_class:checked').length;
         if (selected_count == 1) {
             $("#edit").show();
@@ -193,7 +192,7 @@
     });
 
     //quiz
-    $(".selected_quiz_class").change(function () {
+    $(document).on('click', ".selected_quiz_class", function () {
         selected_count = $(document).find('.selected_quiz_class:checked').length;
         if (selected_count == 1) {
             $("#quiz_edit").show();
@@ -201,9 +200,7 @@
             $("#quiz_assign").show();
             $("#quiz_view").hide();
             $("#quiz_delete").show();
-
             $("#import").show();
-            console.log($(document).find('.selected_quiz_class:checked').val());
             $("#quid").val();
         } else if (selected_count == 0) {
             $("#quiz_edit").hide();

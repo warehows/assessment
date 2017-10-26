@@ -26,7 +26,6 @@
                             <?php endif; ?>
                         </div>
 
-
                         <div class="form-group">
                             <label for="inputEmail"
                                    class="sr-only"><?php echo $this->lang->line('email_address'); ?></label>
@@ -35,7 +34,6 @@
                                    readonly=readonly class="form-control"
                                    placeholder="<?php echo $this->lang->line('email_address'); ?>" required autofocus>
                         </div>
-
 
                         <div class="form-group">
                             <label for="inputEmail"

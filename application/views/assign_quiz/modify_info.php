@@ -131,6 +131,7 @@ $currentSem = isset($quiz_detail['semester']) ? $quiz_detail['semester'] : '';
 
 
         function update_quiz() {
+
             var quiz_name = $("#quiz_name").val();
             var lid = $("#grade").val();
             var cid = $("#subject").val();
@@ -163,6 +164,7 @@ $currentSem = isset($quiz_detail['semester']) ? $quiz_detail['semester'] : '';
                     <?php } ?>
                 }
             }).done(function (value) {
+
                 console.log(value);
                 if (value != "Error") {
                     returned_value = value;

@@ -76,7 +76,7 @@
 
                     <tbody>
                     <?php foreach($users as $user_key=>$user_value): ?>
-                        <?php if($user_value['score_obtained']){$total_score = ($user_value['score_obtained']/$user_value['percentage_obtained'])*100; } ?>
+                        <?php if($user_value['score_obtained']){$total_score = ($user_value['score_obtained']/$user_value['percentage_obtained'])*100; }else{$total_score = ""; } ?>
                         <?php if($user_value['percentage_obtained']){$total_percentage = $user_value['percentage_obtained']; }else{ $total_percentage = 0; } ?>
                         <?php if($user_value['maximum_attempts']){$attempted = "Yes"; }else{ $attempted = "No"; } ?>
                         <?php if($user_value['score_obtained']!==null){$score_obtained = $user_value['score_obtained']; }else{ $score_obtained = " "; } ?>

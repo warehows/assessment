@@ -619,6 +619,7 @@ class Assign extends CI_Controller
             'question_selection',
             'lid',
             'author',
+            'semester',
             'assigned_by',
             'assigned',
         );
@@ -654,6 +655,7 @@ class Assign extends CI_Controller
             'with_login' => $data['with_login'],
             'gids' => implode(',', $data['gids']),
             'question_selection' => $data['question_selection'],
+            'semester' => $data['semester'],
             'lid' => $data['lid'],
             'author' => $logged_in['uid'],
         );
