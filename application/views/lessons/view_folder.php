@@ -74,14 +74,15 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
                                 <?php endforeach; ?>
                             </ul>
                         </div>
-                        <div class="file_container col-lg-2 col-md-2 col-sm-12 col-xs-12"><br><br><br>
+                        <div class="file_container col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            
                             <div id="iframe_container_<?php echo $folders_key ?>"
                                  class="iframe_container col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             </div>
                             <?php print_r($this->session->userdata('view_mode'));?>
                         </div>
                     </div>
-                </div>
+            </div>
             <?php endforeach; ?>
 
         </div>
