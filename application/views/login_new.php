@@ -98,19 +98,29 @@
 </div>
 <div class="form-container">
     <div class="image-holder"></div>
+
     <form method="post" method="post" action="<?php echo site_url('login/verifylogin'); ?>">
 
         <h2 align="center" style="  margin-top:-25px!important;
 ">St. Therese Private School</h2>
         <p align="center" style="  margin-top:-30px!important;
 ">Learning Management System</p>
-
+        <?php
+        if ($this->session->flashdata('message')) {
+            ?>
+            <div class="alert alert-danger">
+                <?php echo $this->session->flashdata('message'); ?>
+            </div>
+            <?php
+        }
+        ?>
         <!--<div class="avatar-login" align="center"><img style=" margin-top:-15px!important; height: 200px!important; width: 200px!important;"  class="img-responsive avatar-img" src="<?php echo base_url('css/new_material/img/steps.png'); ?>" alt="School Logo"/></div>-->
         <div class="illustration" style="margin-top:-20px!important;"><img style="align: center!important; height: 190px!important;" class="navbar-brand image_logo" src="<?php echo base_url('css/new_material/img/steps.png'); ?>" alt="School Logo" align="center"></div>
+
         <!--<div class="illustration" style="margin-top:-20px!important;"><img style="height: 190px!important;" class="navbar-brand image_logo" src="<?php /*echo base_url('css/new_material/img/steps.png'); */?>" alt="School Logo" ></div>-->
 
         <?php
-        if ($this->session->flashdata('message')) {
+        if ($this->session->flashdata('wrong_credz')) {
         ?>
             <div class="form-group has-feedback has-error">
                 <input class="form-control" type="text" name="email" placeholder="ID Number"><i
@@ -129,7 +139,7 @@
 
         <?php } ?>
         <?php
-        if ($this->session->flashdata('message')) {
+        if ($this->session->flashdata('wrong_credz')) {
         ?>
         <div class="form-group has-feedback has-error">
             <input class="form-control" type="password" name="password" placeholder="Password"><i

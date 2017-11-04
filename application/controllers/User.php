@@ -11,6 +11,7 @@ class User extends CI_Controller
         $this->load->model("user_model");
         $this->load->model("group_model");
         $this->load->model("lessons_model");
+        $this->load->model("user_model");
         $this->lang->load('basic', $this->config->item('language'));
         // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
@@ -358,11 +359,14 @@ class User extends CI_Controller
 
     function logout()
     {
-
+        $this->user_model->update_log($this->session->userdata('logged_in')['email'],"logout");
+        $this->session->set_flashdata('message', "Account has been successfully logged out");
         $this->session->unset_userdata('logged_in');
         if ($this->session->userdata('logged_in_raw')) {
             $this->session->unset_userdata('logged_in_raw');
         }
+
+
         redirect('login');
 
     }

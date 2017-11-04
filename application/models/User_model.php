@@ -71,6 +71,107 @@ Class User_model extends CI_Model
         }
     }
 
+    function update_log($email,$method="login"){
+        $user_ip = $this->user_ip();
+
+
+        if($method=="login"){
+
+            $data = array(
+                "logged"=>1,
+                "ip"=>$user_ip,
+            );
+
+        }else{
+
+            $data = array(
+                "logged"=>0,
+                "ip"=>$user_ip,
+            );
+
+        }
+
+        $this->db->where("email",$email);
+        $this->db->update('savsoft_users', $data);
+        $query = $this->db->get("savsoft_users");
+        return $query->result_array()[0];
+    }
+
+    function check_log($email="admin",$limit=15){
+
+        date_default_timezone_set('Asia/Manila');
+        $this->db->where("email",$email);
+        $this->db->limit(1);
+        $query = $this->db->get("savsoft_users");
+        $current_data = $query->result_array()[0];
+        $current_ip = $this->user_ip();
+
+        $current_last_logged = strtotime($current_data['last_logged']);
+        $time_limit = $limit*60;
+        $current_time = time();
+
+        $time_difference = $current_time - $current_last_logged;
+
+        if($current_data['last_logged']&&$current_data['ip']){
+            if($current_data['logged']==1&&$current_ip==$current_data['ip']){
+
+                if($time_limit>=$time_difference){
+                    $this->update_log($email);
+                    return true;
+                }else{
+                    $this->update_log($email,"logout");
+                    $this->session->set_flashdata('message', "Session has already expired. Please log in again");
+                    return false;
+                }
+            }else if($current_data['logged']==1&&$current_ip!=$current_data['ip']){
+                if($time_limit>=$time_difference){
+                    $this->session->set_flashdata('message', "This account is currently logged.");
+                    return false;
+                }else{
+                    $this->update_log($email,"logout");
+                    $this->session->set_flashdata('message', "The machine has detected you have logged in on new machine. All other machines using this account have been disabled.");
+                    return false;
+                }
+
+            }else{
+                $this->update_log($email);
+                return true;
+            }
+
+
+        }else{
+
+            $this->update_log($email);
+            return true;
+        }
+
+    }
+
+    function user_ip()
+    {
+        $client  = @$_SERVER['HTTP_CLIENT_IP'];
+        $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+        $remote  = $_SERVER['REMOTE_ADDR'];
+
+        if(filter_var($client, FILTER_VALIDATE_IP))
+        {
+            $ip = $client;
+        }
+        elseif(filter_var($forward, FILTER_VALIDATE_IP))
+        {
+            $ip = $forward;
+        }
+        else
+        {
+            $ip = $remote;
+        }
+
+        return $ip;
+    }
+
+
+
+
 
     function admin_login()
     {

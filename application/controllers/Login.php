@@ -14,10 +14,6 @@ class Login extends CI_Controller {
 			redirect('install');
 		}
 
-
-
-
-
 	}
 
 	public function index()
@@ -58,40 +54,48 @@ class Login extends CI_Controller {
 		$username=$this->input->post('email');
 		$password=$this->input->post('password');
 
-		if($this->user_model->login($username,$password)){
+		if($this->user_model->check_log($username)){
+			if($this->user_model->login($username,$password)){
 
-			// row exist fetch userdata
-			$user=$this->user_model->login($username,$password);
+				// row exist fetch userdata
+				$user=$this->user_model->login($username,$password);
 
 
-			// validate if user assigned to paid group
-			if($user['price'] > '0'){
+				// validate if user assigned to paid group
+				if($user['price'] > '0'){
 
-				// user assigned to paid group now validate expiry date.
-				if($user['subscription_expired'] <= time()){
-					// eubscription expired, redirect to payment page
+					// user assigned to paid group now validate expiry date.
+					if($user['subscription_expired'] <= time()){
+						// eubscription expired, redirect to payment page
 
-					redirect('payment_gateway/subscription_expired/'.$user['uid']);
+						redirect('payment_gateway/subscription_expired/'.$user['uid']);
+
+					}
 
 				}
+				$user['base_url']=base_url();
+				// creating login cookie
+				$this->session->set_userdata('logged_in', $user);
+				// redirect to dashboard
+				if($user['su']>0){
 
-			}
-			$user['base_url']=base_url();
-			// creating login cookie
-			$this->session->set_userdata('logged_in', $user);
-			// redirect to dashboard
-			if($user['su']>0){
-				redirect('dashboard');
-            }else{
+					redirect('dashboard');
+
+				}else{
 //				redirect('quiz');
-                redirect('dashboard/student');
-            }
+					redirect('dashboard/student');
+				}
+			}else{
+
+				// invalid login
+				$this->session->set_flashdata('wrong_credz', $this->lang->line('invalid_login'));
+				redirect('login');
+			}
 		}else{
 
-			// invalid login
-			$this->session->set_flashdata('message', $this->lang->line('invalid_login'));
 			redirect('login');
 		}
+
 
 
 
