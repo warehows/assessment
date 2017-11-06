@@ -25,7 +25,7 @@
         width: 100%;
     }
     .school_logo_container .small{
-        height: 500px;
+        height: 580px;
         width: 100%;
     }
     .form_container{
