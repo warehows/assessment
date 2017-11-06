@@ -46,7 +46,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="modified_separator col-lg-7 col-md-6 col-sm-hidden col-xs-12">
+        <div class="modified_separator col-lg-7 col-md-6 hidden-sm hidden-xs">
             <div class="system_logo_container">
                 <img src="<?php echo base_url('css/new_material/img/brainee_home2.jpg')?>"/>
             </div>
