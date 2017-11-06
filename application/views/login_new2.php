@@ -20,8 +20,12 @@
     .school_logo_container{
 
     }
-    .school_logo_container img{
+    .school_logo_container .large{
         height: 270px;
+        width: 100%;
+    }
+    .school_logo_container .small{
+        height: 500px;
         width: 100%;
     }
     .form_container{
@@ -42,6 +46,7 @@
 
     }
 
+
 </style>
 
 <div class="container">
@@ -56,8 +61,10 @@
 
             <p class="system_title">Learning Management System</p>
             <div class="school_logo_container">
-                <img src="<?php echo base_url('css/new_material/img/steps.png')?>"/>
+                <img class="large visible-lg visible-md hidden-sm hidden-xs" src="<?php echo base_url('css/new_material/img/steps.png')?>"/>
+                <img class="small hidden-lg hidden-md visible-sm visible-xs" src="<?php echo base_url('css/new_material/img/steps.png')?>"/>
             </div>
+
             <form method="post" method="post" action="<?php echo site_url('login/verifylogin'); ?>">
 
 
