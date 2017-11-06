@@ -163,7 +163,10 @@ Class Quiz_model extends CI_Model
         }
 
         $this->db->from('savsoft_quiz a');
-        $this->db->where('a.uid', $logged_in['uid']);
+        if($user!='0'){
+            $this->db->where('a.uid', $user);
+        }
+
         if($subject!='0'){
             $this->db->where('a.cid', $subject);
         }

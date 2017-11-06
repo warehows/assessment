@@ -24,6 +24,18 @@
     }
 </style>
 
+<?php
+function multi_in_array($needle, $haystack, $key) {
+    foreach ($haystack as $h) {
+        if (array_key_exists($key, $h) && $h[$key]==$needle) {
+            return true;
+        }
+    }
+    return false;
+}
+
+?>
+
 <input type="hidden" id="added" value="<?php echo $this->lang->line('added'); ?>">
 <div class="wrapper">
     <div class="wrapper">
@@ -43,8 +55,10 @@
             <!--            </select>-->
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <h2>Results</h2>
+<!--                --><?php //print_r("<pre>")?>
+<!--                --><?php //print_r($filtered_users)?>
 <!--                <pre>-->
-<!--                    --><?php //print_r($users); ?>
+<!--                    --><?php //print_r(multi_in_array("student",$filtered_users,"email")); ?>
                 <table id="list" class="display responsive nowrap" cellspacing="0" width="100%">
                     <thead>
                     <tr>
@@ -75,24 +89,39 @@
                     </tfoot>
 
                     <tbody>
-                    <?php foreach($users as $user_key=>$user_value): ?>
+                    <?php foreach($filtered_users as $user_key=>$user_value): ?>
                         <?php if($user_value['score_obtained']){$total_score = ($user_value['score_obtained']/$user_value['percentage_obtained'])*100; }else{$total_score = ""; } ?>
                         <?php if($user_value['percentage_obtained']){$total_percentage = $user_value['percentage_obtained']; }else{ $total_percentage = 0; } ?>
                         <?php if($user_value['maximum_attempts']){$attempted = "Yes"; }else{ $attempted = "No"; } ?>
                         <?php if($user_value['score_obtained']!==null){$score_obtained = $user_value['score_obtained']; }else{ $score_obtained = " "; } ?>
+                        <?php if(!$user_value['quid']):?>
+                            <tr class="quiz_result_preview" data-href='<?php echo site_url('result/view_students/'.$quiz_value['quid'])?>'>
 
-                        <tr class="quiz_result_preview" data-href='<?php echo site_url('result/view_students/'.$quiz_value['quid'])?>'>
+                                    <td><?php print_r($user_value['email']); ?></td>
+                                    <td><?php print_r($user_value['first_name']); ?></td>
+                                    <td><?php print_r($user_value['last_name']); ?></td>
+                                    <td><?php print_r($user_value['level_name']); ?></td>
+                                    <td><?php print_r(ucfirst($user_value['group_name'])); ?></td>
+                                    <td><?php echo $score_obtained ?></td>
+                                    <td><?php echo $total_score ?></td>
+                                    <td><?php echo $total_percentage ?>%</td>
+                                    <td><?php echo $attempted ?></td>
+                            </tr>
+                        <?php endif; ?>
+                        <?php if($user_value['quid']==$_REQUEST['quiz_id']):?>
+                            <tr class="quiz_result_preview" data-href='<?php echo site_url('result/view_students/'.$quiz_value['quid'])?>'>
 
                                 <td><?php print_r($user_value['email']); ?></td>
                                 <td><?php print_r($user_value['first_name']); ?></td>
                                 <td><?php print_r($user_value['last_name']); ?></td>
-                                <td><?php print_r($user_value['lid']); ?></td>
-                                <td><?php print_r($user_value['gid']); ?></td>
+                                <td><?php print_r($user_value['level_name']); ?></td>
+                                <td><?php print_r(ucfirst($user_value['group_name'])); ?></td>
                                 <td><?php echo $score_obtained ?></td>
                                 <td><?php echo $total_score ?></td>
                                 <td><?php echo $total_percentage ?>%</td>
                                 <td><?php echo $attempted ?></td>
-                        </tr>
+                            </tr>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                     </tbody>
                 </table>

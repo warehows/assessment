@@ -26,14 +26,18 @@ Class User_model extends CI_Model
         return $query->result_array();
     }
 
-    function filtered_user($grade='0',$section='0'){
-
+    function filtered_user($grade='0',$section='0',$quid='0'){
 
         $this->db->from('savsoft_users a');
         $this->db->join('savsoft_group b', 'b.gid=a.gid',"left");
         $this->db->join('savsoft_level c', 'c.lid=b.lid',"left");
         $this->db->join('savsoft_result d', 'd.uid=a.uid',"left");
         $this->db->join('savsoft_quiz e', 'e.quid=d.quid',"left");
+//        $this->db->from('savsoft_users a');
+//        $this->db->join('savsoft_group b', 'b.gid=a.gid',"left");
+//        $this->db->join('savsoft_level c', 'c.lid=b.lid',"left");
+//        $this->db->join('savsoft_result d', 'd.uid=a.uid',"left");
+//        $this->db->join('savsoft_quiz e', 'e.quid=d.quid',"left");
 
         $this->db->where('a.su', "0");
 
@@ -42,6 +46,9 @@ Class User_model extends CI_Model
         }
         if($grade!='0'){
             $this->db->where('c.lid', $grade);
+        }
+        if($quid!='0'){
+//            $this->db->where('EXISTS(SELECT * FROM savsoft_result where d.quid = '.$quid.')');
         }
 
         $query = $this->db->get();
@@ -129,7 +136,7 @@ Class User_model extends CI_Model
                     return false;
                 }else{
                     $this->update_log($email,"logout");
-                    $this->session->set_flashdata('message', "The machine has detected you have logged in on new machine. All other machines using this account have been disabled.");
+                    $this->session->set_flashdata('message', "The system has detected you have logged in on a new device. All other devices using this account have been logged out. Please log in again.");
                     return false;
                 }
 

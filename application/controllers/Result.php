@@ -33,6 +33,7 @@ class Result extends CI_Controller {
 		$this->load->view('results/index');
 		$this->load->view('new_material/footer');
 	}
+
 	public function index($limit='0',$status='0',$grade='0',$subject='0',$section='0')
 	{
 
@@ -59,12 +60,14 @@ class Result extends CI_Controller {
 //		$data['users']= $this->user_model->filtered_user($grade,$section);
 		$data['quiz']= $this->quiz_model->filter_quiz($grade,$subject);
 
-		/*		$this->load->view('header',$data);
+		/*
+				$this->load->view('header',$data);
                 $this->load->view('result_list',$data);
-                $this->load->view('material_part/footer_material',$data);*/
+                $this->load->view('material_part/footer_material',$data);
+		*/
 
         if ($logged_in['su'] > 0) {
-            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);}else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
 
         } else {
             $this->load->view('new_material/student_header', $data);
@@ -88,17 +91,20 @@ class Result extends CI_Controller {
 		$grade = $request['grade'];
 		$quiz_id = $request['quiz_id'];
 		$user_filtered_stored = array();
-
+//		echo "<pre>";
 		foreach($sections as $section_key=>$section_value){
 
-			$user_filtered = $this->user_model->filtered_user($grade,$section_value);
+
+			$user_filtered = $this->user_model->filtered_user($grade,$section_value,$quiz_id);
 
 			$user_filtered_stored = array_merge($user_filtered_stored,$user_filtered);
 
 
 		}
+//		print_r($user_filtered_stored);
+//		exit;
 
-		$data['users'] = $user_filtered_stored;
+		$data['filtered_users'] = $user_filtered_stored;
 
 		if(!$this->session->userdata('logged_in')){
 			redirect('login');
@@ -110,7 +116,7 @@ class Result extends CI_Controller {
 		}
 		if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
 
-		$data['users']= $this->user_model->filtered_user($grade,$section);
+
 
 		$this->load->view('results/view_student',$data);
 		$this->load->view('new_material/footer',$data);

@@ -51,6 +51,7 @@
                         <th>Assigned</th>
                         <th>Grade</th>
                         <th>Subject</th>
+                        <th>Assigned Teacher</th>
                         <th>Assign Date</th>
                         <th>Expiration Date</th>
 
@@ -62,6 +63,7 @@
                         <th>Assigned</th>
                         <th>Grade</th>
                         <th>Subject</th>
+                        <th>Assigned Teacher</th>
                         <th>Assign Date</th>
                         <th>Expiration Date</th>
                     </tr>
@@ -69,18 +71,24 @@
 
                     <tbody>
                         <?php foreach($quiz as $quiz_key=>$quiz_value): ?>
-                            <?php if($quiz_value['start_date']!=0):?>
+                            <?php if($quiz_value['start_date']!=0): ?>
                                 <?php $start_date = date('M d, Y', $quiz_value['start_date']) ?>
+
+                            <?php else: ?>
+                                    <?php $start_date = "" ?>
                             <?php endif; ?>
-                            <?php if($quiz_value['end_date']!=0):?>
+                            <?php if($quiz_value['end_date']!=0): ?>
                                 <?php $end_date = date('M d, Y', $quiz_value['end_date']) ?>
+                            <?php else: ?>
+                                <?php $end_date = "" ?>
                             <?php endif; ?>
-                            <tr class="quiz_result_preview" data-value="<?php echo $quiz_value['gids']?>" data-href='<?php echo site_url('result/view_students/?section='.urlencode($quiz_value['gids'])."&grade=".$quiz_value['lid']."&quiz_id=".$quiz_value['quid'])?>'>
+                            <tr class="quiz_result_preview" data-value="<?php echo $quiz_value['gids']?>" data-href='<?php echo site_url('result/view_students/?section='.urlencode($quiz_value['gids'])."&grade=0"."&quiz_id=".$quiz_value['quid'])?>'>
 
                                 <td><?php print_r($quiz_value['quiz_name'])?></td>
                                 <td><?php if($quiz_value['gids']){echo "Yes"; }else{ echo "No"; }?></td>
                                 <td><?php print_r($this->grades_model->where("lid",$quiz_value['lid'])[0]['level_name'])?></td>
                                 <td><?php print_r($this->subjects_model->where("cid",$quiz_value['cid'])[0]['category_name'])?></td>
+                                <td><?php echo ucfirst($this->user_model->where("uid",$quiz_value['uid'])[0]['last_name']) ?> <?php echo ucfirst($this->user_model->where("uid",$quiz_value['uid'])[0]['first_name'])?></td>
                                 <td><?php print_r($start_date)?></td>
                                 <td><?php print_r($end_date)?></td>
                             </tr>
