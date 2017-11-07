@@ -287,12 +287,13 @@
 
                 </div>
 
-<!--                <div class="col-lg-2" style="text-align:center;">-->
-<!--                    <p>--><?php //echo $this->lang->line('status'); ?><!--</p>-->
-<!---->
-<!--                    <p style="color:#e39500;">--><?php //echo $result['result_status']; ?><!--</p>-->
-<!---->
-<!--                </div>-->
+                <!--                <div class="col-lg-2" style="text-align:center;">-->
+                <!--                    <p>--><?php //echo $this->lang->line('status'); ?><!--</p>-->
+                <!---->
+                <!--                    <p style="color:#e39500;">-->
+                <?php //echo $result['result_status']; ?><!--</p>-->
+                <!---->
+                <!--                </div>-->
 
 
             </div>
@@ -302,14 +303,16 @@
                     //if($result['view_answer']=='1' || $logged_in['su']>'0'){
                     //
                     //?>
-<!--                    <a href="#answers_i" class="btn btn-info"-->
-<!--                       style="margin-top:10px;">--><?php //echo $this->lang->line('answer_sheet'); ?><!--</a>-->
+                    <!--                    <a href="#answers_i" class="btn btn-info"-->
+                    <!--                       style="margin-top:10px;">-->
+                    <?php //echo $this->lang->line('answer_sheet'); ?><!--</a>-->
                     <?php //
                     //}
                     //?>
 
-<!--                    <a href="javascript:print();" class="btn btn-success printbtn"-->
-<!--                       style="margin-top:10px;">--><?php //echo $this->lang->line('print'); ?><!--</a>-->
+                    <!--                    <a href="javascript:print();" class="btn btn-success printbtn"-->
+                    <!--                       style="margin-top:10px;">-->
+                    <?php //echo $this->lang->line('print'); ?><!--</a>-->
 
                     <?php
                     if ($result['gen_certificate'] == '1') {
@@ -488,6 +491,7 @@
             <div id="page_break"></div>
             <div class="col-md-12">
                 <h3><?php echo 'Results'; ?></h3>
+                <a href="<?php echo $_SERVER['HTTP_REFERER']?>"><button class="btn btn-danger">back</button></a>
                 <?php
 
 
