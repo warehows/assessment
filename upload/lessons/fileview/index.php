@@ -5,7 +5,7 @@
     }
 
     object {
-        height: 97%;
+        height: 95%;
         width: 100%;
     }
 
@@ -18,7 +18,7 @@
     }
 
     video::-webkit-media-controls-panel {
-        width: calc(100% + 30px); /* Adjust as needed */
+        width: calc(100% + 0px); /* Adjust as needed */
     }
 </style>
 
@@ -41,7 +41,7 @@ if ($file_extension == "png" || $file_extension == "jpg") {
 
     echo '<img id="image_view" src="' . $base_url . $filelocation . $input['filename'] . '"/>';
 }elseif($file_extension == "mp4"){?>
-    <video width="100%" height="97%" controls>
+    <video width="100%" height="95%" controls>
         <source src="<?php echo $base_url . $filelocation . $input['filename'] ?>" type="video/mp4">
         <source src="movie.ogg" type="video/ogg">
         Your browser does not support the video tag.

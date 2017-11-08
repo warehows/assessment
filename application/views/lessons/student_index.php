@@ -8,8 +8,6 @@
     }
 </style>
 <?php $logged_in = $this->session->userdata('logged_in');?>
-
-<?php print_r($logged_in); ?>
 <?php $lesson_for_students = $this->lessons_model->like("lesson_assigned_ids",",".$logged_in['gid'].","); ?>
 <?php
 if(!$lesson_for_students){
@@ -18,8 +16,11 @@ if(!$lesson_for_students){
 if(!$lesson_for_students){
     $lesson_for_students = $this->lessons_model->like("lesson_assigned_ids",",".$logged_in['gid']);
 }
+if(!$lesson_for_students){
+    $lesson_for_students = $this->lessons_model->like("lesson_assigned_ids",$logged_in['gid']);
+}
 ?>
-<div class="wr  6apper">
+<div class="wrapper">
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-12 col-md-12col-sm-12">

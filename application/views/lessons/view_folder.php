@@ -56,7 +56,7 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
             <?php foreach ($folders as $folders_key => $folders_value): ?>
                 <div class="tab-pane fade in" id="tab<?php echo $folders_key ?>">
                     <div class="row" style="margin-right: 0px;">
-                        <div class="content_wrapper col-lg-2 col-md-2 col-sm-12 col-xs-12 hidden-sm hidden-xs">
+                        <div class="content_container col-lg-2 col-md-2 col-sm-12 col-xs-12 hidden-sm hidden-xs">
                             <ul content_id="<?php echo $folders_key ?>">
                                 <div class="ul_title">Contents</div>
                                 <?php foreach ($lesson_contents as $lesson_contents_key => $lesson_contents_value): ?>
@@ -76,8 +76,7 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
                         </div>
                         <div class="file_container col-lg-2 col-md-2 col-sm-12 col-xs-12">
                             
-                            <div id="iframe_container_<?php echo $folders_key ?>"
-                                 class="iframe_container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div id="iframe_container_<?php echo $folders_key ?>" class="iframe_container col-lg-offset-2 col-lg-10 col-md-12 col-sm-12 col-xs-12">
                             </div>
                             <?php print_r($this->session->userdata('view_mode'));?>
                         </div>
@@ -89,7 +88,7 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
     </div>
 
     <div class="card-info col-lg-12 col-md-12 col-sm-12 col-xs-12"><a href="<?php if($logged_in['su']==2){echo site_url('workspace');}else{echo site_url('lessons');} ?>"><span
-                class="back col-sm-1 col-xs-1"><i class="glyphicon glyphicon-arrow-left" style="font-size: 20px"></i></span></a><span
+                class="back col-sm-1 col-xs-1"><i class="glyphicon glyphicon-arrow-left"></i></span></a><span
             class="card-title col-sm-offset-0 col-xs-offset-0"><?php echo $lesson_information[0]['lesson_name'] ?></span></div>
 
 
@@ -113,7 +112,7 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
 </div>
 
 <div class="toggle_button col-sm-12 col-xs-12 hidden-lg hidden-md visible-sm-block visible-xs-block">
-    <button class="toggle_navigation btn btn-primary form-control">TOGGLE NAVIGATION</button>
+    <button class="toggle_navigation btn btn-warning form-control">TOGGLE NAVIGATION</button>
 </div>
 
 <script src="<?php echo base_url('js/jquery.js') ?>"></script>
@@ -129,7 +128,7 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
             $(".content_container").toggleClass("hidden-xs visible-xs-block");
 
         } else {
-            $(document).find(".the_iframe").attr("style", "height:91%;width: 83%;");
+            $(document).find(".the_iframe").attr("style", "height:80%;width: 99%;");
         }
     }
 
@@ -144,6 +143,18 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
         $(".button_for_folders").eq(0).removeClass("btn-default");
         $(".button_for_folders").eq(0).addClass("btn-primary");
         $(".toggle_button").click(function () {
+            if(!$(".file_container").hasClass("hidden-sm")&&!$(".file_container").hasClass("hidden-xs")){
+                $(".file_container").removeClass("visible-sm");
+                $(".file_container").removeClass("visible-xs");
+                $(".file_container").addClass("hidden-sm");
+                $(".file_container").addClass("hidden-xs");
+            }else{
+                $(".file_container").removeClass("hidden-sm");
+                $(".file_container").removeClass("hidden-xs");
+                $(".file_container").addClass("visible-sm");
+                $(".file_container").addClass("visible-xs");
+            }
+
 
             $(".content_container").toggleClass("hidden-sm visible-sm-block");
             $(".content_container").toggleClass("hidden-xs visible-xs-block");
@@ -152,12 +163,22 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
 
         });
 
+
+
         $(".content").click(function () {
 
             var url = $(this).attr("value");
             var file_type = $(this).attr("type");
             var content_id = $(this).parent().attr("content_id");
 
+            if($(".file_container").hasClass("hidden-sm")&&$(".file_container").hasClass("hidden-xs")){
+                $(".file_container").removeClass("hidden-sm");
+                $(".file_container").removeClass("hidden-xs");
+                $(".file_container").addClass("visible-sm");
+                $(".file_container").addClass("visible-xs");
+                $(".file_container").addClass("visible-md");
+                $(".file_container").addClass("visible-lg");
+            }
 
             if (file_type != "quiz") {
                 $("#current_iframe_" + content_id).remove();
