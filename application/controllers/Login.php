@@ -60,7 +60,6 @@ class Login extends CI_Controller {
 				// row exist fetch userdata
 				$user=$this->user_model->login($username,$password);
 
-
 				// validate if user assigned to paid group
 				if($user['price'] > '0'){
 

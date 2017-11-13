@@ -66,7 +66,15 @@
             </div>
 
             <form method="post" method="post" action="<?php echo site_url('login/verifylogin'); ?>">
-
+                <?php
+                if ($this->session->flashdata('message')) {
+                    ?>
+                    <div class="alert alert-danger">
+                        <?php echo $this->session->flashdata('message'); ?>
+                    </div>
+                    <?php
+                }
+                ?>
 
                 <?php
                 if ($this->session->flashdata('wrong_credz')) {

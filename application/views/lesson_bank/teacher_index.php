@@ -126,8 +126,7 @@
             $("#lesson_type").show();
         }
     });
-
-    $(".selected_quiz").change(function () {
+    $(document).on('click', ".selected_quiz", function () {
         selected_count = $(document).find('.selected_quiz:checked').length;
         if (selected_count == 1) {
             $("#quiz_import").show();
@@ -141,8 +140,7 @@
         }
     });
 
-
-    $(".lesson_row").click(function () {
+    $(document).on('click', ".lesson_row", function () {
         $(this).siblings(".input_row").eq(0).find(".selected_lesson_class").prop('checked', true);
         $("#view").click();
     });
