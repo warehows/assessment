@@ -57,7 +57,7 @@
             </div>
             <div class="form-group">
                 <h6>Pass Percentage</h6>
-                <input id="pass_percentage" type="number" min="1" class="form-control" name="pass_percentage" required placeholder="Pass Percentage"/>
+                <input id="pass_percentage" type="number" min="1" class="form-control" name="pass_percentage" max="100" required placeholder="Pass Percentage"/>
             </div>
             <div class="form-group">
                 <h6>Score per Question</h6>
