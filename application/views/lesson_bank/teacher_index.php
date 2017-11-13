@@ -88,10 +88,10 @@
                                 <td class="input_row"><input type="checkbox" class="selected_quiz"
                                                              name="selected_quiz[]"
                                                              value="<?php echo $quiz_value['quid'] ?>"/></td>
-                                <td class="quiz_row"><?php echo $quiz_value['quiz_name'] ?></td>
-                                <td class="quiz_row"><?php echo $subject_information[0]['category_name'] ?></td>
-                                <td class="quiz_row"><?php echo $grade_information[0]['level_name'] ?></td>
-                                <td class="quiz_row"><?php echo $user_information['first_name'] ?> <?php echo $user_information['last_name'] ?></td>
+                                <td class="quiz_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$quiz_value['quid'])?>'><?php echo $quiz_value['quiz_name'] ?></td>
+                                <td class="quiz_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$quiz_value['quid'])?>'><?php echo $subject_information[0]['category_name'] ?></td>
+                                <td class="quiz_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$quiz_value['quid'])?>'><?php echo $grade_information[0]['level_name'] ?></td>
+                                <td class="quiz_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$quiz_value['quid'])?>'><?php echo $user_information['first_name'] ?> <?php echo $user_information['last_name'] ?></td>
                             </tr>
                         <?php } ?>
 
@@ -115,7 +115,9 @@
     $("#quiz_import").hide();
 
     $("#quiz_type").hide();
-
+    $(document).on('click', ".quiz_row", function () {
+        window.location = $(this).data("href");
+    });
     $("#content_type").change(function () {
         var content_value = $(this).val();
         if (content_value == "quiz") {
