@@ -83,7 +83,6 @@
 
 <!--                    <input class="btn btn-primary" id="quid" name="quid" type="hidden" value=""/>-->
 
-
                     <table id="quiz_lists" class="table table-bordered table-hover" >
                         <thead>
                         <tr>
@@ -99,6 +98,7 @@
                         <tbody>
 
                         <?php foreach ($all_quizzes as $quiz_key => $quiz_value) { ?>
+
                             <?php $get_current_quiz = $this->quiz_model->get_quiz($quiz_value['content_id']);?>
                             <tr style="cursor:pointer" >
                                 <td class="quiz_input_row">

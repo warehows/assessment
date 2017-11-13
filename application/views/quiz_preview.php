@@ -4,9 +4,11 @@
         font-size: 14px;
         padding: 4px;
     }
-    .navbar.navbar-default{
+
+    .navbar.navbar-default {
         display: none;
     }
+
     .footer_buttons_preview {
         position: fixed;
         bottom: 0px;
@@ -21,8 +23,8 @@
 <div class="container">
 
 
-    <div class="save_answer_signal" id="save_answer_signal2"></div>
-    <div class="save_answer_signal" id="save_answer_signal1"></div>
+    <!--    <div class="save_answer_signal" id="save_answer_signal2"></div>-->
+    <!--    <div class="save_answer_signal" id="save_answer_signal1"></div>-->
 
 
     <div style="float:left;width:auto; ">
@@ -37,11 +39,11 @@
 
     <div class="row" style="margin-top:5px;">
         <div class="col-md-8">
-            <form method="post" action="<?php echo site_url('quiz/submit_quiz/' . $quiz['rid']); ?>" id="quiz_form">
-                <input type="hidden" name="rid" value="<?php echo $quiz['rid']; ?>">
+            <form method="post" action="" id="quiz_form">
+                <!--                <input type="hidden" name="rid" value="--><?php //echo $quiz['qid']; ?><!--">-->
                 <input type="hidden" name="noq" value="<?php echo $quiz['noq']; ?>">
-                <input type="hidden" name="individual_time" id="individual_time"
-                       value="<?php echo $quiz['individual_time']; ?>">
+                <!--                <input type="hidden" name="individual_time" id="individual_time"-->
+                <!--                       value="--><?php //echo $quiz['individual_time']; ?><!--">-->
 
                 <?php
                 $abc = array(
@@ -320,8 +322,6 @@
                 ?>
             </form>
         </div>
-
-
     </div>
 
 
@@ -329,10 +329,10 @@
 
 
 <div class="footer_buttons_preview">
-
-
-    <button class="btn btn-danger" onclick="window.history.go(-1); return false;"
-            style="margin-top:2px;">Back</button>
+    <button class="btn btn-danger btn-block" style="height: 65px;font-size: 26px;"
+            onclick="window.history.go(-1); return false;"
+            style="margin-top:2px;">Back
+    </button>
 </div>
 
 <script>

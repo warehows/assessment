@@ -6,6 +6,9 @@
         text-decoration: none;
         color: black;
     }
+    .lesson_row{
+        cursor: pointer;
+    }
 </style>
 <div class="wrapper">
     <div class="wrapper">
@@ -41,7 +44,7 @@
                             <tr style="cursor:pointer">
                                 <td class="input_row"><input type="checkbox" class="selected_lesson_class" name="selected_lesson[]"
                                            value="<?php echo $value['id'] ?>"/></td>
-                                <td class="lesson_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$value['id'])?>'><?php echo $value['lesson_name'] ?></td>
+                                <td class="lesson_row" data-href='<?php echo base_url('index.php/lessons/view_lesson_folder?lesson_id='.$value['id'].'&author='.$logged_in['uid'])?>'><?php echo $value['lesson_name'] ?></td>
                                 <td class="lesson_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$value['id'])?>'><?php print_r($subject_model->where('cid', $value['subject_id'])[0]['category_name']); ?></td>
                                 <td class="lesson_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$value['id'])?>'><?php echo $value['level_id'] ?></td>
                             </tr>
@@ -63,12 +66,13 @@
                         </thead>
                         <tbody>
                         <?php foreach ($all_quizzes as $key => $value) { ?>
+
                             <tr>
                                 <td class="input_row"><input type="checkbox" class="selected_quiz_class"
                                                              name="selected_quiz[]"
                                                              value="<?php echo $value['quid'] ?>"/></td>
-                                <td class="lesson_row"><?php echo $value['quiz_name'] ?></td>
-                                <td class="lesson_row">Quiz</td>
+                                <td class="lesson_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$value['quid'])?>'><?php echo $value['quiz_name'] ?></td>
+                                <td class="lesson_row" data-href='<?php echo base_url('index.php/quiz/preview/'.$value['quid'])?>'>Quiz</td>
                             </tr>
                         <?php } ?>
 

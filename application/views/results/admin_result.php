@@ -28,19 +28,6 @@
 <div class="wrapper">
     <div class="wrapper">
         <div class="row">
-
-<!--            <select>-->
-<!--                --><?php //foreach($this->grades_model->all() as $grades_key=>$grades_value): ?>
-<!--                    <option value="--><?php //echo $grades_value['lid']?><!--">--><?php //echo $grades_value['level_name']?><!--</option>-->
-<!--                --><?php //endforeach;?>
-<!--            </select>-->
-<!---->
-<!---->
-<!--            <select>-->
-<!--                --><?php //foreach($this->group_model->get_all() as $group_key=>$group_value): ?>
-<!--                    <option value="--><?php //echo $group_value['gid']?><!--">--><?php //echo $group_value['group_name']?><!--</option>-->
-<!--                --><?php //endforeach;?>
-<!--            </select>-->
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <h2>Results</h2>
 

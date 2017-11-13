@@ -23,8 +23,8 @@ class Workspace extends CI_Controller
 
     }
 
-    public function index()
-    {
+    public function index(){
+
         // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
             redirect('login');

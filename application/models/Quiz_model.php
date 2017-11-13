@@ -319,10 +319,14 @@ Class Quiz_model extends CI_Model
 
     function get_options($qids)
     {
+        if($qids){
+            $query = $this->db->query("select * from savsoft_options where qid in ($qids) order by FIELD(savsoft_options.qid,$qids)");
+            return $query->result_array();
+        }else{
+            return false;
+        }
 
 
-        $query = $this->db->query("select * from savsoft_options where qid in ($qids) order by FIELD(savsoft_options.qid,$qids)");
-        return $query->result_array();
 
     }
 
