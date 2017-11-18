@@ -12,14 +12,12 @@
 
 <link rel="stylesheet" href="<?php echo base_url('css/confirm.css'); ?>">
 <?php $current_lesson_data = $this->lessons_model->lesson_by_id($lesson_id)[0]?>
-<?php //print_r($current_lesson_data)?>
 
 
 
 <form action="<?php echo site_url('workspace/teacher_assign_lesson') ?>" method="GET">
     <div class="col-lg-6 col-lg-offset-0 col-md-6">
         <div id="data"></div>
-
     </div>
     <div class="col-lg-6 col-lg-offset-0 col-md-6">
         <div class="form-group">
@@ -29,6 +27,28 @@
         <div class="form-group">
             <h6>Date End</h6>
             <input id="date_end" class="form-control" name="date_end" value="<?php echo $current_lesson_data['assigned_date_end']?>" required placeholder="mm/dd/yyyy"/>
+        </div>
+
+        <h3>For Quizzes</h3>
+        <div class="form-group">
+
+            <div class="form-group">
+                <h6>Duration in (min)</h6>
+                <input id="duration" type="number" min="1" class="form-control" name="duration" required placeholder="Duration"/>
+            </div>
+            <div class="form-group">
+                <h6>Maximum Attempts</h6>
+                <input id="maximum_attempts" type="number" min="1" class="form-control" name="maximum_attempts" required placeholder="Maximum Attempts"/>
+            </div>
+            <div class="form-group">
+                <h6>Pass Percentage</h6>
+                <input id="pass_percentage" type="number" min="1" class="form-control" name="pass_percentage" max="100" required placeholder="Pass Percentage"/>
+            </div>
+            <div class="form-group">
+                <h6>Score per Question</h6>
+                <input id="correct_score" type="number" min="1" class="form-control" name="correct_score" required placeholder="Score per Question"/>
+            </div>
+
         </div>
 
         <input type="hidden" id="section_checked" name="sections[]"/>

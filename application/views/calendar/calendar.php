@@ -162,11 +162,13 @@
         var d = new Date();
         var curr_day = d.getDate().toString().length == 1 ? "0"+d.getDate(): d.getDate();
         var curr_month = d.getMonth().toString().length == 1 ? "0"+d.getMonth(): d.getMonth();
-        var curr_month_default = d.getMonth().toString().length == 1 ? "0"+(parseInt(d.getMonth())+1): d.getMonth();
+
+        var curr_month_default = curr_month.toString().length == 1 ? "0"+(parseInt(d.getMonth())+1): d.getMonth()+1;
         var curr_year = d.getFullYear();
 
         var today = curr_year+"-"+curr_month+"-"+curr_day;
         var default_date = curr_year+"-"+curr_month_default+"-"+curr_day;
+
 
         $('#calendar').fullCalendar({
             events: 'calendar/getEvents',
@@ -292,7 +294,7 @@
             .done(function(data) {
                 console.log(data);
             });
-            
+
             $('#calendar').fullCalendar('addEventSource',{url: 'calendar/getEvents'})
         });
 

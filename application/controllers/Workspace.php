@@ -66,6 +66,11 @@ class Workspace extends CI_Controller
         $lesson_id = $requests['lesson_id'];
         $grades = explode(",",$requests['grades'][0]);
         $lesson_assigned_ids = array();
+        $duration = $requests['duration'];
+        $maximum_attempts = $requests['maximum_attempts'];
+        $pass_percentage = $requests['pass_percentage'];
+        $correct_score = $requests['correct_score'];
+
 
         if($this->lessons_model->check_if_assigned($lesson_id)){
             $clear_data = array(
@@ -82,9 +87,13 @@ class Workspace extends CI_Controller
                 'lesson_id' => $lesson_id,
                 'workspace_id' => $workspace_id,
                 'uid' => $logged_in['uid'],
-                'gid' => $requests['sections'][0],
+                'gid' => $value,
                 'date_start' => $date_start,
                 'date_end' => $date_end,
+                'duration' => $duration,
+                'maximum_attempts' => $maximum_attempts,
+                'pass_percentage' => $pass_percentage,
+                'correct_score' => $correct_score,
             );
 
             if($teacher_workspace_model = $this->workspace_model->insert($data)){
@@ -96,6 +105,8 @@ class Workspace extends CI_Controller
             }
 
         }
+
+
         $all_lesson_contents_by_id = array("lesson_id"=>$lesson_id);
 
         $current_lesson_contents = $this->lessons_model->all_lesson_contents_by_id($all_lesson_contents_by_id);
