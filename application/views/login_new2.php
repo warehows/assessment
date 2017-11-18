@@ -51,12 +51,12 @@
 
 <div class="container">
     <div class="row">
-        <div class="modified_separator col-lg-7 col-md-6 hidden-sm hidden-xs">
+        <div class="modified_separator col-lg-8 col-md-6 hidden-sm hidden-xs">
             <div class="system_logo_container">
                 <img src="<?php echo base_url('css/new_material/img/brainee_home2.jpg')?>"/>
             </div>
         </div>
-        <div class="form_container col-lg-5 col-md-6 col-sm-12 col-xs-12">
+        <div class="form_container col-lg-4 col-md-6 col-sm-12 col-xs-12">
             <h2 class="school_title">St. Therese Private School</h2>
 
             <p class="system_title">Learning Management System</p>

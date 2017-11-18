@@ -142,6 +142,9 @@ function echo_file_li($root_link, $lesson_contents_value, $folder_location, $bas
         $(".tab-pane").eq(0).addClass("active");
         $(".button_for_folders").eq(0).removeClass("btn-default");
         $(".button_for_folders").eq(0).addClass("btn-primary");
+        $(".button_for_folders").click(function(){
+            $(".iframe_container").empty();
+        });
         $(".toggle_button").click(function () {
             if(!$(".file_container").hasClass("hidden-sm")&&!$(".file_container").hasClass("hidden-xs")){
                 $(".file_container").removeClass("visible-sm");

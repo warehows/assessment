@@ -16,7 +16,9 @@
         width: 100%;
         border-top: 1px solid #dddddd;
     }
-
+    .container{
+        margin-bottom: 70px;
+    }
 
 </style>
 
@@ -329,7 +331,7 @@
 
 
 <div class="footer_buttons_preview">
-    <button class="btn btn-danger btn-block" style="height: 65px;font-size: 26px;"
+    <button class="btn btn-danger btn-block" style="height: 45px;font-size: 20px;"
             onclick="window.history.go(-1); return false;"
             style="margin-top:2px;">Back
     </button>

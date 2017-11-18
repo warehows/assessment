@@ -96,6 +96,7 @@ function multi_in_array($needle, $haystack, $key) {
                         <?php if($user_value['percentage_obtained']){$total_percentage = $user_value['percentage_obtained']; }else{ $total_percentage = 0; } ?>
                         <?php if($user_value['maximum_attempts']){$attempted = "Yes"; }else{ $attempted = "No"; } ?>
                         <?php if($user_value['score_obtained']!==null){$score_obtained = $user_value['score_obtained']; }else{ $score_obtained = " "; } ?>
+                        <?php $exploded_section = explode(" ",$user_value['group_name']); ?>
 
                         <?php if(!$user_value['quid']):?>
                             <tr>
@@ -103,7 +104,7 @@ function multi_in_array($needle, $haystack, $key) {
                                     <td><?php print_r($user_value['first_name']); ?></td>
                                     <td><?php print_r($user_value['last_name']); ?></td>
                                     <td><?php print_r($user_value['level_name']); ?></td>
-                                    <td><?php print_r(ucfirst($user_value['group_name'])); ?></td>
+                                    <td><?php print_r(ucfirst($exploded_section[2])); ?></td>
                                     <td><?php echo $score_obtained ?></td>
                                     <td><?php echo $total_score ?></td>
                                     <td><?php echo $total_percentage ?>%</td>
@@ -118,7 +119,7 @@ function multi_in_array($needle, $haystack, $key) {
                                 <td><?php print_r($user_value['first_name']); ?></td>
                                 <td><?php print_r($user_value['last_name']); ?></td>
                                 <td><?php print_r($user_value['level_name']); ?></td>
-                                <td><?php print_r(ucfirst($user_value['group_name'])); ?></td>
+                                <td><?php print_r(ucfirst($exploded_section[2])); ?></td>
                                 <td><?php echo $score_obtained ?></td>
                                 <td><?php echo $total_score ?></td>
                                 <td><?php echo $total_percentage ?>%</td>
@@ -147,7 +148,9 @@ function multi_in_array($needle, $haystack, $key) {
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Search ' + title + '" />');
         });
-        var table = $('#list').DataTable();
+        var table = $('#list').DataTable({
+            "order": [[ 5, "asc" ]]
+        });
         table.columns().every(function () {
             var that = this;
 

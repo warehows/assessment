@@ -39,7 +39,7 @@ if (array_key_exists("quid", $post)) {
            } ?>"/>
 </div>
 <?php
-$semesterData = array(1 => 'First Semester', 2 => 'Second Semester', 3 => 'Third Semester', 4 => 'Fourth Semester');
+$semesterData = array(1 => 'First Trimester', 2 => 'Second Trimester', 3 => 'Third Trimester', 4 => 'Fourth Trimester');
 $currentSem = isset($quiz_detail['semester']) ? $quiz_detail['semester'] : '';
 ?>
 <div class="form-group">
