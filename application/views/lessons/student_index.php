@@ -100,7 +100,10 @@ if (!$lesson_for_students) {
                         <tbody>
                         <?php if ($lesson_for_students): ?>
                             <?php foreach ($lesson_for_students as $lessons_key => $lessons_value) { ?>
-                                <tr class="quiz_result_preview" data-href=''>
+                                <?php print_r($lessons_value); ?>
+                                <?php $data_to_pass['lesson_id'] = $lessons_value['id'];
+                                $data_to_pass['author'] =$lessons_value['author'];?>
+                                <tr class="quiz_result_preview" data-href='<?php echo site_url('lessons/view_lesson_folder')."?".http_build_query($data_to_pass)?>'>
 
                                     <td class="lesson_row"><?php echo $lessons_value['lesson_name'] ?></td>
                                     <td class="lesson_row"><?php print_r($subject_model->where('cid', $lessons_value['subject_id'])[0]['category_name']); ?></td>
@@ -124,11 +127,11 @@ if (!$lesson_for_students) {
 
         $(".quiz_result_preview").click(function() {
 
-            if($(this).data("value")){
+
                 window.location = $(this).data("href");
-            }else{
-                alert("This quiz has no assigned sections please try again.");
-            }
+
+
+
 
         });
         // Setup - add a text input to each footer cell
