@@ -126,13 +126,7 @@ if (!$lesson_for_students) {
     $(document).ready(function () {
 
         $(".quiz_result_preview").click(function() {
-
-
                 window.location = $(this).data("href");
-
-
-
-
         });
         // Setup - add a text input to each footer cell
         $('#lesson_lists tfoot th').each(function () {

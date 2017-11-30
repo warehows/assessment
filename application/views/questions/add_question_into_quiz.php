@@ -148,7 +148,9 @@
             var title = $(this).text();
             $(this).html('<input type="text" placeholder="Search ' + title + '" />');
         });
-        var table = $('#lesson_lists').DataTable();
+        var table = $('#lesson_lists').DataTable({
+            "bSort": false,
+        });
         table.columns().every(function () {
             var that = this;
 

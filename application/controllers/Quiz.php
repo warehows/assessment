@@ -1041,11 +1041,6 @@ class Quiz extends CI_Controller
             redirect('quiz/quiz_detail/' . $data['quiz']['quid']);
         }
 
-//        print_r($data['quiz']);
-
-
-
-
         // end date/time
         if (($data['quiz']['start_time'] + ($data['quiz']['duration'] * 60)) < time()) {
             $this->quiz_model->submit_result($rid);
