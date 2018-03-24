@@ -33,7 +33,7 @@ class Login extends CI_Controller {
 		$data['recent_quiz']=$this->quiz_model->recent_quiz('5');
 
 		$this->load->view('new_material/header_login',$data);
-		$this->load->view('login_new2',$data);
+		$this->load->view('login_new3',$data);
 		$this->load->view('new_material/footer',$data);
 
 	}
@@ -51,9 +51,10 @@ class Login extends CI_Controller {
 
 	public function verifylogin(){
 
-		$username=$this->input->post('email');
-		$password=$this->input->post('password');
-
+		$username=$this->input->get('email');
+		$password=$this->input->get('password');
+//		print_r($username);
+//		exit;
 		if($this->user_model->check_log($username)){
 			if($this->user_model->login($username,$password)){
 

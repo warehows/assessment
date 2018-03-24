@@ -207,7 +207,27 @@ Class Lessons_model extends CI_Model
         $count_row = $query->num_rows();
 
         if ($count_row > 0) {
-            return false;
+            if($data['content_type']=="quiz"){
+                $this->db
+                    ->where('lesson_id', $data['lesson_id'])
+                    ->where('content_id', $data['content_id'])
+                ;
+                $query2 = $this->db->get('lesson_contents');
+                $count_row2 = $query2->num_rows();
+                if ($count_row2 > 0) {
+                    return false;
+                } else {
+                    $this->db->insert('lesson_contents', $data);
+                    $id = $this->db->insert_id($data);
+                    return $data;
+                }
+            }else{
+                $this->db->where("lesson_id", $data['lesson_id'])->where("content_name", $data['content_name']);
+                date_default_timezone_set('Asia/Manila');
+                $data['date_updated'] = date("Y-m-d H:i:s");
+                $this->db->update("lesson_contents", $data);
+                return $data;
+            }
         } else {
             if($data['content_type']=="quiz"){
                 $this->db
@@ -228,11 +248,7 @@ Class Lessons_model extends CI_Model
                 $id = $this->db->insert_id($data);
                 return $data;
             }
-
         }
-
-
-
     }
 
     function duplicate($data)

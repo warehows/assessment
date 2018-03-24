@@ -118,7 +118,6 @@
                     }
                 }).done(function (values) {
                     values = JSON.parse(values);
-
                     to_update_folder = values['folder_name'];
                     to_update_id = values['lesson_id'];
 
