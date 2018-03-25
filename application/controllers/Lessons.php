@@ -350,6 +350,9 @@ class Lessons extends CI_Controller
 
     public function upload_files()
     {
+        $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+        print_r($actual_link);
+        exit;
         // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
             redirect('login');

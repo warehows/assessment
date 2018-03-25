@@ -340,7 +340,7 @@ Class Lessons_model extends CI_Model
                     mkdir($folder, 0777);
                     umask($old);
                 }
-                $document_root = $_SERVER['DOCUMENT_ROOT'] . "/assessment";
+                $document_root = $_SERVER['DOCUMENT_ROOT'] . "/brainee";
                 $file = $document_root . "/upload/lessons/" . $value . "_" . $lesson_content_value['folder_name'] . "/" . $lesson_content_value['content_name'];
                 $newfile = $document_root . "/upload/lessons/" . $new_lesson_id . "_" . $lesson_content_value['folder_name'] . "/" . $lesson_content_value['content_name'];
                 copy($file, $newfile);
