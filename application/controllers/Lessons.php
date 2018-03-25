@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Lessons extends CI_Controller
 {
     public $css_directory = "css/new_material/cdn/";
-    public $dev_site = "false";
+    public $dev_site = "";
     function __construct()
     {
         parent::__construct();
@@ -19,6 +19,7 @@ class Lessons extends CI_Controller
         $this->load->model("user_model");
         $this->load->model("lessons_model");
         $this->load->model("workspace_model");
+        $this->dev_site = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
 
     }
 
@@ -350,9 +351,6 @@ class Lessons extends CI_Controller
 
     public function upload_files()
     {
-        $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-        print_r($actual_link);
-        exit;
         // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
@@ -364,7 +362,7 @@ class Lessons extends CI_Controller
         }
 
 
-        if($this->dev_site=="true"){
+        if($this->dev_site=="http://warehows.net"){
             $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/develop/brainee/upload/lessons/";
         }else{
             $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
@@ -424,7 +422,7 @@ class Lessons extends CI_Controller
             redirect('login');
         }
         $post = $_REQUEST;
-        if($this->dev_site=="true"){
+        if($this->dev_site=="http://warehows.net"){
             $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/develop/brainee/upload/lessons/";
         }else{
             $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
