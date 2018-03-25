@@ -10,8 +10,20 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT id, firstname, lastname FROM MyGuests";
+
+date_default_timezone_set("Asia/Manila");
+$day_minus = date("d")-1;
+$date_minus = date("Y-m-").$day_minus;
+$date_now = date("Y-m-d");
+$sql = "SELECT * FROM `lesson_contents` WHERE date_updated LIKE '%$date_minus%' OR date_updated LIKE '%$date_now%'";
+
 $result = $conn->query($sql);
+
+$result_array = array();
+echo "<pre>";
+foreach($result as $result_key=>$result_value){
+
+}
 
 $conn->close();
 ?>
