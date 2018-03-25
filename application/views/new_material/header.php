@@ -4,64 +4,47 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click</title>
-    <link href="<?php echo base_url('css/new_material/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-    <link href="<?php echo base_url('css/new_material/css/Contact-Form-Clean.css'); ?>" rel="stylesheet">
-    <link href="<?php echo base_url('css/new_material/css/Footer-Clean.css'); ?>" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link href="<?php echo base_url('css/new_material/css/Navigation-Clean1.css'); ?>" rel="stylesheet">
-    <link href="<?php echo base_url('css/new_material/css/MUSA_form-wizard.css'); ?>" rel="stylesheet">
-    <link href="<?php echo base_url('css/new_material/css/styles.css'); ?>" rel="stylesheet">
-    <link href="<?php echo base_url('css/Navigation-Clean1.css'); ?>" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <script src="<?php echo base_url('js/basic.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo base_url('js/jquery.js'); ?>"></script>
+    <title>Brainee</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
+    <link rel="stylesheet" href="<?php echo base_url('css/version_1/styles.min.css'); ?>">
+    <style>
+        body{
+            background-image:url('<?php echo base_url('images/bg_new.jpg'); ?>');
+        }
+    </style>
 </head>
 
 <body>
-
-<nav class="navbar navbar-inverse navbar-fixed-top navigation-clean" style="background-color: #ff4e3b!important;">
-    <div class="container">
-        <div class="navbar-header"><img style="height: 45px!important;" class="navbar-brand image_logo"
-                                        src="<?php echo base_url('css/new_material/img/brainee.png'); ?>"
-                                        alt="School Logo">
-            <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span
-                    class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
-                    class="icon-bar"></span></button>
+<div>
+    <nav class="navbar navbar-default navigation-clean">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="#" class="navbar-brand navbar-link"><img src="<?php echo base_url('images/brainee.png'); ?>" /></a>
+                <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            </div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li role="presentation"><a href="#">Home </a></li>
+                    <li role="presentation"><a href="#">eBooks </a></li>
+                    <li role="presentation"><a href="#">Lesson Bank</a></li>
+                    <li role="presentation"><a href="#">My Lesson</a></li>
+                    <li role="presentation"><a href="#">My Test</a></li>
+                    <li role="presentation"><a href="#">Result </a></li>
+                    <li role="presentation"><a href="#">Partners </a></li>
+                    <li role="presentation"><a href="#">Contact Us</a></li>
+                    <li class="dropdown"><a data-toggle="dropdown" aria-expanded="true" href="#" class="dropdown-toggle">Settings <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li role="presentation"><a href="#">Change Password</a></li>
+                            <li role="presentation"><a href="<?php echo site_url('user/logout'); ?>">Logout </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="collapse navbar-collapse" id="navcol-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li role="presentation"><a href="<?php echo site_url('dashboard'); ?>">Home</a></li>
-                <li role="presentation"><a href="<?php echo site_url('lessonbank'); ?>">Lesson Bank</a></li>
-                <li role="presentation"><a href="<?php echo site_url('lessons'); ?>">My Lesson</a></li>
-
-                <li role="presentation"><a href="<?php echo site_url('assign'); ?>">My Quiz</a></li>
-                <li role="presentation"><a href="<?php echo site_url('calendar'); ?>">My Task</a></li>
-                <li role="presentation"><a href="<?php echo site_url('result'); ?>">Report</a></li>
-
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu" style="background-color: #ff4e3b!important;">
-                        <li role="presentation"><a href="<?php echo site_url('user'); ?>">List</a></li>
-                        <li role="presentation"><a href="<?php echo site_url('user/new_user'); ?>">New User</a></li>
-                        <li role="presentation"><a href="<?php echo site_url('qbank/category_list'); ?>">Subject</a>
-                        </li>
-                        <li role="presentation"><a href="<?php echo site_url('qbank/level_list'); ?>">Grade Level</a>
-                        </li>
-                        <li role="presentation"><a href="<?php echo site_url('user/group_list'); ?>">Group</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Account<span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu" style="background-color: #ff4e3b!important;">
-                        <li role="presentation"><a href="<?php echo site_url('user/edit_user'); ?>">Change Password</a>
-                        </li>
-                        <li role="presentation"><a href="<?php echo site_url('user/logout'); ?>">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
+    </nav>
+</div>

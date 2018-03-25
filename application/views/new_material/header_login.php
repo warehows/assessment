@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
     <link href="<?php echo base_url('css/version_1/styles.min.css'); ?>" rel="stylesheet">
     <script type="text/javascript" src="<?php echo base_url('js/jquery.js'); ?>"></script>
+    <style>
+        body{
+            background-image:url('<?php echo base_url('images/bg_new.jpg'); ?>');
+        }
+    </style>
 </head>
 
 <body>

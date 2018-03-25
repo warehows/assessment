@@ -1,77 +1,60 @@
-
-<div class="wrapper">
-    <div class="container">
-        <div>
-            <div class="row" id="vision_mission">
-                <div class="col-lg-4 col-md-5 centered" align="center" style="padding:20px;">
-                    <h3>St. Therese Private School </h3>
-                    <h4>Learning Management System </h4><img src="<?php echo base_url('images/cura-copy.png'); ?>" width="350px" /></div>
-                <div class="col-lg-8 col-md-7" style="padding:20px;">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3><strong>MISSION and VISION</strong> </h3>
-                            <p class="text-justify">We, the St. Therese Private School of Mandaluyong, envision a learning community committed to develop the young to become Confident, Compassionate, Collaborative and prayerful Christians who are prepared to meet the challenges of higher learning and of the present life. <br> <br>
-Inspired by the holy life of St. Therese of the Child Jesus, we provide quality education through a holistic formation that animates the young to cultivate utmost respect of individuality amids differences.</p>
-                        </div>
-                    </div>
-  <!--                  <div class="row">
-                        <div class="col-md-12">
-                            <h3><strong>MISSION:</strong> </h3>
-                            <p class="text-justify">The Saint Therese Private School is committed to prepare its students to become readily functioning, efficient and effective basic education graduates who are responsible, committed, creative, dedicated critical thinkers, and good
-                                leaders equipped with ideas, intrinsic values, and dexterity in action, communication, and leadership. </p>
-                        </div>
-                    </div>-->
+<div class="row">
+    <div class="col-sm-8">
+        <div class="col-sm-12 simple-slider">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" style="background-image:url(<?php echo base_url('images/bg_new.jpg'); ?>);"></div>
+                    <div class="swiper-slide" style="background-image:url(<?php echo base_url('images/hero-background-technology.jpg'); ?>);"></div>
+                    <div class="swiper-slide" style="background-image:url(<?php echo base_url('images/new_wallpaper.jpg'); ?>);"></div>
+                    <div class="swiper-slide" style="background-image:url(<?php echo base_url('images/Wallpapers1366x768.jpg'); ?>);"></div>
                 </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
-            <div class="row">
-                <div class="col-md-12 clouds">
-                     <section id="first-section" style="positon: relative">
-                        <div class="img-animation wow bounceInRight" style="visibility: visible; animation-name: bounceInRight;"><img src="<?php echo base_url('images/clouds-lg.png'); ?>" class="clouds-lg" /></div>
-
-                        <div id="wrapper">
-                            <div class="train"></div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-            <!--<div data-ride="carousel" class="carousel slide" id="carousel-1">
-                <div role="listbox" class="carousel-inner">
-                    <div class="item active"><img src="http://placeholdit.imgix.net/~text?txtsize=42&amp;txt=Carousel+Image&amp;w=1400&amp;h=600" alt="Slide Image" /></div>
-                    <div class="item"><img src="http://placeholdit.imgix.net/~text?txtsize=42&amp;txt=Carousel+Image&amp;w=1400&amp;h=600" alt="Slide Image" /></div>
-                    <div class="item"><img src="http://placeholdit.imgix.net/~text?txtsize=42&amp;txt=Carousel+Image&amp;w=1400&amp;h=600" alt="Slide Image" /></div>
-                </div>
-                <div><a href="#carousel-1" role="button" data-slide="prev" class="left carousel-control"><i class="glyphicon glyphicon-chevron-left"></i><span class="sr-only">Previous</span></a>
-                    <a href="#carousel-1" role="button" data-slide="next" class="right carousel-control"><i class="glyphicon glyphicon-chevron-right"></i><span class="sr-only">Next</span></a>
-                </div>
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-1" data-slide-to="1"></li>
-                    <li data-target="#carousel-1" data-slide-to="2"></li>
-                </ol>
-            </div>-->
         </div>
     </div>
 
-</div>
-<div class="footer-clean">
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-lg-push-9 col-md-3 col-md-push-9 item social">
-                    <p class="copyright">Powered by Click Innovation © 2017</p>
-                </div>
+    <div class="col-sm-4" style="background-color:#ff1a1f;color:white;font-size:25px;text-align:center;">
+
+        <h3 style="color:white;letter-spacing:2px;text-transform: uppercase;">
+            Announcement</h3>
+    </div>
+
+    <div class="col-sm-4" style="box-shadow:3px 3px 4px rgba(0,0,0,0.53);height:330px;background-color:#e9e9e9;color:white;font-size:25px;text-align:center;"></div>
+
+
+
+</div
+
+<div class="features-boxed"></div>
+<div class="features-boxed">
+    <div class="container">
+        <div class="intro">
+            <h2 class="text-center">Features </h2>
+            <p class="text-center">Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat, pellentesque ut laoreet vitae.</p>
+        </div>
+        <div class="row features">
+            <div class="col-lg-3 col-sm-6 item">
+                <a href="about.html"><div class="box"><i class="glyphicon glyphicon-user icon"></i>
+                        <h3 class="name">About Us</h3>
+                        <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu.</p><a href="#" class="learn-more">Learn more »</a></div>
+                </a></div>
+            <div class="col-lg-3 col-sm-6 item">
+                <div class="box"><i class="glyphicon glyphicon-calendar icon"></i>
+                    <h3 class="name">Calendar</h3>
+                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu.</p><a href="#" class="learn-more">Learn more »</a></div>
+            </div>
+            <div class="col-lg-3 col-sm-6 item">
+                <div class="box"><i class="glyphicon glyphicon-bell icon"></i>
+                    <h3 class="name">Notifications </h3>
+                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu.</p><a href="#" class="learn-more">Learn more »</a></div>
+            </div>
+            <div class="col-lg-3 col-sm-6 item">
+                <div class="box"><i class="glyphicon glyphicon-time icon"></i>
+                    <h3 class="name">School Events</h3>
+                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu.</p><a href="#" class="learn-more">Learn more »</a></div>
             </div>
         </div>
-    </footer>
+    </div>
 </div>
-
-<script src="<?php echo base_url("css/new_material/js/jquery.min.js"); ?>"></script>
-<script src="<?php echo base_url("css/new_material/bootstrap/js/bootstrap.min.js"); ?>"></script>
-<script src="<?php echo base_url("css/new_material/js/bs-animation.js"); ?>"></script>
-<script src="<?php echo base_url("css/new_material/MUSA_form-wizard.js"); ?>"></script>
-<script src="<?php echo base_url("css/new_material/js/custom.js"); ?>"></script>
-
-
-
-
-
