@@ -29,12 +29,12 @@
             </div>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li role="presentation"><a href="#">Home </a></li>
+                    <li role="presentation"><a href="<?php echo site_url('dashboard'); ?>">Home </a></li>
                     <li role="presentation"><a href="#">eBooks </a></li>
-                    <li role="presentation"><a href="#">Lesson Bank</a></li>
-                    <li role="presentation"><a href="#">My Lesson</a></li>
-                    <li role="presentation"><a href="#">My Test</a></li>
-                    <li role="presentation"><a href="#">Result </a></li>
+                    <li role="presentation"><a href="<?php echo site_url('lessonbank'); ?>">Lesson Bank</a></li>
+                    <li role="presentation"><a href="<?php echo site_url('lessons'); ?>">My Lesson</a></li>
+                    <li role="presentation"><a href="<?php echo site_url('assign'); ?>">My Test</a></li>
+                    <li role="presentation"><a href="<?php echo site_url('result'); ?>">Result </a></li>
                     <li role="presentation"><a href="#">Partners </a></li>
                     <li role="presentation"><a href="#">Contact Us</a></li>
                     <li class="dropdown"><a data-toggle="dropdown" aria-expanded="true" href="#" class="dropdown-toggle">Settings <span class="caret"></span></a>
