@@ -36,40 +36,7 @@ if (!$lesson_for_students) {
     $lesson_for_students = $this->lessons_model->like("lesson_assigned_ids", $logged_in['gid']);
 }
 ?>
-<!--                    <table id="lesson_lists" class="table table-bordered table-hover">-->
-<!--                        <thead>-->
-<!--                        <tr>-->
-<!--                            <th style="display: none"></th>-->
-<!--                            <th>Lesson Name</th>-->
-<!--                            <th>Subject</th>-->
-<!--                            <th>Date Assigned</th>-->
-<!--                            <th>Expiration Date</th>-->
-<!---->
-<!--                        </tr>-->
-<!--                        </thead>-->
-<!--                        <tbody>-->
-<!--                        <!--                        -->--><?php ////print_r($lesson_for_students);?>
-<!--                        --><?php //if ($lesson_for_students): ?>
-<!--                            --><?php //foreach ($lesson_for_students as $lessons_key => $lessons_value) { ?>
-<!--                                <!--                                -->--><?php ////$value = $this->lessons_model->lesson_by_id($lessons_value); ?>
-<!--                                <!--                                -->--><?php ////$value = $value[0]; ?>
-<!---->
-<!--                                <tr style="cursor:pointer">-->
-<!--                                    <td style="display: none" class="input_row"><input type="checkbox"-->
-<!--                                                                                       class="selected_lesson_class"-->
-<!--                                                                                       name="selected_lesson[]"-->
-<!--                                                                                       value="--><?php //echo $lessons_value['id'] ?><!--"/>-->
-<!--                                    </td>-->
-<!--                                    <td class="lesson_row">--><?php //echo $lessons_value['lesson_name'] ?><!--</td>-->
-<!--                                    <td class="lesson_row">--><?php //print_r($subject_model->where('cid', $lessons_value['subject_id'])[0]['category_name']); ?><!--</td>-->
-<!--                                    <td class="lesson_row">--><?php //echo $lessons_value['assigned_date_start'] ?><!--</td>-->
-<!--                                    <td class="lesson_row">--><?php //echo $lessons_value['assigned_date_end'] ?><!--</td>-->
-<!--                                </tr>-->
-<!--                            --><?php //} ?>
-<!--                        --><?php //endif; ?>
-<!---->
-<!--                        </tbody>-->
-<!--                    </table>-->
+
 <div class="wrapper">
     <div class="wrapper">
         <div class="row">
@@ -166,4 +133,4 @@ if (!$lesson_for_students) {
 
         });
     });
-</script> 
+</script>
