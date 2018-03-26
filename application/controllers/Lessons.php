@@ -349,6 +349,26 @@ class Lessons extends CI_Controller
 
     }
 
+    public function upload_files_to_live(){
+        $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/develop/brainee/upload/lessons/";
+        $folder_to_create = $_POST['lesson_id'] . "_" . $_POST['folder_name'];
+        $folder = $output_dir . $folder_to_create;
+        if (!file_exists($folder)) {
+
+            $old = umask(0);
+            mkdir($folder,0777);
+            umask($old);
+        }
+        if (!is_array($_FILES["myfile"]["name"])) //single file
+        {
+            $fileName = $_FILES["myfile"]["name"];
+            move_uploaded_file($_FILES["myfile"]["tmp_name"], $folder . "/" . $fileName);
+            array_push($curl_file_path_array,$folder . "/" . $fileName);
+
+            $ret[] = $fileName;
+        }
+    }
+
     public function upload_files()
     {
         // redirect if not loggedin
@@ -381,10 +401,14 @@ class Lessons extends CI_Controller
 
         $error = $_FILES["myfile"]["error"];
 
+        $curl_file_path_array = array();
+
         if (!is_array($_FILES["myfile"]["name"])) //single file
         {
             $fileName = $_FILES["myfile"]["name"];
             move_uploaded_file($_FILES["myfile"]["tmp_name"], $folder . "/" . $fileName);
+            array_push($curl_file_path_array,$folder . "/" . $fileName);
+
             $ret[] = $fileName;
         } else  //Multiple files, file[]
         {
@@ -392,10 +416,33 @@ class Lessons extends CI_Controller
             for ($i = 0; $i < $fileCount; $i++) {
                 $fileName = $_FILES["myfile"]["name"][$i];
                 move_uploaded_file($_FILES["myfile"]["tmp_name"][$i], $folder . "/" . $fileName);
+                array_push($curl_file_path_array,$folder . "/" . $fileName);
                 $ret[] = $fileName;
             }
 
         }
+        if($this->dev_site=="http://warehows.net"){
+
+        }else{
+            $target_url = "http://warehows.net/develop/brainee/index.php/lessons/upload_files_to_live";
+            foreach($curl_file_path_array as $curl_file_path_array_key=>$curl_file_path_array_value){
+                if (function_exists('curl_file_create')) { // php 5.5+
+                    $cFile = curl_file_create($curl_file_path_array_value);
+                } else { //
+                    $cFile = '@' . realpath($curl_file_path_array_value);
+                }
+                $post = array('extra_info' => '123456','myfile'=> $cFile);
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL,$target_url);
+                curl_setopt($ch, CURLOPT_POST,1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+                $result=curl_exec ($ch);
+                curl_close ($ch);
+            }
+        }
+
+
+
         $data = array("lesson_id" => $_POST['lesson_id'], "folder_name" => $_POST['folder_name'], "author" => $_POST['author']);
         $data = $this->lessons_model->get_current_folder($data);
         print_r(json_encode($data));
