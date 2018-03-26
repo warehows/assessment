@@ -431,7 +431,7 @@ class Lessons extends CI_Controller
                 } else { //
                     $cFile = '@' . realpath($curl_file_path_array_value);
                 }
-                $post = array('extra_info' => '123456','myfile'=> $cFile);
+                $post = array('lesson_id' => $_POST['lesson_id'],'folder_name'=>$_POST['folder_name'],'myfile'=> $cFile);
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL,$target_url);
                 curl_setopt($ch, CURLOPT_POST,1);
