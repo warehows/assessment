@@ -12,18 +12,52 @@ if ($conn->connect_error) {
 
 
 date_default_timezone_set("Asia/Manila");
-$day_minus = date("d")-1;
-$date_minus = date("Y-m-").$day_minus;
+$day_minus = date("d") - 1;
+$date_minus = date("Y-m-") . $day_minus;
 $date_now = date("Y-m-d");
-$sql = "SELECT * FROM `lesson_contents` WHERE date_updated LIKE '%$date_minus%' OR date_updated LIKE '%$date_now%'";
+//$sql = "SELECT * FROM `lesson_contents` WHERE date_updated LIKE '%$date_minus%' OR date_updated LIKE '%$date_now%'";
+$sql = "SELECT * FROM `lesson_contents` WHERE date_updated LIKE '%$date_now%'";
 
 $result = $conn->query($sql);
 
 $result_array = array();
-echo "<pre>";
-foreach($result as $result_key=>$result_value){
+//$server_url = 'http://warehows.net/develop/brainee/upload/lessons/368_Engage/leen.jpg';
+$server_url = 'http://warehows.net/develop/brainee/upload/lessons/';
+//$local_url = 'http://localhost/brainee/upload/lessons/370_Engage/leen.jpg';
+$local_url = 'http://localhost/brainee/';
+$output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
 
+foreach ($result as $result_key => $result_value) {
+//    print_r($result_value);
+    $directory = $output_dir . $result_value['lesson_id'].'_'.$result_value['folder_name'];
+    $server_directory = $server_url . $result_value['lesson_id'].'_'.$result_value['folder_name'];
+    $copy = $directory."/".$result_value['content_name'];
+    $server_copy = $server_directory."/".$result_value['content_name'];
+    $ch = curl_init($server_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, TRUE);
+    curl_setopt($ch, CURLOPT_NOBODY, TRUE);
+
+    $data = curl_exec($ch);
+    $server_size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+
+    curl_close($ch);
+
+    if (!is_dir($directory)) {
+        mkdir($directory);
+        copy($server_copy,$copy);
+
+    } else {
+        if (!file_exists($copy)) {
+            copy($server_copy,$copy);
+        } else {
+            $local_size = filesize($copy);
+            if ($local_size != $server_size) {
+                copy($server_copy,$copy);
+            }
+        }
+    }
 }
-
-$conn->close();
+//echo '<img src="upload/lessons/368_Engage/leen.jpg">';
+//echo '<img src="upload/lessons/370_Engage/leen.jpg">';
 ?>
