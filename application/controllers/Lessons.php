@@ -26,6 +26,7 @@ class Lessons extends CI_Controller
     public function index()
     {
         // redirect if not loggedin
+        ini_set('max_execution_time', 300);
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
         }
