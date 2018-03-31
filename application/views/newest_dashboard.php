@@ -3,9 +3,9 @@
         <div class="col-md-8">
             <div data-ride="carousel" class="carousel slide" id="carousel-1">
                 <div role="listbox" class="carousel-inner">
-                    <div class="item active"><img src="http://placeholdit.imgix.net/~text?txtsize=42&amp;txt=Carousel+Image&amp;w=1400&amp;h=600" alt="Slide Image" /></div>
-                    <div class="item"><img src="http://placeholdit.imgix.net/~text?txtsize=42&amp;txt=Carousel+Image&amp;w=1400&amp;h=600" alt="Slide Image" /></div>
-                    <div class="item"><img src="http://placeholdit.imgix.net/~text?txtsize=42&amp;txt=Carousel+Image&amp;w=1400&amp;h=600" alt="Slide Image" /></div>
+                    <div class="item active"><img src="<?php echo base_url('images/banner/banner1.jpg'); ?>" alt="Slide Image" /></div>
+                    <div class="item"><img src="<?php echo base_url('images/banner/banner2.jpg'); ?>" alt="Slide Image" /></div>
+                    <div class="item"><img src="<?php echo base_url('images/banner/banner3.jpg'); ?>" alt="Slide Image" /></div>
                 </div>
                 <div><a href="#carousel-1" role="button" data-slide="prev" class="left carousel-control"><i class="glyphicon glyphicon-chevron-left"></i><span class="sr-only">Previous</span></a>
                     <a href="#carousel-1" role="button" data-slide="next" class="right carousel-control"><i class="glyphicon glyphicon-chevron-right"></i><span class="sr-only">Next</span></a>
