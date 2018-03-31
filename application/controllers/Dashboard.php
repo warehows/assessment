@@ -45,6 +45,25 @@ class Dashboard extends CI_Controller
             redirect('');
         }
     }
+    public function about_us(){
+        $logged_in = $this->session->userdata('logged_in');
+        $data['title'] = $this->lang->line('dashboard');
+        $data['result'] = $this->user_model->user_list(0);
+        $data['num_users'] = $this->user_model->num_users();
+        $data['num_qbank'] = $this->qbank_model->num_qbank();
+        $data['num_quiz'] = $this->quiz_model->num_quiz();
+        if ($logged_in['su'] == 1) {
+            $this->load->view('new_material/header', $data);
+            $this->load->view('newest_dashboard', $data);
+            $this->load->view('material_part/footer_material', $data);
+        } elseif ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+            $this->load->view('newest_dashboard', $data);
+            $this->load->view('material_part/footer_material', $data);
+        } else {
+            redirect('');
+        }
+    }
 
     public function student($limit = '0')
     {

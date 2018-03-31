@@ -365,7 +365,6 @@ class Lessons extends CI_Controller
             move_uploaded_file($_FILES["myfile"]["tmp_name"], $folder . "/" . $fileName);
             array_push($curl_file_path_array,$folder . "/" . $fileName);
 
-            $ret[] = $fileName;
         }
     }
 
