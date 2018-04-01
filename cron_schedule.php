@@ -12,6 +12,9 @@ if ($conn->connect_error) {
 
 date_default_timezone_set("Asia/Manila");
 $day_minus = date("d") - 1;
+if(strlen($day_minus)==1){
+    $day_minus = "0".(string)$day_minus;
+}
 $date_minus = date("Y-m-") . $day_minus;
 $date_now = date("Y-m-d");
 
@@ -25,7 +28,7 @@ $local_url = 'http://192.168.2.17/brainee/';
 $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
 
 foreach ($result as $result_key => $result_value) {
-
+    
     $directory = $output_dir . $result_value['lesson_id'].'_'.$result_value['folder_name'];
     $server_directory = $server_url . $result_value['lesson_id'].'_'.$result_value['folder_name'];
     $copy = $directory."/".$result_value['content_name'];
@@ -43,7 +46,6 @@ foreach ($result as $result_key => $result_value) {
     if (!is_dir($directory)) {
         mkdir($directory,0777, true);
         copy($server_copy,$copy);
-
     } else {
         if (!file_exists($copy)) {
             copy($server_copy,$copy);
@@ -61,7 +63,9 @@ foreach ($result as $result_key => $result_value) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        setTimeout(location.reload(), 5000);
+        setTimeout(function(){
+            location.reload();
+        }, 5000);
     });
 </script>
 
