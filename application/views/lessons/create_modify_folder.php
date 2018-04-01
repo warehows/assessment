@@ -43,7 +43,6 @@
 
                     </div>
                     <div id="step2" class="tab-pane active" role="tabpanel">
-                        <?php print_r($_SERVER['DOCUMENT_ROOT'])?>
                         <form>
                             <div class="col-lg-2 col-lg-offset-0 col-md-2">
                                 <div id="data"></div>

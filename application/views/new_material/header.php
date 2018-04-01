@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
     <link rel="stylesheet" href="<?php echo base_url('css/version_1/styles.min.css'); ?>">
-
 </head>
 
 <body>
@@ -28,8 +27,8 @@
                     <li role="presentation"><a href="<?php echo site_url('lessons'); ?>">My Lesson</a></li>
                     <li role="presentation"><a href="<?php echo site_url('assign'); ?>">My Test</a></li>
                     <li role="presentation"><a href="<?php echo site_url('result'); ?>">Result </a></li>
-                    <li role="presentation"><a href="#">Partners </a></li>
-                    <li role="presentation"><a href="#">Contact Us</a></li>
+                    <li role="presentation"><a href="<?php echo site_url('dashboard/partners'); ?>">Partners </a></li>
+                    <li role="presentation"><a href="<?php echo site_url('dashboard/contact'); ?>">Contact Us</a></li>
                     <li class="dropdown"><a data-toggle="dropdown" aria-expanded="true" href="#" class="dropdown-toggle">Settings <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
                             <li role="presentation"><a href="#">Change Password</a></li>

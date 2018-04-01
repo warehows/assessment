@@ -45,24 +45,74 @@ class Dashboard extends CI_Controller
             redirect('');
         }
     }
-    public function about_us(){
+
+    public function about_us()
+    {
         $logged_in = $this->session->userdata('logged_in');
         $data['title'] = $this->lang->line('dashboard');
         $data['result'] = $this->user_model->user_list(0);
         $data['num_users'] = $this->user_model->num_users();
         $data['num_qbank'] = $this->qbank_model->num_qbank();
         $data['num_quiz'] = $this->quiz_model->num_quiz();
-        if ($logged_in['su'] == 1) {
-            $this->load->view('new_material/header', $data);
-            $this->load->view('newest_dashboard', $data);
-            $this->load->view('material_part/footer_material', $data);
-        } elseif ($logged_in['su'] == 2) {
-            $this->load->view('new_material/teacher_header', $data);
-            $this->load->view('newest_dashboard', $data);
-            $this->load->view('material_part/footer_material', $data);
-        } else {
-            redirect('');
-        }
+
+        $this->load->view('new_material/header', $data);
+        $this->load->view('new_material/page_underconstruction', $data);
+        $this->load->view('material_part/footer_material', $data);
+    }
+
+    public function contact()
+    {
+        $logged_in = $this->session->userdata('logged_in');
+        $data['title'] = $this->lang->line('dashboard');
+        $data['result'] = $this->user_model->user_list(0);
+        $data['num_users'] = $this->user_model->num_users();
+        $data['num_qbank'] = $this->qbank_model->num_qbank();
+        $data['num_quiz'] = $this->quiz_model->num_quiz();
+
+        $this->load->view('new_material/header', $data);
+        $this->load->view('new_material/page_underconstruction', $data);
+        $this->load->view('material_part/footer_material', $data);
+    }
+
+    public function calendar(){
+        $logged_in = $this->session->userdata('logged_in');
+        $data['title'] = $this->lang->line('dashboard');
+        $data['result'] = $this->user_model->user_list(0);
+        $data['num_users'] = $this->user_model->num_users();
+        $data['num_qbank'] = $this->qbank_model->num_qbank();
+        $data['num_quiz'] = $this->quiz_model->num_quiz();
+
+        $this->load->view('new_material/header', $data);
+        $this->load->view('new_material/calendar',$data);
+//        $this->load->view('material_part/footer_material', $data);
+    }
+
+    public function partners()
+    {
+        $logged_in = $this->session->userdata('logged_in');
+        $data['title'] = $this->lang->line('dashboard');
+        $data['result'] = $this->user_model->user_list(0);
+        $data['num_users'] = $this->user_model->num_users();
+        $data['num_qbank'] = $this->qbank_model->num_qbank();
+        $data['num_quiz'] = $this->quiz_model->num_quiz();
+
+        $this->load->view('new_material/header', $data);
+        $this->load->view('new_material/page_underconstruction', $data);
+        $this->load->view('material_part/footer_material', $data);
+    }
+
+    public function events()
+    {
+        $logged_in = $this->session->userdata('logged_in');
+        $data['title'] = $this->lang->line('dashboard');
+        $data['result'] = $this->user_model->user_list(0);
+        $data['num_users'] = $this->user_model->num_users();
+        $data['num_qbank'] = $this->qbank_model->num_qbank();
+        $data['num_quiz'] = $this->quiz_model->num_quiz();
+
+        $this->load->view('new_material/header', $data);
+        $this->load->view('new_material/events', $data);
+        $this->load->view('material_part/footer_material', $data);
     }
 
     public function student($limit = '0')
