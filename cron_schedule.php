@@ -41,7 +41,7 @@ foreach ($result as $result_key => $result_value) {
 
 
     if (!is_dir($directory)) {
-        mkdir($directory);
+        mkdir($directory,0777, true);
         copy($server_copy,$copy);
 
     } else {
@@ -58,3 +58,10 @@ foreach ($result as $result_key => $result_value) {
     curl_close($ch);
 }
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        location.reload();
+    });
+</script>
+
