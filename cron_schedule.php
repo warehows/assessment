@@ -21,7 +21,7 @@ $result = $conn->query($sql);
 
 $result_array = array();
 $server_url = 'http://warehows.net/develop/brainee/upload/lessons/';
-$local_url = 'http://localhost/brainee/';
+$local_url = 'http://192.168.2.17/brainee/';
 $output_dir = $_SERVER['DOCUMENT_ROOT'] . "/brainee/upload/lessons/";
 
 foreach ($result as $result_key => $result_value) {
