@@ -60,6 +60,20 @@ class Dashboard extends CI_Controller
         $this->load->view('material_part/footer_material', $data);
     }
 
+    public function notifications()
+    {
+        $logged_in = $this->session->userdata('logged_in');
+        $data['title'] = $this->lang->line('dashboard');
+        $data['result'] = $this->user_model->user_list(0);
+        $data['num_users'] = $this->user_model->num_users();
+        $data['num_qbank'] = $this->qbank_model->num_qbank();
+        $data['num_quiz'] = $this->quiz_model->num_quiz();
+
+        $this->load->view('new_material/header', $data);
+        $this->load->view('new_material/page_underconstruction', $data);
+        $this->load->view('material_part/footer_material', $data);
+    }
+
     public function contact()
     {
         $logged_in = $this->session->userdata('logged_in');

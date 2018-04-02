@@ -14,31 +14,26 @@
         <div class="col-lg-3">
             <a target="_blank" href="1.jpg" class="event_image_container">
                 <img src="<?php echo base_url('images/events/1.jpg'); ?>" alt="Fjords" width="300" height="200">
-                <div class="desc">School Event</div>
             </a>
         </div>
         <div class="col-lg-3">
             <a target="_blank" href="1.jpg" class="event_image_container">
                 <img src="<?php echo base_url('images/events/2.jpg'); ?>" alt="Fjords" width="300" height="200">
-                <div class="desc">School Event</div>
             </a>
         </div>
         <div class="col-lg-3">
             <a target="_blank" href="1.jpg" class="event_image_container">
                 <img src="<?php echo base_url('images/events/3.jpg'); ?>" alt="Fjords" width="300" height="200">
-                <div class="desc">School Event</div>
             </a>
         </div>
         <div class="col-lg-3">
             <a target="_blank" href="1.jpg" class="event_image_container">
                 <img src="<?php echo base_url('images/events/4.jpg'); ?>" alt="Fjords" width="300" height="200">
-                <div class="desc">School Event</div>
             </a>
         </div>
         <div class="col-lg-3">
             <a target="_blank" href="1.jpg" class="event_image_container">
                 <img src="<?php echo base_url('images/events/5.jpg'); ?>" alt="Fjords" width="300" height="200">
-                <div class="desc">School Event</div>
             </a>
         </div>
 
