@@ -38,11 +38,11 @@ class Lessons extends CI_Controller
         $logged_in = $this->session->userdata('logged_in');
 
         $data['title'] = $this->lang->line('Lessons');
-        $data['all_users'] = $this->user_model->get_all();
-        $data['all_subjects'] = $this->subjects_model->all();
-        $data['all_levels'] = $this->level_model->all();
+//        $data['all_users'] = $this->user_model->get_all();
+//        $data['all_subjects'] = $this->subjects_model->all();
+//        $data['all_levels'] = $this->level_model->all();
         $data['subject_model'] = $this->subjects_model;
-        $data['grade_model'] = $this->grades_model;
+//        $data['grade_model'] = $this->grades_model;
         $data['all_lessons'] = $this->lessons_model->all_lessons_non_duplicated();
         $gid = $logged_in['gid'];
 
