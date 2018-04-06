@@ -36,6 +36,29 @@ Class Lessons_model extends CI_Model
         $query = $this->db->get('lessons');
         return $query->result_array();
     }
+    function all_lessons_non_duplicated_2()
+    {
+//        $this->db->select('id')
+//            ->select('lesson_name')
+//            ->select('subject_id')
+//            ->select('level_id')
+//            ->select('assigned_date_start')
+//            ->select('assigned_date_end')
+//        ;
+        $this->db->select('*');
+        $this->db->from('lessons');
+        $this->db->join('savsoft_level','savsoft_level.lid = lessons.level_id');
+        $this->db->join('savsoft_category','savsoft_category.cid = lessons.subject_id');
+        $this->db->join('savsoft_users','savsoft_users.uid = lessons.author');
+        $this->db->where('duplicated', 0)
+//            ->where('level_id', 3)
+        ;
+        $query = $this->db->get();
+//        print_r('<pre>');
+//        print_r($query->result_array());
+//        exit;
+        return $query->result_array();
+    }
 
     function all_lessons_shared()
     {

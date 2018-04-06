@@ -41,9 +41,9 @@ class Lessons extends CI_Controller
 //        $data['all_users'] = $this->user_model->get_all();
 //        $data['all_subjects'] = $this->subjects_model->all();
 //        $data['all_levels'] = $this->level_model->all();
-        $data['subject_model'] = $this->subjects_model;
 //        $data['grade_model'] = $this->grades_model;
-        $data['all_lessons'] = $this->lessons_model->all_lessons_non_duplicated();
+        $data['subject_model'] = $this->subjects_model;
+        $data['all_lessons'] = $this->lessons_model->all_lessons_non_duplicated_2();
         $gid = $logged_in['gid'];
 
         $data['lesson_assigned'] = $this->workspace_model->select_by_gid($gid);
@@ -52,19 +52,24 @@ class Lessons extends CI_Controller
         }
 
         $data['logged_in'] = $logged_in;
+//        print_r('<pre>');
+//        print_r($data['all_lessons']);
 
         if ($logged_in["su"] == 1) {
-            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){ $this->load->view('new_material/teacher_header', $data); }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
-            $this->load->view('lessons/index', $data);
+//            if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){ $this->load->view('new_material/teacher_header', $data); }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+            $header_string = 'new_material/header';
         } else if ($logged_in["su"] == 2) {
-            $this->load->view('new_material/teacher_header', $data);
-            $this->load->view('lessons/teacher_index', $data);
+//            $this->load->view('new_material/teacher_header', $data);
+//            $this->load->view('lessons/teacher_index', $data);
+            $header_string = 'new_material/teacher_header';
         }else if ($logged_in["su"] == 0) {
 
-            $this->load->view('new_material/student_header', $data);
-            $this->load->view('lessons/student_index', $data);
+            $header_string = 'new_material/student_header';
+//            $this->load->view('new_material/student_header', $data);
+//            $this->load->view('lessons/student_index', $data);
         }
-
+        $this->load->view($header_string, $data);
+        $this->load->view('lessons/index', $data);
         $this->load->view('new_material/footer', $data);
 
 
