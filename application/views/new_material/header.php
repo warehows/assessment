@@ -26,6 +26,7 @@
                     <li role="presentation"><a href="<?php echo site_url('lessonbank'); ?>">Lesson Bank</a></li>
                     <li role="presentation"><a href="<?php echo site_url('lessons'); ?>">My Lesson</a></li>
                     <li role="presentation"><a href="<?php echo site_url('assign'); ?>">My Test</a></li>
+                    <li role="presentation"><a href="<?php echo site_url('test'); ?>">Test</a></li>
                     <li role="presentation"><a href="<?php echo site_url('result'); ?>">Result </a></li>
                     <li role="presentation"><a href="<?php echo site_url('dashboard/partners'); ?>">Partners </a></li>
                     <li role="presentation"><a href="<?php echo site_url('dashboard/contact'); ?>">Contact Us</a></li>
