@@ -1,7 +1,7 @@
 .main-title-container {
     background-color: #2a2828;
     color: white;
-    margin-top: 25px;
+    margin-top: 10px;
     padding: 0px 20px;
 }
 .main-part-container {
@@ -48,6 +48,8 @@
 }
 .content-container {
     margin-top: 15px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 .question-add{
     color: #775fff;
@@ -77,8 +79,79 @@
     margin: 0px;
 }
 .question-content-container{
-    
+
 }
 .option{
     padding: 5px;
+}
+.part-div{
+    display: inline;
+}
+.part-toggle-container {
+    margin-left: 25px;
+    border: 1px solid white;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+.part-button-container {
+    background-color: #50d164;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+
+.part-button-container a {
+    color: white;
+}
+.part-button-container a:hover {
+    color: black;
+    text-decoration:none;
+}
+.part-button-container span:hover {
+    color: black;
+    text-decoration:none;
+}
+.part-questions{
+
+}
+
+.content_container {
+    padding: 0px 20px;
+}
+
+.title_bar-container {
+    background-color: #222222;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.title_button {
+    display: inline;
+    float: right;
+    position: relative;
+    top: 7px;
+    cursor: pointer;
+}
+
+.title_button span {
+    background-color: #5cb85c;
+    padding: 5px;
+    font-size: 15px;
+    text-decoration: none;
+    color: white;
+}
+
+.title_bar {
+    display: inline;
+}
+.done span{
+    background-color: #007bff;
+    margin-left: 10px;
+}
+.cancel span{
+    background-color: #dc3545;
+    margin-left: 10px;
 }

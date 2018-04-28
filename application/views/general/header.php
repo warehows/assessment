@@ -2,6 +2,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css"
       href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('css/new_material/joeven.css') ?>">
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">

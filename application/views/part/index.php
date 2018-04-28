@@ -1,42 +1,5 @@
-<!--<link rel="stylesheet" type="text/css" href="--><?php //echo base_url('css/new_material/joeven.css') ?><!--">-->
-<!-- Latest compiled and minified CSS -->
-<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
-<!--      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
-<!---->
-<!--<div class="container">-->
-<!---->
-<!--</div>-->
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
-<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
-<!--        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"-->
-<!--        crossorigin="anonymous"></script>-->
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('css/new_material/joeven.css') ?>">
-<link rel="stylesheet" type="text/css"
-      href="<?php echo base_url('css/new_material/cdn/datatables_responsive.min.css') ?>">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-
-<style>
-    tfoot input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-    }
-
-    tfoot {
-        display: table-header-group;
-    }
-
-    a {
-        color: black;
-    }
-
-    tr {
-        cursor: pointer;
-    }
-
-</style>
-
-<div class="container">
+<?php $parts = array("a", "b", "c"); ?>
+<div class="col-lg-12">
     <div class="main-title-container">
         <p class="main-title">Build Test - (Quiz 1)</p>
         <a href="create" class="main-title-link">
@@ -45,30 +8,36 @@
     </div>
 
     <div class="content-container">
-        <div class="col-lg-12">
-            <div class="main-part-container">
-                <p class="main-title">Parts</p>
-                <a href="create" class="main-title-link">
-                    <button class="main-button">+Add Part</button>
-                </a>
-            </div>
-            <div class="col-lg-12">
-                <div class="part-container col-lg-12">
 
-                    <div class="part-label-container col-lg-1">
+        <div class="main-part-container">
+            <p class="main-title">Parts</p>
+            <a href="create" class="main-title-link">
+                <button class="main-button">+Add Part</button>
+            </a>
+        </div>
+        <?php foreach ($parts as $parts_key => $parts_value): ?>
+            <div class="parts col-lg-12">
+                <div class="part-container">
+
+                    <div class="part-div part part-label-container">
                         <span>Part I.</span>
                     </div>
-                    <div class="part-description-container col-lg-9">
+                    <div class="part-div part-description-container">
                         <span>The quick brown fox jumps over the lazy dog near the bank of the river.</span>
                     </div>
-                    <div class="part-button-container col-lg-1">
-                        <a href=""><span>+Add Question</span></a>
+                    <div class="part-div part-toggle-container pull-right">
+                        <span>-</span>
                     </div>
-                    <div class="part-toggle-container col-lg-1">
-                        <span>+</span>
+                    <div class="part-div part-button-container hidden-sm hidden-xs pull-right">
+                        <a href="<?php echo base_url(); ?>index.php/question/index"><span>+Add Question</span></a>
                     </div>
+
+                    <div class="part-div part-button-container hidden-lg hidden-md pull-right">
+                        <a href="/"><span>+Q</span></a>
+                    </div>
+
                 </div>
-                <div class="col-lg-12">
+                <div class="part-questions">
 
                     <!--                    IDENTIFICATION-->
                     <div class="question-container">
@@ -192,14 +161,34 @@
                     <!--                    Open Ended -->
 
                 </div>
+
+
             </div>
+        <?php endforeach; ?>
 
 
-        </div>
     </div>
-
 </div>
+
 
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".part-toggle-container").click(function () {
+            var this_function = this;
+            var index = $(this).parent().parent().index();
+            index = index - 1;
 
+            $(".part-questions").eq(index).slideToggle("fast", function () {
+
+                if ($(this_function).find("span").text() == "-") {
+                    $(this_function).find("span").text("+");
+                } else {
+                    $(this_function).find("span").text("-");
+                }
+            });
+        });
+
+    });
+</script>

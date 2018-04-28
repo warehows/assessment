@@ -1,31 +1,3 @@
-<script src="<?php echo base_url('css/new_material/cdn/jquery1_12.js') ?>"></script>
-<script src="<?php echo base_url('css/new_material/cdn/datatables.min.js') ?>"></script>
-<script src="<?php echo base_url('css/new_material/cdn/datatables_responsive.min.js') ?>"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('css/new_material/cdn/datatables.min.css') ?>">
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('css/new_material/joeven.css') ?>">
-<link rel="stylesheet" type="text/css"
-      href="<?php echo base_url('css/new_material/cdn/datatables_responsive.min.css') ?>">
-<style>
-    tfoot input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-    }
-
-    tfoot {
-        display: table-header-group;
-    }
-
-    a {
-        color: black;
-    }
-
-    tr {
-        cursor: pointer;
-    }
-
-</style>
-
 <div class="container">
     <div class="main-title-container">
         <p class="main-title">Create Test</p>

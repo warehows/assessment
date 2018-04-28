@@ -1,32 +1,13 @@
-<style>
-    .content_container {
-        padding: 0px 20px;
-    }
-    .title_bar-container {
-        background-color: #222222;
-        color: white;
-        padding: 10px;
-        margin-bottom: 10px;
-        font-size: 25px;
-        padding-left: 30px;
-        padding-right: 30px;
-    }
-    .title_button {
-        display: inline;
-        float: right;
-    }
-    .title_bar {
-        display: inline;
-    }
-</style>
 <div class="content_container">
     <div class="title_bar-container">
         <div class="title_bar">
             <span>Tests</span>
         </div>
-        <div class="title_button">
-            <span>+ Add Test</span>
-        </div>
+        <a href="test/create">
+            <div class="title_button">
+                <span>+ Add Test</span>
+            </div>
+        </a>
     </div>
     <table id="example" class="display responsive nowrap" style="width:100%">
         <thead>

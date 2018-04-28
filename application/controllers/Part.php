@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Part extends CI_Controller
 {
-    public $folder_name = 'part';
+    public $folder_name;
+    public $layout = 'general';
 
     function __construct()
     {
@@ -15,34 +16,34 @@ class Part extends CI_Controller
         $this->load->model("category_model");
         $this->load->model("grades_model");
         $this->lang->load('basic', $this->config->item('language'));
+        $this->folder_name = strtolower(get_class());
     }
 
     function index($test_id=''){
-//        $this->load->view('general/header');
-        $this->load->view($this->folder_name.'/index');
-//        $this->load->view('new_material/footer');
+        $this->load->view($this->layout.'/header');
+        $this->load->view($this->layout.'/datatables');
+        $this->load->view($this->folder_name.'/'.__FUNCTION__);
+        $this->load->view($this->layout.'/footer');
     }
 
     function create(){
-        $this->load->view('new_material/header');
-        $this->load->view($this->folder_name.'/create');
-        $this->load->view('new_material/footer');
+        $this->load->view($this->layout.'/header');
+        $this->load->view($this->folder_name.'/'.__FUNCTION__);
+        $this->load->view($this->layout.'/footer');
     }
     function read(){
-        $this->load->view('new_material/header');
-        $this->load->view($this->folder_name.'/read');
-
-        $this->load->view('new_material/footer');
+        $this->load->view($this->layout.'/header');
+        $this->load->view($this->folder_name.'/'.__FUNCTION__);
+        $this->load->view($this->layout.'/footer');
     }
     function update(){
-        $this->load->view('new_material/header');
-        $this->load->view($this->folder_name.'/update');
-
-        $this->load->view('new_material/footer');
+        $this->load->view($this->layout.'/header');
+        $this->load->view($this->folder_name.'/'.__FUNCTION__);
+        $this->load->view($this->layout.'/footer');
     }
     function delete(){
-        $this->load->view('new_material/header');
-        $this->load->view($this->folder_name.'/delete');
-        $this->load->view('new_material/footer');
+        $this->load->view($this->layout.'/header');
+        $this->load->view($this->folder_name.'/'.__FUNCTION__);
+        $this->load->view($this->layout.'/footer');
     }
 }
