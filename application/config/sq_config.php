@@ -15,7 +15,7 @@ $sq_base_url=$base_url;
 $sq_hostname='166.62.10.139';
 $sq_dbname=$dbase;
 $sq_dbusername='ben';
-$sq_dbpassword='Resty!Joeven241';
+$sq_dbpassword='Joeven241';
 
 //$sq_base_url=$base_url;
 //$sq_hostname='localhost';

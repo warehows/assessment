@@ -82,7 +82,7 @@ $currentSem = isset($quiz_detail['semester']) ? $quiz_detail['semester'] : '';
     <button class="form-control" type="submit">Next</button>
 </div>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 
     $(document).ready(function () {

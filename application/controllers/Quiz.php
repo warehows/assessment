@@ -264,6 +264,7 @@ class Quiz extends CI_Controller
             redirect('login');
         }
 
+
         $this->load->model("qbank_model");
 
 
@@ -292,13 +293,7 @@ class Quiz extends CI_Controller
         $data['quid'] = $quid;
 
         if ($logged_in['su'] == 1) {
-            if ($logged_in['su'] == 1) {
-                $this->load->view('new_material/header', $data);
-            } elseif ($logged_in['su'] == 2) {
-                $this->load->view('new_material/teacher_header', $data);
-            } else {
-                $this->load->view('new_material/student_header', $data);
-            }
+            $this->load->view('new_material/header', $data);
         } elseif ($logged_in['su'] == 2) {
             $this->load->view('new_material/teacher_header', $data);
         } else {

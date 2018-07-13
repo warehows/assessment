@@ -23,11 +23,13 @@
         cursor: pointer;
     }
 </style>
-<?php //print_r($result)?>
+
 <input type="hidden" id="added" value="<?php echo $this->lang->line('added'); ?>">
+
 <div class="wrapper">
     <div class="wrapper">
         <div class="row">
+
             <?php $logged_in = $this->session->userdata('logged_in'); ?>
             <?php if ($logged_in['uid'] == 1) { ?>
                 <a href="<?php echo site_url('assign'); ?>"
@@ -74,6 +76,7 @@
                     </tr>
                     </tfoot>
                     <tbody>
+
                     <?php foreach($result as $result_key=>$val): ?>
                         <?php
                         $qn=1;
@@ -99,8 +102,8 @@
                         ?>
                         <tr>
                             <td><?php print_r($val['question'])?></td>
-                            <td><?php echo $this->category_model->get($val['cid'])['category_name']; ?></td>
-                            <td><?php print_r($this->grades_model->where("lid",$val['lid'])[0]['level_name']);?></td>
+                            <td><?php print_r($val['category_name']);?></td>
+                            <td><?php print_r($val['level_name']);?></td>
                             <td><?php print_r($val['question_type'])?></td>
                             <td><a href="javascript:addquestion('<?php echo $quid; ?>','<?php echo $val['qid']; ?>');"
                                    class="btn btn-primary abutton" id='q<?php echo $val['qid']; ?>'>
