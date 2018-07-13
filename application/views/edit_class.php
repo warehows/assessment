@@ -1,4 +1,4 @@
-<div class="container" >
+<div class="wrapper" >
 <script type="text/javascript" src="<?php echo base_url();?>/js/basic.js"></script>
 <br>
 <?php 

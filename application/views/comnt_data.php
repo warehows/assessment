@@ -12,7 +12,7 @@ $logged_in =$this->session->userdata('logged_in');
    $pub_id="0";
    }
  
- ?> <div <?php  if($logged_in['su']=="1"){   ?> OnClick="show_options(<?php echo $val['content_id'];?>,<?php echo $pub_id;?>);"  <?php } ?> style="<?php if($val['su']=='1'){ ?> background:#E1FFDA;<?php }else{ ?> background:#D4DDE7; <?php } ?>;<?php if($logged_in['su']=="1"){ echo "cursor:pointer;"; }?>width: 250px;
+ ?> <div <?php  if($logged_in['su']=="1"){   ?> OnClick="show_options(<?php echo $val['content_id'];?>,<?php echo $pub_id;?>);"  <?php } ?> style="<?php if($val['su']>'0'){ ?> background:#E1FFDA;<?php }else{ ?> background:#D4DDE7; <?php } ?>;<?php if($logged_in['su']=="1"){ echo "cursor:pointer;"; }?>width: 250px;
 padding: 5px;
 
 -webkit-border-radius: 10px;

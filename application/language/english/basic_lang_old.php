@@ -135,7 +135,7 @@ $lang['contact_no'] = "Contact Number";
 $lang['account_registered'] = "Account registered successfully ";
 $lang['account_registered_email_sent'] = "Account registered successfully. An email sent sent with verification link. please click on verification link to activate account.";
 $lang['valid_for_days'] = "Valid for days, 0 = unlimited";
-$lang['question_selection'] = "How do you want to add questions into this quiz?";
+$lang['question_selection'] = "Selection";
 $lang['automatically'] = "Automatically - System selects question randomaly based on given categories,level and No. of questions";
 $lang['manually'] = "Manually - Select question manually from question bank";
 $lang['yes'] = "Yes";

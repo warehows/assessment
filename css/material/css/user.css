@@ -1,0 +1,61 @@
+.mdl-layout-login{
+	align-items: center;
+  justify-content: center;
+}
+.mdl-layout__content-login {
+	padding: 24px;
+	flex: none;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+.avatar{
+  height: 200px;
+  width: 200px;
+  margin: 0 auto 2em;
+}
+
+.avatar-login{
+  padding-top: 50px;
+  height: 200px;
+  width: 200px;
+  margin: 0 auto 2em;
+}
+
+
+
+.form-login{
+  width: 500px;
+  margin: 0 auto 2em;
+}
+
+.avatar-img {
+  height: 200px;
+  width: 200px;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+
+
+@media screen and (max-width: 480px) {
+
+	.avatar-login{
+	  height: 150px;
+	   width: 150px;
+	}
+
+	.avatar-img {
+	   height: 150px;
+	    width: 150px;
+
+	}
+
+}
+
+.drawer-text {
+  padding: 1em;
+  text-align: center;
+}

@@ -1,0 +1,100 @@
+ul{
+    background-color: darkred;
+    color:white;
+    line-height: 40px;
+    padding: 0px;
+
+}
+ul li {
+    list-style: none;
+    font-size: 20px;
+    padding:10px;
+    border-bottom: 1px solid white;
+    overflow-wrap: break-word;
+}
+
+ul li:hover {
+    cursor: pointer;
+    color:black;
+    background-color: white;
+    -webkit-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
+
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.toggle_button{
+    position: fixed;
+    bottom: 0px;
+    padding: 0px;
+}
+.btn-pref{
+    position: fixed;
+    top: 70px;
+}
+.button_for_folders span {
+    font-size: 18px;
+}
+.card-info{
+    text-align: center;
+    position: fixed;
+    top: 0px;
+    font-size: 40px;
+    background-color: white;
+}
+.well{
+    position: relative;
+    top: 146px;
+    margin: 0px;
+}
+.viewer_container{
+    padding: 0px;
+}
+.iframe_container{
+    position: fixed;
+    padding: 0px;
+}
+.file_container{
+    top: 150px;
+    position: fixed;
+}
+.content_container{
+    padding-right: 0px;
+}
+.ul_title{
+    text-align: center;
+    font-size: 30px;
+    padding: 5px;
+    border-bottom: 2px solid white;
+}
+.hello{
+    height:91%;
+    width: 83%;
+}
+.back{
+    font-size: 29px;
+    vertical-align: middle;
+    top: 18px;
+    left: 15px;
+    cursor: pointer;
+}
+.the_iframe{
+    height: 85%;
+    width: 99%;
+}
+.back i{
+    font-size: 36px!important;
+    color: #ff9800;
+}
+
+.toggle_navigation{
+    height: 100px;
+    font-size: 20px;
+}
+.button_for_folders{
+    height: 50px;
+}

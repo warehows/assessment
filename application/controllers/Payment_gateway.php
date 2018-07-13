@@ -27,7 +27,7 @@ class Payment_gateway extends CI_Controller {
 		redirect('login');
 		}
 		$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 			}
 			
@@ -62,7 +62,7 @@ function generate_report(){
 			
 		}
 		$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
+			if($logged_in['su']<'1'){
 			exit($this->lang->line('permission_denied'));
 		}
 			

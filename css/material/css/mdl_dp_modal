@@ -1,0 +1,59 @@
+.c-scrim {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 4 !important;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.541176);
+    opacity: 0;
+    transition: 200ms ease opacity;
+    will-change: opacity;
+}
+.c-scrim--shown {
+     z-index: 4 !important;
+}
+
+.c-datepicker{
+    z-index: 4 !important;
+}
+
+.u-hover-ball-effect:hover:before, .c-datepicker__day-body:hover:before, .c-datepicker__clock__num:hover:before, .c-datepicker__clock__am-pm-toggle label:hover:before {
+    background: #d50000 !important;
+    width: 35px;
+    height: 35px;
+    z-index: -1;
+}
+
+.c-datepicker__header-date {
+    background: #d50000 !important;
+    height: 150px;
+    padding: 16px 0;
+}
+
+/*a.c-datepicker__header-date__day .js-date-day{
+    padding-top: 10px;
+}*/
+
+.c-datepicker__header-date__time > span {
+    display: inline-block;
+    padding-top: 20px !important;
+}
+
+.c-datepicker--show-time.is-selected ~ .c-datepicker__header .c-datepicker__header-date__time {
+    opacity: 1;
+    padding-top: 20px !important;
+}
+
+.c-datepicker--show-calendar.is-selected ~ .c-datepicker__header .c-datepicker__header-date__month, .c-datepicker--show-calendar.is-selected ~ .c-datepicker__header .c-datepicker__header-date__day {
+    opacity: 1;
+    padding-top: 20px !important;
+}
+
+.c-datepicker__header-date span {
+    display: block;
+    color: white;
+    margin: 0;
+    transition: opacity 100ms ease-in-out;
+    padding-top: 20px !important;
+}

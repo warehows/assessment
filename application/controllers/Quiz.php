@@ -1,793 +1,1350 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Quiz extends CI_Controller {
+class Quiz extends CI_Controller
+{
 
-	 function __construct()
-	 {
-	   parent::__construct();
-	   $this->load->database();
-	   $this->load->model("quiz_model");
-	   $this->load->model("user_model");
-	   $this->lang->load('basic', $this->config->item('language'));
+    function __construct()
+    {
+        parent::__construct();
+        $this->load->database();
+        $this->load->model("quiz_model");
+        $this->load->model("qbank_model");
+        $this->load->model("user_model");
+        $this->load->model("category_model");
+        $this->load->model("grades_model");
+        $this->lang->load('basic', $this->config->item('language'));
+    }
 
-	 }
+    public function index($limit = '0', $list_view = 'table')
+    {
 
-	public function index($limit='0',$list_view='grid')
-	{
-		
-		// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
-		
-		
-		
-		$logged_in=$this->session->userdata('logged_in');
-			 
-			
-			
-		$data['list_view']=$list_view;
-		$data['limit']=$limit;
-		$data['title']=$this->lang->line('quiz');
-		// fetching quiz list
-		$data['result']=$this->quiz_model->quiz_list($limit);
-		$this->load->view('header',$data);
-		$this->load->view('quiz_list',$data);
-		$this->load->view('footer',$data);
-	}
-	
-	
-	
-function open_quiz($limit='0'){
-	if(!$this->config->item('open_quiz')){
-		exit();
-	}
-		$data['limit']=$limit;
-		$data['title']=$this->lang->line('quiz');
-		$data['open_quiz']=$this->quiz_model->open_quiz($limit);
-		
-		$this->load->view('header',$data);
-		$this->load->view('open_quiz',$data);
-		$this->load->view('footer',$data);
-	
-}
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
 
 
+        $logged_in = $this->session->userdata('logged_in');
 
-	public function add_new()
-	{
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
-		
-		$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
-			exit($this->lang->line('permission_denied'));
-			}
-			
-			
-	 
-		$data['title']=$this->lang->line('add_new').' '.$this->lang->line('quiz');
-		// fetching group list
-		$data['group_list']=$this->user_model->group_list();
-		$this->load->view('header',$data);
-		$this->load->view('new_quiz',$data);
-		$this->load->view('footer',$data);
-	}
-	
-		
-		
-	
-	
-	
-	
-	
-	
-	
-		public function edit_quiz($quid)
-	{
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
-		
-		$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
-			exit($this->lang->line('permission_denied'));
-			}
-			
-			
-	 
-		$data['title']=$this->lang->line('edit').' '.$this->lang->line('quiz');
-		// fetching group list
-		$data['group_list']=$this->user_model->group_list();
-		$data['quiz']=$this->quiz_model->get_quiz($quid);
-		if($data['quiz']['question_selection']=='0'){
-		$data['questions']=$this->quiz_model->get_questions($data['quiz']['qids']);
-			 
-		}else{
-			$this->load->model("qbank_model");
-	   $data['qcl']=$this->quiz_model->get_qcl($data['quiz']['quid']);
-		
-			 $data['category_list']=$this->qbank_model->category_list();
-		 $data['level_list']=$this->qbank_model->level_list();
-		
-		}
-		$this->load->view('header',$data);
-		$this->load->view('edit_quiz',$data);
-		$this->load->view('footer',$data);
-	}
-	
-	
-	
-	
-	function no_q_available($cid,$lid){
-		$val="<select name='noq[]'>";
-		$query=$this->db->query(" select * from savsoft_qbank where cid='$cid' and lid='$lid' ");
-		$nor=$query->num_rows();
-		for($i=0; $i<= $nor; $i++){
-			$val.="<option value='".$i."' >".$i."</option>";
-			
-			
-		}
-		$val.="</select>";
-		echo $val;
-		
-	}
-	
-	
-	
-	
-	function remove_qid($quid,$qid){
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
-		
-		if($this->quiz_model->remove_qid($quid,$qid)){
-                        $this->session->set_flashdata('message', "<div class='alert alert-success'>".$this->lang->line('removed_successfully')." </div>");
-		}
-		redirect('quiz/edit_quiz/'.$quid);
-	}
-	
-	function add_qid($quid,$qid){
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
-		
-		 $this->quiz_model->add_qid($quid,$qid);
-          echo 'added';              
-	}
-	
-	
-	
-	function pre_add_question($quid,$limit='0',$cid='0',$lid='0'){
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
-		$cid=$this->input->post('cid');
-		$lid=$this->input->post('lid');
-		redirect('quiz/add_question/'.$quid.'/'.$limit.'/'.$cid.'/'.$lid);
-	}
-	
-	
-	
-		public function add_question($quid,$limit='0',$cid='0',$lid='0')
-	{
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
-
-		$this->load->model("qbank_model");
-	   
-		
-		$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
-			exit($this->lang->line('permission_denied'));
-			}
-			
-			
-	 
-		 $data['quiz']=$this->quiz_model->get_quiz($quid);
-		$data['title']=$this->lang->line('add_question_into_quiz').': '.$data['quiz']['quiz_name'];
-		if($data['quiz']['question_selection']=='0'){
-		
-		$data['result']=$this->qbank_model->question_list($limit,$cid,$lid);
-		 $data['category_list']=$this->qbank_model->category_list();
-		 $data['level_list']=$this->qbank_model->level_list();
-			 
-		}else{
-			
-			exit($this->lang->line('permission_denied'));
-		}
-		$data['limit']=$limit;
-		$data['cid']=$cid;
-		$data['lid']=$lid;
-		$data['quid']=$quid;
-		
-		$this->load->view('header',$data);
-		$this->load->view('add_question_into_quiz',$data);
-		$this->load->view('footer',$data);
-	}
-	
-	
-	
-	
-	function up_question($quid,$qid,$not='1'){
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
+        $data['category_list'] = $this->qbank_model->category_list();
+        $data['level_list'] = $this->qbank_model->level_list();
+        $data['quiz_model'] = $this->quiz_model;
+        $data['list_view'] = $list_view;
+        $data['limit'] = $limit;
+        $data['title'] = $this->lang->line('quiz');
+        $data['su'] = $logged_in['su'];
+        // fetching quiz list
+        $data['result'] = $this->quiz_model->quiz_list($limit);
 
 
-		$logged_in=$this->session->userdata('logged_in');
-	if($logged_in['su']!="1"){
-	exit($this->lang->line('permission_denied'));
-	return;
-	}		
-	for($i=1; $i <= $not; $i++){
-	$this->quiz_model->up_question($quid,$qid);
-	}
-	redirect('quiz/edit_quiz/'.$quid, 'refresh');
-	}
-	
-	
-	
-	
-	
-	
-	function down_question($quid,$qid,$not='1'){
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
+        if ($logged_in['su'] > 0) {
+            $this->load->view('header', $data);
+            $this->load->view('quiz_list', $data);
+        } else {
+            $this->load->view('new_material/student_header', $data);
+            $this->load->view('quiz_list_student', $data);
+        }
+        $this->load->view('material_part/footer_material', $data);
+    }
 
 
-		$logged_in=$this->session->userdata('logged_in');
-	if($logged_in['su']!="1"){
-	exit($this->lang->line('permission_denied'));
-	return;
-	}	
-			for($i=1; $i <= $not; $i++){
-	$this->quiz_model->down_question($quid,$qid);
-	}
-	redirect('quiz/edit_quiz/'.$quid, 'refresh');
-	}
-	
-	
-	
-	
-		public function insert_quiz()
-	{
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
-		
-	 
-	
-	
-		
-			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
-				exit($this->lang->line('permission_denied'));
-			}
-		$this->load->library('form_validation');
-		$this->form_validation->set_rules('quiz_name', 'quiz_name', 'required');
-           if ($this->form_validation->run() == FALSE)
-                {
-                     $this->session->set_flashdata('message', "<div class='alert alert-danger'>".validation_errors()." </div>");
-					redirect('quiz/add_new/');
+    function open_quiz($limit = '0')
+    {
+        if (!$this->config->item('open_quiz')) {
+            exit();
+        }
+        $data['limit'] = $limit;
+        $data['title'] = $this->lang->line('quiz');
+        $data['open_quiz'] = $this->quiz_model->open_quiz($limit);
+
+        /*        $this->load->view('header', $data);
+                $this->load->view('open_quiz', $data);
+                $this->load->view('material_part/footer_material', $data);*/
+
+        if ($logged_in['su'] == 1) {
+            if ($logged_in['su'] == 1) {
+                $this->load->view('new_material/header', $data);
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
+        } elseif ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+        } else {
+            $this->load->view('new_material/student_header', $data);
+        }
+        $this->load->view('open_quiz', $data);
+        $this->load->view('material_part/footer_material', $data);
+
+    }
+
+
+    public function add_new()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] < '1') {
+            exit($this->lang->line('permission_denied'));
+        }
+
+        $data['title'] = $this->lang->line('add_new') . ' ' . $this->lang->line('quiz');
+        // fetching group list
+        $data['group_list'] = $this->user_model->group_list();
+        $data['quiz_model'] = $this->quiz_model;
+        /*       $this->load->view('header', $data);
+               $this->load->view('new_quiz', $data);
+               $this->load->view('material_part/footer_material', $data);*/
+
+        if ($logged_in['su'] == 1) {
+            if ($logged_in['su'] == 1) {
+                $this->load->view('new_material/header', $data);
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
+        } elseif ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+        } else {
+            $this->load->view('new_material/student_header', $data);
+        }
+        $this->load->view('new_quiz', $data);
+        $this->load->view('material_part/footer_material', $data);
+    }
+
+
+    public function edit_quiz($quid)
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] < '1') {
+            exit($this->lang->line('permission_denied'));
+        }
+
+
+        $data['title'] = $this->lang->line('edit') . ' ' . $this->lang->line('quiz');
+        // fetching group list
+        $data['group_list'] = $this->user_model->group_list();
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        if ($data['quiz']['question_selection'] == '0') {
+            $data['questions'] = $this->quiz_model->get_questions($data['quiz']['qids']);
+        } else {
+            $this->load->model("qbank_model");
+            $data['qcl'] = $this->quiz_model->get_qcl($data['quiz']['quid']);
+
+            $data['category_list'] = $this->qbank_model->category_list();
+            $data['level_list'] = $this->qbank_model->level_list();
+        }
+        /*        $this->load->view('header', $data);
+                $this->load->view('edit_quiz', $data);
+                $this->load->view('material_part/footer_material', $data);*/
+
+        if ($logged_in['su'] == 1) {
+            if ($logged_in['su'] == 1) {
+                $this->load->view('new_material/header', $data);
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
+        } elseif ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+        } else {
+            $this->load->view('new_material/student_header', $data);
+        }
+        $this->load->view('edit_quiz', $data);
+        $this->load->view('material_part/footer_material', $data);
+    }
+
+
+    function no_q_available($cid, $lid)
+    {
+        $val = "<select name='noq[]'>";
+        $query = $this->db->query(" select * from savsoft_qbank where cid='$cid' and lid='$lid' ");
+        $nor = $query->num_rows();
+        for ($i = 0; $i <= $nor; $i++) {
+            $val .= "<option value='" . $i . "' >" . $i . "</option>";
+        }
+        $val .= "</select>";
+        echo $val;
+    }
+
+
+    function remove_qid($quid, $qid)
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        if ($this->quiz_model->remove_qid($quid, $qid)) {
+            $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('removed_successfully') . " </div>");
+        }
+        redirect('quiz/edit_quiz/' . $quid);
+    }
+
+    function add_qid($quid, $qid)
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $this->quiz_model->add_qid($quid, $qid);
+        echo 'added';
+    }
+
+
+    function pre_add_question($quid, $limit = '0', $cid = '0', $lid = '0')
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+        $cid = $this->input->post('cid');
+        $lid = $this->input->post('lid');
+        redirect('quiz/add_question/' . $quid . '/' . $limit . '/' . $cid . '/' . $lid);
+    }
+
+
+    public function add_question($quid, $limit = '0', $cid = '0', $lid = '0')
+    {
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+
+        $this->load->model("qbank_model");
+
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] == '0') {
+            exit($this->lang->line('permission_denied'));
+        }
+
+
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        $data['quid'] = $quid;
+        $data['title'] = $this->lang->line('add_question_into_quiz') . ': ' . $data['quiz']['quiz_name'];
+        if ($data['quiz']['question_selection'] == '0') {
+
+            $data['result'] = $this->qbank_model->question_list($limit, $cid, $lid);
+            $data['category_list'] = $this->qbank_model->category_list();
+            $data['level_list'] = $this->qbank_model->level_list();
+
+        } else {
+
+            exit($this->lang->line('permission_denied'));
+        }
+        $data['limit'] = $limit;
+        $data['cid'] = $cid;
+        $data['lid'] = $lid;
+        $data['quid'] = $quid;
+
+        if ($logged_in['su'] == 1) {
+            $this->load->view('new_material/header', $data);
+        } elseif ($logged_in['su'] == 2) {
+            $this->load->view('new_material/teacher_header', $data);
+        } else {
+            $this->load->view('new_material/student_header', $data);
+        }
+
+        $this->load->view('questions/add_question_into_quiz', $data);
+        $this->load->view('new_material/footer', $data);
+    }
+
+
+    function up_question($quid, $qid, $not = '1')
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] != "1") {
+            exit($this->lang->line('permission_denied'));
+            return;
+        }
+        for ($i = 1; $i <= $not; $i++) {
+            $this->quiz_model->up_question($quid, $qid);
+        }
+        redirect('quiz/edit_quiz/' . $quid, 'refresh');
+    }
+
+
+    function down_question($quid, $qid, $not = '1')
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] != "1") {
+            exit($this->lang->line('permission_denied'));
+            return;
+        }
+        for ($i = 1; $i <= $not; $i++) {
+            $this->quiz_model->down_question($quid, $qid);
+        }
+        redirect('quiz/edit_quiz/' . $quid, 'refresh');
+    }
+
+
+    public function insert_quiz()
+    {
+        // redirect if not logged in
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] < '1') {
+            exit($this->lang->line('permission_denied'));
+        }
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('quiz_name', 'quiz_name', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . validation_errors() . " </div>");
+            redirect('quiz/add_new/');
+        } else {
+            $quid = $this->quiz_model->insert_quiz();
+
+            redirect('quiz/edit_quiz/' . $quid);
+        }
+
+    }
+
+    public function update_quiz($quid)
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] < '1') {
+            exit($this->lang->line('permission_denied'));
+        }
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('quiz_name', 'quiz_name', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . validation_errors() . " </div>");
+            redirect('quiz/edit_quiz/' . $quid);
+        } else {
+            $quid = $this->quiz_model->update_quiz($quid);
+
+            redirect('quiz/edit_quiz/' . $quid);
+        }
+
+    }
+
+
+    public function remove_quiz($quid)
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] < '1') {
+            exit($this->lang->line('permission_denied'));
+        }
+
+        if ($this->quiz_model->remove_quiz($quid)) {
+            $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('removed_successfully') . " </div>");
+        } else {
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_remove') . " </div>");
+
+        }
+        redirect('quiz');
+
+
+    }
+
+
+    public function quiz_detail($quid)
+    {
+        // redirect if not loggedin
+
+
+        $logged_in = $this->session->userdata('logged_in');
+        $gid = $logged_in['gid'];
+        $data['title'] = $this->lang->line('attempt') . ' ' . $this->lang->line('quiz');
+
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        /*        $this->load->view('header', $data);
+                $this->load->view('quiz_detail', $data);
+                $this->load->view('material_part/footer_material', $data);*/
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] > 0) {
+            if ($logged_in['su'] == 1) {
+                if ($logged_in['su'] == 1) {
+                    $this->load->view('new_material/header', $data);
+                } elseif ($logged_in['su'] == 2) {
+                    $this->load->view('new_material/teacher_header', $data);
+                } else {
+                    $this->load->view('new_material/student_header', $data);
                 }
-                else
-                {
-					$quid=$this->quiz_model->insert_quiz();
-                   
-					redirect('quiz/edit_quiz/'.$quid);
-                }       
+            } elseif ($logged_in['su'] == 2) {
+                $this->load->view('new_material/teacher_header', $data);
+            } else {
+                $this->load->view('new_material/student_header', $data);
+            }
+        } else {
+            $this->load->view('new_material/student_header', $data);
+        }
 
-	}
-	
-		public function update_quiz($quid)
-	{
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
-		
-		
-			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
-				exit($this->lang->line('permission_denied'));
-			}
-		$this->load->library('form_validation');
-		$this->form_validation->set_rules('quiz_name', 'quiz_name', 'required');
-           if ($this->form_validation->run() == FALSE)
-                {
-                     $this->session->set_flashdata('message', "<div class='alert alert-danger'>".validation_errors()." </div>");
-					redirect('quiz/edit_quiz/'.$quid);
+        $this->load->view('quiz_detail', $data);
+        $this->load->view('material_part/footer_material', $data);
+
+    }
+
+    public function get_quiz_detail($quid)
+    {
+        // redirect if not loggedin
+
+
+        $logged_in = $this->session->userdata('logged_in');
+        $gid = $logged_in['gid'];
+        $data['title'] = $this->lang->line('attempt') . ' ' . $this->lang->line('quiz');
+
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        /*        $this->load->view('header', $data);
+                $this->load->view('quiz_detail', $data);
+                $this->load->view('material_part/footer_material', $data);*/
+
+        $logged_in = $this->session->userdata('logged_in');
+
+
+        $this->load->view('lessons/get_quiz_detail', $data);
+        $this->load->view('material_part/footer_material', $data);
+
+    }
+
+    public function view_quiz_detail($quid)
+    {
+        // redirect if not loggedin
+
+
+        $logged_in = $this->session->userdata('logged_in');
+        $gid = $logged_in['gid'];
+        $data['title'] = $this->lang->line('attempt') . ' ' . $this->lang->line('quiz');
+
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        /*        $this->load->view('header', $data);
+                $this->load->view('quiz_detail', $data);
+                $this->load->view('material_part/footer_material', $data);*/
+
+        $logged_in = $this->session->userdata('logged_in');
+
+
+        $this->load->view('lessons/view_quiz_details', $data);
+        $this->load->view('material_part/footer_material', $data);
+
+    }
+
+
+    public function view_validate_quiz($quid)
+    {
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+
+        // if it is without login quiz.
+
+        if ($data['quiz']['with_login'] == 0 && !$this->session->userdata('logged_in')) {
+
+        } else {
+
+            $logged_in = $this->session->userdata('logged_in');
+
+            $gid = $logged_in['gid'];
+            $uid = $logged_in['uid'];
+
+            // if this quiz already opened by user then resume it
+            $open_result = $this->quiz_model->open_result($quid, $uid);
+            if($logged_in['su']==2) {
+                if ($open_result != '0') {
+                    $this->session->set_userdata('rid', $open_result);
+                    redirect('quiz/attempt/' . $open_result);
                 }
-                else
-                {
-					$quid=$this->quiz_model->update_quiz($quid);
-                   
-					redirect('quiz/edit_quiz/'.$quid);
-                }       
+            }
 
-	}
-	
-	
-	
-	
+            $data['quiz'] = $this->quiz_model->get_quiz($quid);
+            // validate assigned group
+            if($logged_in['su']==2){
+                if (!in_array($gid, explode(',', $data['quiz']['gids']))) {
+                    $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_assigned_to_your_group') . " </div>");
+                    redirect('quiz/quiz_detail/' . $quid);
+                }
+            }
 
-	
-	
-	
-	
-	
-	
-	public function remove_quiz($quid){
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
+            // validate start end date/time
+            if ($data['quiz']['start_date'] > time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_available') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+            // validate start end date/time
+            if ($data['quiz']['end_date'] < time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
 
-			$logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
-				exit($this->lang->line('permission_denied'));
-			} 
-			
-			if($this->quiz_model->remove_quiz($quid)){
-                        $this->session->set_flashdata('message', "<div class='alert alert-success'>".$this->lang->line('removed_successfully')." </div>");
-					}else{
-						    $this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('error_to_remove')." </div>");
-						
-					}
-					redirect('quiz');
-                     
-			
-		}
-	
+            // validate ip address
+            if ($data['quiz']['ip_address'] != '') {
+                $ip_address = explode(",", $data['quiz']['ip_address']);
+                $myip = $_SERVER['REMOTE_ADDR'];
+                if (!in_array($myip, $ip_address)) {
+                    $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('ip_declined') . " </div>");
+                    redirect('quiz/quiz_detail/' . $quid);
+                }
+            }
+            // validate maximum attempts
+            $maximum_attempt = $this->quiz_model->count_result($quid, $uid);
 
+            if($logged_in['su']==2) {
+                if ($data['quiz']['maximum_attempts'] <= $maximum_attempt) {
+                    $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('reached_maximum_attempt') . " </div>");
+                    redirect('quiz/quiz_detail/' . $quid);
+                }
+            }
 
+            // insert result row and get rid (result id)
+            $rid = $this->quiz_model->insert_result($quid, $uid);
+            
 
-	public function quiz_detail($quid){
-				// redirect if not loggedin
- 
-		
-		$logged_in=$this->session->userdata('logged_in');
-		$gid=$logged_in['gid'];
-		$data['title']=$this->lang->line('attempt').' '.$this->lang->line('quiz');
-		
-		$data['quiz']=$this->quiz_model->get_quiz($quid);
-		$this->load->view('header',$data);
-		$this->load->view('quiz_detail',$data);
-		$this->load->view('footer',$data);
-		
-	}
-	
-	public function validate_quiz($quid){
-		$data['quiz']=$this->quiz_model->get_quiz($quid);
-		// if it is without login quiz.
-		if($data['quiz']['with_login']==0 && !$this->session->userdata('logged_in')){
-		if($this->session->userdata('logged_in_raw')){
-		$logged_in=$this->session->userdata('logged_in_raw');
-		}else{
-			
-		$userdata=array(
-		'email'=>time(),
-		'password'=>md5(rand(11111,99999)),
-		'first_name'=>'Guest User',
-		'last_name'=>time(),
-		'contact_no'=>'',
-		'gid'=>$this->config->item('default_gid'),
-		'su'=>'0'		
-		);
-		$this->db->insert('savsoft_users',$userdata);
-		$uid=$this->db->insert_id();
-		$query=$this->db->query("select * from savsoft_users where uid='$uid' ");
-		$user=$query->row_array();
-		// creating login cookie
-		$user['base_url']=base_url();
-		$this->session->set_userdata('logged_in_raw', $user);
-		$logged_in=$user;
-		}		
-		
-		
-		$gid=$logged_in['gid'];
-		$uid=$logged_in['uid'];
-		 
-		 // if this quiz already opened by user then resume it
-		 $open_result=$this->quiz_model->open_result($quid,$uid);
-		if($open_result != '0'){
-		$this->session->set_userdata('rid', $open_result);
-		redirect('quiz/attempt/'.$open_result);	
-		}
-		$data['quiz']=$this->quiz_model->get_quiz($quid);
+            $this->session->set_userdata('rid', $rid);
 
-		// validate start end date/time
-		if($data['quiz']['start_date'] > time()){
-		$this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('quiz_not_available')." </div>");
-		redirect('quiz/quiz_detail/'.$quid);
-		 }
-		// validate start end date/time
-		if($data['quiz']['end_date'] < time()){
-		$this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('quiz_ended')." </div>");
-		redirect('quiz/quiz_detail/'.$quid);
-		 }
+            redirect('quiz/view_attempt/' . $rid);
+        }
 
+    }
 
-		
-		// insert result row and get rid (result id)
-		$rid=$this->quiz_model->insert_result($quid,$uid);
-		
-		$this->session->set_userdata('rid', $rid);
-		redirect('quiz/attempt/'.$rid);	
+    function view_attempt($rid)
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            if (!$this->session->userdata('logged_in_raw')) {
+                redirect('login');
+            }
+        }
+
+        if (!$this->session->userdata('logged_in')) {
+            $logged_in = $this->session->userdata('logged_in_raw');
+        } else {
+            $logged_in = $this->session->userdata('logged_in');
+        }
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
 
 
 
 
+        $srid = $this->session->userdata('rid');
+
+        // if linked and session rid is not matched then something wrong.
+        if ($rid != $srid) {
+
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+            redirect('quiz/');
+
+        }
+
+        /*
+        if(!$this->session->userdata('logged_in')){
+            exit($this->lang->line('permission_denied'));
+        }
+        */
+
+        // get result and quiz info and validate time period
+        $data['quiz'] = $this->quiz_model->quiz_result($rid);
+        $data['saved_answers'] = $this->quiz_model->saved_answers($rid);
+
+
+        // end date/time
+
+        if($logged_in['su']==2){
+            if ($data['quiz']['end_date'] < time()) {
+                $this->quiz_model->submit_result($rid);
+                $this->session->unset_userdata('rid');
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+                redirect('quiz/quiz_detail/' . $data['quiz']['quid']);
+            }
+        }
 
 
 
+        // end date/time
+        if($logged_in['su']==2) {
+            if (($data['quiz']['start_time'] + ($data['quiz']['duration'] * 60)) < time()) {
+                $this->quiz_model->submit_result($rid);
+                $this->session->unset_userdata('rid');
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('time_over') . " </div>");
+                redirect('quiz/quiz_detail/' . $data['quiz']['quid']);
+            }
+        }
+
+        // remaining time in seconds
+        $data['seconds'] = ($data['quiz']['duration'] * 60) - (time() - $data['quiz']['start_time']);
+        // get questions
+        $data['questions'] = $this->quiz_model->get_questions($data['quiz']['r_qids']);
+        // get options
+        $data['options'] = $this->quiz_model->get_options($data['quiz']['r_qids']);
+        $data['title'] = $data['quiz']['quiz_name'];
+
+        $this->load->view('header', $data);
+        $this->load->view('lessons/view_quiz_attempt', $data);
+        $this->load->view('material_part/footer_material', $data);
+
+//        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+//        $this->load->view('quiz_attempt',$data);
+//        $this->load->view('material_part/footer_material',$data);
+
+    }
+
+
+    public function validate_quiz($quid)
+    {
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        // if it is without login quiz.
+
+
+        if ($data['quiz']['with_login'] == 0 && !$this->session->userdata('logged_in')) {
+
+            if ($this->session->userdata('logged_in_raw')) {
+                $logged_in = $this->session->userdata('logged_in_raw');
+            } else {
+
+                $userdata = array(
+                    'email' => time(),
+                    'password' => md5(rand(11111, 99999)),
+                    'first_name' => 'Guest User',
+                    'last_name' => time(),
+                    'contact_no' => '',
+                    'gid' => $this->config->item('default_gid'),
+                    'su' => '0'
+                );
+                $this->db->insert('savsoft_users', $userdata);
+                $uid = $this->db->insert_id();
+                $query = $this->db->query("select * from savsoft_users where uid='$uid' ");
+                $user = $query->row_array();
+                // creating login cookie
+                $user['base_url'] = base_url();
+                $this->session->set_userdata('logged_in_raw', $user);
+                $logged_in = $user;
+            }
+
+            $gid = $logged_in['gid'];
+            $uid = $logged_in['uid'];
+
+            // if this quiz already opened by user then resume it
+            $open_result = $this->quiz_model->open_result($quid, $uid);
+            if ($open_result != '0') {
+                $this->session->set_userdata('rid', $open_result);
+                redirect('quiz/attempt/' . $open_result);
+            }
+            $data['quiz'] = $this->quiz_model->get_quiz($quid);
+
+            // validate start end date/time
+            if ($data['quiz']['start_date'] > time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_available') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+            // validate start end date/time
+            if ($data['quiz']['end_date'] < time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+
+
+            // insert result row and get rid (result id)
+            $rid = $this->quiz_model->insert_result($quid, $uid);
+
+            $this->session->set_userdata('rid', $rid);
+            redirect('quiz/attempt/' . $rid);
+
+
+            // without login ends
+
+
+        } else {
 
 
 
+            // with login starts
+            // redirect if not loggedin
+            if (!$this->session->userdata('logged_in')) {
+                $this->session->set_flashdata('message', $this->lang->line('login_required2'));
+
+                redirect('login');
+
+            }
+            $logged_in = $this->session->userdata('logged_in');
+            if ($logged_in['base_url'] != base_url()) {
+                $this->session->unset_userdata('logged_in');
+                redirect('login');
+            }
+
+            $logged_in = $this->session->userdata('logged_in');
+
+            $gid = $logged_in['gid'];
+            $uid = $logged_in['uid'];
+
+            // if this quiz already opened by user then resume it
+
+            $open_result = $this->quiz_model->open_result($quid, $uid);
+
+            if ($open_result != '0') {
+                $this->session->set_userdata('rid', $open_result);
+                redirect('quiz/attempt/' . $open_result);
+            }
+
+            $data['quiz'] = $this->quiz_model->get_quiz($quid);
+            // validate assigned group
+            if (!in_array($gid, explode(',', $data['quiz']['gids']))) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_assigned_to_your_group') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+
+            // validate start end date/time
+
+            if ($data['quiz']['start_date'] > time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_available') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+            // validate start end date/time
+            if ($data['quiz']['end_date'] < time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+
+            // validate ip address
+            if ($data['quiz']['ip_address'] != '') {
+                $ip_address = explode(",", $data['quiz']['ip_address']);
+                $myip = $_SERVER['REMOTE_ADDR'];
+                if (!in_array($myip, $ip_address)) {
+                    $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('ip_declined') . " </div>");
+                    redirect('quiz/quiz_detail/' . $quid);
+                }
+            }
+
+            // validate maximum attempts
+            $maximum_attempt = $this->quiz_model->count_result($quid, $uid);
+
+            if ($data['quiz']['maximum_attempts'] <= $maximum_attempt) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('reached_maximum_attempt') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+
+            // insert result row and get rid (result id)
+
+            $rid = $this->quiz_model->insert_result($quid, $uid);
 
 
 
+            $this->session->set_userdata('rid', $rid);
 
-		
-		// without login ends
+            redirect('quiz/attempt/' . $rid);
+        }
 
-		
-		}else{
-		// with login starts
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			$this->session->set_flashdata('message', $this->lang->line('login_required2'));
-			
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
-		 
-		
-		
-		$logged_in=$this->session->userdata('logged_in');
-		
-		
-		$gid=$logged_in['gid'];
-		$uid=$logged_in['uid'];
-		 
-		 // if this quiz already opened by user then resume it
-		 $open_result=$this->quiz_model->open_result($quid,$uid);
-		if($open_result != '0'){
-		$this->session->set_userdata('rid', $open_result);
-		redirect('quiz/attempt/'.$open_result);	
-		}
-		$data['quiz']=$this->quiz_model->get_quiz($quid);
-		// validate assigned group
-		if(!in_array($gid,explode(',',$data['quiz']['gids']))){
-		$this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('quiz_not_assigned_to_your_group')." </div>");
-		redirect('quiz/quiz_detail/'.$quid);
-		 }
-		// validate start end date/time
-		if($data['quiz']['start_date'] > time()){
-		$this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('quiz_not_available')." </div>");
-		redirect('quiz/quiz_detail/'.$quid);
-		 }
-		// validate start end date/time
-		if($data['quiz']['end_date'] < time()){
-		$this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('quiz_ended')." </div>");
-		redirect('quiz/quiz_detail/'.$quid);
-		 }
+    }
 
-		// validate ip address
-		if($data['quiz']['ip_address'] !=''){
-		$ip_address=explode(",",$data['quiz']['ip_address']);
-		$myip=$_SERVER['REMOTE_ADDR'];
-		if(!in_array($myip,$ip_address)){
-		$this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('ip_declined')." </div>");
-		redirect('quiz/quiz_detail/'.$quid);
-		 }
-		}
-		 // validate maximum attempts
-		$maximum_attempt=$this->quiz_model->count_result($quid,$uid);
-		if($data['quiz']['maximum_attempts'] <= $maximum_attempt){
-		$this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('reached_maximum_attempt')." </div>");
-		redirect('quiz/quiz_detail/'.$quid);
-		 }
-		
-		// insert result row and get rid (result id)
-		$rid=$this->quiz_model->insert_result($quid,$uid);
-		
-		$this->session->set_userdata('rid', $rid);
-		redirect('quiz/attempt/'.$rid);	
-		}
-		
-	}
-	
-	
-	
-	function attempt($rid){
-		// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			if(!$this->session->userdata('logged_in_raw')){
-				redirect('login');
-			}
-		}
-		
-		if(!$this->session->userdata('logged_in')){
-		$logged_in=$this->session->userdata('logged_in_raw');
-		}else{
-		$logged_in=$this->session->userdata('logged_in');
-		}
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
+    public function get_validate_quiz($quid)
+    {
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        // if it is without login quiz.
 
 
-		$srid=$this->session->userdata('rid');
-						// if linked and session rid is not matched then something wrong.
-			if($rid != $srid){
-		 
-		$this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('quiz_ended')." </div>");
-		redirect('quiz/');
+        if ($data['quiz']['with_login'] == 0 && !$this->session->userdata('logged_in')) {
 
-			}
-		/*
-		if(!$this->session->userdata('logged_in')){
-			exit($this->lang->line('permission_denied'));
-		}
-		*/
-		
-		// get result and quiz info and validate time period
-		$data['quiz']=$this->quiz_model->quiz_result($rid);
-		$data['saved_answers']=$this->quiz_model->saved_answers($rid);
-		
+            if ($this->session->userdata('logged_in_raw')) {
+                $logged_in = $this->session->userdata('logged_in_raw');
+            } else {
 
-			
-			
-		// end date/time
-		if($data['quiz']['end_date'] < time()){
-		$this->quiz_model->submit_result($rid);
-		$this->session->unset_userdata('rid');
-		$this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('quiz_ended')." </div>");
-		redirect('quiz/quiz_detail/'.$data['quiz']['quid']);
-		 }
+                $userdata = array(
+                    'email' => time(),
+                    'password' => md5(rand(11111, 99999)),
+                    'first_name' => 'Guest User',
+                    'last_name' => time(),
+                    'contact_no' => '',
+                    'gid' => $this->config->item('default_gid'),
+                    'su' => '0'
+                );
+                $this->db->insert('savsoft_users', $userdata);
+                $uid = $this->db->insert_id();
+                $query = $this->db->query("select * from savsoft_users where uid='$uid' ");
+                $user = $query->row_array();
+                // creating login cookie
+                $user['base_url'] = base_url();
+                $this->session->set_userdata('logged_in_raw', $user);
+                $logged_in = $user;
+            }
 
-		
-		// end date/time
-		if(($data['quiz']['start_time']+($data['quiz']['duration']*60)) < time()){
-		$this->quiz_model->submit_result($rid);
-		$this->session->unset_userdata('rid');
-		$this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('time_over')." </div>");
-		redirect('quiz/quiz_detail/'.$data['quiz']['quid']);
-		 }
-		// remaining time in seconds 
-		$data['seconds']=($data['quiz']['duration']*60) - (time()- $data['quiz']['start_time']);
-		// get questions
-		$data['questions']=$this->quiz_model->get_questions($data['quiz']['r_qids']);
-		// get options
-		$data['options']=$this->quiz_model->get_options($data['quiz']['r_qids']);
-		$data['title']=$data['quiz']['quiz_name'];
-		$this->load->view('header',$data);
-		$this->load->view('quiz_attempt',$data);
-		$this->load->view('footer',$data);
-			
-		}
-		
-		
-	
-	
-	function save_answer(){
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			if(!$this->session->userdata('logged_in_raw')){
-		
-		redirect('login');
-			}	
-		}
-		if(!$this->session->userdata('logged_in')){
-		$logged_in=$this->session->userdata('logged_in_raw');
-		}else{
-		$logged_in=$this->session->userdata('logged_in');
-		}
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
+            $gid = $logged_in['gid'];
+            $uid = $logged_in['uid'];
+
+            // if this quiz already opened by user then resume it
+            $open_result = $this->quiz_model->open_result($quid, $uid);
+            if ($open_result != '0') {
+                $this->session->set_userdata('rid', $open_result);
+                redirect('quiz/attempt/' . $open_result);
+            }
+            $data['quiz'] = $this->quiz_model->get_quiz($quid);
+
+            // validate start end date/time
+            if ($data['quiz']['start_date'] > time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_available') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+            // validate start end date/time
+            if ($data['quiz']['end_date'] < time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
 
 
-		echo "<pre>";
-		print_r($_POST);
-		  // insert user response and calculate scroe
-		echo $this->quiz_model->insert_answer();
-		
-		
-	}
- function set_ind_time(){
-		  // update questions time spent
-		$this->quiz_model->set_ind_time();
-		
-		
-	}
- 
- 
- 
- function upload_photo(){
-				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
+            // insert result row and get rid (result id)
+            $rid = $this->quiz_model->insert_result($quid, $uid);
 
-		
-		
-if(isset($_FILES['webcam'])){
-			$targets = 'photo/';
-			$filename=time().'.jpg';
-			$targets = $targets.''.$filename;
-			if(move_uploaded_file($_FILES['webcam']['tmp_name'], $targets)){
-			
-				$this->session->set_flashdata('photoname', $filename);
-				}
-				}
-}
+            $this->session->set_userdata('rid', $rid);
+            redirect('quiz/attempt/' . $rid);
+
+
+            // without login ends
+
+
+        } else {
 
 
 
- function submit_quiz(){
-	 				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			if(!$this->session->userdata('logged_in_raw')){
-		 redirect('login');
-			}
-		}
-		if(!$this->session->userdata('logged_in')){
-		$logged_in=$this->session->userdata('logged_in_raw');
-		}else{
-		$logged_in=$this->session->userdata('logged_in');
-		}
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
+            // with login starts
+            // redirect if not loggedin
+            if (!$this->session->userdata('logged_in')) {
+                $this->session->set_flashdata('message', $this->lang->line('login_required2'));
 
-	 $rid=$this->session->userdata('rid');
-		
-				if($this->quiz_model->submit_result()){
-					 
-					 $this->session->set_flashdata('message', "<div class='alert alert-success'>".str_replace("{result_url}",site_url('result/view_result/'.$rid),$this->lang->line('quiz_submit_successfully'))." </div>");
-					 
-					
-					}else{
-						    $this->session->set_flashdata('message', "<div class='alert alert-danger'>".$this->lang->line('error_to_submit')." </div>");
-						
-					}
-			$this->session->unset_userdata('rid');		
-	if($this->session->userdata('logged_in')){				
- redirect('quiz');
-	}else{
-	 redirect('quiz/open_quiz/0');	
-	}
- }
- 
- 
- 
- function assign_score($rid,$qno,$score){
-	 
-	 				// redirect if not loggedin
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-			
-		}
-		$logged_in=$this->session->userdata('logged_in');
-		if($logged_in['base_url'] != base_url()){
-		$this->session->unset_userdata('logged_in');		
-		redirect('login');
-		}
+                redirect('login');
 
-		
-		
-	 $logged_in=$this->session->userdata('logged_in');
-			if($logged_in['su']!='1'){
-				exit($this->lang->line('permission_denied'));
-			} 
-			$this->quiz_model->assign_score($rid,$qno,$score);
-			
-			echo '1';
-	 
- }
- 
- 
-	
+            }
+            $logged_in = $this->session->userdata('logged_in');
+            if ($logged_in['base_url'] != base_url()) {
+                $this->session->unset_userdata('logged_in');
+                redirect('login');
+            }
+
+            $logged_in = $this->session->userdata('logged_in');
+
+            $gid = $logged_in['gid'];
+            $uid = $logged_in['uid'];
+
+            // if this quiz already opened by user then resume it
+
+            $open_result = $this->quiz_model->open_result($quid, $uid);
+
+            if ($open_result != '0') {
+                $this->session->set_userdata('rid', $open_result);
+                redirect('quiz/attempt/' . $open_result);
+            }
+
+            $data['quiz'] = $this->quiz_model->get_quiz($quid);
+            // validate assigned group
+            if (!in_array($gid, explode(',', $data['quiz']['gids']))) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_assigned_to_your_group') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+
+            // validate start end date/time
+
+            if ($data['quiz']['start_date'] > time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_not_available') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+            // validate start end date/time
+            if ($data['quiz']['end_date'] < time()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+
+            // validate ip address
+            if ($data['quiz']['ip_address'] != '') {
+                $ip_address = explode(",", $data['quiz']['ip_address']);
+                $myip = $_SERVER['REMOTE_ADDR'];
+                if (!in_array($myip, $ip_address)) {
+                    $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('ip_declined') . " </div>");
+                    redirect('quiz/quiz_detail/' . $quid);
+                }
+            }
+
+            // validate maximum attempts
+            $maximum_attempt = $this->quiz_model->count_result($quid, $uid);
+
+            if ($data['quiz']['maximum_attempts'] <= $maximum_attempt) {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('reached_maximum_attempt') . " </div>");
+                redirect('quiz/quiz_detail/' . $quid);
+            }
+
+            // insert result row and get rid (result id)
+
+            $rid = $this->quiz_model->insert_result($quid, $uid);
+
+
+
+            $this->session->set_userdata('rid', $rid);
+
+            redirect('quiz/attempt/' . $rid);
+        }
+
+    }
+
+
+    function attempt($rid)
+    {
+
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            if (!$this->session->userdata('logged_in_raw')) {
+                redirect('login');
+            }
+        }
+
+
+
+        if (!$this->session->userdata('logged_in')) {
+            $logged_in = $this->session->userdata('logged_in_raw');
+        } else {
+            $logged_in = $this->session->userdata('logged_in');
+        }
+
+
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+
+        $srid = $this->session->userdata('rid');
+
+        // if linked and session rid is not matched then something wrong.
+        if ($rid != $srid) {
+
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+            redirect('quiz/');
+
+        }
+
+        /*
+        if(!$this->session->userdata('logged_in')){
+            exit($this->lang->line('permission_denied'));
+        }
+        */
+
+        // get result and quiz info and validate time period
+        $data['quiz'] = $this->quiz_model->quiz_result($rid);
+        $data['saved_answers'] = $this->quiz_model->saved_answers($rid);
+
+        // end date/time
+        if ($data['quiz']['end_date'] < time()) {
+            $this->quiz_model->submit_result($rid);
+            $this->session->unset_userdata('rid');
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('quiz_ended') . " </div>");
+            redirect('quiz/quiz_detail/' . $data['quiz']['quid']);
+        }
+
+        // end date/time
+        if (($data['quiz']['start_time'] + ($data['quiz']['duration'] * 60)) < time()) {
+            $this->quiz_model->submit_result($rid);
+            $this->session->unset_userdata('rid');
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('time_over') . " </div>");
+            redirect('quiz/quiz_detail/' . $data['quiz']['quid']);
+        }
+        // remaining time in seconds
+        $data['seconds'] = ($data['quiz']['duration'] * 60) - (time() - $data['quiz']['start_time']);
+        // get questions
+        $data['questions'] = $this->quiz_model->get_questions($data['quiz']['r_qids']);
+        // get options
+        $data['options'] = $this->quiz_model->get_options($data['quiz']['r_qids']);
+        $data['title'] = $data['quiz']['quiz_name'];
+        $this->load->view('header', $data);
+        $this->load->view('quiz_attempt', $data);
+        $this->load->view('new_material/footer', $data);
+
+//        if ($logged_in['su']== 1){if ($logged_in['su']== 1){$this->load->view('new_material/header', $data);}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}}elseif($logged_in['su']== 2){$this->load->view('new_material/teacher_header', $data);        }else{$this->load->view('new_material/student_header', $data);}
+//        $this->load->view('quiz_attempt',$data);
+//        $this->load->view('material_part/footer_material',$data);
+
+    }
+
+    function preview($rid)
+    {
+
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            if (!$this->session->userdata('logged_in_raw')) {
+                redirect('login');
+            }
+        }
+
+
+
+        if (!$this->session->userdata('logged_in')) {
+            $logged_in = $this->session->userdata('logged_in_raw');
+        } else {
+            $logged_in = $this->session->userdata('logged_in');
+        }
+
+
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        // get result and quiz info and validate time period
+        $data['quiz'] = $this->quiz_model->get_quiz($rid);
+        $data['saved_answers'] = $this->quiz_model->saved_answers($rid);
+
+
+
+        $data['questions'] = $this->quiz_model->get_questions($data['quiz']['qids']);
+        // get options
+        $data['options'] = $this->quiz_model->get_options($data['quiz']['qids']);
+        $data['title'] = $data['quiz']['quiz_name'];
+        $this->load->view('header', $data);
+        $this->load->view('quiz_preview', $data);
+        $this->load->view('new_material/footer', $data);
+
+    }
+
+    function quiz_preview($quid)
+    {
+
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            if (!$this->session->userdata('logged_in_raw')) {
+                redirect('login');
+            }
+        }
+
+
+
+        if (!$this->session->userdata('logged_in')) {
+            $logged_in = $this->session->userdata('logged_in_raw');
+        } else {
+            $logged_in = $this->session->userdata('logged_in');
+        }
+
+
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        // get result and quiz info and validate time period
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+
+        $data['saved_answers'] = $this->quiz_model->saved_answers($quid);
+
+
+        // get questions
+        $data['questions'] = $this->quiz_model->get_questions($data['quiz']['qids']);
+        // get options
+        $data['options'] = $this->quiz_model->get_options($data['quiz']['qids']);
+        $data['title'] = $data['quiz']['quiz_name'];
+//        $this->load->view('header', $data);
+        $this->load->view('assign_quiz/preview', $data);
+//        $this->load->view('new_material/footer', $data);
+
+    }
+
+
+
+    function save_answer()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            if (!$this->session->userdata('logged_in_raw')) {
+
+                redirect('login');
+            }
+        }
+        if (!$this->session->userdata('logged_in')) {
+            $logged_in = $this->session->userdata('logged_in_raw');
+        } else {
+            $logged_in = $this->session->userdata('logged_in');
+        }
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+
+
+        // insert user response and calculate score
+        echo $this->quiz_model->insert_answer();
+
+
+    }
+
+    function set_ind_time()
+    {
+        // update questions time spent
+        $this->quiz_model->set_ind_time();
+
+
+    }
+
+
+    function upload_photo()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+
+        if (isset($_FILES['webcam'])) {
+            $targets = 'photo/';
+            $filename = time() . '.jpg';
+            $targets = $targets . '' . $filename;
+            if (move_uploaded_file($_FILES['webcam']['tmp_name'], $targets)) {
+
+                $this->session->set_flashdata('photoname', $filename);
+            }
+        }
+    }
+
+
+    function submit_quiz()
+    {
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            if (!$this->session->userdata('logged_in_raw')) {
+                redirect('login');
+            }
+        }
+        if (!$this->session->userdata('logged_in')) {
+            $logged_in = $this->session->userdata('logged_in_raw');
+        } else {
+            $logged_in = $this->session->userdata('logged_in');
+        }
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+        $rid = $this->session->userdata('rid');
+        if($this->session->userdata('view_mode')){
+
+        };
+
+
+        if ($this->quiz_model->submit_result()) {
+
+            $this->session->set_flashdata('message', "<div class='alert alert-success'>" . str_replace("{result_url}", site_url('result/view_result/' . $rid), $this->lang->line('quiz_submit_successfully')) . " </div>");
+
+
+        } else {
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_submit') . " </div>");
+
+        }
+
+
+//        exit;
+
+
+        $this->session->unset_userdata('rid');
+        if ($this->session->userdata('logged_in')) {
+            redirect('quiz');
+        } else {
+            redirect('quiz/open_quiz/0');
+        }
+    }
+
+
+    function assign_score($rid, $qno, $score)
+    {
+
+        // redirect if not loggedin
+        if (!$this->session->userdata('logged_in')) {
+            redirect('login');
+
+        }
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['base_url'] != base_url()) {
+            $this->session->unset_userdata('logged_in');
+            redirect('login');
+        }
+
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] < '1') {
+            exit($this->lang->line('permission_denied'));
+        }
+        $this->quiz_model->assign_score($rid, $qno, $score);
+
+        echo '1';
+
+    }
+
+//customized functions
+    public function assessment_insert_quiz()
+    {
+        $post = $this->input->post();
+        $data = array("quiz_name" => $post["quiz_name"], "cid" => $post['cid']);
+        $quid = $this->quiz_model->assessment_insert_quiz($data);
+        if ($quid) {
+            echo $this->db->insert_id();
+        }
+
+
+    }
+
+    public function addQuestionsToQuiz()
+    {
+        $post = $this->input->post();
+        parse_str($post['question_id'], $myArray);
+        $question_ids = implode(',', $myArray);
+        $quid = $post['quid'];
+
+        echo '<pre>';
+
+        $userdata = array(
+            'qids' => $question_ids,
+        );
+        $this->db->where('quid', $quid);
+        $this->db->update('savsoft_quiz', $userdata);
+    }
+
+    public function addGroupToQuiz()
+    {
+        $post = $this->input->post();
+        parse_str($post['gids'], $myArray);
+        $gids = implode(',', $myArray['gids']);
+        $quid = $post['quid'];
+
+        $userdata = array(
+            'gids' => $gids,
+        );
+        $this->db->where('quid', $quid);
+        $this->db->update('savsoft_quiz', $userdata);
+    }
+
+    public function addSettingsToQuiz()
+    {
+        $post = $this->input->post();
+
+        parse_str($post['question_id'], $questionArray);
+
+        $quid = $post['quid'];
+        $startTime = strtotime($post['start_date']);
+        $endTime = strtotime($post['end_date']);
+        $quizdata = array(
+            'start_date' => $startTime,
+            'end_date' => $endTime,
+            'duration' => $post['duration'],
+            'maximum_attempts' => $post['maximum_attempts'],
+            'pass_percentage' => $post['pass_percentage'],
+            'view_answer' => $post['view_answer'],
+            'camera_req' => 0,
+            'noq' => count($questionArray),
+            'correct_score' => 1,
+            'incorrect_score' => 1
+        );
+
+        $this->db->where('quid', $quid);
+        $this->db->update('savsoft_quiz', $quizdata);
+    }
+
+
 }

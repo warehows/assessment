@@ -1,0 +1,112 @@
+
+
+#first-section {
+  background:#ffffff;
+  height:350px;
+}
+
+@media (max-width:767px){
+  #first-section {
+    background:#ffffff;
+    height:650px;
+  }
+
+}
+
+
+
+
+.trains-lg {
+  position:absolute;
+  -webkit-animation:moveSlideshow 15s linear infinite;
+  margin-left:-70px;
+}
+
+#clouds {
+  position:absolute;
+  z-index:500;
+  right:-4900px;
+  top:10px;
+}
+
+animation: collage 60s linear infinite; @keyframe collage 0% {
+  -webkit-transform:translateZ(0);
+  transform:translateZ(0);
+}
+
+main.faea32ab.css:5 100% {
+  -webkit-transform:translate3d(-1800px,0,0);
+  transform:translate3d(-1800px,0,0);
+}
+
+0% {
+  webkit-transform:translateZ(0);
+  transform:translateZ(0);
+}
+
+main.faea32ab.css:5 100% {
+  -webkit-transform:translate3d(-1800px,0,0);
+  transform:translate3d(-1800px,0,0);
+}
+
+main.faea32ab.css:5 100% {
+  -webkit-transform:translate3d(-1800px,0,0);
+  transform:translate3d(-1800px,0,0);
+}
+
+0% {
+  left:-100%;
+}
+
+100% {
+  left:0%;
+}
+
+
+
+.wrapper {
+  /*height:1080px;*/
+  /*width:1920px;*/
+  margin:auto;
+  background:rgba(40,7,68,0);
+  /*overflow:hidden !important;*/
+}
+
+.train {
+  /*position:absolute;*/
+  bottom:400px;
+  height:230px;
+  width:100%;
+  background:url('./sample2.png');
+  background-repeat:repeat-x;
+  background-position:top center;
+  background-size:contain;
+  animation:translateX 8s infinite linear both;
+}
+
+@keyframes translateX {
+  0% {background-position:0px 0px;
+  }
+	100% {background-position:1920px 0px;
+}
+
+.clouds-lg {
+  position:absolute;
+  height:10px;
+  background-repeat:repeat-x;
+}
+
+.clouds {
+  position:relative;
+  bottom:100px;
+  height:315px;
+  width:100%;
+  background:url('./clouds-lg.png');
+  background-repeat:repeat-x;
+  animation:translateX 5s infinite linear both;
+}
+
+#first-section {
+  height:400px;
+}
+

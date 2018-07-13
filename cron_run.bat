@@ -1,0 +1,1 @@
+php c:\xampp\htdocs\brainee\cron_schedule.php

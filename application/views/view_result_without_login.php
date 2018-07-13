@@ -303,7 +303,7 @@ $cia_tim_cate=cia_tim_cate($correct_incorrect_unattempted,explode(",",$result['i
 <div class="col-lg-12" style="margin-top:20px;">
 <center>
 <?php 
-if($result['view_answer']=='1' || $logged_in['su']=='1'){
+if($result['view_answer']=='1' || $logged_in['su']>'0'){
 	
 ?>
 <a href="#answers_i" class="btn btn-info" style="margin-top:10px;"><?php echo $this->lang->line('answer_sheet');?></a>
